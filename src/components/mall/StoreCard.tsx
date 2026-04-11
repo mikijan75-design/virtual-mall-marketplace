@@ -11,85 +11,140 @@ const StoreCard = ({ store }: StoreCardProps) => {
   return (
     <button
       onClick={() => navigate(`/store/${store.id}`)}
-      className="group relative flex flex-col w-full cursor-pointer transition-all duration-500 hover:scale-[1.04] focus:outline-none"
+      className="group relative flex flex-col w-full cursor-pointer transition-all duration-300 hover:scale-[1.03] focus:outline-none"
       aria-label={`כניסה לחנות ${store.name}`}
     >
-      {/* Store sign - frosted glass */}
-      <div className="relative z-10 text-center py-2.5 px-2 rounded-t-xl overflow-hidden backdrop-blur-md"
-        style={{
-          background: "linear-gradient(135deg, rgba(255,255,255,0.85), rgba(240,240,245,0.75))",
-          borderTop: "1px solid rgba(255,255,255,0.9)",
-          borderLeft: "1px solid rgba(255,255,255,0.7)",
-          borderRight: "1px solid rgba(220,220,230,0.5)",
-          boxShadow: "0 4px 20px rgba(0,0,0,0.06), inset 0 1px 0 rgba(255,255,255,0.9)",
-        }}
-      >
-        <span className="font-heebo font-bold text-xs md:text-sm lg:text-base truncate block"
-          style={{ color: "hsl(220, 15%, 25%)" }}
-        >
-          {store.name}
-        </span>
-      </div>
+      {/* === Storefront Frame === */}
+      <div className="relative flex flex-col w-full">
 
-      {/* Glass vitrine */}
-      <div className="relative flex-1 min-h-[110px] md:min-h-[150px] flex flex-col items-center justify-center gap-2.5 rounded-b-xl overflow-hidden transition-all duration-500"
-        style={{
-          background: "linear-gradient(180deg, rgba(255,255,255,0.6) 0%, rgba(245,247,250,0.5) 50%, rgba(235,238,245,0.4) 100%)",
-          border: "1px solid rgba(255,255,255,0.6)",
-          borderTop: "none",
-          boxShadow: "0 8px 32px rgba(0,0,0,0.05), inset 0 0 40px rgba(255,255,255,0.3)",
-          backdropFilter: "blur(12px)",
-        }}
-      >
-        {/* Glass reflection sweep */}
-        <div className="absolute inset-0 pointer-events-none opacity-60 group-hover:opacity-100 transition-opacity duration-700"
+        {/* Top cornice / molding */}
+        <div className="relative z-20 h-2 rounded-t-sm"
           style={{
-            background: "linear-gradient(115deg, transparent 30%, rgba(255,255,255,0.5) 45%, rgba(255,255,255,0.8) 50%, rgba(255,255,255,0.5) 55%, transparent 70%)",
-            transform: "translateX(-100%)",
-            animation: "none",
-          }}
-        />
-        
-        {/* Subtle light reflection on hover */}
-        <div className="absolute top-0 left-0 right-0 h-1/3 pointer-events-none rounded-t-xl opacity-40 group-hover:opacity-70 transition-opacity duration-500"
-          style={{
-            background: "linear-gradient(180deg, rgba(255,255,255,0.9) 0%, transparent 100%)",
+            background: "linear-gradient(180deg, hsl(35,20%,75%) 0%, hsl(35,15%,65%) 40%, hsl(35,20%,72%) 100%)",
+            boxShadow: "0 2px 4px rgba(0,0,0,0.15)",
           }}
         />
 
-        {/* Soft edge highlight */}
-        <div className="absolute inset-[1px] rounded-b-xl pointer-events-none"
+        {/* Sign board */}
+        <div className="relative z-10 py-2 px-1 text-center"
           style={{
-            border: "1px solid rgba(255,255,255,0.4)",
-            borderTop: "none",
-          }}
-        />
-
-        {/* Logo with soft shadow */}
-        <span className="relative text-3xl md:text-4xl lg:text-5xl transition-transform duration-500 group-hover:scale-110"
-          style={{ filter: "drop-shadow(0 2px 8px rgba(0,0,0,0.08))" }}
-        >
-          {store.logoEmoji}
-        </span>
-
-        {/* Category */}
-        <span className="relative text-[10px] md:text-xs font-heebo tracking-wider uppercase"
-          style={{ color: "hsl(220, 10%, 50%)" }}
-        >
-          {store.category}
-        </span>
-
-        {/* Enter indicator */}
-        <div className="absolute bottom-2.5 opacity-0 group-hover:opacity-100 transition-all duration-300 translate-y-1 group-hover:translate-y-0 text-xs font-bold px-4 py-1.5 rounded-full font-heebo backdrop-blur-sm"
-          style={{
-            background: "rgba(255,255,255,0.85)",
-            color: "hsl(220, 15%, 30%)",
-            boxShadow: "0 2px 12px rgba(0,0,0,0.08), inset 0 1px 0 rgba(255,255,255,0.9)",
-            border: "1px solid rgba(220,225,235,0.6)",
+            background: "linear-gradient(180deg, hsl(30,10%,18%) 0%, hsl(25,8%,12%) 100%)",
+            borderLeft: "3px solid hsl(35,15%,60%)",
+            borderRight: "3px solid hsl(35,15%,60%)",
           }}
         >
-          כניסה לחנות ←
+          {/* Sign light glow */}
+          <div className="absolute top-0 left-1/2 -translate-x-1/2 w-3/4 h-1 rounded-b-full opacity-60"
+            style={{ background: "radial-gradient(ellipse, hsl(45,80%,75%) 0%, transparent 80%)" }}
+          />
+          <span className="font-heebo font-bold text-[10px] md:text-xs lg:text-sm truncate block"
+            style={{ color: "hsl(45,70%,75%)", textShadow: "0 0 8px rgba(218,185,100,0.4)" }}
+          >
+            {store.name}
+          </span>
         </div>
+
+        {/* Awning / canopy */}
+        <div className="relative z-10 h-3 md:h-4"
+          style={{
+            background: "repeating-linear-gradient(90deg, hsl(350,50%,40%) 0px, hsl(350,50%,40%) 8px, hsl(0,60%,95%) 8px, hsl(0,60%,95%) 16px)",
+            borderBottom: "2px solid hsl(350,30%,35%)",
+            clipPath: "polygon(0% 0%, 100% 0%, 95% 100%, 5% 100%)",
+          }}
+        />
+
+        {/* Main shop window area */}
+        <div className="relative flex-1 min-h-[90px] md:min-h-[120px]"
+          style={{
+            borderLeft: "5px solid hsl(35,15%,55%)",
+            borderRight: "5px solid hsl(35,15%,55%)",
+            borderBottom: "5px solid hsl(35,15%,50%)",
+          }}
+        >
+          {/* Window frame inner border */}
+          <div className="absolute inset-0"
+            style={{
+              border: "2px solid hsl(35,20%,65%)",
+              boxShadow: "inset 0 0 15px rgba(0,0,0,0.15)",
+            }}
+          />
+
+          {/* Glass window background */}
+          <div className="absolute inset-0"
+            style={{
+              background: "linear-gradient(170deg, hsl(210,20%,92%) 0%, hsl(200,15%,85%) 30%, hsl(210,10%,80%) 70%, hsl(200,15%,75%) 100%)",
+            }}
+          />
+
+          {/* Glass reflection */}
+          <div className="absolute inset-0 pointer-events-none opacity-50"
+            style={{
+              background: "linear-gradient(135deg, rgba(255,255,255,0.7) 0%, rgba(255,255,255,0.3) 20%, transparent 45%, rgba(255,255,255,0.1) 80%, rgba(255,255,255,0.3) 100%)",
+            }}
+          />
+
+          {/* Window divider (vertical mullion) */}
+          <div className="absolute top-0 bottom-0 left-1/2 -translate-x-1/2 w-[3px]"
+            style={{ background: "linear-gradient(180deg, hsl(35,15%,60%), hsl(35,10%,50%))" }}
+          />
+
+          {/* Horizontal mullion */}
+          <div className="absolute top-1/2 -translate-y-1/2 left-0 right-0 h-[3px]"
+            style={{ background: "linear-gradient(90deg, hsl(35,15%,60%), hsl(35,10%,50%), hsl(35,15%,60%))" }}
+          />
+
+          {/* Content */}
+          <div className="relative z-10 flex flex-col items-center justify-center h-full py-3 gap-1.5">
+            <span className="text-2xl md:text-3xl lg:text-4xl drop-shadow-md group-hover:scale-110 transition-transform duration-300">
+              {store.logoEmoji}
+            </span>
+            <span className="text-[8px] md:text-[10px] font-heebo font-medium tracking-wide"
+              style={{ color: "hsl(220,10%,35%)" }}
+            >
+              {store.category}
+            </span>
+          </div>
+
+          {/* Hover glow */}
+          <div className="absolute inset-0 opacity-0 group-hover:opacity-100 transition-opacity duration-500 pointer-events-none"
+            style={{ background: "radial-gradient(ellipse at center, rgba(255,220,150,0.15) 0%, transparent 70%)" }}
+          />
+        </div>
+
+        {/* Door / entrance at bottom */}
+        <div className="relative z-10 flex justify-center"
+          style={{
+            borderLeft: "5px solid hsl(35,15%,55%)",
+            borderRight: "5px solid hsl(35,15%,55%)",
+            borderBottom: "5px solid hsl(35,15%,50%)",
+            background: "hsl(35,12%,52%)",
+          }}
+        >
+          <div className="w-2/3 py-2 md:py-3 flex flex-col items-center gap-0.5 rounded-t-lg relative"
+            style={{
+              background: "linear-gradient(180deg, hsl(30,10%,22%) 0%, hsl(25,8%,15%) 100%)",
+              border: "2px solid hsl(35,15%,45%)",
+              borderBottom: "none",
+            }}
+          >
+            {/* Door handle */}
+            <div className="w-1.5 h-3 md:w-2 md:h-4 rounded-full"
+              style={{ background: "linear-gradient(180deg, hsl(43,60%,65%), hsl(43,50%,45%))" }}
+            />
+            <span className="text-[7px] md:text-[9px] font-heebo opacity-0 group-hover:opacity-100 transition-opacity"
+              style={{ color: "hsl(45,60%,70%)" }}
+            >
+              כניסה
+            </span>
+          </div>
+        </div>
+
+        {/* Floor / threshold */}
+        <div className="h-2 rounded-b-sm"
+          style={{
+            background: "linear-gradient(180deg, hsl(30,8%,45%) 0%, hsl(30,6%,35%) 100%)",
+          }}
+        />
       </div>
     </button>
   );
