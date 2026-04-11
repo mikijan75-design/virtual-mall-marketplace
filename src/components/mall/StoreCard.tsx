@@ -2,25 +2,25 @@ import { useNavigate } from "react-router-dom";
 import type { Store } from "@/data/mallData";
 
 const brandStyles: Record<string, { bg: string; text: string; accent: string; font: string }> = {
-  "אופנה עילית": { bg: "linear-gradient(135deg, #1a1a2e, #16213e)", text: "#e8d5b7", accent: "#c9a96e", font: "font-frank" },
-  "טכנולוגיה מתקדמת": { bg: "linear-gradient(135deg, #0a0a0a, #1a1a1a)", text: "#ffffff", accent: "#4fc3f7", font: "font-heebo" },
-  "חנות עיצוב": { bg: "linear-gradient(135deg, #2d2d2d, #1a1a1a)", text: "#f5f0e8", accent: "#d4a373", font: "font-frank" },
+  "אופנה עילית": { bg: "linear-gradient(135deg, #f5eef0, #ede4e8)", text: "#3a2a30", accent: "#c9a96e", font: "font-frank" },
+  "טכנולוגיה מתקדמת": { bg: "linear-gradient(135deg, #e8f0f8, #dbe6f2)", text: "#1a3a5c", accent: "#4fc3f7", font: "font-heebo" },
+  "חנות עיצוב": { bg: "linear-gradient(135deg, #f8f0e8, #f0e6d8)", text: "#4a3520", accent: "#d4a373", font: "font-frank" },
   "קוסמטיקה טבעית": { bg: "linear-gradient(135deg, #fdf6f0, #f8ede3)", text: "#5c4033", accent: "#c49b7c", font: "font-frank" },
   "גלריה לאמנות": { bg: "linear-gradient(135deg, #f5f5f5, #e8e8e8)", text: "#222222", accent: "#888888", font: "font-frank" },
-  "ספורט ואתגר": { bg: "linear-gradient(135deg, #1b1b1b, #2d2d2d)", text: "#ffffff", accent: "#ff4444", font: "font-heebo" },
-  "ספורט עיוותי": { bg: "linear-gradient(135deg, #0d0d0d, #1a1a2e)", text: "#e0e0e0", accent: "#ff6b35", font: "font-heebo" },
+  "ספורט ואתגר": { bg: "linear-gradient(135deg, #fef0f0, #fce4e4)", text: "#8b1a1a", accent: "#ff4444", font: "font-heebo" },
+  "ספורט עיוותי": { bg: "linear-gradient(135deg, #fff3ed, #fce8de)", text: "#6b3015", accent: "#ff6b35", font: "font-heebo" },
   "אמבטיות מתקדמות": { bg: "linear-gradient(135deg, #f0f4f8, #dce4ed)", text: "#2c3e50", accent: "#5b8fa8", font: "font-frank" },
-  "בנק": { bg: "linear-gradient(135deg, #1a237e, #0d1642)", text: "#ffffff", accent: "#c9b037", font: "font-frank" },
-  "סמארט ואתגר": { bg: "linear-gradient(135deg, #111111, #222222)", text: "#ffffff", accent: "#7c4dff", font: "font-heebo" },
-  "מסעדה איטלקית": { bg: "linear-gradient(135deg, #3e0c0c, #1a0505)", text: "#f5e6d3", accent: "#c8a96e", font: "font-frank" },
-  "קפה בוטיק": { bg: "linear-gradient(135deg, #3e2723, #1b0f0c)", text: "#eedcca", accent: "#a67c52", font: "font-frank" },
+  "בנק": { bg: "linear-gradient(135deg, #eef0f8, #e0e4f0)", text: "#1a237e", accent: "#c9b037", font: "font-frank" },
+  "סמארט ואתגר": { bg: "linear-gradient(135deg, #f0ecf8, #e6e0f4)", text: "#3a1a6b", accent: "#7c4dff", font: "font-heebo" },
+  "מסעדה איטלקית": { bg: "linear-gradient(135deg, #fdf2ec, #f8e8de)", text: "#5c2a10", accent: "#c8a96e", font: "font-frank" },
+  "קפה בוטיק": { bg: "linear-gradient(135deg, #f5ece4, #ede0d2)", text: "#3e2723", accent: "#a67c52", font: "font-frank" },
   "סושי בר": { bg: "linear-gradient(135deg, #1a1a1a, #0a0a0a)", text: "#e8d5c4", accent: "#c62828", font: "font-heebo" },
   "גלידריה": { bg: "linear-gradient(135deg, #fce4ec, #f8bbd0)", text: "#4a2040", accent: "#e91e63", font: "font-frank" },
   "מאפיית שמרים": { bg: "linear-gradient(135deg, #f5e6d3, #e8d5b7)", text: "#3e2723", accent: "#8d6e63", font: "font-frank" },
   "בר מיצים": { bg: "linear-gradient(135deg, #e8f5e9, #c8e6c9)", text: "#1b5e20", accent: "#4caf50", font: "font-heebo" },
 };
 
-const defaultStyle = { bg: "linear-gradient(135deg, #1a1a1a, #2d2d2d)", text: "#f5f0e8", accent: "#c9a96e", font: "font-frank" };
+const defaultStyle = { bg: "linear-gradient(135deg, #f5f0e8, #ede4d8)", text: "#3a2a20", accent: "#c9a96e", font: "font-frank" };
 
 interface StoreCardProps {
   store: Store;
