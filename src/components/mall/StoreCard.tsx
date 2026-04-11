@@ -11,139 +11,125 @@ const StoreCard = ({ store }: StoreCardProps) => {
   return (
     <button
       onClick={() => navigate(`/store/${store.id}`)}
-      className="group relative flex flex-col w-full cursor-pointer transition-all duration-300 hover:scale-[1.03] focus:outline-none"
+      className="group relative flex flex-col w-full cursor-pointer transition-all duration-300 hover:scale-[1.02] focus:outline-none"
       aria-label={`כניסה לחנות ${store.name}`}
     >
-      {/* === Storefront Frame === */}
       <div className="relative flex flex-col w-full">
 
-        {/* Top cornice / molding */}
-        <div className="relative z-20 h-2 rounded-t-sm"
+        {/* Top marble cornice */}
+        <div className="h-2.5 rounded-t-sm"
           style={{
-            background: "linear-gradient(180deg, hsl(35,20%,75%) 0%, hsl(35,15%,65%) 40%, hsl(35,20%,72%) 100%)",
-            boxShadow: "0 2px 4px rgba(0,0,0,0.15)",
+            background: "linear-gradient(180deg, hsl(40,15%,88%) 0%, hsl(38,12%,78%) 50%, hsl(36,10%,72%) 100%)",
+            boxShadow: "0 2px 6px rgba(0,0,0,0.12)",
           }}
         />
 
-        {/* Sign board */}
-        <div className="relative z-10 py-2 px-1 text-center"
+        {/* Sign board - dark elegant */}
+        <div className="relative z-10 py-2.5 px-2 text-center"
           style={{
-            background: "linear-gradient(180deg, hsl(30,10%,18%) 0%, hsl(25,8%,12%) 100%)",
-            borderLeft: "3px solid hsl(35,15%,60%)",
-            borderRight: "3px solid hsl(35,15%,60%)",
+            background: "linear-gradient(180deg, hsl(220,12%,15%) 0%, hsl(220,10%,10%) 100%)",
+            borderLeft: "2px solid hsl(40,20%,70%)",
+            borderRight: "2px solid hsl(40,20%,70%)",
           }}
         >
-          {/* Sign light glow */}
-          <div className="absolute top-0 left-1/2 -translate-x-1/2 w-3/4 h-1 rounded-b-full opacity-60"
-            style={{ background: "radial-gradient(ellipse, hsl(45,80%,75%) 0%, transparent 80%)" }}
+          {/* Subtle top light */}
+          <div className="absolute top-0 left-[15%] right-[15%] h-[1px]"
+            style={{ background: "linear-gradient(90deg, transparent, hsl(40,30%,70%), transparent)" }}
           />
-          <span className="font-heebo font-bold text-[10px] md:text-xs lg:text-sm truncate block"
-            style={{ color: "hsl(45,70%,75%)", textShadow: "0 0 8px rgba(218,185,100,0.4)" }}
+          <span className="font-heebo font-bold text-[10px] md:text-xs lg:text-sm truncate block tracking-wider"
+            style={{ color: "hsl(40,25%,80%)", letterSpacing: "0.05em" }}
           >
             {store.name}
           </span>
         </div>
 
-        {/* Awning / canopy */}
-        <div className="relative z-10 h-3 md:h-4"
-          style={{
-            background: "repeating-linear-gradient(90deg, hsl(350,50%,40%) 0px, hsl(350,50%,40%) 8px, hsl(0,60%,95%) 8px, hsl(0,60%,95%) 16px)",
-            borderBottom: "2px solid hsl(350,30%,35%)",
-            clipPath: "polygon(0% 0%, 100% 0%, 95% 100%, 5% 100%)",
-          }}
+        {/* Thin gold separator */}
+        <div className="h-[3px]"
+          style={{ background: "linear-gradient(90deg, hsl(40,20%,65%), hsl(43,40%,65%), hsl(40,20%,65%))" }}
         />
 
-        {/* Main shop window area */}
-        <div className="relative flex-1 min-h-[90px] md:min-h-[120px]"
+        {/* Main display window */}
+        <div className="relative flex-1 min-h-[95px] md:min-h-[130px]"
           style={{
-            borderLeft: "5px solid hsl(35,15%,55%)",
-            borderRight: "5px solid hsl(35,15%,55%)",
-            borderBottom: "5px solid hsl(35,15%,50%)",
+            background: "linear-gradient(180deg, hsl(40,8%,95%) 0%, hsl(40,6%,90%) 100%)",
+            borderLeft: "2px solid hsl(40,15%,72%)",
+            borderRight: "2px solid hsl(40,15%,72%)",
           }}
         >
-          {/* Window frame inner border */}
-          <div className="absolute inset-0"
+          {/* Inner shadow frame */}
+          <div className="absolute inset-[3px]"
             style={{
-              border: "2px solid hsl(35,20%,65%)",
-              boxShadow: "inset 0 0 15px rgba(0,0,0,0.15)",
+              boxShadow: "inset 0 2px 10px rgba(0,0,0,0.06), inset 0 -1px 6px rgba(0,0,0,0.03)",
+              border: "1px solid hsl(40,10%,85%)",
             }}
           />
 
-          {/* Glass window background */}
-          <div className="absolute inset-0"
+          {/* Glass reflection - subtle diagonal */}
+          <div className="absolute inset-0 pointer-events-none"
             style={{
-              background: "linear-gradient(170deg, hsl(210,20%,92%) 0%, hsl(200,15%,85%) 30%, hsl(210,10%,80%) 70%, hsl(200,15%,75%) 100%)",
+              background: "linear-gradient(155deg, rgba(255,255,255,0.6) 0%, rgba(255,255,255,0.2) 25%, transparent 50%)",
             }}
           />
 
-          {/* Glass reflection */}
-          <div className="absolute inset-0 pointer-events-none opacity-50"
-            style={{
-              background: "linear-gradient(135deg, rgba(255,255,255,0.7) 0%, rgba(255,255,255,0.3) 20%, transparent 45%, rgba(255,255,255,0.1) 80%, rgba(255,255,255,0.3) 100%)",
-            }}
-          />
-
-          {/* Window divider (vertical mullion) */}
-          <div className="absolute top-0 bottom-0 left-1/2 -translate-x-1/2 w-[3px]"
-            style={{ background: "linear-gradient(180deg, hsl(35,15%,60%), hsl(35,10%,50%))" }}
-          />
-
-          {/* Horizontal mullion */}
-          <div className="absolute top-1/2 -translate-y-1/2 left-0 right-0 h-[3px]"
-            style={{ background: "linear-gradient(90deg, hsl(35,15%,60%), hsl(35,10%,50%), hsl(35,15%,60%))" }}
-          />
-
-          {/* Content */}
-          <div className="relative z-10 flex flex-col items-center justify-center h-full py-3 gap-1.5">
-            <span className="text-2xl md:text-3xl lg:text-4xl drop-shadow-md group-hover:scale-110 transition-transform duration-300">
+          {/* Display content */}
+          <div className="relative z-10 flex flex-col items-center justify-center h-full py-4 gap-2">
+            <span className="text-2xl md:text-3xl lg:text-4xl group-hover:scale-110 transition-transform duration-500"
+              style={{ filter: "drop-shadow(0 1px 3px rgba(0,0,0,0.1))" }}
+            >
               {store.logoEmoji}
             </span>
-            <span className="text-[8px] md:text-[10px] font-heebo font-medium tracking-wide"
-              style={{ color: "hsl(220,10%,35%)" }}
+            <span className="text-[8px] md:text-[10px] font-heebo tracking-widest uppercase"
+              style={{ color: "hsl(220,8%,50%)" }}
             >
               {store.category}
             </span>
           </div>
 
-          {/* Hover glow */}
+          {/* Hover warm glow */}
           <div className="absolute inset-0 opacity-0 group-hover:opacity-100 transition-opacity duration-500 pointer-events-none"
-            style={{ background: "radial-gradient(ellipse at center, rgba(255,220,150,0.15) 0%, transparent 70%)" }}
+            style={{ background: "radial-gradient(ellipse at center 60%, rgba(218,195,150,0.12) 0%, transparent 70%)" }}
           />
         </div>
 
-        {/* Door / entrance at bottom */}
-        <div className="relative z-10 flex justify-center"
+        {/* Bottom threshold - marble */}
+        <div className="h-2"
           style={{
-            borderLeft: "5px solid hsl(35,15%,55%)",
-            borderRight: "5px solid hsl(35,15%,55%)",
-            borderBottom: "5px solid hsl(35,15%,50%)",
-            background: "hsl(35,12%,52%)",
+            background: "linear-gradient(180deg, hsl(38,10%,70%) 0%, hsl(36,8%,62%) 100%)",
+            borderLeft: "2px solid hsl(40,15%,72%)",
+            borderRight: "2px solid hsl(40,15%,72%)",
           }}
+        />
+
+        {/* Entrance area */}
+        <div className="flex justify-center"
+          style={{ background: "hsl(38,8%,68%)", padding: "0 2px" }}
         >
-          <div className="w-2/3 py-2 md:py-3 flex flex-col items-center gap-0.5 rounded-t-lg relative"
+          <div className="w-[55%] pt-1 pb-1.5 flex flex-col items-center rounded-t-md relative"
             style={{
-              background: "linear-gradient(180deg, hsl(30,10%,22%) 0%, hsl(25,8%,15%) 100%)",
-              border: "2px solid hsl(35,15%,45%)",
+              background: "linear-gradient(180deg, hsl(220,8%,14%) 0%, hsl(220,6%,10%) 100%)",
+              border: "1.5px solid hsl(40,15%,55%)",
               borderBottom: "none",
             }}
           >
-            {/* Door handle */}
-            <div className="w-1.5 h-3 md:w-2 md:h-4 rounded-full"
-              style={{ background: "linear-gradient(180deg, hsl(43,60%,65%), hsl(43,50%,45%))" }}
+            {/* Arch top */}
+            <div className="absolute -top-[1px] left-[10%] right-[10%] h-1 rounded-t-full"
+              style={{ background: "hsl(40,15%,55%)" }}
             />
-            <span className="text-[7px] md:text-[9px] font-heebo opacity-0 group-hover:opacity-100 transition-opacity"
-              style={{ color: "hsl(45,60%,70%)" }}
+            {/* Door handle */}
+            <div className="w-[3px] h-2.5 md:h-3 rounded-full mt-0.5"
+              style={{ background: "linear-gradient(180deg, hsl(43,45%,68%), hsl(43,35%,50%))" }}
+            />
+            <span className="text-[6px] md:text-[8px] font-heebo opacity-0 group-hover:opacity-100 transition-opacity tracking-wider"
+              style={{ color: "hsl(40,20%,65%)" }}
             >
               כניסה
             </span>
           </div>
         </div>
 
-        {/* Floor / threshold */}
-        <div className="h-2 rounded-b-sm"
-          style={{
-            background: "linear-gradient(180deg, hsl(30,8%,45%) 0%, hsl(30,6%,35%) 100%)",
-          }}
+        {/* Base */}
+        <div className="h-1.5 rounded-b-sm"
+          style={{ background: "linear-gradient(180deg, hsl(35,8%,58%) 0%, hsl(35,6%,48%) 100%)" }}
         />
       </div>
     </button>
