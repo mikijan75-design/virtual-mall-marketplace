@@ -18,17 +18,10 @@ const MallFloor = ({ floor, isActive }: MallFloorProps) => {
         </span>
       </div>
 
-      {/* Stores grid - always 2 rows of 3 */}
+      {/* Stores grid */}
       <div className="max-w-5xl mx-auto px-2">
-        {/* Top row */}
-        <div className="grid grid-cols-3 md:grid-cols-6 gap-3 md:gap-4 mb-3">
-          {floor.stores.slice(0, 3).map((store) => (
-            <StoreCard key={store.id} store={store} />
-          ))}
-        </div>
-        {/* Bottom row */}
         <div className="grid grid-cols-3 md:grid-cols-6 gap-3 md:gap-4">
-          {floor.stores.slice(3, 6).map((store) => (
+          {floor.stores.map((store) => (
             <StoreCard key={store.id} store={store} />
           ))}
         </div>
