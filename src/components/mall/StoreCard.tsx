@@ -1,12 +1,34 @@
 import { useNavigate } from "react-router-dom";
 import type { Store } from "@/data/mallData";
 
+const brandStyles: Record<string, { bg: string; text: string; accent: string; font: string }> = {
+  "אופנה עילית": { bg: "linear-gradient(135deg, #1a1a2e, #16213e)", text: "#e8d5b7", accent: "#c9a96e", font: "font-frank" },
+  "טכנולוגיה מתקדמת": { bg: "linear-gradient(135deg, #0a0a0a, #1a1a1a)", text: "#ffffff", accent: "#4fc3f7", font: "font-heebo" },
+  "חנות עיצוב": { bg: "linear-gradient(135deg, #2d2d2d, #1a1a1a)", text: "#f5f0e8", accent: "#d4a373", font: "font-frank" },
+  "קוסמטיקה טבעית": { bg: "linear-gradient(135deg, #fdf6f0, #f8ede3)", text: "#5c4033", accent: "#c49b7c", font: "font-frank" },
+  "גלריה לאמנות": { bg: "linear-gradient(135deg, #f5f5f5, #e8e8e8)", text: "#222222", accent: "#888888", font: "font-frank" },
+  "ספורט ואתגר": { bg: "linear-gradient(135deg, #1b1b1b, #2d2d2d)", text: "#ffffff", accent: "#ff4444", font: "font-heebo" },
+  "ספורט עיוותי": { bg: "linear-gradient(135deg, #0d0d0d, #1a1a2e)", text: "#e0e0e0", accent: "#ff6b35", font: "font-heebo" },
+  "אמבטיות מתקדמות": { bg: "linear-gradient(135deg, #f0f4f8, #dce4ed)", text: "#2c3e50", accent: "#5b8fa8", font: "font-frank" },
+  "בנק": { bg: "linear-gradient(135deg, #1a237e, #0d1642)", text: "#ffffff", accent: "#c9b037", font: "font-frank" },
+  "סמארט ואתגר": { bg: "linear-gradient(135deg, #111111, #222222)", text: "#ffffff", accent: "#7c4dff", font: "font-heebo" },
+  "מסעדה איטלקית": { bg: "linear-gradient(135deg, #3e0c0c, #1a0505)", text: "#f5e6d3", accent: "#c8a96e", font: "font-frank" },
+  "קפה בוטיק": { bg: "linear-gradient(135deg, #3e2723, #1b0f0c)", text: "#eedcca", accent: "#a67c52", font: "font-frank" },
+  "סושי בר": { bg: "linear-gradient(135deg, #1a1a1a, #0a0a0a)", text: "#e8d5c4", accent: "#c62828", font: "font-heebo" },
+  "גלידריה": { bg: "linear-gradient(135deg, #fce4ec, #f8bbd0)", text: "#4a2040", accent: "#e91e63", font: "font-frank" },
+  "מאפיית שמרים": { bg: "linear-gradient(135deg, #f5e6d3, #e8d5b7)", text: "#3e2723", accent: "#8d6e63", font: "font-frank" },
+  "בר מיצים": { bg: "linear-gradient(135deg, #e8f5e9, #c8e6c9)", text: "#1b5e20", accent: "#4caf50", font: "font-heebo" },
+};
+
+const defaultStyle = { bg: "linear-gradient(135deg, #1a1a1a, #2d2d2d)", text: "#f5f0e8", accent: "#c9a96e", font: "font-frank" };
+
 interface StoreCardProps {
   store: Store;
 }
 
 const StoreCard = ({ store }: StoreCardProps) => {
   const navigate = useNavigate();
+  const style = brandStyles[store.name] || defaultStyle;
 
   return (
     <button
@@ -21,36 +43,43 @@ const StoreCard = ({ store }: StoreCardProps) => {
           boxShadow: "0 4px 20px rgba(0,0,0,0.08), inset 0 0 0 1px hsl(40,20%,85%)",
         }}
       >
-        {/* Top ornamental trim */}
+        {/* Top gold trim */}
         <div className="h-[3px]"
           style={{ background: "linear-gradient(90deg, hsl(40,15%,65%), hsl(43,45%,70%), hsl(40,15%,65%))" }}
         />
 
-        {/* Sign board - white background with unique logo */}
-        <div className="relative z-10 py-3 md:py-4 px-2 flex flex-col items-center gap-1"
+        {/* Brand sign - unique per store */}
+        <div className="relative z-10 py-3 md:py-4 px-2 flex flex-col items-center justify-center gap-0.5"
           style={{
-            background: "linear-gradient(180deg, hsl(0,0%,100%) 0%, hsl(40,10%,97%) 100%)",
-            borderBottom: "2px solid hsl(40,25%,72%)",
+            background: style.bg,
+            borderBottom: `2px solid ${style.accent}`,
           }}
         >
-          {/* Logo emoji as brand icon */}
-          <span className="text-xl md:text-2xl lg:text-3xl">{store.logoEmoji}</span>
+          {/* Decorative corner accents */}
+          <div className="absolute top-1 left-1 w-2 h-2 border-t border-l opacity-40"
+            style={{ borderColor: style.accent }}
+          />
+          <div className="absolute top-1 right-1 w-2 h-2 border-t border-r opacity-40"
+            style={{ borderColor: style.accent }}
+          />
+          <div className="absolute bottom-1 left-1 w-2 h-2 border-b border-l opacity-40"
+            style={{ borderColor: style.accent }}
+          />
+          <div className="absolute bottom-1 right-1 w-2 h-2 border-b border-r opacity-40"
+            style={{ borderColor: style.accent }}
+          />
+
           {/* Brand name */}
-          <span className="font-frank font-bold text-[10px] md:text-xs lg:text-sm truncate block tracking-wider w-full text-center"
-            style={{ color: "hsl(220,15%,20%)" }}
+          <span className={`${style.font} font-bold text-[10px] md:text-xs lg:text-sm truncate block tracking-wider w-full text-center`}
+            style={{ color: style.text }}
           >
             {store.name}
           </span>
-          {/* Decorative line under name */}
-          <div className="w-8 md:w-10 h-[1.5px] mt-0.5"
-            style={{ background: "linear-gradient(90deg, transparent, hsl(43,40%,60%), transparent)" }}
+          {/* Accent line */}
+          <div className="w-6 md:w-8 h-[1.5px] mt-0.5"
+            style={{ background: style.accent }}
           />
         </div>
-
-        {/* Inner gold trim */}
-        <div className="h-[2px]"
-          style={{ background: "linear-gradient(90deg, hsl(40,20%,75%), hsl(43,50%,68%), hsl(40,20%,75%))" }}
-        />
 
         {/* Store window with open doors */}
         <div className="relative min-h-[85px] md:min-h-[115px] overflow-hidden"
@@ -80,7 +109,7 @@ const StoreCard = ({ store }: StoreCardProps) => {
             }}
           />
 
-          {/* Depth shadows */}
+          {/* Inner depth */}
           <div className="absolute inset-0"
             style={{ boxShadow: "inset 0 4px 14px rgba(0,0,0,0.05), inset 0 0 20px rgba(0,0,0,0.02)" }}
           />
@@ -110,7 +139,7 @@ const StoreCard = ({ store }: StoreCardProps) => {
           />
         </div>
 
-        {/* Bottom ornamental trim */}
+        {/* Bottom gold trim */}
         <div className="h-[3px]"
           style={{ background: "linear-gradient(90deg, hsl(40,15%,65%), hsl(43,45%,70%), hsl(40,15%,65%))" }}
         />
