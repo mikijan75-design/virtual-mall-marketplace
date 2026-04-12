@@ -4,13 +4,22 @@ import MallCeiling from "@/components/mall/MallCeiling";
 import Decorations from "@/components/mall/Decorations";
 import FloorMap from "@/components/mall/FloorMap";
 import StoreCard from "@/components/mall/StoreCard";
+import mallWall from "@/assets/mall-wall.jpg";
+import marbleFloor from "@/assets/marble-floor.jpg";
 
 const Index = () => {
   return (
     <div className="min-h-screen bg-background">
       <MallHeader />
 
-      <div className="bg-mall-wall pt-4 pb-0">
+      <div
+        className="pt-4 pb-0"
+        style={{
+          backgroundImage: `url(${mallWall})`,
+          backgroundSize: "400px 400px",
+          backgroundRepeat: "repeat",
+        }}
+      >
         <MallCeiling />
 
         {/* All floors stacked */}
@@ -18,19 +27,29 @@ const Index = () => {
           <div key={floor.id} className="mb-6">
             {/* Floor label */}
             <div className="text-center my-4">
-              <span className="inline-block bg-mall-sign text-mall-gold font-frank font-bold text-lg md:text-xl px-6 py-2 rounded-md shadow-lg">
+              <span
+                className="inline-block font-frank font-bold text-lg md:text-xl px-6 py-2 rounded-md"
+                style={{
+                  background: "linear-gradient(135deg, hsl(220,20%,14%), hsl(220,18%,20%))",
+                  color: "hsl(43,70%,55%)",
+                  boxShadow: "0 4px 16px rgba(0,0,0,0.3), inset 0 1px 0 rgba(255,255,255,0.05)",
+                  border: "1px solid hsl(43,50%,35%)",
+                  letterSpacing: "0.05em",
+                }}
+              >
                 {floor.name}
               </span>
             </div>
 
-            {/* Stores row */}
             {/* Marble entry path */}
             <div className="max-w-5xl mx-auto px-2 mb-2">
-              <div className="h-3 md:h-4 rounded-t-sm mx-4"
+              <div
+                className="h-4 md:h-5 rounded-t-sm mx-4"
                 style={{
-                  background: "linear-gradient(180deg, hsl(35,15%,88%) 0%, hsl(35,20%,92%) 40%, hsl(35,15%,88%) 100%)",
-                  boxShadow: "inset 0 1px 3px rgba(255,255,255,0.6), inset 0 -1px 2px rgba(0,0,0,0.05)",
-                  backgroundImage: "linear-gradient(180deg, hsl(35,15%,88%) 0%, hsl(35,20%,92%) 40%, hsl(35,15%,88%) 100%), repeating-linear-gradient(90deg, transparent, transparent 30px, rgba(255,255,255,0.3) 30px, rgba(255,255,255,0.3) 31px)",
+                  backgroundImage: `url(${marbleFloor})`,
+                  backgroundSize: "200px 200px",
+                  backgroundRepeat: "repeat",
+                  boxShadow: "inset 0 2px 6px rgba(255,255,255,0.4), inset 0 -1px 3px rgba(0,0,0,0.08), 0 2px 8px rgba(0,0,0,0.1)",
                 }}
               />
             </div>
@@ -39,29 +58,64 @@ const Index = () => {
               <div className="relative grid grid-cols-3 md:grid-cols-6 gap-3 md:gap-4">
                 {floor.stores.map((store, idx) => (
                   <div key={store.id} className="relative">
-                    {/* Wall light above store */}
-                    <div className="absolute -top-1 left-1/2 -translate-x-1/2 z-20 flex flex-col items-center pointer-events-none">
-                      <div className="w-4 h-1.5 md:w-5 md:h-2 rounded-b-full"
+                    {/* Recessed ceiling light fixture */}
+                    <div className="absolute -top-2 left-1/2 -translate-x-1/2 z-20 flex flex-col items-center pointer-events-none">
+                      {/* Light fixture body */}
+                      <div
+                        className="w-5 h-2 md:w-6 md:h-2.5 rounded-b-full"
                         style={{
-                          background: "linear-gradient(180deg, hsl(45,10%,85%), hsl(45,20%,95%))",
-                          boxShadow: "0 0 6px 2px rgba(255,255,240,0.5)",
+                          background: "linear-gradient(180deg, hsl(40,10%,75%), hsl(40,8%,88%))",
+                          boxShadow: "0 1px 4px rgba(0,0,0,0.15), 0 0 8px rgba(255,250,230,0.6)",
+                          border: "1px solid hsl(40,12%,70%)",
                         }}
                       />
-                      <div className="w-8 h-10 md:w-10 md:h-14"
+                      {/* Light bulb glow */}
+                      <div
+                        className="w-2 h-1 md:w-2.5 md:h-1.5 rounded-b-full -mt-0.5"
                         style={{
-                          background: "linear-gradient(180deg, rgba(255,255,240,0.25) 0%, rgba(255,255,240,0.08) 40%, transparent 100%)",
+                          background: "radial-gradient(ellipse, rgba(255,250,220,0.95), rgba(255,245,200,0.5))",
+                          boxShadow: "0 0 6px 3px rgba(255,250,220,0.4)",
+                        }}
+                      />
+                      {/* Light beam cone */}
+                      <div
+                        className="w-10 h-14 md:w-14 md:h-20"
+                        style={{
+                          background: "linear-gradient(180deg, rgba(255,250,230,0.22) 0%, rgba(255,250,230,0.06) 50%, transparent 100%)",
+                          clipPath: "polygon(35% 0%, 65% 0%, 100% 100%, 0% 100%)",
                         }}
                       />
                     </div>
 
                     <StoreCard store={store} />
 
-                    {/* Small planter between stores */}
+                    {/* Realistic planter between stores */}
                     {idx % 3 !== 2 && (
-                      <div className="absolute -right-2 md:-right-2.5 bottom-2 z-30 flex flex-col items-center pointer-events-none">
-                        <div className="w-1.5 h-2.5 md:w-2 md:h-3 bg-green-700/70 rounded-full" style={{ filter: "blur(0.3px)" }} />
-                        <div className="w-2 h-1.5 md:w-2.5 md:h-2 rounded-t-sm"
-                          style={{ background: "linear-gradient(180deg, hsl(25,30%,55%), hsl(25,25%,45%))" }}
+                      <div className="absolute -right-2 md:-right-2.5 bottom-3 z-30 flex flex-col items-center pointer-events-none">
+                        {/* Plant foliage */}
+                        <div className="relative">
+                          <div
+                            className="w-2.5 h-3 md:w-3 md:h-4 rounded-full"
+                            style={{
+                              background: "radial-gradient(ellipse at 40% 30%, hsl(120,35%,40%), hsl(130,30%,28%))",
+                              boxShadow: "0 1px 3px rgba(0,0,0,0.2)",
+                            }}
+                          />
+                          <div
+                            className="absolute -left-0.5 top-0.5 w-1.5 h-2 md:w-2 md:h-2.5 rounded-full"
+                            style={{
+                              background: "radial-gradient(ellipse, hsl(115,30%,45%), hsl(125,28%,32%))",
+                            }}
+                          />
+                        </div>
+                        {/* Pot */}
+                        <div
+                          className="w-2.5 h-2 md:w-3 md:h-2.5 rounded-b-md -mt-0.5"
+                          style={{
+                            background: "linear-gradient(180deg, hsl(20,40%,50%), hsl(15,35%,38%))",
+                            boxShadow: "0 2px 4px rgba(0,0,0,0.15)",
+                            borderTop: "1px solid hsl(20,30%,55%)",
+                          }}
                         />
                       </div>
                     )}
@@ -70,8 +124,16 @@ const Index = () => {
               </div>
             </div>
 
-            {/* Floor divider */}
-            <div className="mt-4 h-6 bg-gradient-to-b from-mall-floor to-mall-wall/50 rounded-b-lg max-w-5xl mx-auto shadow-inner" />
+            {/* Marble floor divider */}
+            <div
+              className="mt-4 h-6 md:h-8 rounded-b-lg max-w-5xl mx-auto"
+              style={{
+                backgroundImage: `url(${marbleFloor})`,
+                backgroundSize: "300px 300px",
+                backgroundRepeat: "repeat",
+                boxShadow: "inset 0 3px 10px rgba(0,0,0,0.12), 0 2px 6px rgba(0,0,0,0.08)",
+              }}
+            />
           </div>
         ))}
 
