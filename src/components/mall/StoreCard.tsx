@@ -30,7 +30,7 @@ const brandStyles: Record<string, { bg: string; text: string; accent: string; fo
   "ספורט עיוותי": { bg: "linear-gradient(135deg, #fff3ed, #fce8de)", text: "#6b3015", accent: "#ff6b35", font: "font-heebo", image: extremeSportsImg, subtitle: "ספורט אקסטרים" },
   "אמבטיות מתקדמות": { bg: "linear-gradient(135deg, #f0f4f8, #dce4ed)", text: "#2c3e50", accent: "#5b8fa8", font: "font-frank", image: bathroomImg, subtitle: "עיצוב מודרני" },
   "בנק": { bg: "linear-gradient(135deg, #eef0f8, #e0e4f0)", text: "#1a237e", accent: "#c9b037", font: "font-frank", image: bankImg, subtitle: "שירותים פיננסיים" },
-  "סמארט ואתגר": { bg: "linear-gradient(135deg, #f0ecf8, #e6e0f4)", text: "#3a1a6b", accent: "#7c4dff", font: "font-heebo", image: smartImg, subtitle: "סמארטפונים ואביזרים", logo: smartLogo },
+  "סמארט ואתגר": { bg: "linear-gradient(135deg, #f0ecf8, #e6e0f4)", text: "#3a1a6b", accent: "#7c4dff", font: "font-heebo", image: smartImg, subtitle: "סמארטפונים ואביזרים", logo: smartLogo, subtitleLogo: daliaLogo },
   "מסעדה איטלקית": { bg: "linear-gradient(135deg, #fdf2ec, #f8e8de)", text: "#5c2a10", accent: "#c8a96e", font: "font-frank", image: italianImg, subtitle: "פסטה ופיצה אותנטית" },
   "קפה בוטיק": { bg: "linear-gradient(135deg, #f5ece4, #ede0d2)", text: "#3e2723", accent: "#a67c52", font: "font-frank", image: cafeImg, subtitle: "קפה ומאפים" },
   "סושי בר": { bg: "linear-gradient(135deg, #1a1a1a, #0a0a0a)", text: "#e8d5c4", accent: "#c62828", font: "font-heebo", image: sushiImg, subtitle: "סושי טרי יומיומי" },
