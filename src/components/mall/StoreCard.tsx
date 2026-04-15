@@ -41,11 +41,14 @@ const brandStyles: Record<string, { bg: string; text: string; accent: string; fo
 
 const defaultStyle = { bg: "linear-gradient(135deg, #f5f0e8, #ede4d8)", text: "#3a2a20", accent: "#c9a96e", font: "font-frank", image: "", subtitle: "", logo: undefined as string | undefined, subtitleLogo: undefined as string | undefined };
 
+const romanNumerals = ["I", "II", "III", "IV", "V", "VI"];
+
 interface StoreCardProps {
   store: Store;
+  storeIndex?: number;
 }
 
-const StoreCard = ({ store }: StoreCardProps) => {
+const StoreCard = ({ store, storeIndex }: StoreCardProps) => {
   const navigate = useNavigate();
   const style = brandStyles[store.name] || defaultStyle;
 
@@ -169,6 +172,28 @@ const StoreCard = ({ store }: StoreCardProps) => {
           className="h-[3px]"
           style={{ background: "linear-gradient(90deg, hsl(40,15%,65%), hsl(43,45%,70%), hsl(40,15%,65%))" }}
         />
+
+        {/* Roman numeral badge */}
+        {storeIndex !== undefined && (
+          <div
+            className="absolute -bottom-2 left-1/2 -translate-x-1/2 z-20 flex items-center justify-center"
+            style={{
+              background: "linear-gradient(135deg, hsl(43,45%,55%), hsl(40,40%,45%))",
+              color: "hsl(40,10%,98%)",
+              width: "22px",
+              height: "22px",
+              borderRadius: "50%",
+              fontSize: "9px",
+              fontWeight: 700,
+              fontFamily: "serif",
+              letterSpacing: "0.02em",
+              boxShadow: "0 2px 6px rgba(0,0,0,0.25), inset 0 1px 0 rgba(255,255,255,0.3)",
+              border: "1.5px solid hsl(43,50%,65%)",
+            }}
+          >
+            {romanNumerals[storeIndex]}
+          </div>
+        )}
       </div>
     </button>
   );
