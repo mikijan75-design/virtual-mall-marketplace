@@ -83,12 +83,16 @@ const StoreCard = ({ store }: StoreCardProps) => {
           <div className="absolute bottom-1 right-1 w-2 h-2 border-b border-r opacity-40" style={{ borderColor: style.accent }} />
 
           {/* Brand name */}
-          <span
-            className={`${style.font} font-bold text-[10px] md:text-xs lg:text-sm truncate block tracking-wider w-full text-center`}
-            style={{ color: style.text }}
-          >
-            {store.name}
-          </span>
+          {style.logo ? (
+            <img src={style.logo} alt={store.name} className="h-5 md:h-6 lg:h-7 object-contain" />
+          ) : (
+            <span
+              className={`${style.font} font-bold text-[10px] md:text-xs lg:text-sm truncate block tracking-wider w-full text-center`}
+              style={{ color: style.text }}
+            >
+              {store.name}
+            </span>
+          )}
           {/* Accent line */}
           <div className="w-6 md:w-8 h-[1.5px] mt-0.5" style={{ background: style.accent }} />
         </div>
