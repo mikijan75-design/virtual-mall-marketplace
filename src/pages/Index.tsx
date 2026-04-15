@@ -87,7 +87,7 @@ const Index = () => {
                       />
                     </div>
 
-                    <StoreCard store={store} />
+                    <StoreCard store={store} storeIndex={idx} />
 
                     {/* Realistic planter between stores */}
                     {idx % 3 !== 2 && (
