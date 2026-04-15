@@ -69,33 +69,41 @@ const StoreCard = ({ store }: StoreCardProps) => {
         />
 
         {/* Brand sign */}
-        <div
-          className="relative z-10 py-2.5 md:py-3 px-2 flex flex-col items-center justify-center gap-0.5"
-          style={{
-            background: style.bg,
-            borderBottom: `2px solid ${style.accent}`,
-          }}
-        >
-          {/* Corner accents */}
-          <div className="absolute top-1 left-1 w-2 h-2 border-t border-l opacity-40" style={{ borderColor: style.accent }} />
-          <div className="absolute top-1 right-1 w-2 h-2 border-t border-r opacity-40" style={{ borderColor: style.accent }} />
-          <div className="absolute bottom-1 left-1 w-2 h-2 border-b border-l opacity-40" style={{ borderColor: style.accent }} />
-          <div className="absolute bottom-1 right-1 w-2 h-2 border-b border-r opacity-40" style={{ borderColor: style.accent }} />
+        {style.logo ? (
+          <div
+            className="relative z-10 flex items-center justify-center overflow-hidden"
+            style={{
+              background: "#ffffff",
+              borderBottom: `2px solid ${style.accent}`,
+            }}
+          >
+            <img src={style.logo} alt={store.name} className="w-full h-full object-contain py-1 px-2" style={{ minHeight: "36px", maxHeight: "48px" }} />
+          </div>
+        ) : (
+          <div
+            className="relative z-10 py-2.5 md:py-3 px-2 flex flex-col items-center justify-center gap-0.5"
+            style={{
+              background: style.bg,
+              borderBottom: `2px solid ${style.accent}`,
+            }}
+          >
+            {/* Corner accents */}
+            <div className="absolute top-1 left-1 w-2 h-2 border-t border-l opacity-40" style={{ borderColor: style.accent }} />
+            <div className="absolute top-1 right-1 w-2 h-2 border-t border-r opacity-40" style={{ borderColor: style.accent }} />
+            <div className="absolute bottom-1 left-1 w-2 h-2 border-b border-l opacity-40" style={{ borderColor: style.accent }} />
+            <div className="absolute bottom-1 right-1 w-2 h-2 border-b border-r opacity-40" style={{ borderColor: style.accent }} />
 
-          {/* Brand name */}
-          {style.logo ? (
-            <img src={style.logo} alt={store.name} className="h-5 md:h-6 lg:h-7 object-contain" />
-          ) : (
+            {/* Brand name */}
             <span
               className={`${style.font} font-bold text-[10px] md:text-xs lg:text-sm truncate block tracking-wider w-full text-center`}
               style={{ color: style.text }}
             >
               {store.name}
             </span>
-          )}
-          {/* Accent line */}
-          <div className="w-6 md:w-8 h-[1.5px] mt-0.5" style={{ background: style.accent }} />
-        </div>
+            {/* Accent line */}
+            <div className="w-6 md:w-8 h-[1.5px] mt-0.5" style={{ background: style.accent }} />
+          </div>
+        )}
 
         {/* Subtitle bar */}
         {style.subtitle && (
