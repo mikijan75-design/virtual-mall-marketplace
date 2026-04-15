@@ -41,11 +41,14 @@ const brandStyles: Record<string, { bg: string; text: string; accent: string; fo
 
 const defaultStyle = { bg: "linear-gradient(135deg, #f5f0e8, #ede4d8)", text: "#3a2a20", accent: "#c9a96e", font: "font-frank", image: "", subtitle: "", logo: undefined as string | undefined, subtitleLogo: undefined as string | undefined };
 
+const romanNumerals = ["I", "II", "III", "IV", "V", "VI"];
+
 interface StoreCardProps {
   store: Store;
+  storeIndex?: number;
 }
 
-const StoreCard = ({ store }: StoreCardProps) => {
+const StoreCard = ({ store, storeIndex }: StoreCardProps) => {
   const navigate = useNavigate();
   const style = brandStyles[store.name] || defaultStyle;
 
