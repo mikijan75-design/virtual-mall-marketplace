@@ -11,6 +11,7 @@ import extremeSportsImg from "@/assets/stores/extreme-sports.jpg";
 import bathroomImg from "@/assets/stores/bathroom.jpg";
 import bankImg from "@/assets/stores/bank.jpg";
 import smartImg from "@/assets/stores/smart.jpg";
+import smartLogo from "@/assets/stores/smart-logo.jpg";
 import italianImg from "@/assets/stores/italian.jpg";
 import cafeImg from "@/assets/stores/cafe.jpg";
 import sushiImg from "@/assets/stores/sushi.jpg";
@@ -18,7 +19,7 @@ import gelatoImg from "@/assets/stores/gelato.jpg";
 import bakeryImg from "@/assets/stores/bakery.jpg";
 import juiceImg from "@/assets/stores/juice.jpg";
 
-const brandStyles: Record<string, { bg: string; text: string; accent: string; font: string; image: string; subtitle: string }> = {
+const brandStyles: Record<string, { bg: string; text: string; accent: string; font: string; image: string; subtitle: string; logo?: string }> = {
   "אופנה עילית": { bg: "linear-gradient(135deg, #f5eef0, #ede4e8)", text: "#3a2a30", accent: "#c9a96e", font: "font-frank", image: fashionImg, subtitle: "קוטור יוקרה" },
   "טכנולוגיה מתקדמת": { bg: "linear-gradient(135deg, #e8f0f8, #dbe6f2)", text: "#1a3a5c", accent: "#4fc3f7", font: "font-heebo", image: techImg, subtitle: "גאדג'טים מהעתיד" },
   "חנות עיצוב": { bg: "linear-gradient(135deg, #f8f0e8, #f0e6d8)", text: "#4a3520", accent: "#d4a373", font: "font-frank", image: designImg, subtitle: "סטודיו לציור" },
@@ -28,7 +29,7 @@ const brandStyles: Record<string, { bg: string; text: string; accent: string; fo
   "ספורט עיוותי": { bg: "linear-gradient(135deg, #fff3ed, #fce8de)", text: "#6b3015", accent: "#ff6b35", font: "font-heebo", image: extremeSportsImg, subtitle: "ספורט אקסטרים" },
   "אמבטיות מתקדמות": { bg: "linear-gradient(135deg, #f0f4f8, #dce4ed)", text: "#2c3e50", accent: "#5b8fa8", font: "font-frank", image: bathroomImg, subtitle: "עיצוב מודרני" },
   "בנק": { bg: "linear-gradient(135deg, #eef0f8, #e0e4f0)", text: "#1a237e", accent: "#c9b037", font: "font-frank", image: bankImg, subtitle: "שירותים פיננסיים" },
-  "סמארט ואתגר": { bg: "linear-gradient(135deg, #f0ecf8, #e6e0f4)", text: "#3a1a6b", accent: "#7c4dff", font: "font-heebo", image: smartImg, subtitle: "סמארטפונים ואביזרים" },
+  "סמארט ואתגר": { bg: "linear-gradient(135deg, #f0ecf8, #e6e0f4)", text: "#3a1a6b", accent: "#7c4dff", font: "font-heebo", image: smartImg, subtitle: "סמארטפונים ואביזרים", logo: smartLogo },
   "מסעדה איטלקית": { bg: "linear-gradient(135deg, #fdf2ec, #f8e8de)", text: "#5c2a10", accent: "#c8a96e", font: "font-frank", image: italianImg, subtitle: "פסטה ופיצה אותנטית" },
   "קפה בוטיק": { bg: "linear-gradient(135deg, #f5ece4, #ede0d2)", text: "#3e2723", accent: "#a67c52", font: "font-frank", image: cafeImg, subtitle: "קפה ומאפים" },
   "סושי בר": { bg: "linear-gradient(135deg, #1a1a1a, #0a0a0a)", text: "#e8d5c4", accent: "#c62828", font: "font-heebo", image: sushiImg, subtitle: "סושי טרי יומיומי" },
@@ -37,7 +38,7 @@ const brandStyles: Record<string, { bg: string; text: string; accent: string; fo
   "בר מיצים": { bg: "linear-gradient(135deg, #e8f5e9, #c8e6c9)", text: "#1b5e20", accent: "#4caf50", font: "font-heebo", image: juiceImg, subtitle: "מיצים טבעיים" },
 };
 
-const defaultStyle = { bg: "linear-gradient(135deg, #f5f0e8, #ede4d8)", text: "#3a2a20", accent: "#c9a96e", font: "font-frank", image: "", subtitle: "" };
+const defaultStyle = { bg: "linear-gradient(135deg, #f5f0e8, #ede4d8)", text: "#3a2a20", accent: "#c9a96e", font: "font-frank", image: "", subtitle: "", logo: undefined as string | undefined };
 
 interface StoreCardProps {
   store: Store;
@@ -82,12 +83,16 @@ const StoreCard = ({ store }: StoreCardProps) => {
           <div className="absolute bottom-1 right-1 w-2 h-2 border-b border-r opacity-40" style={{ borderColor: style.accent }} />
 
           {/* Brand name */}
-          <span
-            className={`${style.font} font-bold text-[10px] md:text-xs lg:text-sm truncate block tracking-wider w-full text-center`}
-            style={{ color: style.text }}
-          >
-            {store.name}
-          </span>
+          {style.logo ? (
+            <img src={style.logo} alt={store.name} className="h-5 md:h-6 lg:h-7 object-contain" />
+          ) : (
+            <span
+              className={`${style.font} font-bold text-[10px] md:text-xs lg:text-sm truncate block tracking-wider w-full text-center`}
+              style={{ color: style.text }}
+            >
+              {store.name}
+            </span>
+          )}
           {/* Accent line */}
           <div className="w-6 md:w-8 h-[1.5px] mt-0.5" style={{ background: style.accent }} />
         </div>
