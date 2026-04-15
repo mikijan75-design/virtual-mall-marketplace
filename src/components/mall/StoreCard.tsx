@@ -12,6 +12,7 @@ import bathroomImg from "@/assets/stores/bathroom.jpg";
 import bankImg from "@/assets/stores/bank.jpg";
 import smartImg from "@/assets/stores/smart.jpg";
 import smartLogo from "@/assets/stores/smart-logo-clean.png";
+import daliaLogo from "@/assets/stores/dalia-hadad-logo-clean.png";
 import italianImg from "@/assets/stores/italian.jpg";
 import cafeImg from "@/assets/stores/cafe.jpg";
 import sushiImg from "@/assets/stores/sushi.jpg";
