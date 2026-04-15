@@ -107,7 +107,16 @@ const StoreCard = ({ store }: StoreCardProps) => {
         )}
 
         {/* Subtitle bar */}
-        {style.subtitle && (
+        {style.subtitleLogo ? (
+          <div
+            className="flex items-center justify-center overflow-hidden"
+            style={{
+              background: "#ffffff",
+            }}
+          >
+            <img src={style.subtitleLogo} alt={store.name} className="w-full h-full object-contain px-2 py-0.5" style={{ minHeight: "24px", maxHeight: "36px" }} loading="lazy" />
+          </div>
+        ) : style.subtitle ? (
           <div
             className="py-1 text-center"
             style={{
@@ -118,7 +127,7 @@ const StoreCard = ({ store }: StoreCardProps) => {
               {style.subtitle}
             </span>
           </div>
-        )}
+        ) : null}
 
         {/* Realistic store image */}
         {style.image ? (
