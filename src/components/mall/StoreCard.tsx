@@ -19,7 +19,7 @@ import sushiImg from "@/assets/stores/sushi.jpg";
 import gelatoImg from "@/assets/stores/gelato.jpg";
 import bakeryImg from "@/assets/stores/bakery.jpg";
 import juiceImg from "@/assets/stores/juice.jpg";
-import comingSoonTemplate from "@/assets/stores/coming-soon-template.jpg";
+import comingSoonTemplate from "@/assets/stores/coming-soon-bg.jpg";
 
 const brandStyles: Record<string, { bg: string; text: string; accent: string; font: string; image: string; subtitle: string; logo?: string; subtitleLogo?: string; comingSoon?: string }> = {
   "אופנה עילית": { bg: "linear-gradient(135deg, #f5eef0, #ede4e8)", text: "#3a2a30", accent: "#c9a96e", font: "font-frank", image: fashionImg, subtitle: "קוטור יוקרה" },
