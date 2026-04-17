@@ -73,17 +73,6 @@ const StoreCard = ({ store, storeIndex }: StoreCardProps) => {
           style={{ background: "linear-gradient(90deg, hsl(40,15%,65%), hsl(43,45%,70%), hsl(40,15%,65%))" }}
         />
 
-        {style.comingSoon ? (
-          <div className="relative overflow-hidden">
-            <img
-              src={style.comingSoon}
-              alt={`${store.name} - בקרוב הפתיחה`}
-              className="block w-full h-[155px] md:h-[210px] object-cover object-center transition-transform duration-700 group-hover:scale-105"
-              loading="lazy"
-            />
-          </div>
-        ) : (
-        <>
         {/* Brand sign */}
         {style.logo ? (
           <div
@@ -144,8 +133,17 @@ const StoreCard = ({ store, storeIndex }: StoreCardProps) => {
           </div>
         ) : null}
 
-        {/* Realistic store image */}
-        {style.image ? (
+        {/* Store image (or coming soon template) */}
+        {style.comingSoon ? (
+          <div className="relative overflow-hidden">
+            <img
+              src={style.comingSoon}
+              alt={`${store.name} - בקרוב הפתיחה`}
+              className="block w-full h-[90px] md:h-[130px] object-cover object-center transition-transform duration-700 group-hover:scale-110"
+              loading="lazy"
+            />
+          </div>
+        ) : style.image ? (
           <div className="relative overflow-hidden">
             <img
               src={style.image}
@@ -177,8 +175,6 @@ const StoreCard = ({ store, storeIndex }: StoreCardProps) => {
           >
             <span className="text-2xl md:text-3xl">{store.logoEmoji}</span>
           </div>
-        )}
-        </>
         )}
 
         {/* Bottom gold trim */}
