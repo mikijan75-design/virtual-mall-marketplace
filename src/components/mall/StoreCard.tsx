@@ -74,11 +74,11 @@ const StoreCard = ({ store, storeIndex }: StoreCardProps) => {
         />
 
         {style.comingSoon ? (
-          <div className="relative overflow-hidden bg-white">
+          <div className="relative overflow-hidden">
             <img
               src={style.comingSoon}
               alt={`${store.name} - בקרוב הפתיחה`}
-              className="w-full h-[150px] md:h-[200px] object-cover transition-transform duration-700 group-hover:scale-105"
+              className="block w-full h-[155px] md:h-[210px] object-cover object-center transition-transform duration-700 group-hover:scale-105"
               loading="lazy"
             />
           </div>
