@@ -73,6 +73,17 @@ const StoreCard = ({ store, storeIndex }: StoreCardProps) => {
           style={{ background: "linear-gradient(90deg, hsl(40,15%,65%), hsl(43,45%,70%), hsl(40,15%,65%))" }}
         />
 
+        {style.comingSoon ? (
+          <div className="relative overflow-hidden bg-white">
+            <img
+              src={style.comingSoon}
+              alt={`${store.name} - בקרוב הפתיחה`}
+              className="w-full h-[150px] md:h-[200px] object-cover transition-transform duration-700 group-hover:scale-105"
+              loading="lazy"
+            />
+          </div>
+        ) : (
+        <>
         {/* Brand sign */}
         {style.logo ? (
           <div
