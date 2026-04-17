@@ -178,6 +178,8 @@ const StoreCard = ({ store, storeIndex }: StoreCardProps) => {
             <span className="text-2xl md:text-3xl">{store.logoEmoji}</span>
           </div>
         )}
+        </>
+        )}
 
         {/* Bottom gold trim */}
         <div
