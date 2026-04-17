@@ -74,7 +74,27 @@ const StoreCard = ({ store, storeIndex }: StoreCardProps) => {
         />
 
         {/* Brand sign */}
-        {style.logo ? (
+        {style.comingSoon ? (
+          <div
+            className="relative z-10 py-2 md:py-2.5 px-2 flex items-center justify-center"
+            style={{
+              background: "#ffffff",
+              borderBottom: `2px solid #c8453a`,
+            }}
+          >
+            {/* Corner brackets like the reference */}
+            <div className="absolute top-0.5 left-0.5 w-2.5 h-2.5 border-t-2 border-l-2" style={{ borderColor: "#c8453a" }} />
+            <div className="absolute top-0.5 right-0.5 w-2.5 h-2.5 border-t-2 border-r-2" style={{ borderColor: "#c8453a" }} />
+            <div className="absolute bottom-0.5 left-0.5 w-2.5 h-2.5 border-b-2 border-l-2" style={{ borderColor: "#c8453a" }} />
+            <div className="absolute bottom-0.5 right-0.5 w-2.5 h-2.5 border-b-2 border-r-2" style={{ borderColor: "#c8453a" }} />
+            <span
+              className="font-frank font-extrabold text-[11px] md:text-sm tracking-wide text-center"
+              style={{ color: "#b8362c" }}
+            >
+              בקרוב הפתיחה
+            </span>
+          </div>
+        ) : style.logo ? (
           <div
             className="relative z-10 flex items-center justify-center overflow-hidden"
             style={{
@@ -124,29 +144,25 @@ const StoreCard = ({ store, storeIndex }: StoreCardProps) => {
           <div
             className="py-1 text-center"
             style={{
-              background: "linear-gradient(180deg, rgba(0,0,0,0.65), rgba(0,0,0,0.8))",
+              background: style.comingSoon
+                ? "#ffffff"
+                : "linear-gradient(180deg, rgba(0,0,0,0.65), rgba(0,0,0,0.8))",
             }}
           >
-            <span className="text-[8px] md:text-[10px] font-heebo font-medium tracking-wide" style={{ color: "hsl(40,30%,85%)" }}>
+            <span
+              className="text-[8px] md:text-[10px] font-heebo font-medium tracking-wide"
+              style={{ color: style.comingSoon ? "#2a2a2a" : "hsl(40,30%,85%)" }}
+            >
               {style.subtitle}
             </span>
           </div>
         ) : null}
 
-        {/* Store image (or coming soon template) */}
-        {style.comingSoon ? (
+        {/* Store image (or coming soon background) */}
+        {style.image || style.comingSoon ? (
           <div className="relative overflow-hidden">
             <img
-              src={style.comingSoon}
-              alt={`${store.name} - בקרוב הפתיחה`}
-              className="block w-full h-[90px] md:h-[130px] object-cover object-center transition-transform duration-700 group-hover:scale-110"
-              loading="lazy"
-            />
-          </div>
-        ) : style.image ? (
-          <div className="relative overflow-hidden">
-            <img
-              src={style.image}
+              src={style.comingSoon || style.image}
               alt={store.name}
               className="w-full h-[90px] md:h-[130px] object-cover transition-transform duration-700 group-hover:scale-110"
               loading="lazy"
