@@ -73,102 +73,57 @@ const StoreCard = ({ store, storeIndex }: StoreCardProps) => {
           style={{ background: "linear-gradient(90deg, hsl(40,15%,65%), hsl(43,45%,70%), hsl(40,15%,65%))" }}
         />
 
-        {/* Brand sign */}
         {style.comingSoon ? (
-          <div
-            className="relative z-10 py-2 md:py-2.5 px-2 flex items-center justify-center"
-            style={{
-              background: "#ffffff",
-              borderBottom: `2px solid #c8453a`,
-            }}
-          >
-            {/* Corner brackets like the reference */}
-            <div className="absolute top-0.5 left-0.5 w-2.5 h-2.5 border-t-2 border-l-2" style={{ borderColor: "#c8453a" }} />
-            <div className="absolute top-0.5 right-0.5 w-2.5 h-2.5 border-t-2 border-r-2" style={{ borderColor: "#c8453a" }} />
-            <div className="absolute bottom-0.5 left-0.5 w-2.5 h-2.5 border-b-2 border-l-2" style={{ borderColor: "#c8453a" }} />
-            <div className="absolute bottom-0.5 right-0.5 w-2.5 h-2.5 border-b-2 border-r-2" style={{ borderColor: "#c8453a" }} />
-            <span
-              className="font-frank font-extrabold text-[11px] md:text-sm tracking-wide text-center"
-              style={{ color: "#b8362c" }}
-            >
-              בקרוב הפתיחה
-            </span>
-          </div>
-        ) : style.logo ? (
-          <div
-            className="relative z-10 flex items-center justify-center overflow-hidden"
-            style={{
-              background: "#ffffff",
-              borderBottom: `2px solid ${style.accent}`,
-            }}
-          >
-            <img src={style.logo} alt={store.name} className="w-full h-full object-contain py-1 px-2" style={{ minHeight: "36px", maxHeight: "48px" }} />
-          </div>
-        ) : (
-          <div
-            className="relative z-10 py-2.5 md:py-3 px-2 flex flex-col items-center justify-center gap-0.5"
-            style={{
-              background: style.bg,
-              borderBottom: `2px solid ${style.accent}`,
-            }}
-          >
-            {/* Corner accents */}
-            <div className="absolute top-1 left-1 w-2 h-2 border-t border-l opacity-40" style={{ borderColor: style.accent }} />
-            <div className="absolute top-1 right-1 w-2 h-2 border-t border-r opacity-40" style={{ borderColor: style.accent }} />
-            <div className="absolute bottom-1 left-1 w-2 h-2 border-b border-l opacity-40" style={{ borderColor: style.accent }} />
-            <div className="absolute bottom-1 right-1 w-2 h-2 border-b border-r opacity-40" style={{ borderColor: style.accent }} />
-
-            {/* Brand name */}
-            <span
-              className={`${style.font} font-bold text-[10px] md:text-xs lg:text-sm truncate block tracking-wider w-full text-center`}
-              style={{ color: style.text }}
-            >
-              {store.name}
-            </span>
-            {/* Accent line */}
-            <div className="w-6 md:w-8 h-[1.5px] mt-0.5" style={{ background: style.accent }} />
-          </div>
-        )}
-
-        {/* Subtitle bar */}
-        {style.subtitleLogo ? (
-          <div
-            className="flex items-center justify-center overflow-hidden"
-            style={{
-              background: "#ffffff",
-            }}
-          >
-            <img src={style.subtitleLogo} alt={store.name} className="w-full h-full object-contain px-2 py-0.5" style={{ minHeight: "24px", maxHeight: "36px" }} loading="lazy" />
-          </div>
-        ) : style.subtitle ? (
-          <div
-            className="py-1 text-center"
-            style={{
-              background: style.comingSoon
-                ? "#ffffff"
-                : "linear-gradient(180deg, rgba(0,0,0,0.65), rgba(0,0,0,0.8))",
-            }}
-          >
-            <span
-              className="text-[8px] md:text-[10px] font-heebo font-medium tracking-wide"
-              style={{ color: style.comingSoon ? "#2a2a2a" : "hsl(40,30%,85%)" }}
-            >
-              {style.subtitle}
-            </span>
-          </div>
-        ) : null}
-
-        {/* Store image (or coming soon background) */}
-        {style.image || style.comingSoon ? (
-          <div className="relative overflow-hidden">
+          /* ===== Coming Soon Template (composed in code over construction bg) ===== */
+          <div className="relative overflow-hidden" style={{ background: "linear-gradient(180deg, #f5e6cc 0%, #ead7b3 100%)" }}>
+            {/* Construction background image */}
             <img
-              src={style.comingSoon || style.image}
-              alt={store.name}
-              className="w-full h-[90px] md:h-[130px] object-cover transition-transform duration-700 group-hover:scale-110"
+              src={style.comingSoon}
+              alt=""
+              aria-hidden="true"
+              className="absolute inset-0 w-full h-full object-cover transition-transform duration-700 group-hover:scale-105"
               loading="lazy"
-              width={512}
-              height={512}
             />
+
+            {/* Content layer at fixed scene height */}
+            <div className="relative w-full h-[170px] md:h-[230px] flex flex-col items-center pt-2 md:pt-3 px-2">
+              {/* White "בקרוב הפתיחה" sign with red corner brackets */}
+              <div
+                className="relative w-[88%] py-1.5 md:py-2.5 px-2 flex items-center justify-center rounded-sm"
+                style={{
+                  background: "#ffffff",
+                  boxShadow: "0 3px 8px rgba(0,0,0,0.18), 0 1px 0 rgba(255,255,255,0.6) inset",
+                  border: "1px solid rgba(0,0,0,0.05)",
+                }}
+              >
+                <div className="absolute top-0.5 left-0.5 w-2 h-2 md:w-2.5 md:h-2.5 border-t-2 border-l-2" style={{ borderColor: "#c8453a" }} />
+                <div className="absolute top-0.5 right-0.5 w-2 h-2 md:w-2.5 md:h-2.5 border-t-2 border-r-2" style={{ borderColor: "#c8453a" }} />
+                <div className="absolute bottom-0.5 left-0.5 w-2 h-2 md:w-2.5 md:h-2.5 border-b-2 border-l-2" style={{ borderColor: "#c8453a" }} />
+                <div className="absolute bottom-0.5 right-0.5 w-2 h-2 md:w-2.5 md:h-2.5 border-b-2 border-r-2" style={{ borderColor: "#c8453a" }} />
+                <span
+                  className="font-frank font-extrabold text-[11px] md:text-base tracking-wide text-center leading-tight"
+                  style={{ color: "#b8362c" }}
+                >
+                  בקרוב הפתיחה
+                </span>
+              </div>
+
+              {/* Subtitle pill (store original subtitle) */}
+              {style.subtitle && (
+                <div
+                  className="mt-2 md:mt-3 px-3 md:px-4 py-1 md:py-1.5 rounded-sm"
+                  style={{
+                    background: "rgba(0,0,0,0.78)",
+                    boxShadow: "0 2px 6px rgba(0,0,0,0.25)",
+                  }}
+                >
+                  <span className="font-heebo font-semibold text-[10px] md:text-xs tracking-wide" style={{ color: "#ffffff" }}>
+                    {style.subtitle}
+                  </span>
+                </div>
+              )}
+            </div>
+
             {/* Glass reflection overlay */}
             <div
               className="absolute inset-0 pointer-events-none"
@@ -180,17 +135,91 @@ const StoreCard = ({ store, storeIndex }: StoreCardProps) => {
             <div
               className="absolute inset-0 opacity-0 group-hover:opacity-100 transition-opacity duration-500 pointer-events-none"
               style={{
-                background: "radial-gradient(ellipse at center, rgba(255,230,180,0.15) 0%, transparent 70%)",
+                background: "radial-gradient(ellipse at center, rgba(255,230,180,0.18) 0%, transparent 70%)",
               }}
             />
           </div>
         ) : (
-          <div
-            className="relative min-h-[90px] md:min-h-[130px] flex items-center justify-center"
-            style={{ background: "linear-gradient(180deg, hsl(40,8%,96%), hsl(40,6%,92%))" }}
-          >
-            <span className="text-2xl md:text-3xl">{store.logoEmoji}</span>
-          </div>
+          <>
+            {/* Brand sign */}
+            {style.logo ? (
+              <div
+                className="relative z-10 flex items-center justify-center overflow-hidden"
+                style={{
+                  background: "#ffffff",
+                  borderBottom: `2px solid ${style.accent}`,
+                }}
+              >
+                <img src={style.logo} alt={store.name} className="w-full h-full object-contain py-1 px-2" style={{ minHeight: "36px", maxHeight: "48px" }} />
+              </div>
+            ) : (
+              <div
+                className="relative z-10 py-2.5 md:py-3 px-2 flex flex-col items-center justify-center gap-0.5"
+                style={{
+                  background: style.bg,
+                  borderBottom: `2px solid ${style.accent}`,
+                }}
+              >
+                <div className="absolute top-1 left-1 w-2 h-2 border-t border-l opacity-40" style={{ borderColor: style.accent }} />
+                <div className="absolute top-1 right-1 w-2 h-2 border-t border-r opacity-40" style={{ borderColor: style.accent }} />
+                <div className="absolute bottom-1 left-1 w-2 h-2 border-b border-l opacity-40" style={{ borderColor: style.accent }} />
+                <div className="absolute bottom-1 right-1 w-2 h-2 border-b border-r opacity-40" style={{ borderColor: style.accent }} />
+                <span
+                  className={`${style.font} font-bold text-[10px] md:text-xs lg:text-sm truncate block tracking-wider w-full text-center`}
+                  style={{ color: style.text }}
+                >
+                  {store.name}
+                </span>
+                <div className="w-6 md:w-8 h-[1.5px] mt-0.5" style={{ background: style.accent }} />
+              </div>
+            )}
+
+            {/* Subtitle bar */}
+            {style.subtitleLogo ? (
+              <div className="flex items-center justify-center overflow-hidden" style={{ background: "#ffffff" }}>
+                <img src={style.subtitleLogo} alt={store.name} className="w-full h-full object-contain px-2 py-0.5" style={{ minHeight: "24px", maxHeight: "36px" }} loading="lazy" />
+              </div>
+            ) : style.subtitle ? (
+              <div className="py-1 text-center" style={{ background: "linear-gradient(180deg, rgba(0,0,0,0.65), rgba(0,0,0,0.8))" }}>
+                <span className="text-[8px] md:text-[10px] font-heebo font-medium tracking-wide" style={{ color: "hsl(40,30%,85%)" }}>
+                  {style.subtitle}
+                </span>
+              </div>
+            ) : null}
+
+            {/* Store image */}
+            {style.image ? (
+              <div className="relative overflow-hidden">
+                <img
+                  src={style.image}
+                  alt={store.name}
+                  className="w-full h-[90px] md:h-[130px] object-cover transition-transform duration-700 group-hover:scale-110"
+                  loading="lazy"
+                  width={512}
+                  height={512}
+                />
+                <div
+                  className="absolute inset-0 pointer-events-none"
+                  style={{
+                    background: "linear-gradient(155deg, rgba(255,255,255,0.18) 0%, transparent 35%, transparent 60%, rgba(255,255,255,0.06) 100%)",
+                  }}
+                />
+                <div
+                  className="absolute inset-0 opacity-0 group-hover:opacity-100 transition-opacity duration-500 pointer-events-none"
+                  style={{
+                    background: "radial-gradient(ellipse at center, rgba(255,230,180,0.15) 0%, transparent 70%)",
+                  }}
+                />
+              </div>
+            ) : (
+              <div
+                className="relative min-h-[90px] md:min-h-[130px] flex items-center justify-center"
+                style={{ background: "linear-gradient(180deg, hsl(40,8%,96%), hsl(40,6%,92%))" }}
+              >
+                <span className="text-2xl md:text-3xl">{store.logoEmoji}</span>
+              </div>
+            )}
+          </>
         )}
 
         {/* Bottom gold trim */}
