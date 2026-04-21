@@ -41,16 +41,22 @@ const brandStyles: Record<string, { bg: string; text: string; accent: string; fo
 };
 
 // Per-store-id overrides — edit a single store independently of mallData
+const comingSoonOverride = {
+  name: "בקרוב הפתיחה",
+  bg: "linear-gradient(135deg, #f5ede0, #ebe0cc)",
+  text: "#5a4424",
+  accent: "#c9a96e",
+  font: "font-frank",
+  image: comingSoonImg,
+  subtitle: "בשיפוצים",
+};
+
 const idOverrides: Record<string, Partial<{ name: string; bg: string; text: string; accent: string; font: string; image: string; subtitle: string; logo: string; subtitleLogo: string }>> = {
-  s6: {
-    name: "בקרוב הפתיחה",
-    bg: "linear-gradient(135deg, #f5ede0, #ebe0cc)",
-    text: "#5a4424",
-    accent: "#c9a96e",
-    font: "font-frank",
-    image: comingSoonImg,
-    subtitle: "בשיפוצים",
-  },
+  s6: comingSoonOverride,
+  s7: comingSoonOverride,
+  s9: comingSoonOverride,
+  s13: comingSoonOverride,
+  s14: comingSoonOverride,
 };
 
 const defaultStyle = { bg: "linear-gradient(135deg, #f5f0e8, #ede4d8)", text: "#3a2a20", accent: "#c9a96e", font: "font-frank", image: "", subtitle: "", logo: undefined as string | undefined, subtitleLogo: undefined as string | undefined };
