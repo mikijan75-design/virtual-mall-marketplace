@@ -1,13 +1,21 @@
 import { Link } from "react-router-dom";
+import logo from "@/assets/shop-desing-logo.png";
 
 const MallHeader = () => {
   return (
     <header className="bg-mall-sign text-primary-foreground shadow-lg sticky top-0 z-50">
-      <div className="container mx-auto flex items-center justify-between py-3 px-4">
-        <h1 className="text-2xl md:text-3xl font-frank font-bold text-mall-gold tracking-wide">
+      <div className="container mx-auto grid grid-cols-3 items-center py-3 px-4">
+        <div className="flex justify-start">
+          <img
+            src={logo}
+            alt="Shop Desing logo"
+            className="h-12 md:h-16 w-auto rounded-full bg-background/95 p-1 shadow-md"
+          />
+        </div>
+        <h1 className="text-center text-3xl md:text-5xl font-bubble font-semibold text-mall-gold tracking-wide drop-shadow-[0_2px_0_rgba(0,0,0,0.4)]">
           הקניון הווירטואלי
         </h1>
-        <nav className="flex gap-1 md:gap-6 text-sm md:text-base font-heebo">
+        <nav className="flex justify-end gap-1 md:gap-6 text-sm md:text-base font-heebo">
           <Link to="/" className="px-3 py-1 rounded hover:bg-mall-gold/20 transition-colors">דף הבית</Link>
           <Link to="/" className="px-3 py-1 rounded hover:bg-mall-gold/20 transition-colors">חנויות</Link>
           <Link to="/" className="px-3 py-1 rounded hover:bg-mall-gold/20 transition-colors">מבצעים</Link>
