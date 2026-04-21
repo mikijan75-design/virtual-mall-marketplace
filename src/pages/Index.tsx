@@ -1,44 +1,72 @@
+import { useNavigate } from "react-router-dom";
 import { mallFloors } from "@/data/mallData";
 import MallHeader from "@/components/mall/MallHeader";
-import MallCeiling from "@/components/mall/MallCeiling";
-import MallFloorRow from "@/components/mall/MallFloorRow";
 import FloorMap from "@/components/mall/FloorMap";
+import referenceMall from "@/assets/reference-mall-exact.png";
+
+const storeHotspots = [
+  { id: "s6", left: 2.6, top: 38.5, width: 11.8, height: 22.5 },
+  { id: "s5", left: 17.0, top: 38.5, width: 11.4, height: 22.5 },
+  { id: "s4", left: 30.5, top: 38.5, width: 12.2, height: 22.5 },
+  { id: "s3", left: 58.7, top: 38.5, width: 12.2, height: 22.5 },
+  { id: "s2", left: 73.3, top: 38.5, width: 11.8, height: 22.5 },
+  { id: "s1", left: 87.1, top: 38.5, width: 11.2, height: 22.5 },
+  { id: "s12", left: 2.6, top: 64.4, width: 11.8, height: 23.7 },
+  { id: "s11", left: 17.0, top: 64.4, width: 11.4, height: 23.7 },
+  { id: "s10", left: 30.5, top: 64.4, width: 12.2, height: 23.7 },
+  { id: "s9", left: 58.7, top: 64.4, width: 12.2, height: 23.7 },
+  { id: "s8", left: 73.3, top: 64.4, width: 11.8, height: 23.7 },
+  { id: "s7", left: 87.1, top: 64.4, width: 11.2, height: 23.7 },
+];
 
 const Index = () => {
+  const navigate = useNavigate();
+
   return (
     <div className="min-h-screen bg-background">
       <MallHeader />
 
-      {/* Outer mall background — soft grey like the reference */}
-      <div
-        className="relative pb-8"
-        style={{
-          background:
-            "linear-gradient(180deg, hsl(35,6%,68%) 0%, hsl(35,8%,74%) 40%, hsl(35,10%,78%) 100%)",
-        }}
+      <main
+        className="relative bg-background py-0 overflow-x-auto"
+        aria-label="מבנה הקניון הווירטואלי"
       >
-        {/* Dome ceiling with fresco */}
-        <MallCeiling />
+        <div className="relative mx-auto w-full max-w-[1630px] min-w-[900px]">
+          <img
+            src={referenceMall}
+            alt="מבנה קניון וירטואלי עם כיפת פרסקו, חנויות ושער מרכזי"
+            className="block w-full h-auto select-none"
+            width={1630}
+            height={640}
+            draggable={false}
+          />
 
-        {/* Floors stack — directly attached to the dome */}
-        <div className="relative -mt-1">
-          {mallFloors.map((floor, idx) => (
-            <MallFloorRow
-              key={floor.id}
-              floor={floor}
-              isLast={idx === mallFloors.length - 1}
+          {storeHotspots.map((hotspot) => (
+            <button
+              key={hotspot.id}
+              type="button"
+              aria-label={`כניסה לחנות ${hotspot.id}`}
+              className="absolute focus:outline-none focus-visible:ring-2 focus-visible:ring-mall-gold focus-visible:ring-offset-2 focus-visible:ring-offset-background"
+              style={{
+                left: `${hotspot.left}%`,
+                top: `${hotspot.top}%`,
+                width: `${hotspot.width}%`,
+                height: `${hotspot.height}%`,
+              }}
+              onClick={() => navigate(`/store/${hotspot.id}`)}
             />
           ))}
         </div>
-      </div>
+      </main>
 
       <FloorMap
         floors={mallFloors}
         activeFloor={1}
         onFloorChange={(floorId) => {
-          document
-            .getElementById(`floor-${floorId}`)
-            ?.scrollIntoView({ behavior: "smooth" });
+          const targetTop = floorId === 1 ? 0 : floorId === 2 ? 0.56 : 0.78;
+          window.scrollTo({
+            top: document.body.scrollHeight * targetTop,
+            behavior: "smooth",
+          });
         }}
       />
 
