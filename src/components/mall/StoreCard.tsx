@@ -1,5 +1,6 @@
 import { useNavigate } from "react-router-dom";
 import type { Store } from "@/data/mallData";
+import ComingSoonTemplate from "./ComingSoonTemplate";
 
 import fashionImg from "@/assets/stores/fashion.jpg";
 import techImg from "@/assets/stores/tech.jpg";
@@ -74,70 +75,9 @@ const StoreCard = ({ store, storeIndex }: StoreCardProps) => {
         />
 
         {style.comingSoon ? (
-          /* ===== Coming Soon Template (composed in code over construction bg) ===== */
-          <div className="relative overflow-hidden" style={{ background: "linear-gradient(180deg, #f5e6cc 0%, #ead7b3 100%)" }}>
-            {/* Construction background image */}
-            <img
-              src={style.comingSoon}
-              alt=""
-              aria-hidden="true"
-              className="absolute inset-0 w-full h-full object-cover transition-transform duration-700 group-hover:scale-105"
-              loading="lazy"
-            />
-
-            {/* Content layer at fixed scene height */}
-            <div className="relative w-full h-[170px] md:h-[230px] flex flex-col items-center pt-2 md:pt-3 px-2">
-              {/* White "בקרוב הפתיחה" sign with red corner brackets */}
-              <div
-                className="relative w-[88%] py-1.5 md:py-2.5 px-2 flex items-center justify-center rounded-sm"
-                style={{
-                  background: "#ffffff",
-                  boxShadow: "0 3px 8px rgba(0,0,0,0.18), 0 1px 0 rgba(255,255,255,0.6) inset",
-                  border: "1px solid rgba(0,0,0,0.05)",
-                }}
-              >
-                <div className="absolute top-0.5 left-0.5 w-2 h-2 md:w-2.5 md:h-2.5 border-t-2 border-l-2" style={{ borderColor: "#c8453a" }} />
-                <div className="absolute top-0.5 right-0.5 w-2 h-2 md:w-2.5 md:h-2.5 border-t-2 border-r-2" style={{ borderColor: "#c8453a" }} />
-                <div className="absolute bottom-0.5 left-0.5 w-2 h-2 md:w-2.5 md:h-2.5 border-b-2 border-l-2" style={{ borderColor: "#c8453a" }} />
-                <div className="absolute bottom-0.5 right-0.5 w-2 h-2 md:w-2.5 md:h-2.5 border-b-2 border-r-2" style={{ borderColor: "#c8453a" }} />
-                <span
-                  className="font-frank font-extrabold text-[11px] md:text-base tracking-wide text-center leading-tight"
-                  style={{ color: "#b8362c" }}
-                >
-                  בקרוב הפתיחה
-                </span>
-              </div>
-
-              {/* Subtitle pill (store original subtitle) */}
-              {style.subtitle && (
-                <div
-                  className="mt-2 md:mt-3 px-3 md:px-4 py-1 md:py-1.5 rounded-sm"
-                  style={{
-                    background: "rgba(0,0,0,0.78)",
-                    boxShadow: "0 2px 6px rgba(0,0,0,0.25)",
-                  }}
-                >
-                  <span className="font-heebo font-semibold text-[10px] md:text-xs tracking-wide" style={{ color: "#ffffff" }}>
-                    {style.subtitle}
-                  </span>
-                </div>
-              )}
-            </div>
-
-            {/* Glass reflection overlay */}
-            <div
-              className="absolute inset-0 pointer-events-none"
-              style={{
-                background: "linear-gradient(155deg, rgba(255,255,255,0.18) 0%, transparent 35%, transparent 60%, rgba(255,255,255,0.06) 100%)",
-              }}
-            />
-            {/* Hover warm glow */}
-            <div
-              className="absolute inset-0 opacity-0 group-hover:opacity-100 transition-opacity duration-500 pointer-events-none"
-              style={{
-                background: "radial-gradient(ellipse at center, rgba(255,230,180,0.18) 0%, transparent 70%)",
-              }}
-            />
+          /* ===== Coming Soon Template - pure CSS, replaceable sign ===== */
+          <div className="relative w-full h-[170px] md:h-[230px] overflow-hidden">
+            <ComingSoonTemplate signText="בקרוב הפתיחה" subtitle={style.subtitle} />
           </div>
         ) : (
           <>
