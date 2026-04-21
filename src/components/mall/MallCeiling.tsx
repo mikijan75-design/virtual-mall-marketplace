@@ -1,31 +1,42 @@
-import mallCeiling from "@/assets/mall-ceiling.jpg";
+import mallCeiling from "@/assets/fresco-ceiling.jpg";
 
 const MallCeiling = () => {
   return (
     <div className="relative w-full overflow-hidden">
-      <div className="relative mx-auto max-w-5xl">
-        {/* Gold border frame */}
+      <div className="relative mx-auto max-w-6xl">
+        {/* Dome arch fresco with gilded frame */}
         <div
-          className="rounded-t-[50%] overflow-hidden"
+          className="relative rounded-t-[50%] overflow-hidden"
           style={{
-            border: "3px solid hsl(43,50%,45%)",
-            boxShadow: "0 4px 20px rgba(0,0,0,0.2), inset 0 0 30px rgba(0,0,0,0.1)",
+            border: "6px solid hsl(43,55%,45%)",
+            boxShadow:
+              "0 12px 40px rgba(0,0,0,0.45), inset 0 0 60px rgba(0,0,0,0.25), 0 0 0 2px hsl(43,40%,30%)",
           }}
         >
           <img
             src={mallCeiling}
-            alt="תקרת קניון יוקרתית"
-            className="w-full h-48 md:h-72 lg:h-80 object-cover"
-            width={1024}
-            height={512}
+            alt="פרסקו תקרת קניון בסגנון רנסנס"
+            className="w-full h-56 md:h-80 lg:h-96 object-cover"
+            width={1920}
+            height={768}
+          />
+          {/* Inner soft vignette to simulate dome curvature */}
+          <div
+            className="absolute inset-0 pointer-events-none"
+            style={{
+              background:
+                "radial-gradient(ellipse at 50% 40%, transparent 40%, rgba(0,0,0,0.35) 100%)",
+            }}
           />
         </div>
-        {/* Gold ornamental bar below ceiling */}
+        {/* Gold ornamental cornice */}
         <div
-          className="h-4"
+          className="h-5"
           style={{
-            background: "linear-gradient(180deg, hsl(43,55%,50%), hsl(43,45%,42%), hsl(43,55%,50%))",
-            boxShadow: "0 2px 8px rgba(0,0,0,0.15), inset 0 1px 0 rgba(255,255,255,0.2)",
+            background:
+              "linear-gradient(180deg, hsl(43,65%,58%), hsl(43,55%,42%) 50%, hsl(43,40%,30%))",
+            boxShadow:
+              "0 4px 14px rgba(0,0,0,0.35), inset 0 1px 0 rgba(255,255,255,0.35), inset 0 -1px 0 rgba(0,0,0,0.4)",
           }}
         />
       </div>
