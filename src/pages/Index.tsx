@@ -263,11 +263,15 @@ const Index = () => {
 
                 {/* Stores grid with central gate */}
                 <div className="px-1">
-                  <div className="relative grid grid-cols-7 gap-1.5 md:gap-2.5 items-end">
+                  <div className="relative grid grid-cols-7 gap-2 md:gap-3 items-stretch">
                     {floor.stores.slice(0, 3).map((store, idx) => (
                       <div key={store.id} className="relative">
                         <CeilingLight />
                         <StoreCard store={store} storeIndex={idx} />
+                        {/* Gold column to the right of each store except last before gate */}
+                        <div className="absolute -right-1.5 md:-right-2 top-0 bottom-0">
+                          <GoldColumn />
+                        </div>
                       </div>
                     ))}
 
@@ -277,6 +281,12 @@ const Index = () => {
                       <div key={store.id} className="relative">
                         <CeilingLight />
                         <StoreCard store={store} storeIndex={idx + 3} />
+                        {/* Gold column to the left of each store except first after gate */}
+                        {idx > 0 && (
+                          <div className="absolute -left-1.5 md:-left-2 top-0 bottom-0">
+                            <GoldColumn />
+                          </div>
+                        )}
                       </div>
                     ))}
                   </div>
