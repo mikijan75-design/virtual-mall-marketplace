@@ -119,7 +119,7 @@ const StoreCard = ({ store, storeIndex }: StoreCardProps) => {
               className={`${style.font} font-bold text-[10px] md:text-xs lg:text-sm truncate block tracking-wider w-full text-center`}
               style={{ color: style.text }}
             >
-              {store.name}
+              {displayName}
             </span>
             {/* Accent line */}
             <div className="w-6 md:w-8 h-[1.5px] mt-0.5" style={{ background: style.accent }} />
