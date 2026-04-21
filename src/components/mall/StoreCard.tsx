@@ -40,6 +40,19 @@ const brandStyles: Record<string, { bg: string; text: string; accent: string; fo
   "בר מיצים": { bg: "linear-gradient(135deg, #e8f5e9, #c8e6c9)", text: "#1b5e20", accent: "#4caf50", font: "font-heebo", image: juiceImg, subtitle: "מיצים טבעיים" },
 };
 
+// Per-store-id overrides — edit a single store independently of mallData
+const idOverrides: Record<string, Partial<{ name: string; bg: string; text: string; accent: string; font: string; image: string; subtitle: string; logo: string; subtitleLogo: string }>> = {
+  s6: {
+    name: "בקרוב הפתיחה",
+    bg: "linear-gradient(135deg, #f5ede0, #ebe0cc)",
+    text: "#5a4424",
+    accent: "#c9a96e",
+    font: "font-frank",
+    image: comingSoonImg,
+    subtitle: "בשיפוצים",
+  },
+};
+
 const defaultStyle = { bg: "linear-gradient(135deg, #f5f0e8, #ede4d8)", text: "#3a2a20", accent: "#c9a96e", font: "font-frank", image: "", subtitle: "", logo: undefined as string | undefined, subtitleLogo: undefined as string | undefined };
 
 const romanNumerals = ["I", "II", "III", "IV", "V", "VI"];
@@ -51,53 +64,10 @@ interface StoreCardProps {
 
 const StoreCard = ({ store, storeIndex }: StoreCardProps) => {
   const navigate = useNavigate();
-  const style = brandStyles[store.name] || defaultStyle;
-
-  // Special "coming soon / under renovation" design for store s6 (floor 1, store 6)
-  if (store.id === "s6") {
-    return (
-      <button
-        onClick={() => navigate(`/store/${store.id}`)}
-        className="group relative flex flex-col w-full cursor-pointer transition-all duration-300 hover:scale-[1.03] focus:outline-none"
-        aria-label={`כניסה לחנות ${store.name}`}
-      >
-        <div
-          className="relative flex flex-col w-full rounded-lg overflow-hidden bg-white"
-          style={{
-            border: "2px solid hsl(40,25%,72%)",
-            boxShadow: "0 6px 24px rgba(0,0,0,0.12), inset 0 0 0 1px hsl(40,20%,85%)",
-          }}
-        >
-          <img
-            src={comingSoonImg}
-            alt={`${store.name} - בקרוב`}
-            className="w-full h-auto object-contain"
-            loading="lazy"
-          />
-          {storeIndex !== undefined && (
-            <div
-              className="absolute -bottom-2 left-1/2 -translate-x-1/2 z-20 flex items-center justify-center"
-              style={{
-                background: "linear-gradient(135deg, hsl(43,45%,55%), hsl(40,40%,45%))",
-                color: "hsl(40,10%,98%)",
-                width: "22px",
-                height: "22px",
-                borderRadius: "50%",
-                fontSize: "9px",
-                fontWeight: 700,
-                fontFamily: "serif",
-                letterSpacing: "0.02em",
-                boxShadow: "0 2px 6px rgba(0,0,0,0.25), inset 0 1px 0 rgba(255,255,255,0.3)",
-                border: "1.5px solid hsl(43,50%,65%)",
-              }}
-            >
-              {romanNumerals[storeIndex]}
-            </div>
-          )}
-        </div>
-      </button>
-    );
-  }
+  const baseStyle = brandStyles[store.name] || defaultStyle;
+  const override = idOverrides[store.id];
+  const style = override ? { ...baseStyle, ...override } : baseStyle;
+  const displayName = override?.name ?? store.name;
 
   return (
     <button
@@ -149,7 +119,7 @@ const StoreCard = ({ store, storeIndex }: StoreCardProps) => {
               className={`${style.font} font-bold text-[10px] md:text-xs lg:text-sm truncate block tracking-wider w-full text-center`}
               style={{ color: style.text }}
             >
-              {store.name}
+              {displayName}
             </span>
             {/* Accent line */}
             <div className="w-6 md:w-8 h-[1.5px] mt-0.5" style={{ background: style.accent }} />
