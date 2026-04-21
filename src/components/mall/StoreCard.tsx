@@ -20,6 +20,7 @@ import gelatoImg from "@/assets/stores/gelato.jpg";
 import bakeryImg from "@/assets/stores/bakery.jpg";
 import juiceImg from "@/assets/stores/juice.jpg";
 import comingSoonImg from "@/assets/stores/coming-soon.png";
+import forRentImg from "@/assets/stores/for-rent.png";
 
 const brandStyles: Record<string, { bg: string; text: string; accent: string; font: string; image: string; subtitle: string; logo?: string; subtitleLogo?: string }> = {
   "אופנה עילית": { bg: "linear-gradient(135deg, #f5eef0, #ede4e8)", text: "#3a2a30", accent: "#c9a96e", font: "font-frank", image: fashionImg, subtitle: "קוטור יוקרה" },
@@ -54,7 +55,15 @@ const comingSoonOverride = {
 const idOverrides: Record<string, Partial<{ name: string; bg: string; text: string; accent: string; font: string; image: string; subtitle: string; logo: string; subtitleLogo: string }>> = {
   s6: comingSoonOverride,
   s7: comingSoonOverride,
-  s9: comingSoonOverride,
+  s9: {
+    name: "להשכרה מיידית",
+    bg: "linear-gradient(135deg, #f5ede0, #ebe0cc)",
+    text: "#5a4424",
+    accent: "#c9a96e",
+    font: "font-frank",
+    image: forRentImg,
+    subtitle: "חנות וירטואלית",
+  },
   s13: comingSoonOverride,
   s14: comingSoonOverride,
 };
