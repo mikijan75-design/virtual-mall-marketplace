@@ -149,27 +149,28 @@ const CentralGate = ({ label }: { label: string }) => (
           }}
         />
 
-        {/* Inner archway opening (recessed dark) */}
+        {/* Inner archway opening — light beige like reference image */}
         <div
           className="absolute"
           style={{
-            inset: "12% 18% 0 18%",
+            inset: "14% 20% 0 20%",
             background:
-              "linear-gradient(180deg, hsl(35,18%,55%) 0%, hsl(30,15%,32%) 55%, hsl(28,18%,20%) 100%)",
+              "linear-gradient(180deg, hsl(40,35%,90%) 0%, hsl(38,28%,82%) 60%, hsl(35,25%,72%) 100%)",
             borderTopLeftRadius: "50% 40%",
             borderTopRightRadius: "50% 40%",
+            border: "1.5px solid hsl(43,55%,50%)",
             boxShadow:
-              "inset 0 8px 22px rgba(0,0,0,0.8), inset 0 -3px 8px rgba(255,255,255,0.1)",
+              "inset 0 4px 14px rgba(180,150,100,0.25), inset 0 -2px 6px rgba(0,0,0,0.08)",
           }}
         >
-          {/* Warm interior glow */}
+          {/* Decorative inner arch outline */}
           <div
-            className="absolute inset-0"
+            className="absolute inset-1.5 pointer-events-none"
             style={{
-              background:
-                "radial-gradient(ellipse at 50% 90%, rgba(255,210,140,0.55), transparent 70%)",
               borderTopLeftRadius: "50% 40%",
               borderTopRightRadius: "50% 40%",
+              border: "1px solid hsl(43,50%,55%)",
+              opacity: 0.6,
             }}
           />
         </div>
