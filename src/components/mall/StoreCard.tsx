@@ -54,7 +54,50 @@ const StoreCard = ({ store, storeIndex }: StoreCardProps) => {
   const style = brandStyles[store.name] || defaultStyle;
 
   // Special "coming soon / under renovation" design for store s6 (floor 1, store 6)
-  const isComingSoon = store.id === "s6";
+  if (store.id === "s6") {
+    return (
+      <button
+        onClick={() => navigate(`/store/${store.id}`)}
+        className="group relative flex flex-col w-full cursor-pointer transition-all duration-300 hover:scale-[1.03] focus:outline-none"
+        aria-label={`כניסה לחנות ${store.name}`}
+      >
+        <div
+          className="relative flex flex-col w-full rounded-lg overflow-hidden bg-white"
+          style={{
+            border: "2px solid hsl(40,25%,72%)",
+            boxShadow: "0 6px 24px rgba(0,0,0,0.12), inset 0 0 0 1px hsl(40,20%,85%)",
+          }}
+        >
+          <img
+            src={comingSoonImg}
+            alt={`${store.name} - בקרוב`}
+            className="w-full h-auto object-contain"
+            loading="lazy"
+          />
+          {storeIndex !== undefined && (
+            <div
+              className="absolute -bottom-2 left-1/2 -translate-x-1/2 z-20 flex items-center justify-center"
+              style={{
+                background: "linear-gradient(135deg, hsl(43,45%,55%), hsl(40,40%,45%))",
+                color: "hsl(40,10%,98%)",
+                width: "22px",
+                height: "22px",
+                borderRadius: "50%",
+                fontSize: "9px",
+                fontWeight: 700,
+                fontFamily: "serif",
+                letterSpacing: "0.02em",
+                boxShadow: "0 2px 6px rgba(0,0,0,0.25), inset 0 1px 0 rgba(255,255,255,0.3)",
+                border: "1.5px solid hsl(43,50%,65%)",
+              }}
+            >
+              {romanNumerals[storeIndex]}
+            </div>
+          )}
+        </div>
+      </button>
+    );
+  }
 
   return (
     <button
@@ -77,19 +120,7 @@ const StoreCard = ({ store, storeIndex }: StoreCardProps) => {
         />
 
         {/* Brand sign */}
-        {isComingSoon ? (
-          <div
-            className="relative z-10 py-2.5 md:py-3 px-2 flex items-center justify-center"
-            style={{
-              background: "linear-gradient(135deg, #1e3a8a, #1e40af)",
-              borderBottom: `2px solid #c9a96e`,
-            }}
-          >
-            <span className="font-frank font-bold text-[11px] md:text-sm tracking-wider text-white">
-              בקרוב הפתיחה
-            </span>
-          </div>
-        ) : style.logo ? (
+        {style.logo ? (
           <div
             className="relative z-10 flex items-center justify-center overflow-hidden"
             style={{
@@ -126,7 +157,7 @@ const StoreCard = ({ store, storeIndex }: StoreCardProps) => {
         )}
 
         {/* Subtitle bar */}
-        {isComingSoon ? null : style.subtitleLogo ? (
+        {style.subtitleLogo ? (
           <div
             className="flex items-center justify-center overflow-hidden"
             style={{
@@ -149,16 +180,7 @@ const StoreCard = ({ store, storeIndex }: StoreCardProps) => {
         ) : null}
 
         {/* Realistic store image */}
-        {isComingSoon ? (
-          <div className="relative overflow-hidden bg-white">
-            <img
-              src={comingSoonImg}
-              alt={`${store.name} - בקרוב`}
-              className="w-full h-[90px] md:h-[130px] object-contain transition-transform duration-700 group-hover:scale-110"
-              loading="lazy"
-            />
-          </div>
-        ) : style.image ? (
+        {style.image ? (
           <div className="relative overflow-hidden">
             <img
               src={style.image}
