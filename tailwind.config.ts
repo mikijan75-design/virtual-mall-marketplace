@@ -16,6 +16,7 @@ export default {
       fontFamily: {
         heebo: ['Heebo', 'sans-serif'],
         frank: ['Frank Ruhl Libre', 'serif'],
+        bubble: ['Fredoka', 'Bubblegum Sans', 'sans-serif'],
       },
       colors: {
         border: "hsl(var(--border))",
