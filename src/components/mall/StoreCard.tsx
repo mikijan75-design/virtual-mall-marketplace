@@ -38,7 +38,19 @@ const brandStyles: Record<string, { bg: string; text: string; accent: string; fo
   "גלידריה": { bg: "linear-gradient(135deg, #fce4ec, #f8bbd0)", text: "#4a2040", accent: "#e91e63", font: "font-frank", image: gelatoImg, subtitle: "גלידה ארטיזנלית" },
   "מאפיית שמרים": { bg: "linear-gradient(135deg, #f5e6d3, #e8d5b7)", text: "#3e2723", accent: "#8d6e63", font: "font-frank", image: bakeryImg, subtitle: "מאפים טריים" },
   "בר מיצים": { bg: "linear-gradient(135deg, #e8f5e9, #c8e6c9)", text: "#1b5e20", accent: "#4caf50", font: "font-heebo", image: juiceImg, subtitle: "מיצים טבעיים" },
-  "בקרוב הפתיחה": { bg: "linear-gradient(135deg, #f5ede0, #ebe0cc)", text: "#5a4424", accent: "#c9a96e", font: "font-frank", image: comingSoonImg, subtitle: "בשיפוצים" },
+};
+
+// Per-store-id overrides — edit a single store independently of mallData
+const idOverrides: Record<string, Partial<{ name: string; bg: string; text: string; accent: string; font: string; image: string; subtitle: string; logo: string; subtitleLogo: string }>> = {
+  s6: {
+    name: "בקרוב הפתיחה",
+    bg: "linear-gradient(135deg, #f5ede0, #ebe0cc)",
+    text: "#5a4424",
+    accent: "#c9a96e",
+    font: "font-frank",
+    image: comingSoonImg,
+    subtitle: "בשיפוצים",
+  },
 };
 
 const defaultStyle = { bg: "linear-gradient(135deg, #f5f0e8, #ede4d8)", text: "#3a2a20", accent: "#c9a96e", font: "font-frank", image: "", subtitle: "", logo: undefined as string | undefined, subtitleLogo: undefined as string | undefined };
@@ -52,7 +64,10 @@ interface StoreCardProps {
 
 const StoreCard = ({ store, storeIndex }: StoreCardProps) => {
   const navigate = useNavigate();
-  const style = brandStyles[store.name] || defaultStyle;
+  const baseStyle = brandStyles[store.name] || defaultStyle;
+  const override = idOverrides[store.id];
+  const style = override ? { ...baseStyle, ...override } : baseStyle;
+  const displayName = override?.name ?? store.name;
 
   return (
     <button
