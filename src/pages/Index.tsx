@@ -220,12 +220,10 @@ const Index = () => {
       <MallHeader />
 
       <div
-        className="pt-4 pb-0 relative"
+        className="pt-0 pb-0 relative"
         style={{
-          backgroundImage: `url(${mallWall})`,
-          backgroundSize: "400px 400px",
-          backgroundRepeat: "repeat",
-          boxShadow: "inset 0 0 140px rgba(0,0,0,0.4)",
+          background:
+            "linear-gradient(180deg, hsl(35,8%,72%) 0%, hsl(35,10%,78%) 50%, hsl(35,12%,80%) 100%)",
         }}
       >
         <MallCeiling />
