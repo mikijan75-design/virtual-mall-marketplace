@@ -230,45 +230,30 @@ const Index = () => {
         <MallCeiling />
 
         {mallFloors.map((floor, floorIdx) => (
-          <div key={floor.id} id={`floor-${floor.id}`} className="mb-1 relative">
+          <div key={floor.id} id={`floor-${floor.id}`} className="relative">
             <div className="max-w-6xl mx-auto px-2 md:px-4">
-              {/* Architectural arched frame around the floor */}
+              {/* Flat architectural frame for each floor (no top arch — dome is global) */}
               <div
-                className="relative pt-6 pb-4 px-3 md:px-6"
+                className="relative pt-3 pb-2 px-3 md:px-6"
                 style={{
                   background:
                     "linear-gradient(180deg, hsl(35,28%,84%) 0%, hsl(35,22%,76%) 100%)",
-                  borderTopLeftRadius: floorIdx === 0 ? "0" : "100px",
-                  borderTopRightRadius: floorIdx === 0 ? "0" : "100px",
-                  border: "4px solid hsl(43,50%,42%)",
-                  borderTop:
-                    floorIdx === 0 ? "none" : "4px solid hsl(43,55%,45%)",
+                  borderLeft: "4px solid hsl(43,50%,42%)",
+                  borderRight: "4px solid hsl(43,50%,42%)",
+                  borderBottom:
+                    floorIdx === mallFloors.length - 1
+                      ? "4px solid hsl(43,50%,42%)"
+                      : "2px solid hsl(43,45%,38%)",
                   boxShadow:
-                    "0 18px 42px rgba(0,0,0,0.45), inset 0 4px 18px rgba(255,255,255,0.45), inset 0 -10px 28px rgba(0,0,0,0.22), inset 10px 0 22px rgba(0,0,0,0.18), inset -10px 0 22px rgba(0,0,0,0.18)",
+                    "inset 0 4px 18px rgba(255,255,255,0.35), inset 0 -10px 28px rgba(0,0,0,0.2), inset 10px 0 22px rgba(0,0,0,0.15), inset -10px 0 22px rgba(0,0,0,0.15)",
                 }}
               >
-                {/* Marble entry path */}
-                <div className="px-2 mb-2">
-                  <div
-                    className="h-4 md:h-5 rounded-t-sm mx-4"
-                    style={{
-                      backgroundImage: `url(${marbleFloor})`,
-                      backgroundSize: "200px 200px",
-                      backgroundRepeat: "repeat",
-                      boxShadow:
-                        "inset 0 2px 6px rgba(255,255,255,0.4), inset 0 -1px 3px rgba(0,0,0,0.08), 0 2px 8px rgba(0,0,0,0.1)",
-                    }}
-                  />
-                </div>
-
-                {/* Stores grid with central gate */}
                 <div className="px-1">
                   <div className="relative grid grid-cols-7 gap-2 md:gap-3 items-stretch">
                     {floor.stores.slice(0, 3).map((store, idx) => (
                       <div key={store.id} className="relative">
                         <CeilingLight />
                         <StoreCard store={store} storeIndex={idx} />
-                        {/* Gold column to the right of each store except last before gate */}
                         <div className="absolute -right-1.5 md:-right-2 top-0 bottom-0">
                           <GoldColumn />
                         </div>
@@ -281,7 +266,6 @@ const Index = () => {
                       <div key={store.id} className="relative">
                         <CeilingLight />
                         <StoreCard store={store} storeIndex={idx + 3} />
-                        {/* Gold column to the left of each store except first after gate */}
                         {idx > 0 && (
                           <div className="absolute -left-1.5 md:-left-2 top-0 bottom-0">
                             <GoldColumn />
@@ -292,15 +276,14 @@ const Index = () => {
                   </div>
                 </div>
 
-                {/* Marble floor */}
                 <div
-                  className="mt-3 h-7 md:h-10 rounded-b-md"
+                  className="mt-2 h-5 md:h-7"
                   style={{
                     backgroundImage: `url(${marbleFloor})`,
                     backgroundSize: "300px 300px",
                     backgroundRepeat: "repeat",
                     boxShadow:
-                      "inset 0 4px 14px rgba(0,0,0,0.28), inset 0 -2px 6px rgba(255,255,255,0.3), 0 4px 10px rgba(0,0,0,0.22)",
+                      "inset 0 4px 14px rgba(0,0,0,0.28), inset 0 -2px 6px rgba(255,255,255,0.3)",
                   }}
                 />
               </div>
