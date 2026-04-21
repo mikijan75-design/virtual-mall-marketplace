@@ -36,69 +36,178 @@ const CeilingLight = () => (
   </div>
 );
 
+const GoldColumn = () => (
+  <div
+    className="absolute top-0 bottom-0 w-[6px] md:w-[8px] z-10 pointer-events-none"
+    style={{
+      background:
+        "linear-gradient(90deg, hsl(43,35%,32%) 0%, hsl(43,70%,72%) 30%, hsl(45,85%,88%) 50%, hsl(43,70%,72%) 70%, hsl(43,35%,32%) 100%)",
+      boxShadow:
+        "0 0 6px rgba(0,0,0,0.35), inset 0 1px 0 rgba(255,255,255,0.5)",
+      borderRadius: "2px",
+    }}
+  >
+    {/* Capital top */}
+    <div
+      className="absolute -top-1 -left-1 -right-1 h-2"
+      style={{
+        background:
+          "linear-gradient(180deg, hsl(43,55%,50%), hsl(43,40%,38%))",
+        borderRadius: "2px",
+        boxShadow: "0 1px 2px rgba(0,0,0,0.4)",
+      }}
+    />
+    {/* Base bottom */}
+    <div
+      className="absolute -bottom-1 -left-1 -right-1 h-2"
+      style={{
+        background:
+          "linear-gradient(0deg, hsl(43,55%,50%), hsl(43,40%,38%))",
+        borderRadius: "2px",
+        boxShadow: "0 -1px 2px rgba(0,0,0,0.4)",
+      }}
+    />
+  </div>
+);
+
+const PottedPlant = ({ side }: { side: "left" | "right" }) => (
+  <div
+    className={`absolute bottom-0 ${side === "left" ? "left-2" : "right-2"} z-20 pointer-events-none`}
+    style={{ width: "28px", height: "44px" }}
+  >
+    {/* Foliage */}
+    <div
+      className="absolute top-0 left-1/2 -translate-x-1/2 w-7 h-7 rounded-full"
+      style={{
+        background:
+          "radial-gradient(circle at 35% 30%, hsl(120,40%,55%), hsl(130,45%,30%) 70%, hsl(130,50%,20%))",
+        boxShadow: "inset -2px -3px 6px rgba(0,0,0,0.4), 0 2px 4px rgba(0,0,0,0.3)",
+      }}
+    />
+    {/* Pot */}
+    <div
+      className="absolute bottom-0 left-1/2 -translate-x-1/2 w-5 h-4"
+      style={{
+        background:
+          "linear-gradient(180deg, hsl(35,30%,55%), hsl(30,35%,38%))",
+        clipPath: "polygon(10% 0%, 90% 0%, 80% 100%, 20% 100%)",
+        boxShadow: "inset 0 -2px 3px rgba(0,0,0,0.4)",
+      }}
+    />
+  </div>
+);
+
 const CentralGate = ({ label }: { label: string }) => (
-  <div className="relative flex items-end justify-center">
-    <div className="relative w-full" style={{ aspectRatio: "1 / 1.45" }}>
-      {/* Outer gold arch */}
+  <div className="relative flex flex-col items-center justify-end h-full col-span-1">
+    <div className="relative w-full h-full flex flex-col">
+      {/* Dark sign with gold text at top */}
       <div
-        className="absolute inset-0"
+        className="relative mx-auto px-3 md:px-4 py-1.5 rounded text-center whitespace-nowrap z-30 mb-1"
         style={{
           background:
-            "linear-gradient(180deg, hsl(43,60%,58%) 0%, hsl(43,45%,38%) 100%)",
-          borderTopLeftRadius: "100%",
-          borderTopRightRadius: "100%",
+            "linear-gradient(135deg, hsl(220,28%,10%) 0%, hsl(220,22%,18%) 50%, hsl(220,28%,10%) 100%)",
+          color: "hsl(43,75%,62%)",
+          border: "2px solid hsl(43,55%,48%)",
           boxShadow:
-            "0 10px 28px rgba(0,0,0,0.5), inset 0 2px 6px rgba(255,255,255,0.4), inset 0 -4px 10px rgba(0,0,0,0.3)",
-        }}
-      />
-      {/* Inner archway recess */}
-      <div
-        className="absolute"
-        style={{
-          inset: "10% 10% 0 10%",
-          background:
-            "linear-gradient(180deg, hsl(35,15%,55%) 0%, hsl(30,12%,28%) 60%, hsl(30,15%,18%) 100%)",
-          borderTopLeftRadius: "100%",
-          borderTopRightRadius: "100%",
-          boxShadow:
-            "inset 0 8px 22px rgba(0,0,0,0.75), inset 0 -2px 6px rgba(255,255,255,0.08)",
-        }}
-      >
-        {/* Warm light glow from inside */}
-        <div
-          className="absolute inset-0"
-          style={{
-            background:
-              "radial-gradient(ellipse at 50% 95%, rgba(255,220,160,0.5), transparent 65%)",
-          }}
-        />
-      </div>
-      {/* Keystone */}
-      <div
-        className="absolute -top-1 left-1/2 -translate-x-1/2 w-7 h-3.5 z-10"
-        style={{
-          background: "linear-gradient(180deg, hsl(43,75%,65%), hsl(43,45%,35%))",
-          clipPath: "polygon(20% 100%, 80% 100%, 100% 0%, 0% 0%)",
-          boxShadow: "0 2px 6px rgba(0,0,0,0.5)",
-        }}
-      />
-      {/* Floor sign hanging in the gate */}
-      <div
-        className="absolute left-1/2 -translate-x-1/2 px-2 md:px-3 py-1 rounded text-center whitespace-nowrap z-10"
-        style={{
-          top: "38%",
-          background:
-            "linear-gradient(135deg, hsl(220,20%,12%), hsl(220,18%,20%))",
-          color: "hsl(43,72%,58%)",
-          border: "1.5px solid hsl(43,55%,45%)",
-          boxShadow: "0 4px 14px rgba(0,0,0,0.55)",
+            "0 4px 12px rgba(0,0,0,0.6), inset 0 1px 0 rgba(255,255,255,0.1), 0 0 0 1px hsl(43,40%,30%)",
           fontFamily: "'Frank Ruhl Libre', serif",
           fontWeight: 700,
-          fontSize: "clamp(8px, 1vw, 12px)",
-          letterSpacing: "0.04em",
+          fontSize: "clamp(9px, 1.1vw, 13px)",
+          letterSpacing: "0.05em",
         }}
       >
         {label}
+      </div>
+
+      {/* Arched gateway structure */}
+      <div className="relative flex-1 w-full">
+        {/* Outer cream/beige arch frame */}
+        <div
+          className="absolute inset-x-0 bottom-0 top-0"
+          style={{
+            background:
+              "linear-gradient(180deg, hsl(40,30%,88%) 0%, hsl(38,25%,80%) 100%)",
+            borderTopLeftRadius: "50% 35%",
+            borderTopRightRadius: "50% 35%",
+            border: "2px solid hsl(43,45%,55%)",
+            boxShadow:
+              "0 8px 24px rgba(0,0,0,0.4), inset 0 2px 8px rgba(255,255,255,0.5)",
+          }}
+        />
+
+        {/* Gold trim band on arch */}
+        <div
+          className="absolute inset-x-1 top-1 bottom-0 pointer-events-none"
+          style={{
+            borderTopLeftRadius: "50% 35%",
+            borderTopRightRadius: "50% 35%",
+            border: "2px solid transparent",
+            borderImage:
+              "linear-gradient(180deg, hsl(43,70%,65%), hsl(43,45%,42%)) 1",
+            background:
+              "linear-gradient(180deg, transparent 0%, transparent 75%, rgba(0,0,0,0.05) 100%)",
+          }}
+        />
+
+        {/* Inner archway opening (recessed dark) */}
+        <div
+          className="absolute"
+          style={{
+            inset: "12% 18% 0 18%",
+            background:
+              "linear-gradient(180deg, hsl(35,18%,55%) 0%, hsl(30,15%,32%) 55%, hsl(28,18%,20%) 100%)",
+            borderTopLeftRadius: "50% 40%",
+            borderTopRightRadius: "50% 40%",
+            boxShadow:
+              "inset 0 8px 22px rgba(0,0,0,0.8), inset 0 -3px 8px rgba(255,255,255,0.1)",
+          }}
+        >
+          {/* Warm interior glow */}
+          <div
+            className="absolute inset-0"
+            style={{
+              background:
+                "radial-gradient(ellipse at 50% 90%, rgba(255,210,140,0.55), transparent 70%)",
+              borderTopLeftRadius: "50% 40%",
+              borderTopRightRadius: "50% 40%",
+            }}
+          />
+        </div>
+
+        {/* Gold side columns of the gate */}
+        <div
+          className="absolute left-[10%] top-[10%] bottom-0 w-[5px]"
+          style={{
+            background:
+              "linear-gradient(90deg, hsl(43,40%,38%), hsl(43,75%,75%) 50%, hsl(43,40%,38%))",
+            boxShadow: "0 0 4px rgba(0,0,0,0.4)",
+            borderRadius: "2px",
+          }}
+        />
+        <div
+          className="absolute right-[10%] top-[10%] bottom-0 w-[5px]"
+          style={{
+            background:
+              "linear-gradient(90deg, hsl(43,40%,38%), hsl(43,75%,75%) 50%, hsl(43,40%,38%))",
+            boxShadow: "0 0 4px rgba(0,0,0,0.4)",
+            borderRadius: "2px",
+          }}
+        />
+
+        {/* Keystone */}
+        <div
+          className="absolute top-[8%] left-1/2 -translate-x-1/2 w-6 h-3 z-10"
+          style={{
+            background:
+              "linear-gradient(180deg, hsl(43,80%,72%), hsl(43,50%,40%))",
+            clipPath: "polygon(20% 100%, 80% 100%, 100% 0%, 0% 0%)",
+            boxShadow: "0 2px 4px rgba(0,0,0,0.5)",
+          }}
+        />
+
+        {/* Potted plants at gate entrance */}
+        <PottedPlant side="left" />
+        <PottedPlant side="right" />
       </div>
     </div>
   </div>
