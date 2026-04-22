@@ -23,7 +23,7 @@ const storefrontPositions = [
   { left: 87.1, width: 11.2 },
 ] as const;
 
-const centralGatePosition = { left: 43.7, width: 12.9 };
+const centralGatePosition = { left: 42.7, width: 16.0 };
 
 const storefrontContent: Record<string, { image: string; eyebrow: string; signTone: string; textTone: string }> = {
   s13: {
