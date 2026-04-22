@@ -14,6 +14,17 @@ interface FloorThreeRowProps {
   stores: Store[];
 }
 
+const storefrontPositions = [
+  { left: 2.6, width: 11.8 },
+  { left: 17.0, width: 11.4 },
+  { left: 30.5, width: 12.2 },
+  { left: 58.7, width: 12.2 },
+  { left: 73.3, width: 11.8 },
+  { left: 87.1, width: 11.2 },
+] as const;
+
+const centralGatePosition = { left: 43.7, width: 12.9 };
+
 const storefrontContent: Record<string, { image: string; eyebrow: string; signTone: string; textTone: string }> = {
   s13: {
     image: italianImg,
@@ -82,12 +93,24 @@ const GoldDivider = ({ align }: { align: "left" | "right" }) => (
   </div>
 );
 
-const FloorThreeStorefront = ({ store, index, divider }: { store: Store; index: number; divider?: "left" | "right" }) => {
+const FloorThreeStorefront = ({
+  store,
+  index,
+  divider,
+  left,
+  width,
+}: {
+  store: Store;
+  index: number;
+  divider?: "left" | "right";
+  left: number;
+  width: number;
+}) => {
   const navigate = useNavigate();
   const content = storefrontContent[store.id];
 
   return (
-    <div className="relative h-full">
+    <div className="absolute bottom-0 top-0" style={{ left: `${left}%`, width: `${width}%` }}>
       {divider ? <GoldDivider align={divider} /> : null}
       <button
         type="button"
@@ -155,7 +178,11 @@ const FloorThreeStorefront = ({ store, index, divider }: { store: Store; index: 
 };
 
 const FloorThreeGate = () => (
-  <div className="relative flex h-full min-h-[218px] flex-col" data-floor3-gate>
+  <div
+    className="absolute bottom-0 top-0 flex min-h-[218px] flex-col"
+    style={{ left: `${centralGatePosition.left}%`, width: `${centralGatePosition.width}%` }}
+    data-floor3-gate
+  >
     <div className="absolute inset-x-0 top-[18px] flex justify-center">
       <div className="h-[10px] w-[76%] rounded-full border border-mall-gold/45 bg-mall-wall/70 shadow-[0_1px_3px_rgba(0,0,0,0.2)]" />
     </div>
@@ -245,9 +272,16 @@ const FloorThreeRow = ({ stores }: FloorThreeRowProps) => {
           </div>
         </div>
 
-        <div className="grid grid-cols-7 items-stretch gap-[6px] pt-6 md:gap-[8px] md:pt-7">
+        <div className="relative h-[224px] pt-6 md:h-[236px] md:pt-7">
           {stores.slice(0, 3).map((store, index) => (
-            <FloorThreeStorefront key={store.id} store={store} index={index} divider="right" />
+            <FloorThreeStorefront
+              key={store.id}
+              store={store}
+              index={index}
+              divider="right"
+              left={storefrontPositions[index].left}
+              width={storefrontPositions[index].width}
+            />
           ))}
 
           <FloorThreeGate />
@@ -258,6 +292,8 @@ const FloorThreeRow = ({ stores }: FloorThreeRowProps) => {
               store={store}
               index={index + 3}
               divider={index === 0 ? undefined : "left"}
+              left={storefrontPositions[index + 3].left}
+              width={storefrontPositions[index + 3].width}
             />
           ))}
         </div>
