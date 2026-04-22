@@ -15,15 +15,15 @@ interface FloorThreeRowProps {
 }
 
 const storefrontPositions = [
-  { left: 2.6, width: 11.8 },
-  { left: 17.0, width: 11.4 },
-  { left: 30.5, width: 12.2 },
-  { left: 58.7, width: 12.2 },
-  { left: 73.3, width: 11.8 },
-  { left: 87.1, width: 11.2 },
+  { left: 0.6, width: 12.7 },
+  { left: 14.0, width: 11.7 },
+  { left: 27.3, width: 11.4 },
+  { left: 59.9, width: 11.4 },
+  { left: 72.6, width: 11.7 },
+  { left: 85.9, width: 13.4 },
 ] as const;
 
-const centralGatePosition = { left: 42.7, width: 16.0 };
+const centralGatePosition = { left: 40.7, width: 17.9 };
 
 const storefrontContent: Record<string, { image: string; eyebrow: string; signTone: string; textTone: string }> = {
   s13: {
