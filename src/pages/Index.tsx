@@ -2,7 +2,7 @@ import { useNavigate } from "react-router-dom";
 import { mallFloors } from "@/data/mallData";
 import MallHeader from "@/components/mall/MallHeader";
 import FloorMap from "@/components/mall/FloorMap";
-import StoreCard from "@/components/mall/StoreCard";
+import MallFloorRow from "@/components/mall/MallFloorRow";
 import referenceMall from "@/assets/reference-mall-exact.png";
 
 const storeHotspots = [
@@ -56,55 +56,11 @@ const Index = () => {
               onClick={() => navigate(`/store/${hotspot.id}`)}
             />
           ))}
+        </div>
 
-          <section
-            id="floor-3"
-            aria-label="קומה 3 - קומת המזון"
-            className="relative bg-mall-wall -mt-px"
-          >
-            {/* שלט קטן ממורכז כמו בקומות 1-2 */}
-            <div className="flex justify-center pt-3 pb-2">
-              <div className="bg-mall-sign px-8 py-1.5 rounded-sm border border-mall-gold/70 shadow-md">
-                <h2 className="font-frank text-mall-gold text-base md:text-lg tracking-widest">
-                  קומה 3 — קומת המזון
-                </h2>
-              </div>
-            </div>
-
-            {/* גריד 7 עמודות: 3 חנויות | מדרגות | 3 חנויות */}
-            <div className="grid grid-cols-7 gap-2 px-4 pb-4 items-stretch">
-              {mallFloors[2].stores.slice(0, 3).map((store, idx) => (
-                <StoreCard key={store.id} store={store} storeIndex={idx} />
-              ))}
-
-              {/* כניסה מרכזית עם מדרגות */}
-              <div className="flex flex-col items-center justify-end relative">
-                <div className="w-full flex-1 flex items-center justify-center bg-gradient-to-b from-mall-wall to-[hsl(30,12%,38%)] rounded-t-[40%] border-x-4 border-t-4 border-mall-gold/60 relative overflow-hidden">
-                  <div className="absolute inset-x-2 top-2 bottom-0 bg-gradient-to-b from-[hsl(30,15%,25%)] to-[hsl(30,20%,15%)] rounded-t-[40%]" />
-                  <span className="relative font-frank text-mall-gold text-2xl md:text-3xl mb-4">↑</span>
-                </div>
-                {/* מדרגות */}
-                <div className="w-full flex flex-col">
-                  {[0, 1, 2, 3].map((i) => (
-                    <div
-                      key={i}
-                      className="h-2 border-t border-mall-gold/30"
-                      style={{
-                        background: `hsl(35, ${10 + i * 2}%, ${55 - i * 5}%)`,
-                        marginInline: `${i * 4}px`,
-                      }}
-                    />
-                  ))}
-                </div>
-              </div>
-
-              {mallFloors[2].stores.slice(3, 6).map((store, idx) => (
-                <StoreCard key={store.id} store={store} storeIndex={idx + 3} />
-              ))}
-            </div>
-
-            <div className="h-4 bg-gradient-to-b from-mall-trim to-mall-floor border-t-2 border-mall-gold/40" />
-          </section>
+        {/* קומה 3 — בסגנון זהה לקומות 1 ו-2, עם אותו מרווח/אלמנט מפריד */}
+        <div className="mx-auto w-full max-w-[1630px] min-w-[900px] -mt-px">
+          <MallFloorRow floor={mallFloors[2]} isLast={true} />
         </div>
       </main>
 
