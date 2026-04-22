@@ -56,26 +56,26 @@ const Index = () => {
               onClick={() => navigate(`/store/${hotspot.id}`)}
             />
           ))}
+
+          <section
+            id="floor-3"
+            aria-label="קומה 3 - קומת המזון"
+            className="relative bg-mall-wall -mt-px"
+          >
+            <div className="bg-mall-sign py-3 text-center border-y-2 border-mall-gold/60">
+              <h2 className="font-frank text-mall-gold text-2xl md:text-3xl tracking-wide">
+                קומה 3 — קומת המזון
+              </h2>
+            </div>
+            <div className="grid grid-cols-3 lg:grid-cols-6 gap-3 p-4 md:p-6">
+              {mallFloors[2].stores.map((store, idx) => (
+                <StoreCard key={store.id} store={store} storeIndex={idx} />
+              ))}
+            </div>
+            <div className="h-4 bg-gradient-to-b from-mall-trim to-mall-floor border-t-2 border-mall-gold/40" />
+          </section>
         </div>
       </main>
-
-      <section
-        id="floor-3"
-        aria-label="קומה 3 - קומת המזון"
-        className="relative mx-auto w-full max-w-[1630px] min-w-[900px] bg-mall-wall border-t-4 border-mall-trim"
-      >
-        <div className="bg-mall-sign py-3 text-center">
-          <h2 className="font-frank text-mall-gold text-2xl md:text-3xl tracking-wide">
-            קומה 3 — קומת המזון
-          </h2>
-        </div>
-        <div className="grid grid-cols-2 md:grid-cols-3 lg:grid-cols-6 gap-4 p-6">
-          {mallFloors[2].stores.map((store, idx) => (
-            <StoreCard key={store.id} store={store} storeIndex={idx} />
-          ))}
-        </div>
-        <div className="h-3 bg-gradient-to-b from-mall-trim to-mall-floor border-t border-mall-gold/40" />
-      </section>
 
       <FloorMap
         floors={mallFloors}
