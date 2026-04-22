@@ -1,20 +1,19 @@
 import { useState } from "react";
-import { useNavigate } from "react-router-dom";
 import { Floor } from "@/data/mallData";
+import StoreCard from "@/components/mall/StoreCard";
 
 interface MobileMallViewProps {
   floors: Floor[];
 }
 
 const MobileMallView = ({ floors }: MobileMallViewProps) => {
-  const navigate = useNavigate();
   const [activeFloor, setActiveFloor] = useState<number>(floors[0]?.id ?? 1);
 
   const current = floors.find((f) => f.id === activeFloor) ?? floors[0];
 
   return (
-    <div className="md:hidden bg-background min-h-screen pb-24">
-      {/* Floor selector */}
+    <div className="md:hidden bg-background min-h-screen pb-24" dir="rtl">
+      {/* Header + Floor selector */}
       <div className="sticky top-0 z-30 bg-mall-sign/95 backdrop-blur-sm border-b-2 border-mall-gold px-3 py-3 shadow-md">
         <h2 className="text-mall-gold font-frank text-center text-lg mb-2">
           הקניון הווירטואלי
@@ -42,34 +41,27 @@ const MobileMallView = ({ floors }: MobileMallViewProps) => {
         </div>
       </div>
 
-      {/* Floor name */}
-      <div className="px-4 pt-4 pb-2 text-center">
-        <p className="font-frank text-mall-sign text-base">{current.name}</p>
+      {/* Floor name sign — same style as desktop */}
+      <div className="px-4 pt-5 pb-3 flex justify-center">
+        <div
+          className="flex h-[34px] min-w-[230px] items-center justify-center rounded-sm border-2 border-mall-gold/70 px-4 shadow-[0_4px_10px_rgba(0,0,0,0.45)]"
+          style={{
+            background:
+              "linear-gradient(180deg, hsl(var(--mall-sign)) 0%, hsl(220 17% 23%) 50%, hsl(var(--mall-sign)) 100%)",
+          }}
+        >
+          <span className="font-frank text-[13px] font-bold tracking-[0.05em] text-mall-gold">
+            {current.name}
+          </span>
+        </div>
       </div>
 
-      {/* Store grid */}
-      <div className="grid grid-cols-2 gap-3 px-3 pt-2">
+      {/* Store grid — uses the original StoreCard with full branding */}
+      <div className="grid grid-cols-2 gap-3 px-3 pt-2 pb-4">
         {current.stores.map((store, idx) => (
-          <button
-            key={store.id}
-            type="button"
-            onClick={() => navigate(`/store/${store.id}`)}
-            aria-label={`כניסה לחנות ${store.name}`}
-            className="group relative flex flex-col items-center justify-center aspect-square rounded-xl bg-gradient-to-br from-mall-cream to-mall-cream/60 border-2 border-mall-gold/50 shadow-md active:scale-95 transition-transform overflow-hidden"
-          >
-            <span className="absolute top-1.5 right-1.5 bg-mall-sign text-mall-gold text-[10px] font-bold rounded-full w-6 h-6 flex items-center justify-center font-frank">
-              {idx + 1}
-            </span>
-            <span className="text-4xl mb-2" aria-hidden>
-              {store.logoEmoji}
-            </span>
-            <span className="font-heebo text-xs font-bold text-mall-sign text-center px-2 leading-tight">
-              {store.name}
-            </span>
-            <span className="font-heebo text-[10px] text-muted-foreground mt-1">
-              {store.category}
-            </span>
-          </button>
+          <div key={store.id} className="pb-3">
+            <StoreCard store={store} storeIndex={idx} />
+          </div>
         ))}
       </div>
     </div>
