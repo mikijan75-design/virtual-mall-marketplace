@@ -3,6 +3,7 @@ import { mallFloors } from "@/data/mallData";
 import MallHeader from "@/components/mall/MallHeader";
 import FloorMap from "@/components/mall/FloorMap";
 import FloorThreeRow from "@/components/mall/FloorThreeRow";
+import MobileMallView from "@/components/mall/MobileMallView";
 import referenceMall from "@/assets/reference-mall-exact.png";
 
 const storeHotspots = [
@@ -25,6 +26,11 @@ const Index = () => {
 
   return (
     <div className="min-h-screen bg-background">
+      {/* Mobile view */}
+      <MobileMallView floors={mallFloors} />
+
+      {/* Desktop view */}
+      <div className="hidden md:block">
       <MallHeader />
 
       <main
@@ -80,6 +86,7 @@ const Index = () => {
         <p className="text-mall-gold font-frank text-xl mb-2">הקניון הווירטואלי</p>
         <p className="text-sm text-muted-foreground">© 2026 כל הזכויות שמורות</p>
       </footer>
+      </div>
     </div>
   );
 };
