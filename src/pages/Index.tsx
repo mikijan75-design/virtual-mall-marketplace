@@ -26,13 +26,13 @@ const Index = () => {
 
   return (
     <div className="min-h-screen bg-background">
+      <MallHeader />
+
       {/* Mobile view */}
       <MobileMallView floors={mallFloors} />
 
       {/* Desktop view */}
       <div className="hidden md:block">
-      <MallHeader />
-
       <main
         className="relative bg-background py-0 overflow-x-auto"
         aria-label="מבנה הקניון הווירטואלי"
@@ -69,6 +69,7 @@ const Index = () => {
           <FloorThreeRow stores={mallFloors[2].stores} />
         </div>
       </main>
+      </div>
 
       <FloorMap
         floors={mallFloors}
@@ -86,7 +87,6 @@ const Index = () => {
         <p className="text-mall-gold font-frank text-xl mb-2">הקניון הווירטואלי</p>
         <p className="text-sm text-muted-foreground">© 2026 כל הזכויות שמורות</p>
       </footer>
-      </div>
     </div>
   );
 };
