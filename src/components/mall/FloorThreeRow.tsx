@@ -112,11 +112,31 @@ const FloorThreeStorefront = ({
   return (
     <div className="absolute bottom-0 top-0" style={{ left: `${left}%`, width: `${width}%` }}>
       {divider ? <GoldDivider align={divider} /> : null}
+      {/* קשת עליונה — תואם לקומות 1 ו-2 */}
+      <div
+        className="pointer-events-none absolute left-0 right-0 top-0 z-10 h-[14px] md:h-[16px]"
+        style={{
+          background:
+            "linear-gradient(180deg, hsl(var(--mall-wall)) 0%, hsl(var(--mall-ceiling)) 100%)",
+          borderTopLeftRadius: "50% 100%",
+          borderTopRightRadius: "50% 100%",
+          borderBottom: "1px solid hsl(var(--mall-gold) / 0.55)",
+          boxShadow: "inset 0 1px 0 hsl(var(--mall-gold) / 0.45), 0 1px 2px rgba(0,0,0,0.18)",
+        }}
+      >
+        <div
+          className="absolute inset-x-[12%] bottom-[2px] top-[3px]"
+          style={{
+            background:
+              "radial-gradient(ellipse at 50% 100%, hsl(var(--mall-gold) / 0.35) 0%, transparent 70%)",
+          }}
+        />
+      </div>
       <button
         type="button"
         onClick={() => navigate(`/store/${store.id}`)}
         aria-label={`כניסה לחנות ${store.name}`}
-        className="group relative flex h-full w-full flex-col overflow-hidden border border-mall-gold/55 bg-card/90 shadow-[0_2px_8px_rgba(0,0,0,0.18)] transition-transform duration-200 hover:-translate-y-0.5 focus:outline-none focus-visible:ring-2 focus-visible:ring-mall-gold focus-visible:ring-offset-2 focus-visible:ring-offset-background"
+        className="group relative mt-[12px] flex h-[calc(100%-12px)] w-full flex-col overflow-hidden border border-mall-gold/55 bg-card/90 shadow-[0_2px_8px_rgba(0,0,0,0.18)] transition-transform duration-200 hover:-translate-y-0.5 focus:outline-none focus-visible:ring-2 focus-visible:ring-mall-gold focus-visible:ring-offset-2 focus-visible:ring-offset-background md:mt-[14px] md:h-[calc(100%-14px)]"
         style={{
           backgroundImage: `linear-gradient(180deg, hsl(var(--card)) 0%, hsl(var(--mall-wall) / 0.88) 100%), url(${mallWallTexture})`,
           backgroundBlendMode: "soft-light, normal",
@@ -183,12 +203,21 @@ const FloorThreeGate = () => (
     style={{ left: `${centralGatePosition.left}%`, width: `${centralGatePosition.width}%` }}
     data-floor3-gate
   >
-    <div className="absolute inset-x-0 top-[7px] flex justify-center">
-      <div className="h-[6px] w-[76%] rounded-full border border-mall-gold/45 bg-mall-wall/70 shadow-[0_1px_3px_rgba(0,0,0,0.2)]" />
-    </div>
+    {/* קשת עליונה מעל השער — תואמת לקשתות החנויות */}
+    <div
+      className="pointer-events-none absolute left-0 right-0 top-0 z-10 h-[14px] md:h-[16px]"
+      style={{
+        background:
+          "linear-gradient(180deg, hsl(var(--mall-wall)) 0%, hsl(var(--mall-ceiling)) 100%)",
+        borderTopLeftRadius: "50% 100%",
+        borderTopRightRadius: "50% 100%",
+        borderBottom: "1px solid hsl(var(--mall-gold) / 0.6)",
+        boxShadow: "inset 0 1px 0 hsl(var(--mall-gold) / 0.5), 0 1px 2px rgba(0,0,0,0.2)",
+      }}
+    />
 
     <div
-      className="relative flex-1 overflow-hidden border-x border-t border-mall-gold/60 bg-mall-wall shadow-[inset_0_2px_8px_rgba(255,255,255,0.35)]"
+      className="relative mt-[12px] flex-1 overflow-hidden border-x border-t border-mall-gold/60 bg-mall-wall shadow-[inset_0_2px_8px_rgba(255,255,255,0.35)] md:mt-[14px]"
       style={{
         borderTopLeftRadius: "42% 24%",
         borderTopRightRadius: "42% 24%",
