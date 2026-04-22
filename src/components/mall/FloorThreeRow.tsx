@@ -68,7 +68,7 @@ const romanNumerals = ["I", "II", "III", "IV", "V", "VI"];
 
 const GoldDivider = ({ align }: { align: "left" | "right" }) => (
   <div
-    className={`absolute top-[4px] bottom-[10px] z-20 w-[5px] md:w-[6px] ${align === "left" ? "-left-[4px] md:-left-[5px]" : "-right-[4px] md:-right-[5px]"}`}
+    className={`absolute top-[2px] bottom-[6px] z-20 w-[5px] md:w-[6px] ${align === "left" ? "-left-[4px] md:-left-[5px]" : "-right-[4px] md:-right-[5px]"}`}
     style={{
       background:
         "linear-gradient(90deg, hsl(43 36% 32%) 0%, hsl(43 64% 58%) 34%, hsl(44 88% 84%) 50%, hsl(43 64% 58%) 66%, hsl(43 36% 32%) 100%)",
@@ -116,36 +116,36 @@ const FloorThreeStorefront = ({
         type="button"
         onClick={() => navigate(`/store/${store.id}`)}
         aria-label={`כניסה לחנות ${store.name}`}
-        className="group relative flex h-full min-h-[218px] w-full flex-col overflow-hidden border border-mall-gold/55 bg-card/90 shadow-[0_2px_8px_rgba(0,0,0,0.18)] transition-transform duration-200 hover:-translate-y-0.5 focus:outline-none focus-visible:ring-2 focus-visible:ring-mall-gold focus-visible:ring-offset-2 focus-visible:ring-offset-background"
+        className="group relative flex h-full w-full flex-col overflow-hidden border border-mall-gold/55 bg-card/90 shadow-[0_2px_8px_rgba(0,0,0,0.18)] transition-transform duration-200 hover:-translate-y-0.5 focus:outline-none focus-visible:ring-2 focus-visible:ring-mall-gold focus-visible:ring-offset-2 focus-visible:ring-offset-background"
         style={{
           backgroundImage: `linear-gradient(180deg, hsl(var(--card)) 0%, hsl(var(--mall-wall) / 0.88) 100%), url(${mallWallTexture})`,
           backgroundBlendMode: "soft-light, normal",
         }}
         data-floor3-store={store.id}
       >
-        <div className="h-[4px] w-full bg-gradient-to-r from-mall-trim/70 via-mall-gold to-mall-trim/70" />
+        <div className="h-[3px] w-full bg-gradient-to-r from-mall-trim/70 via-mall-gold to-mall-trim/70" />
 
         <div
-          className="relative flex h-[44px] items-center justify-center border-b border-mall-gold/45 px-2 text-center"
+          className="relative flex h-[31px] items-center justify-center border-b border-mall-gold/45 px-1.5 text-center md:h-[33px]"
           style={{ background: content.signTone }}
         >
           <div className="absolute inset-x-[6px] top-[5px] h-px bg-mall-gold/40" />
           <div className="absolute inset-x-[6px] bottom-[5px] h-px bg-mall-gold/35" />
           <span
-            className="font-frank text-[10px] font-bold leading-tight md:text-[11px]"
+            className="font-frank text-[9px] font-bold leading-tight md:text-[10px]"
             style={{ color: content.textTone }}
           >
             {store.name}
           </span>
         </div>
 
-        <div className="flex h-[22px] items-center justify-center border-b border-mall-gold/35 bg-mall-sign/90 px-2">
-          <span className="font-heebo text-[8px] font-medium tracking-[0.08em] text-mall-gold/85 md:text-[9px]">
+        <div className="flex h-[18px] items-center justify-center border-b border-mall-gold/35 bg-mall-sign/90 px-1.5 md:h-[19px]">
+          <span className="font-heebo text-[7px] font-medium tracking-[0.08em] text-mall-gold/85 md:text-[8px]">
             {content.eyebrow}
           </span>
         </div>
 
-        <div className="relative flex-1 overflow-hidden bg-background/70 p-[5px]">
+        <div className="relative flex-1 overflow-hidden bg-background/70 p-[3px] md:p-[4px]">
           <div className="relative h-full overflow-hidden border border-mall-column/90 bg-background shadow-[inset_0_0_0_1px_rgba(255,255,255,0.55)]">
             <img
               src={content.image}
@@ -162,13 +162,13 @@ const FloorThreeStorefront = ({
         </div>
 
         <div
-          className="relative flex h-[16px] items-center justify-center border-t border-mall-gold/30"
+          className="relative flex h-[11px] items-center justify-center border-t border-mall-gold/30 md:h-[12px]"
           style={{
             backgroundImage: `linear-gradient(180deg, hsl(var(--mall-floor) / 0.55) 0%, hsl(var(--mall-floor) / 0.85) 100%), url(${marbleFloorTexture})`,
             backgroundBlendMode: "soft-light, normal",
           }}
         >
-          <div className="absolute left-1/2 top-1/2 flex h-[18px] w-[18px] -translate-x-1/2 -translate-y-1/2 items-center justify-center rounded-full border border-mall-gold/60 bg-[hsl(var(--mall-trim))] text-[8px] font-bold text-primary-foreground shadow-[0_1px_3px_rgba(0,0,0,0.24)]">
+          <div className="absolute left-1/2 top-1/2 flex h-[14px] w-[14px] -translate-x-1/2 -translate-y-1/2 items-center justify-center rounded-full border border-mall-gold/60 bg-[hsl(var(--mall-trim))] text-[6px] font-bold text-primary-foreground shadow-[0_1px_3px_rgba(0,0,0,0.24)] md:h-[15px] md:w-[15px] md:text-[7px]">
             {romanNumerals[index]}
           </div>
         </div>
@@ -179,12 +179,12 @@ const FloorThreeStorefront = ({
 
 const FloorThreeGate = () => (
   <div
-    className="absolute bottom-0 top-0 flex min-h-[218px] flex-col"
+    className="absolute bottom-0 top-0 flex flex-col"
     style={{ left: `${centralGatePosition.left}%`, width: `${centralGatePosition.width}%` }}
     data-floor3-gate
   >
-    <div className="absolute inset-x-0 top-[18px] flex justify-center">
-      <div className="h-[10px] w-[76%] rounded-full border border-mall-gold/45 bg-mall-wall/70 shadow-[0_1px_3px_rgba(0,0,0,0.2)]" />
+    <div className="absolute inset-x-0 top-[10px] flex justify-center">
+      <div className="h-[8px] w-[76%] rounded-full border border-mall-gold/45 bg-mall-wall/70 shadow-[0_1px_3px_rgba(0,0,0,0.2)]" />
     </div>
 
     <div
@@ -216,14 +216,14 @@ const FloorThreeGate = () => (
         />
       </div>
 
-      <div className="absolute inset-x-[12%] bottom-[8px] flex flex-col gap-[3px]">
-        {[0, 1, 2, 3, 4].map((step) => (
+      <div className="absolute inset-x-[14%] bottom-[4px] flex flex-col gap-[2px]">
+        {[0, 1, 2, 3].map((step) => (
           <div
             key={step}
             className="border-t border-mall-gold/25"
             style={{
-              height: "8px",
-              marginInline: `${step * 4}px`,
+              height: "6px",
+              marginInline: `${step * 3}px`,
               background: `linear-gradient(180deg, hsl(35 16% ${72 - step * 5}%) 0%, hsl(35 16% ${60 - step * 5}%) 100%)`,
             }}
           />
@@ -232,7 +232,7 @@ const FloorThreeGate = () => (
     </div>
 
     <div
-      className="h-[16px] border-t border-mall-gold/40"
+      className="h-[11px] border-t border-mall-gold/40 md:h-[12px]"
       style={{
         backgroundImage: `linear-gradient(180deg, hsl(var(--mall-floor) / 0.55) 0%, hsl(var(--mall-floor) / 0.85) 100%), url(${marbleFloorTexture})`,
         backgroundBlendMode: "soft-light, normal",
@@ -245,7 +245,7 @@ const FloorThreeRow = ({ stores }: FloorThreeRowProps) => {
   return (
     <section id="floor-3" className="relative -mt-px" aria-label="קומה 3 - קומת המזון" data-floor3-row>
       <div
-        className="relative border-x-[3px] border-mall-gold/55 px-2 pb-0 pt-5 md:px-3 md:pt-6"
+        className="relative border-x-[3px] border-mall-gold/55 px-0 pb-0 pt-4 md:pt-5"
         style={{
           backgroundImage: `linear-gradient(180deg, hsl(var(--mall-ceiling) / 0.96) 0%, hsl(var(--mall-wall) / 0.98) 100%), url(${mallWallTexture})`,
           backgroundBlendMode: "soft-light, normal",
@@ -261,18 +261,18 @@ const FloorThreeRow = ({ stores }: FloorThreeRowProps) => {
 
         <div className="absolute left-1/2 top-0 z-30 -translate-x-1/2 -translate-y-[30%]" data-floor3-sign>
           <div
-            className="flex h-[32px] min-w-[250px] items-center justify-center rounded-sm border-2 border-mall-gold/70 px-5 shadow-[0_4px_10px_rgba(0,0,0,0.45)] md:min-w-[286px]"
+            className="flex h-[30px] min-w-[250px] items-center justify-center rounded-sm border-2 border-mall-gold/70 px-5 shadow-[0_4px_10px_rgba(0,0,0,0.45)] md:min-w-[286px]"
             style={{
               background: "linear-gradient(180deg, hsl(var(--mall-sign)) 0%, hsl(220 17% 23%) 50%, hsl(var(--mall-sign)) 100%)",
             }}
           >
-            <span className="font-frank text-[14px] font-bold tracking-[0.05em] text-mall-gold md:text-[15px]">
+            <span className="font-frank text-[13px] font-bold tracking-[0.05em] text-mall-gold md:text-[14px]">
               קומה 3 - קומת המזון
             </span>
           </div>
         </div>
 
-        <div className="relative h-[224px] pt-6 md:h-[236px] md:pt-7">
+        <div className="relative h-[150px] pt-5 md:h-[162px] md:pt-6">
           {stores.slice(0, 3).map((store, index) => (
             <FloorThreeStorefront
               key={store.id}
