@@ -15,15 +15,15 @@ interface FloorThreeRowProps {
 }
 
 const storefrontPositions = [
-  { left: 2.6, width: 11.8 },
-  { left: 17.0, width: 11.4 },
-  { left: 30.5, width: 12.2 },
-  { left: 58.7, width: 12.2 },
-  { left: 73.3, width: 11.8 },
-  { left: 87.1, width: 11.2 },
+  { left: 0.6, width: 12.7 },
+  { left: 14.0, width: 11.7 },
+  { left: 27.3, width: 11.4 },
+  { left: 59.9, width: 11.4 },
+  { left: 72.6, width: 11.7 },
+  { left: 85.9, width: 13.4 },
 ] as const;
 
-const centralGatePosition = { left: 42.7, width: 16.0 };
+const centralGatePosition = { left: 40.7, width: 17.9 };
 
 const storefrontContent: Record<string, { image: string; eyebrow: string; signTone: string; textTone: string }> = {
   s13: {
@@ -261,12 +261,12 @@ const FloorThreeRow = ({ stores }: FloorThreeRowProps) => {
 
         <div className="absolute left-1/2 top-0 z-30 -translate-x-1/2 -translate-y-[30%]" data-floor3-sign>
           <div
-            className="flex h-[30px] min-w-[250px] items-center justify-center rounded-sm border-2 border-mall-gold/70 px-5 shadow-[0_4px_10px_rgba(0,0,0,0.45)] md:min-w-[286px]"
+            className="flex h-[26px] min-w-[195px] items-center justify-center rounded-sm border-2 border-mall-gold/70 px-3 shadow-[0_4px_10px_rgba(0,0,0,0.45)] md:min-w-[210px]"
             style={{
               background: "linear-gradient(180deg, hsl(var(--mall-sign)) 0%, hsl(220 17% 23%) 50%, hsl(var(--mall-sign)) 100%)",
             }}
           >
-            <span className="font-frank text-[13px] font-bold tracking-[0.05em] text-mall-gold md:text-[14px]">
+            <span className="font-frank text-[11px] font-bold tracking-[0.05em] text-mall-gold md:text-[12px]">
               קומה 3 - קומת המזון
             </span>
           </div>
