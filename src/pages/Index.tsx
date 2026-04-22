@@ -2,6 +2,7 @@ import { useNavigate } from "react-router-dom";
 import { mallFloors } from "@/data/mallData";
 import MallHeader from "@/components/mall/MallHeader";
 import FloorMap from "@/components/mall/FloorMap";
+import StoreCard from "@/components/mall/StoreCard";
 import referenceMall from "@/assets/reference-mall-exact.png";
 
 const storeHotspots = [
@@ -57,6 +58,24 @@ const Index = () => {
           ))}
         </div>
       </main>
+
+      <section
+        id="floor-3"
+        aria-label="קומה 3 - קומת המזון"
+        className="relative mx-auto w-full max-w-[1630px] min-w-[900px] bg-mall-wall border-t-4 border-mall-trim"
+      >
+        <div className="bg-mall-sign py-3 text-center">
+          <h2 className="font-frank text-mall-gold text-2xl md:text-3xl tracking-wide">
+            קומה 3 — קומת המזון
+          </h2>
+        </div>
+        <div className="grid grid-cols-2 md:grid-cols-3 lg:grid-cols-6 gap-4 p-6">
+          {mallFloors[2].stores.map((store, idx) => (
+            <StoreCard key={store.id} store={store} storeIndex={idx} />
+          ))}
+        </div>
+        <div className="h-3 bg-gradient-to-b from-mall-trim to-mall-floor border-t border-mall-gold/40" />
+      </section>
 
       <FloorMap
         floors={mallFloors}
