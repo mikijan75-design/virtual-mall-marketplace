@@ -8,13 +8,6 @@ interface MobileMallViewProps {
 const MobileMallView = ({ floors }: MobileMallViewProps) => {
   return (
     <div className="md:hidden bg-background min-h-screen pb-24" dir="rtl">
-      {/* Header */}
-      <div className="bg-mall-sign border-b-2 border-mall-gold px-3 py-4 shadow-md">
-        <h2 className="text-mall-gold font-frank text-center text-xl">
-          הקניון הווירטואלי
-        </h2>
-      </div>
-
       {/* All floors — single scrollable page */}
       {floors.map((floor) => (
         <section key={floor.id} aria-label={floor.name}>
