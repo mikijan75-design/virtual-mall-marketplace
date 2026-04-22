@@ -123,29 +123,29 @@ const FloorThreeStorefront = ({
         }}
         data-floor3-store={store.id}
       >
-        <div className="h-[3px] w-full bg-gradient-to-r from-mall-trim/70 via-mall-gold to-mall-trim/70" />
+        <div className="h-[2px] w-full bg-gradient-to-r from-mall-trim/70 via-mall-gold to-mall-trim/70" />
 
         <div
-          className="relative flex h-[31px] items-center justify-center border-b border-mall-gold/45 px-1.5 text-center md:h-[33px]"
+          className="relative flex h-[22px] items-center justify-center border-b border-mall-gold/45 px-1 text-center md:h-[24px]"
           style={{ background: content.signTone }}
         >
-          <div className="absolute inset-x-[6px] top-[5px] h-px bg-mall-gold/40" />
-          <div className="absolute inset-x-[6px] bottom-[5px] h-px bg-mall-gold/35" />
+          <div className="absolute inset-x-[4px] top-[3px] h-px bg-mall-gold/40" />
+          <div className="absolute inset-x-[4px] bottom-[3px] h-px bg-mall-gold/35" />
           <span
-            className="font-frank text-[9px] font-bold leading-tight md:text-[10px]"
+            className="font-frank text-[7px] font-bold leading-tight md:text-[8px]"
             style={{ color: content.textTone }}
           >
             {store.name}
           </span>
         </div>
 
-        <div className="flex h-[18px] items-center justify-center border-b border-mall-gold/35 bg-mall-sign/90 px-1.5 md:h-[19px]">
-          <span className="font-heebo text-[7px] font-medium tracking-[0.08em] text-mall-gold/85 md:text-[8px]">
+        <div className="flex h-[12px] items-center justify-center border-b border-mall-gold/35 bg-mall-sign/90 px-1 md:h-[13px]">
+          <span className="font-heebo text-[6px] font-medium tracking-[0.05em] text-mall-gold/85 md:text-[6px]">
             {content.eyebrow}
           </span>
         </div>
 
-        <div className="relative flex-1 overflow-hidden bg-background/70 p-[3px] md:p-[4px]">
+        <div className="relative flex-1 overflow-hidden bg-background/70 p-[2px]">
           <div className="relative h-full overflow-hidden border border-mall-column/90 bg-background shadow-[inset_0_0_0_1px_rgba(255,255,255,0.55)]">
             <img
               src={content.image}
@@ -162,13 +162,13 @@ const FloorThreeStorefront = ({
         </div>
 
         <div
-          className="relative flex h-[11px] items-center justify-center border-t border-mall-gold/30 md:h-[12px]"
+          className="relative flex h-[8px] items-center justify-center border-t border-mall-gold/30 md:h-[9px]"
           style={{
             backgroundImage: `linear-gradient(180deg, hsl(var(--mall-floor) / 0.55) 0%, hsl(var(--mall-floor) / 0.85) 100%), url(${marbleFloorTexture})`,
             backgroundBlendMode: "soft-light, normal",
           }}
         >
-          <div className="absolute left-1/2 top-1/2 flex h-[14px] w-[14px] -translate-x-1/2 -translate-y-1/2 items-center justify-center rounded-full border border-mall-gold/60 bg-[hsl(var(--mall-trim))] text-[6px] font-bold text-primary-foreground shadow-[0_1px_3px_rgba(0,0,0,0.24)] md:h-[15px] md:w-[15px] md:text-[7px]">
+          <div className="absolute left-1/2 top-1/2 flex h-[11px] w-[11px] -translate-x-1/2 -translate-y-1/2 items-center justify-center rounded-full border border-mall-gold/60 bg-[hsl(var(--mall-trim))] text-[5px] font-bold text-primary-foreground shadow-[0_1px_3px_rgba(0,0,0,0.24)] md:h-[12px] md:w-[12px] md:text-[5px]">
             {romanNumerals[index]}
           </div>
         </div>
@@ -183,8 +183,8 @@ const FloorThreeGate = () => (
     style={{ left: `${centralGatePosition.left}%`, width: `${centralGatePosition.width}%` }}
     data-floor3-gate
   >
-    <div className="absolute inset-x-0 top-[10px] flex justify-center">
-      <div className="h-[8px] w-[76%] rounded-full border border-mall-gold/45 bg-mall-wall/70 shadow-[0_1px_3px_rgba(0,0,0,0.2)]" />
+    <div className="absolute inset-x-0 top-[7px] flex justify-center">
+      <div className="h-[6px] w-[76%] rounded-full border border-mall-gold/45 bg-mall-wall/70 shadow-[0_1px_3px_rgba(0,0,0,0.2)]" />
     </div>
 
     <div
@@ -216,14 +216,14 @@ const FloorThreeGate = () => (
         />
       </div>
 
-      <div className="absolute inset-x-[14%] bottom-[4px] flex flex-col gap-[2px]">
-        {[0, 1, 2, 3].map((step) => (
+      <div className="absolute inset-x-[15%] bottom-[3px] flex flex-col gap-[1px]">
+        {[0, 1, 2].map((step) => (
           <div
             key={step}
             className="border-t border-mall-gold/25"
             style={{
-              height: "6px",
-              marginInline: `${step * 3}px`,
+              height: "4px",
+              marginInline: `${step * 2}px`,
               background: `linear-gradient(180deg, hsl(35 16% ${72 - step * 5}%) 0%, hsl(35 16% ${60 - step * 5}%) 100%)`,
             }}
           />
@@ -232,7 +232,7 @@ const FloorThreeGate = () => (
     </div>
 
     <div
-      className="h-[11px] border-t border-mall-gold/40 md:h-[12px]"
+      className="h-[8px] border-t border-mall-gold/40 md:h-[9px]"
       style={{
         backgroundImage: `linear-gradient(180deg, hsl(var(--mall-floor) / 0.55) 0%, hsl(var(--mall-floor) / 0.85) 100%), url(${marbleFloorTexture})`,
         backgroundBlendMode: "soft-light, normal",
@@ -272,7 +272,7 @@ const FloorThreeRow = ({ stores }: FloorThreeRowProps) => {
           </div>
         </div>
 
-        <div className="relative h-[150px] pt-5 md:h-[162px] md:pt-6">
+        <div className="relative aspect-[1630/158] min-h-[92px] max-h-[158px] pt-4 md:pt-5">
           {stores.slice(0, 3).map((store, index) => (
             <FloorThreeStorefront
               key={store.id}
