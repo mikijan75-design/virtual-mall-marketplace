@@ -2,7 +2,7 @@ import { useNavigate } from "react-router-dom";
 import { mallFloors } from "@/data/mallData";
 import MallHeader from "@/components/mall/MallHeader";
 import FloorMap from "@/components/mall/FloorMap";
-import MallFloorRow from "@/components/mall/MallFloorRow";
+import FloorThreeRow from "@/components/mall/FloorThreeRow";
 import referenceMall from "@/assets/reference-mall-exact.png";
 
 const storeHotspots = [
@@ -58,9 +58,9 @@ const Index = () => {
           ))}
         </div>
 
-        {/* קומה 3 — בסגנון זהה לקומות 1 ו-2, עם אותו מרווח/אלמנט מפריד */}
+        {/* קומה 3 — חיבור מדויק למבנה העליון */}
         <div className="mx-auto w-full max-w-[1630px] min-w-[900px] -mt-px">
-          <MallFloorRow floor={mallFloors[2]} isLast={true} />
+          <FloorThreeRow stores={mallFloors[2].stores} />
         </div>
       </main>
 
