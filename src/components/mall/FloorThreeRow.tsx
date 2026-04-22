@@ -112,11 +112,31 @@ const FloorThreeStorefront = ({
   return (
     <div className="absolute bottom-0 top-0" style={{ left: `${left}%`, width: `${width}%` }}>
       {divider ? <GoldDivider align={divider} /> : null}
+      {/* קשת עליונה — תואם לקומות 1 ו-2 */}
+      <div
+        className="pointer-events-none absolute left-0 right-0 top-0 z-10 h-[14px] md:h-[16px]"
+        style={{
+          background:
+            "linear-gradient(180deg, hsl(var(--mall-wall)) 0%, hsl(var(--mall-ceiling)) 100%)",
+          borderTopLeftRadius: "50% 100%",
+          borderTopRightRadius: "50% 100%",
+          borderBottom: "1px solid hsl(var(--mall-gold) / 0.55)",
+          boxShadow: "inset 0 1px 0 hsl(var(--mall-gold) / 0.45), 0 1px 2px rgba(0,0,0,0.18)",
+        }}
+      >
+        <div
+          className="absolute inset-x-[12%] bottom-[2px] top-[3px]"
+          style={{
+            background:
+              "radial-gradient(ellipse at 50% 100%, hsl(var(--mall-gold) / 0.35) 0%, transparent 70%)",
+          }}
+        />
+      </div>
       <button
         type="button"
         onClick={() => navigate(`/store/${store.id}`)}
         aria-label={`כניסה לחנות ${store.name}`}
-        className="group relative flex h-full w-full flex-col overflow-hidden border border-mall-gold/55 bg-card/90 shadow-[0_2px_8px_rgba(0,0,0,0.18)] transition-transform duration-200 hover:-translate-y-0.5 focus:outline-none focus-visible:ring-2 focus-visible:ring-mall-gold focus-visible:ring-offset-2 focus-visible:ring-offset-background"
+        className="group relative mt-[12px] flex h-[calc(100%-12px)] w-full flex-col overflow-hidden border border-mall-gold/55 bg-card/90 shadow-[0_2px_8px_rgba(0,0,0,0.18)] transition-transform duration-200 hover:-translate-y-0.5 focus:outline-none focus-visible:ring-2 focus-visible:ring-mall-gold focus-visible:ring-offset-2 focus-visible:ring-offset-background md:mt-[14px] md:h-[calc(100%-14px)]"
         style={{
           backgroundImage: `linear-gradient(180deg, hsl(var(--card)) 0%, hsl(var(--mall-wall) / 0.88) 100%), url(${mallWallTexture})`,
           backgroundBlendMode: "soft-light, normal",
