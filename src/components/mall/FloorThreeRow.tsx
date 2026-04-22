@@ -245,7 +245,7 @@ const FloorThreeRow = ({ stores }: FloorThreeRowProps) => {
   return (
     <section id="floor-3" className="relative -mt-px" aria-label="קומה 3 - קומת המזון" data-floor3-row>
       <div
-        className="relative border-x-[3px] border-mall-gold/55 px-0 pb-0 pt-4 md:pt-5"
+        className="relative px-0 pb-0 pt-4 md:pt-5"
         style={{
           backgroundImage: `linear-gradient(180deg, hsl(var(--mall-ceiling) / 0.96) 0%, hsl(var(--mall-wall) / 0.98) 100%), url(${mallWallTexture})`,
           backgroundBlendMode: "soft-light, normal",
