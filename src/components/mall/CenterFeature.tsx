@@ -449,57 +449,134 @@ const CenterFeature = ({ floorId }: CenterFeatureProps) => {
 
           {floorId === 1 && (
             <>
-              {/* Roman dome top - connects upward to floor above */}
+              {/* Modern ceiling dome with neon LED frame casting light downward */}
               <div
-                className="absolute top-0 left-[4%] right-[4%] h-12 md:h-16 rounded-t-full overflow-hidden"
+                className="absolute top-0 left-[4%] right-[4%] h-14 md:h-20 rounded-b-[60%] overflow-visible"
                 style={{
                   background:
-                    "radial-gradient(ellipse at 50% 100%, hsl(43,55%,60%), hsl(43,38%,30%))",
-                  boxShadow: "inset 0 -5px 18px rgba(0,0,0,0.5), 0 4px 14px rgba(0,0,0,0.35)",
+                    "radial-gradient(ellipse at 50% 0%, hsl(210,30%,22%), hsl(215,35%,12%) 80%)",
+                  boxShadow:
+                    "inset 0 -8px 22px rgba(0,0,0,0.55), 0 4px 14px rgba(0,0,0,0.35)",
                 }}
               >
+                {/* Neon LED ring */}
                 <div
-                  className="absolute inset-0 opacity-50"
+                  className="absolute bottom-0 left-[6%] right-[6%] h-[3px] md:h-[4px] rounded-full"
                   style={{
-                    backgroundImage:
-                      "repeating-linear-gradient(90deg, transparent 0, transparent 12px, rgba(0,0,0,0.3) 12px, rgba(0,0,0,0.3) 14px)",
+                    background:
+                      "linear-gradient(90deg, hsl(195,100%,75%), hsl(200,100%,88%), hsl(195,100%,75%))",
+                    boxShadow:
+                      "0 0 12px hsl(195,100%,70%), 0 0 24px hsl(200,100%,65%), 0 0 40px hsl(200,100%,60%)",
+                  }}
+                />
+                {/* Inner secondary LED line */}
+                <div
+                  className="absolute bottom-2 left-[14%] right-[14%] h-[2px] rounded-full opacity-80"
+                  style={{
+                    background: "linear-gradient(90deg, transparent, hsl(195,100%,85%), transparent)",
+                    boxShadow: "0 0 8px hsl(195,100%,70%)",
                   }}
                 />
               </div>
 
-              {/* Center half-height column under dome */}
+              {/* Light cone projecting downward from the LED frame */}
               <div
-                className="absolute top-12 md:top-16 bottom-[45%] left-1/2 -translate-x-1/2 w-3 md:w-4 rounded-sm"
+                className="absolute top-14 md:top-20 left-1/2 -translate-x-1/2 pointer-events-none"
                 style={{
+                  width: "85%",
+                  height: "55%",
                   background:
-                    "linear-gradient(90deg, hsl(43,40%,75%), hsl(43,35%,55%), hsl(43,40%,75%))",
-                  boxShadow: "0 0 6px rgba(0,0,0,0.4)",
+                    "radial-gradient(ellipse at 50% 0%, hsla(195,100%,75%,0.28), hsla(200,80%,65%,0.10) 55%, transparent 80%)",
+                  filter: "blur(2px)",
                 }}
               />
 
-              {/* Glass railing */}
-              <div className="absolute bottom-0 left-[6%] right-[6%] h-[45%]">
+              {/* Bar counter (seating zone) */}
+              <div className="absolute bottom-[18%] left-[10%] right-[10%] h-[3px] md:h-[4px] rounded-full"
+                style={{
+                  background: "linear-gradient(90deg, hsl(200,40%,70%), hsl(210,35%,85%), hsl(200,40%,70%))",
+                  boxShadow: "0 2px 6px rgba(0,0,0,0.4), 0 0 10px hsla(195,100%,70%,0.4)",
+                }}
+              />
+              {/* Bar front panel */}
+              <div
+                className="absolute bottom-[6%] left-[10%] right-[10%] h-[12%] rounded-sm"
+                style={{
+                  background:
+                    "linear-gradient(180deg, hsl(215,30%,22%), hsl(215,35%,14%))",
+                  borderTop: "1px solid hsla(195,100%,75%,0.5)",
+                  boxShadow:
+                    "inset 0 1px 4px rgba(255,255,255,0.08), 0 -2px 8px hsla(195,100%,60%,0.25)",
+                }}
+              >
+                {/* Soft under-counter LED glow */}
                 <div
-                  className="absolute inset-0 rounded-sm"
+                  className="absolute -bottom-1 left-2 right-2 h-1 rounded-full opacity-80"
                   style={{
-                    background:
-                      "linear-gradient(180deg, rgba(180,210,230,0.28), rgba(140,180,210,0.18))",
-                    border: "2px solid rgba(200,220,240,0.55)",
-                    boxShadow: "inset 0 2px 8px rgba(255,255,255,0.3), 0 4px 12px rgba(0,0,0,0.25)",
+                    background: "linear-gradient(90deg, transparent, hsl(195,100%,75%), transparent)",
+                    filter: "blur(2px)",
                   }}
                 />
-                {/* Railing posts */}
-                <div className="absolute top-0 bottom-0 left-[10%] w-1" style={{ background: "linear-gradient(180deg, hsl(43,55%,68%), hsl(43,35%,38%))" }} />
-                <div className="absolute top-0 bottom-0 left-[30%] w-1" style={{ background: "linear-gradient(180deg, hsl(43,55%,68%), hsl(43,35%,38%))" }} />
-                <div className="absolute top-0 bottom-0 left-[50%] w-1" style={{ background: "linear-gradient(180deg, hsl(43,55%,68%), hsl(43,35%,38%))" }} />
-                <div className="absolute top-0 bottom-0 left-[70%] w-1" style={{ background: "linear-gradient(180deg, hsl(43,55%,68%), hsl(43,35%,38%))" }} />
-                <div className="absolute top-0 bottom-0 left-[90%] w-1" style={{ background: "linear-gradient(180deg, hsl(43,55%,68%), hsl(43,35%,38%))" }} />
-                {/* Top handrail */}
+              </div>
+
+              {/* Bar stools (3 small seats) */}
+              {[20, 50, 80].map((left) => (
+                <div key={left} className="absolute" style={{ left: `${left}%`, bottom: "20%", transform: "translateX(-50%)" }}>
+                  <div
+                    className="w-2 md:w-2.5 h-2 md:h-2.5 rounded-full"
+                    style={{
+                      background: "linear-gradient(180deg, hsl(200,30%,80%), hsl(210,25%,55%))",
+                      boxShadow: "0 1px 3px rgba(0,0,0,0.4)",
+                    }}
+                  />
+                  <div
+                    className="mx-auto w-[1.5px] h-2 md:h-2.5"
+                    style={{ background: "hsl(210,15%,45%)" }}
+                  />
+                </div>
+              ))}
+
+              {/* Modern glass railing — light blue, glossy */}
+              <div className="absolute bottom-[34%] left-[6%] right-[6%] h-[24%]">
                 <div
-                  className="absolute -top-1 left-0 right-0 h-2 md:h-2.5 rounded-full"
+                  className="absolute inset-0 rounded-sm overflow-hidden"
                   style={{
-                    background: "linear-gradient(180deg, hsl(43,55%,68%), hsl(43,40%,40%))",
-                    boxShadow: "0 2px 4px rgba(0,0,0,0.4)",
+                    background:
+                      "linear-gradient(180deg, hsla(195,80%,82%,0.45), hsla(200,70%,65%,0.28))",
+                    border: "1px solid hsla(195,90%,88%,0.7)",
+                    boxShadow:
+                      "inset 0 2px 10px hsla(195,100%,90%,0.5), inset 0 -2px 8px hsla(200,80%,55%,0.25), 0 4px 14px hsla(195,90%,55%,0.35), 0 0 18px hsla(195,100%,70%,0.25)",
+                  }}
+                >
+                  {/* Glossy diagonal highlight */}
+                  <div
+                    className="absolute -inset-1 opacity-60"
+                    style={{
+                      background:
+                        "linear-gradient(115deg, transparent 30%, hsla(195,100%,95%,0.55) 45%, transparent 60%)",
+                    }}
+                  />
+                </div>
+                {/* Slim chrome posts */}
+                {[10, 35, 65, 90].map((l) => (
+                  <div
+                    key={l}
+                    className="absolute top-0 bottom-0 w-[2px]"
+                    style={{
+                      left: `${l}%`,
+                      background: "linear-gradient(180deg, hsl(210,20%,90%), hsl(210,15%,55%))",
+                      boxShadow: "0 0 4px rgba(0,0,0,0.3)",
+                    }}
+                  />
+                ))}
+                {/* Top chrome handrail with cyan glow */}
+                <div
+                  className="absolute -top-1 left-0 right-0 h-1.5 md:h-2 rounded-full"
+                  style={{
+                    background:
+                      "linear-gradient(180deg, hsl(210,25%,95%), hsl(210,15%,55%))",
+                    boxShadow:
+                      "0 0 6px hsla(195,100%,75%,0.6), 0 2px 4px rgba(0,0,0,0.4)",
                   }}
                 />
               </div>
