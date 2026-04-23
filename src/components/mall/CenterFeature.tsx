@@ -227,53 +227,69 @@ const CenterFeature = ({ floorId }: CenterFeatureProps) => {
                   />
                 </g>
 
-                {/* Long red carpet rolling out from the doorway toward viewer */}
+                {/* Long red carpet — starts deep inside the doorway, widens toward viewer */}
                 <g>
-                  {/* Carpet body - trapezoid widening toward viewer */}
+                  {/* Inner small arch at the far end of the carpet — a doorway-within-the-doorway */}
                   <path
-                    d="M 78 175 L 122 175 L 150 230 L 50 230 Z"
+                    d="M 92 152 L 92 138 A 8 10 0 0 1 108 138 L 108 152 Z"
+                    fill="hsl(38,45%,55%)"
+                    stroke="hsl(35,30%,40%)"
+                    strokeWidth="0.6"
+                  />
+                  {/* Inner arch dark interior (hint of further depth) */}
+                  <path
+                    d="M 94 152 L 94 140 A 6 8 0 0 1 106 140 L 106 152 Z"
+                    fill="hsl(35,40%,28%)"
+                  />
+                  {/* Tiny cream glow at the very back of inner arch */}
+                  <ellipse cx="100" cy="148" rx="3" ry="2" fill="hsl(42,70%,90%)" opacity="0.85" />
+
+                  {/* Carpet body - narrow at the inner arch, wide at viewer */}
+                  <path
+                    d="M 92 152 L 108 152 L 158 230 L 42 230 Z"
                     fill="url(#redCarpet)"
                     stroke="hsl(40,35%,68%)"
                     strokeWidth="0.8"
                   />
-                  {/* Gold trim along edges */}
-                  <path
-                    d="M 78 175 L 50 230"
-                    stroke="hsl(43,55%,62%)"
-                    strokeWidth="1.5"
-                    fill="none"
-                  />
-                  <path
-                    d="M 122 175 L 150 230"
-                    stroke="hsl(43,55%,62%)"
-                    strokeWidth="1.5"
-                    fill="none"
-                  />
-                  {/* Two stanchions/posts at the front end of the carpet */}
-                  {/* Left post */}
-                  <rect x="44" y="200" width="3.5" height="30" fill="hsl(43,50%,55%)" stroke="hsl(43,40%,35%)" strokeWidth="0.4" />
-                  <circle cx="45.75" cy="200" r="3" fill="hsl(43,70%,75%)" stroke="hsl(43,45%,40%)" strokeWidth="0.4" />
+                  {/* Gold trim along carpet edges */}
+                  <path d="M 92 152 L 42 230" stroke="hsl(43,55%,62%)" strokeWidth="1.6" fill="none" />
+                  <path d="M 108 152 L 158 230" stroke="hsl(43,55%,62%)" strokeWidth="1.6" fill="none" />
+                  {/* Subtle perspective seam down the middle */}
+                  <line x1="100" y1="152" x2="100" y2="230" stroke="hsl(0,50%,22%)" strokeWidth="0.4" opacity="0.5" />
+
+                  {/* Two LARGE stanchions at the front end of the carpet */}
+                  {/* Left post - base, shaft, ball top */}
+                  <rect x="34" y="218" width="14" height="3" rx="0.6" fill="hsl(43,40%,35%)" />
+                  <rect x="38" y="188" width="6" height="32" fill="hsl(43,55%,58%)" stroke="hsl(43,40%,32%)" strokeWidth="0.5" />
+                  <rect x="36" y="186" width="10" height="3" rx="0.6" fill="hsl(43,60%,68%)" stroke="hsl(43,40%,32%)" strokeWidth="0.4" />
+                  <circle cx="41" cy="183" r="5" fill="hsl(43,75%,80%)" stroke="hsl(43,45%,38%)" strokeWidth="0.5" />
+                  <ellipse cx="39" cy="181" rx="1.5" ry="1" fill="hsl(45,90%,95%)" opacity="0.85" />
                   {/* Right post */}
-                  <rect x="152.5" y="200" width="3.5" height="30" fill="hsl(43,50%,55%)" stroke="hsl(43,40%,35%)" strokeWidth="0.4" />
-                  <circle cx="154.25" cy="200" r="3" fill="hsl(43,70%,75%)" stroke="hsl(43,45%,40%)" strokeWidth="0.4" />
+                  <rect x="152" y="218" width="14" height="3" rx="0.6" fill="hsl(43,40%,35%)" />
+                  <rect x="156" y="188" width="6" height="32" fill="hsl(43,55%,58%)" stroke="hsl(43,40%,32%)" strokeWidth="0.5" />
+                  <rect x="154" y="186" width="10" height="3" rx="0.6" fill="hsl(43,60%,68%)" stroke="hsl(43,40%,32%)" strokeWidth="0.4" />
+                  <circle cx="159" cy="183" r="5" fill="hsl(43,75%,80%)" stroke="hsl(43,45%,38%)" strokeWidth="0.5" />
+                  <ellipse cx="157" cy="181" rx="1.5" ry="1" fill="hsl(45,90%,95%)" opacity="0.85" />
                   {/* Velvet rope between posts (loose curve) */}
                   <path
-                    d="M 47 202 Q 100 218 153 202"
+                    d="M 44 186 Q 100 208 158 186"
                     fill="none"
-                    stroke="hsl(0,55%,35%)"
-                    strokeWidth="1.8"
+                    stroke="hsl(0,60%,32%)"
+                    strokeWidth="2.4"
                     strokeLinecap="round"
                   />
                 </g>
               </svg>
 
-              {/* "Welcome" text label centered over the front of the carpet */}
-              <div className="absolute bottom-1 left-0 right-0 flex items-center justify-center pointer-events-none">
+              {/* "Welcome" text — placed ABOVE the doorway arch */}
+              <div className="absolute top-1 left-0 right-0 flex items-center justify-center pointer-events-none z-10">
                 <span
-                  className="font-frank font-bold text-[9px] md:text-[11px] tracking-wider"
+                  className="font-frank font-bold text-[10px] md:text-xs tracking-wider px-2 py-0.5 rounded"
                   style={{
-                    color: "hsl(45,60%,94%)",
-                    textShadow: "0 1px 2px rgba(0,0,0,0.7), 0 0 4px rgba(0,0,0,0.4)",
+                    color: "hsl(28,45%,18%)",
+                    background: "linear-gradient(180deg, hsl(42,70%,92%), hsl(38,55%,80%))",
+                    border: "1px solid hsl(35,30%,55%)",
+                    boxShadow: "0 1px 2px rgba(0,0,0,0.3), inset 0 1px 0 rgba(255,255,255,0.5)",
                   }}
                 >
                   ברוכים הבאים
