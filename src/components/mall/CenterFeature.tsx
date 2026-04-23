@@ -116,15 +116,19 @@ const CenterFeature = ({ floorId }: CenterFeatureProps) => {
                 preserveAspectRatio="none"
               >
                 <defs>
-                  <radialGradient id="doorDepth" cx="50%" cy="100%" r="80%">
-                    <stop offset="0%" stopColor="hsl(45,80%,90%)" />
-                    <stop offset="35%" stopColor="hsl(40,50%,65%)" />
-                    <stop offset="70%" stopColor="hsl(30,35%,32%)" />
-                    <stop offset="100%" stopColor="hsl(220,40%,8%)" />
+                  {/* Cream interior - lighter at center, soft cream all the way through */}
+                  <radialGradient id="doorDepth" cx="50%" cy="55%" r="75%">
+                    <stop offset="0%" stopColor="hsl(42,75%,96%)" />
+                    <stop offset="55%" stopColor="hsl(40,55%,88%)" />
+                    <stop offset="100%" stopColor="hsl(38,40%,76%)" />
                   </radialGradient>
                   <linearGradient id="stoneGrad" x1="0" y1="0" x2="0" y2="1">
                     <stop offset="0%" stopColor="hsl(40,18%,96%)" />
                     <stop offset="100%" stopColor="hsl(35,15%,75%)" />
+                  </linearGradient>
+                  <linearGradient id="redCarpet" x1="0" y1="0" x2="0" y2="1">
+                    <stop offset="0%" stopColor="hsl(0,65%,48%)" />
+                    <stop offset="100%" stopColor="hsl(0,60%,30%)" />
                   </linearGradient>
                   <clipPath id="doorClip">
                     <path d="M 40 230 L 40 110 A 60 60 0 0 1 160 110 L 160 230 Z" />
@@ -137,14 +141,6 @@ const CenterFeature = ({ floorId }: CenterFeatureProps) => {
                     d="M 40 230 L 40 110 A 60 60 0 0 1 160 110 L 160 230 Z"
                     fill="url(#doorDepth)"
                   />
-                  {/* Perspective floor lines toward vanishing point */}
-                  <path
-                    d="M 40 230 L 95 175 L 105 175 L 160 230 Z"
-                    fill="hsl(40,35%,55%)"
-                    opacity="0.55"
-                  />
-                  <line x1="40" y1="230" x2="100" y2="175" stroke="hsl(35,25%,40%)" strokeWidth="0.5" opacity="0.6" />
-                  <line x1="160" y1="230" x2="100" y2="175" stroke="hsl(35,25%,40%)" strokeWidth="0.5" opacity="0.6" />
                 </g>
 
                 {/* Arched stone voussoirs hugging the opening */}
@@ -217,36 +213,68 @@ const CenterFeature = ({ floorId }: CenterFeatureProps) => {
                   transform="translate(100 140)"
                   style={{
                     filter:
-                      "drop-shadow(0 0 6px rgba(255,248,225,0.9)) drop-shadow(0 0 14px rgba(255,240,200,0.55))",
+                      "drop-shadow(0 0 5px rgba(255,245,215,0.85)) drop-shadow(0 0 12px rgba(245,225,180,0.5))",
                   }}
                 >
+                  {/* Continuous infinity loop - no endpoints, symbolizing endless flow */}
                   <path
-                    d="M -22 0 C -22 -10 -10 -10 0 0 C 10 10 22 10 22 0 C 22 -10 10 -10 0 0 C -10 10 -22 10 -22 0 Z"
+                    d="M 0 0 C -8 -14 -28 -14 -28 0 C -28 14 -8 14 0 0 C 8 -14 28 -14 28 0 C 28 14 8 14 0 0 Z"
                     fill="none"
-                    stroke="hsl(45,55%,95%)"
-                    strokeWidth="3.5"
+                    stroke="hsl(42,60%,93%)"
+                    strokeWidth="4"
                     strokeLinecap="round"
                     strokeLinejoin="round"
                   />
                 </g>
+
+                {/* Long red carpet rolling out from the doorway toward viewer */}
+                <g>
+                  {/* Carpet body - trapezoid widening toward viewer */}
+                  <path
+                    d="M 78 175 L 122 175 L 150 230 L 50 230 Z"
+                    fill="url(#redCarpet)"
+                    stroke="hsl(40,35%,68%)"
+                    strokeWidth="0.8"
+                  />
+                  {/* Gold trim along edges */}
+                  <path
+                    d="M 78 175 L 50 230"
+                    stroke="hsl(43,55%,62%)"
+                    strokeWidth="1.5"
+                    fill="none"
+                  />
+                  <path
+                    d="M 122 175 L 150 230"
+                    stroke="hsl(43,55%,62%)"
+                    strokeWidth="1.5"
+                    fill="none"
+                  />
+                  {/* Two stanchions/posts at the front end of the carpet */}
+                  {/* Left post */}
+                  <rect x="44" y="200" width="3.5" height="30" fill="hsl(43,50%,55%)" stroke="hsl(43,40%,35%)" strokeWidth="0.4" />
+                  <circle cx="45.75" cy="200" r="3" fill="hsl(43,70%,75%)" stroke="hsl(43,45%,40%)" strokeWidth="0.4" />
+                  {/* Right post */}
+                  <rect x="152.5" y="200" width="3.5" height="30" fill="hsl(43,50%,55%)" stroke="hsl(43,40%,35%)" strokeWidth="0.4" />
+                  <circle cx="154.25" cy="200" r="3" fill="hsl(43,70%,75%)" stroke="hsl(43,45%,40%)" strokeWidth="0.4" />
+                  {/* Velvet rope between posts (loose curve) */}
+                  <path
+                    d="M 47 202 Q 100 218 153 202"
+                    fill="none"
+                    stroke="hsl(0,55%,35%)"
+                    strokeWidth="1.8"
+                    strokeLinecap="round"
+                  />
+                </g>
               </svg>
 
-              {/* Front welcome carpet with text */}
-              <div
-                className="absolute bottom-0 left-[8%] right-[8%] h-5 md:h-6 flex items-center justify-center"
-                style={{
-                  background:
-                    "linear-gradient(180deg, hsl(0,60%,42%), hsl(0,55%,28%))",
-                  clipPath: "polygon(6% 0, 94% 0, 100% 100%, 0 100%)",
-                  boxShadow:
-                    "inset 0 1px 2px rgba(255,255,255,0.2), 0 -2px 4px rgba(0,0,0,0.25)",
-                  border: "1px solid hsl(40,30%,70%)",
-                  borderBottom: "none",
-                }}
-              >
+              {/* "Welcome" text label centered over the front of the carpet */}
+              <div className="absolute bottom-1 left-0 right-0 flex items-center justify-center pointer-events-none">
                 <span
                   className="font-frank font-bold text-[9px] md:text-[11px] tracking-wider"
-                  style={{ color: "hsl(45,55%,92%)", textShadow: "0 1px 1px rgba(0,0,0,0.5)" }}
+                  style={{
+                    color: "hsl(45,60%,94%)",
+                    textShadow: "0 1px 2px rgba(0,0,0,0.7), 0 0 4px rgba(0,0,0,0.4)",
+                  }}
                 >
                   ברוכים הבאים
                 </span>
