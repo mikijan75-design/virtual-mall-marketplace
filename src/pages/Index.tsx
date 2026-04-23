@@ -98,9 +98,12 @@ const Index = () => {
 
                     <StoreCard store={store} storeIndex={idx} />
 
-                    {/* Realistic planter between stores */}
+                    {/* Planter centered in the gap between stores (skip last in each row half) */}
                     {idx % 3 !== 2 && (
-                      <div className="absolute -right-3 md:-right-4 bottom-3 z-30 flex flex-col items-center pointer-events-none">
+                      <div
+                        className="absolute bottom-3 z-30 flex flex-col items-center pointer-events-none"
+                        style={{ right: "calc(-0.375rem)", transform: "translateX(50%)" }}
+                      >
                         {/* Lush fruit tree foliage */}
                         <div className="relative w-8 h-9 md:w-12 md:h-14">
                           {/* Foliage clusters */}
@@ -174,6 +177,24 @@ const Index = () => {
                             borderTop: "1.5px solid hsl(22,45%,62%)",
                           }}
                         />
+                      </div>
+                    )}
+
+                    {/* Trash bin where there's no planter — idx 2 (right gap before center) and idx 5 (left gap after last) */}
+                    {idx === 2 && (
+                      <div
+                        className="absolute bottom-3 z-30 flex flex-col items-center pointer-events-none"
+                        style={{ right: "calc(-0.375rem)", transform: "translateX(50%)" }}
+                      >
+                        <TrashBin />
+                      </div>
+                    )}
+                    {idx === 5 && (
+                      <div
+                        className="absolute bottom-3 z-30 flex flex-col items-center pointer-events-none"
+                        style={{ left: "calc(-0.375rem)", transform: "translateX(-50%)" }}
+                      >
+                        <TrashBin />
                       </div>
                     )}
                   </div>
