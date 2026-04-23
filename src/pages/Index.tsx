@@ -1,4 +1,5 @@
 import { mallFloors } from "@/data/mallData";
+import { Fragment } from "react";
 import MallHeader from "@/components/mall/MallHeader";
 import MallCeiling from "@/components/mall/MallCeiling";
 import Decorations from "@/components/mall/Decorations";
@@ -63,9 +64,9 @@ const Index = () => {
                     <CenterFeature key={`center-${floor.id}`} floorId={floor.id} />
                   ) : null;
                   return (
-                  <>
+                  <Fragment key={store.id}>
                   {centerSlot}
-                  <div key={store.id} className="relative">
+                  <div className="relative">
                     {/* Recessed ceiling light fixture */}
                     <div className="absolute -top-2 left-1/2 -translate-x-1/2 z-20 flex flex-col items-center pointer-events-none">
                       {/* Light fixture body */}
@@ -128,7 +129,7 @@ const Index = () => {
                       </div>
                     )}
                   </div>
-                  </>
+                  </Fragment>
                   );
                 })}
               </div>
