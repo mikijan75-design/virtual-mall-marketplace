@@ -371,85 +371,71 @@ const CenterFeature = ({ floorId }: CenterFeatureProps) => {
                   </linearGradient>
                 </defs>
 
-                {/* Top sign banner connecting to desk via posts */}
-                <rect x="55" y="2" width="90" height="14" rx="2"
-                  fill="url(#kioskTop)"
-                  stroke="hsl(210,40%,85%)" strokeWidth="0.8" />
-                <text x="100" y="12" textAnchor="middle"
-                  fontFamily="Frank Ruhl Libre, serif" fontWeight="700"
-                  fontSize="8" fill="hsl(0,0%,98%)" letterSpacing="0.5">
-                  תחנת מידע
-                </text>
-                {/* Decorative info "i" badge on the left of sign */}
-                <circle cx="62" cy="9" r="3.2" fill="hsl(0,0%,98%)" stroke="hsl(215,75%,32%)" strokeWidth="0.6" />
-                <text x="62" y="11.4" textAnchor="middle" fontSize="5" fontWeight="700" fill="hsl(215,75%,32%)" fontFamily="Arial">i</text>
-
-                {/* Two posts connecting sign down to the counter */}
-                <rect x="58" y="16" width="3" height="58" fill="url(#kioskPost)" stroke="hsl(210,30%,55%)" strokeWidth="0.4" />
-                <rect x="139" y="16" width="3" height="58" fill="url(#kioskPost)" stroke="hsl(210,30%,55%)" strokeWidth="0.4" />
-
-                {/* === Attendant (more human) === */}
-                {/* Body / shirt - white */}
-                <path d="M 88 90 Q 100 78 112 90 L 116 110 L 84 110 Z"
-                  fill="hsl(0,0%,98%)" stroke="hsl(210,20%,75%)" strokeWidth="0.5" />
+                {/* === Attendant (LARGER, more human) === */}
+                {/* Body / shirt - white, broader shoulders */}
+                <path d="M 78 78 Q 100 60 122 78 L 130 108 L 70 108 Z"
+                  fill="hsl(0,0%,98%)" stroke="hsl(210,20%,75%)" strokeWidth="0.6" />
                 {/* Blue tie */}
-                <path d="M 100 80 L 97 88 L 100 102 L 103 88 Z" fill="hsl(215,75%,40%)" />
+                <path d="M 100 62 L 95 76 L 100 100 L 105 76 Z" fill="hsl(215,75%,40%)" />
                 {/* Neck */}
-                <rect x="97" y="74" width="6" height="6" fill="url(#skin)" />
+                <rect x="95" y="52" width="10" height="10" fill="url(#skin)" />
                 {/* Head */}
-                <ellipse cx="100" cy="66" rx="8" ry="9" fill="url(#skin)" stroke="hsl(28,40%,55%)" strokeWidth="0.4" />
+                <ellipse cx="100" cy="40" rx="14" ry="16" fill="url(#skin)" stroke="hsl(28,40%,55%)" strokeWidth="0.5" />
                 {/* Ears */}
-                <ellipse cx="92" cy="67" rx="1.4" ry="2" fill="hsl(28,50%,70%)" />
-                <ellipse cx="108" cy="67" rx="1.4" ry="2" fill="hsl(28,50%,70%)" />
+                <ellipse cx="86" cy="42" rx="2.4" ry="3.4" fill="hsl(28,50%,70%)" />
+                <ellipse cx="114" cy="42" rx="2.4" ry="3.4" fill="hsl(28,50%,70%)" />
                 {/* Hair tufts under cap */}
-                <path d="M 92 62 Q 100 58 108 62 L 108 64 Q 100 62 92 64 Z" fill="hsl(28,40%,28%)" />
+                <path d="M 86 32 Q 100 26 114 32 L 114 36 Q 100 33 86 36 Z" fill="hsl(28,40%,28%)" />
                 {/* Eyes */}
-                <circle cx="96.5" cy="67" r="0.9" fill="hsl(220,40%,18%)" />
-                <circle cx="103.5" cy="67" r="0.9" fill="hsl(220,40%,18%)" />
+                <circle cx="94" cy="42" r="1.5" fill="hsl(220,40%,18%)" />
+                <circle cx="106" cy="42" r="1.5" fill="hsl(220,40%,18%)" />
+                <circle cx="94.4" cy="41.5" r="0.5" fill="hsl(0,0%,98%)" />
+                <circle cx="106.4" cy="41.5" r="0.5" fill="hsl(0,0%,98%)" />
                 {/* Eyebrows */}
-                <path d="M 94.5 64.5 L 98.5 64.2" stroke="hsl(28,40%,25%)" strokeWidth="0.6" strokeLinecap="round" />
-                <path d="M 101.5 64.2 L 105.5 64.5" stroke="hsl(28,40%,25%)" strokeWidth="0.6" strokeLinecap="round" />
+                <path d="M 91 38 L 97 37.5" stroke="hsl(28,40%,25%)" strokeWidth="1" strokeLinecap="round" />
+                <path d="M 103 37.5 L 109 38" stroke="hsl(28,40%,25%)" strokeWidth="1" strokeLinecap="round" />
                 {/* Nose */}
-                <path d="M 100 67.5 L 99 71 L 100.5 71.5 L 101 71" stroke="hsl(28,40%,55%)" strokeWidth="0.5" fill="none" strokeLinecap="round" />
+                <path d="M 100 43 L 98.5 49 L 100.5 50 L 101.5 49.5" stroke="hsl(28,40%,55%)" strokeWidth="0.7" fill="none" strokeLinecap="round" />
                 {/* Smile */}
-                <path d="M 97 72.5 Q 100 74.5 103 72.5" stroke="hsl(0,40%,40%)" strokeWidth="0.7" fill="none" strokeLinecap="round" />
-                {/* Cap - red/white/blue stripes */}
-                <path d="M 90 60 Q 100 52 110 60 L 110 62 L 90 62 Z" fill="hsl(215,75%,38%)" stroke="hsl(215,55%,22%)" strokeWidth="0.4" />
+                <path d="M 95 52 Q 100 55.5 105 52" stroke="hsl(0,40%,40%)" strokeWidth="1" fill="none" strokeLinecap="round" />
+                {/* Cap - blue base */}
+                <path d="M 84 30 Q 100 18 116 30 L 116 33 L 84 33 Z" fill="hsl(215,75%,38%)" stroke="hsl(215,55%,22%)" strokeWidth="0.5" />
                 {/* Cap stripes */}
-                <rect x="90" y="56.5" width="20" height="1.6" fill="hsl(0,0%,98%)" />
-                <rect x="90" y="54.4" width="20" height="1.6" fill="hsl(0,75%,50%)" />
+                <rect x="84" y="26" width="32" height="2.2" fill="hsl(0,0%,98%)" />
+                <rect x="84" y="23" width="32" height="2.2" fill="hsl(0,75%,50%)" />
                 {/* Cap brim */}
-                <ellipse cx="100" cy="62.5" rx="11" ry="1.5" fill="hsl(215,75%,28%)" />
+                <ellipse cx="100" cy="33.5" rx="18" ry="2.5" fill="hsl(215,75%,28%)" />
                 {/* Cap top button */}
-                <circle cx="100" cy="53" r="0.9" fill="hsl(0,0%,98%)" />
+                <circle cx="100" cy="20.5" r="1.4" fill="hsl(0,0%,98%)" />
 
                 {/* Hands resting on counter */}
-                <ellipse cx="84" cy="103" rx="3" ry="2" fill="url(#skin)" stroke="hsl(28,40%,55%)" strokeWidth="0.3" />
-                <ellipse cx="116" cy="103" rx="3" ry="2" fill="url(#skin)" stroke="hsl(28,40%,55%)" strokeWidth="0.3" />
+                <ellipse cx="70" cy="100" rx="4.5" ry="3" fill="url(#skin)" stroke="hsl(28,40%,55%)" strokeWidth="0.4" />
+                <ellipse cx="130" cy="100" rx="4.5" ry="3" fill="url(#skin)" stroke="hsl(28,40%,55%)" strokeWidth="0.4" />
 
-                {/* === Counter / kiosk desk === */}
+                {/* === LARGER Counter / kiosk desk === */}
                 {/* Desk front panel */}
-                <rect x="40" y="100" width="120" height="30" rx="2"
+                <rect x="20" y="98" width="160" height="32" rx="2"
                   fill="url(#kioskCounter)"
-                  stroke="hsl(215,55%,45%)" strokeWidth="0.8" />
+                  stroke="hsl(215,55%,45%)" strokeWidth="1" />
                 {/* Desk top */}
-                <rect x="36" y="97" width="128" height="5" rx="1.5"
-                  fill="hsl(0,0%,98%)" stroke="hsl(210,30%,60%)" strokeWidth="0.5" />
+                <rect x="14" y="94" width="172" height="6" rx="2"
+                  fill="hsl(0,0%,98%)" stroke="hsl(210,30%,60%)" strokeWidth="0.6" />
                 {/* Decorative blue band */}
-                <rect x="40" y="118" width="120" height="3" fill="hsl(215,75%,38%)" />
+                <rect x="20" y="120" width="160" height="4" fill="hsl(215,75%,38%)" />
                 {/* Front "i" emblem panel */}
-                <rect x="92" y="106" width="16" height="10" rx="1.5" fill="hsl(0,0%,98%)" stroke="hsl(215,75%,38%)" strokeWidth="0.6" />
-                <text x="100" y="114.5" textAnchor="middle" fontSize="8" fontWeight="700" fill="hsl(215,75%,38%)" fontFamily="Arial">i</text>
-                {/* Side panels divider lines */}
-                <line x1="70" y1="102" x2="70" y2="118" stroke="hsl(215,40%,60%)" strokeWidth="0.4" />
-                <line x1="130" y1="102" x2="130" y2="118" stroke="hsl(215,40%,60%)" strokeWidth="0.4" />
+                <rect x="88" y="104" width="24" height="14" rx="2" fill="hsl(0,0%,98%)" stroke="hsl(215,75%,38%)" strokeWidth="0.8" />
+                <text x="100" y="115.5" textAnchor="middle" fontSize="11" fontWeight="700" fill="hsl(215,75%,38%)" fontFamily="Arial">i</text>
+                {/* Side panel divider lines */}
+                <line x1="55" y1="100" x2="55" y2="120" stroke="hsl(215,40%,60%)" strokeWidth="0.5" />
+                <line x1="145" y1="100" x2="145" y2="120" stroke="hsl(215,40%,60%)" strokeWidth="0.5" />
 
                 {/* Items on desk */}
-                <rect x="46" y="92" width="9" height="6" rx="0.6" fill="hsl(220,30%,12%)" stroke="hsl(210,20%,55%)" strokeWidth="0.4" />
-                <rect x="46.6" y="92.6" width="7.8" height="4.8" fill="hsl(195,70%,55%)" />
-                <rect x="148" y="93" width="8" height="5" fill="hsl(0,0%,98%)" stroke="hsl(210,20%,70%)" strokeWidth="0.3" />
-                <rect x="148" y="94.5" width="8" height="0.5" fill="hsl(210,30%,75%)" />
-                <rect x="148" y="96" width="8" height="0.5" fill="hsl(210,30%,75%)" />
+                <rect x="26" y="86" width="14" height="9" rx="0.8" fill="hsl(220,30%,12%)" stroke="hsl(210,20%,55%)" strokeWidth="0.5" />
+                <rect x="27" y="87" width="12" height="7" fill="hsl(195,70%,55%)" />
+                <rect x="160" y="88" width="12" height="7" fill="hsl(0,0%,98%)" stroke="hsl(210,20%,70%)" strokeWidth="0.4" />
+                <line x1="161" y1="90" x2="171" y2="90" stroke="hsl(210,30%,75%)" strokeWidth="0.5" />
+                <line x1="161" y1="92" x2="171" y2="92" stroke="hsl(210,30%,75%)" strokeWidth="0.5" />
+                <line x1="161" y1="94" x2="171" y2="94" stroke="hsl(210,30%,75%)" strokeWidth="0.5" />
               </svg>
             </>
           )}
