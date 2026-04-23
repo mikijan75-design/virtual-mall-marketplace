@@ -77,15 +77,25 @@ const CenterFeature = ({ floorId }: CenterFeatureProps) => {
 
         {/* Subtitle band */}
         <div
-          className="py-1 text-center"
+          className="py-1 text-center relative"
           style={{
             background: isInfo
-              ? "linear-gradient(180deg, hsl(210,55%,90%), hsl(210,45%,82%))"
-              : "linear-gradient(180deg, rgba(0,0,0,0.65), rgba(0,0,0,0.8))",
+              ? `linear-gradient(90deg,
+                  hsl(210,55%,90%) 0%, hsl(210,55%,90%) 20%,
+                  hsl(0,0%,100%) 20%, hsl(0,0%,100%) 40%,
+                  hsl(210,55%,90%) 40%, hsl(210,55%,90%) 60%,
+                  hsl(0,0%,100%) 60%, hsl(0,0%,100%) 80%,
+                  hsl(210,55%,90%) 80%, hsl(210,55%,90%) 100%)`
+              : `linear-gradient(90deg,
+                  rgba(0,0,0,0.75) 0%, rgba(0,0,0,0.75) 20%,
+                  hsl(0,0%,100%) 20%, hsl(0,0%,100%) 40%,
+                  rgba(0,0,0,0.75) 40%, rgba(0,0,0,0.75) 60%,
+                  hsl(0,0%,100%) 60%, hsl(0,0%,100%) 80%,
+                  rgba(0,0,0,0.75) 80%, rgba(0,0,0,0.75) 100%)`,
           }}
         >
           <span
-            className="text-[8px] md:text-[10px] font-heebo font-medium tracking-wide"
+            className="relative text-[8px] md:text-[10px] font-heebo font-medium tracking-wide"
             style={{ color: isInfo ? "hsl(215,70%,28%)" : "hsl(40,30%,85%)" }}
           >
             {subtitle}
