@@ -5,6 +5,7 @@ import FloorMap from "@/components/mall/FloorMap";
 import FloorThreeRow from "@/components/mall/FloorThreeRow";
 import MobileMallView from "@/components/mall/MobileMallView";
 import referenceMall from "@/assets/reference-mall-exact.png";
+import centralGatesOriginal from "@/assets/central-gates-original.png";
 
 const storeHotspots = [
   { id: "s6", left: 2.6, top: 38.5, width: 11.8, height: 22.5 },
@@ -46,6 +47,25 @@ const Index = () => {
             height={640}
             draggable={false}
           />
+
+          {/* Central original gates overlay — spans floor 1 + floor 2 vertically, centered */}
+          <div
+            className="absolute pointer-events-none select-none z-20"
+            style={{
+              left: "42.7%",
+              width: "16%",
+              top: "0%",
+              height: "100%",
+            }}
+            aria-hidden="true"
+          >
+            <img
+              src={centralGatesOriginal}
+              alt=""
+              className="block w-full h-full object-cover object-center"
+              draggable={false}
+            />
+          </div>
 
           {storeHotspots.map((hotspot) => (
             <button
