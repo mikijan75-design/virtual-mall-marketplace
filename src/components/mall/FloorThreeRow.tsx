@@ -9,6 +9,7 @@ import bakeryImg from "@/assets/stores/bakery.jpg";
 import juiceImg from "@/assets/stores/juice.jpg";
 import mallWallTexture from "@/assets/mall-wall.jpg";
 import marbleFloorTexture from "@/assets/marble-floor.jpg";
+import floor3StairsImg from "@/assets/floor3-stairs.png";
 
 interface FloorThreeRowProps {
   stores: Store[];
