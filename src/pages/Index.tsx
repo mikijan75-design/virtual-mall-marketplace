@@ -38,7 +38,9 @@ const Index = () => {
         className="relative bg-background py-0 overflow-x-auto"
         aria-label="מבנה הקניון הווירטואלי"
       >
+        {/* Wrapper spans floors 1+2 image AND floor 3 row, so the central overlay can stretch across all three */}
         <div className="relative mx-auto w-full max-w-[1630px] min-w-[900px]">
+        <div className="relative">
           <img
             src={referenceMall}
             alt="מבנה קניון וירטואלי עם כיפת פרסקו, חנויות ושער מרכזי"
@@ -47,25 +49,6 @@ const Index = () => {
             height={640}
             draggable={false}
           />
-
-          {/* Central original gates overlay — spans floor 1 + floor 2, aligned to the existing structure */}
-          <div
-            className="absolute pointer-events-none select-none z-20"
-            style={{
-              left: "42.9%",
-              width: "15.6%",
-              top: "1.5%",
-              height: "97%",
-            }}
-            aria-hidden="true"
-          >
-            <img
-              src={centralGatesOriginal}
-              alt=""
-              className="block w-full h-full object-fill"
-              draggable={false}
-            />
-          </div>
 
           {storeHotspots.map((hotspot) => (
             <button
@@ -85,8 +68,28 @@ const Index = () => {
         </div>
 
         {/* קומה 3 — חיבור מדויק למבנה העליון */}
-        <div className="mx-auto w-full max-w-[1630px] min-w-[900px] -mt-px">
+        <div className="w-full -mt-px">
           <FloorThreeRow stores={mallFloors[2].stores} />
+        </div>
+
+        {/* Central original gates overlay — spans ALL THREE floors (top of floor 1 → bottom of floor 3) */}
+        <div
+          className="absolute pointer-events-none select-none z-20"
+          style={{
+            left: "42.9%",
+            width: "15.6%",
+            top: "1.5%",
+            bottom: "0%",
+          }}
+          aria-hidden="true"
+        >
+          <img
+            src={centralGatesOriginal}
+            alt=""
+            className="block w-full h-full object-fill"
+            draggable={false}
+          />
+        </div>
         </div>
       </main>
       </div>
