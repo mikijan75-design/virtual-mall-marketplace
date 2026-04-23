@@ -192,6 +192,8 @@ const FloorThreeGate = () => (
         loading="lazy"
       />
       <div className="pointer-events-none absolute inset-0 bg-gradient-to-b from-white/10 via-transparent to-black/15" />
+      {/* Marker: red line at the bottom edge of the stairs image */}
+      <div className="pointer-events-none absolute inset-x-0 bottom-0 h-[3px] bg-red-600 shadow-[0_0_4px_rgba(220,38,38,0.7)] z-10" />
     </div>
 
     <div
