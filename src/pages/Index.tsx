@@ -39,15 +39,16 @@ const Index = () => {
       >
         <div
           className="relative mx-auto w-full max-w-[1630px] min-w-[900px]"
-          style={{ transform: "scaleY(1.2)", transformOrigin: "top center" }}
+          style={{ aspectRatio: "1630 / 768" }}
         >
           <img
             src={referenceMall}
             alt="מבנה קניון וירטואלי עם כיפת פרסקו, חנויות ושער מרכזי"
-            className="block w-full h-auto select-none"
+            className="block w-full h-full select-none"
             width={1630}
-            height={640}
+            height={768}
             draggable={false}
+            style={{ objectFit: "fill" }}
           />
 
           {storeHotspots.map((hotspot) => (
@@ -71,7 +72,7 @@ const Index = () => {
         {/* קומה 3 — חיבור מדויק למבנה העליון */}
         <div
           className="mx-auto w-full max-w-[1630px] min-w-[900px] -mt-px"
-          style={{ transform: "scaleY(1.2)", transformOrigin: "top center", marginTop: "calc(640px * 0.2 * (100% / 1630))" }}
+          style={{ transform: "scaleY(1.2)", transformOrigin: "top center", paddingBottom: "3%" }}
         >
           <FloorThreeRow stores={mallFloors[2].stores} />
         </div>
