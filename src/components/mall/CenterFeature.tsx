@@ -11,9 +11,9 @@ interface CenterFeatureProps {
  */
 const CenterFeature = ({ floorId }: CenterFeatureProps) => {
   const title =
-    floorId === 3 ? "" : floorId === 2 ? "תחנת מידע" : "מרפסת";
+    floorId === 3 ? "כניסה" : floorId === 2 ? "תחנת מידע" : "מרפסת";
   const subtitle =
-    floorId === 3 ? "" : floorId === 2 ? "שירות ומידע" : "תצפית";
+    floorId === 3 ? "מיי" : floorId === 2 ? "שירות ומידע" : "תצפית";
   const isEntrance = floorId === 3;
   const isInfo = floorId === 2;
   const isBalcony = floorId === 1;
@@ -33,7 +33,7 @@ const CenterFeature = ({ floorId }: CenterFeatureProps) => {
               }
         }
       >
-        {!isEntrance && !isBalcony && (
+        {!isBalcony && (
         <>
         {/* Top gold trim - matches StoreCard */}
         <div
