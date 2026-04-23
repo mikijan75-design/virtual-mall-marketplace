@@ -5,6 +5,7 @@ import FloorMap from "@/components/mall/FloorMap";
 import FloorThreeRow from "@/components/mall/FloorThreeRow";
 import MobileMallView from "@/components/mall/MobileMallView";
 import referenceMall from "@/assets/reference-mall-exact.png";
+import centerSection from "@/assets/mall-center-section.png";
 
 const storeHotspots = [
   { id: "s6", left: 2.6, top: 45.25, width: 11.8, height: 22.5 },
@@ -101,6 +102,23 @@ const Index = () => {
           ))}
 
         </div>
+
+        {/* החלפת הקטע האמצעי (תקרה מקושתת + שער קומה 2) — מידות מדויקות מהמדידה */}
+        <img
+          src={centerSection}
+          alt="קטע אמצעי של הקניון - תקרה מקושתת ושער מרכזי"
+          aria-hidden
+          className="pointer-events-none absolute select-none"
+          draggable={false}
+          style={{
+            left: "45.21%",
+            top: "15.78%",
+            width: "11.17%",
+            height: "83.34%",
+            objectFit: "fill",
+            zIndex: 5,
+          }}
+        />
 
         {/* קומה 3 — חיבור מדויק למבנה העליון */}
         <div
