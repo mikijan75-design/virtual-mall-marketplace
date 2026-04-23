@@ -109,27 +109,139 @@ const CenterFeature = ({ floorId }: CenterFeatureProps) => {
           {/* === Floor-specific scene between the columns === */}
           {floorId === 3 && (
             <>
-              {/* Pediment over doorway - enlarged to frame bounds */}
+              {/* Pediment - light stone */}
               <div
                 className="absolute top-0 left-[2%] right-[2%] h-8 md:h-10"
                 style={{
-                  background: "linear-gradient(180deg, hsl(43,50%,60%), hsl(43,40%,40%))",
+                  background:
+                    "linear-gradient(180deg, hsl(40,20%,94%), hsl(35,15%,78%))",
                   clipPath: "polygon(0 100%, 50% 0, 100% 100%)",
+                  filter: "drop-shadow(0 2px 3px rgba(0,0,0,0.25))",
                 }}
               />
-              {/* Doorway opening - enlarged to frame bounds */}
+              {/* White stone block frame around the entrance (top + sides) */}
+              {/* Top lintel - rows of white stones */}
               <div
-                className="absolute top-7 md:top-9 bottom-3 left-[8%] right-[8%] rounded-t-full"
+                className="absolute left-[6%] right-[6%] top-7 md:top-9 h-5 md:h-6 rounded-sm overflow-hidden"
+                style={{
+                  background: "hsl(40,15%,88%)",
+                  border: "1px solid hsl(35,12%,68%)",
+                  backgroundImage:
+                    "repeating-linear-gradient(90deg, hsl(35,12%,72%) 0 1px, transparent 1px 22px), repeating-linear-gradient(0deg, hsl(35,12%,72%) 0 1px, transparent 1px 12px)",
+                  boxShadow: "inset 0 1px 2px rgba(255,255,255,0.6), 0 2px 3px rgba(0,0,0,0.18)",
+                }}
+              />
+              {/* Left stone column */}
+              <div
+                className="absolute top-7 md:top-9 bottom-3 left-[6%] w-[10%] rounded-sm"
                 style={{
                   background:
-                    "radial-gradient(ellipse at 50% 0%, hsl(43,55%,35%) 0%, hsl(220,30%,8%) 75%)",
-                  boxShadow: "inset 0 6px 18px rgba(0,0,0,0.75)",
+                    "linear-gradient(90deg, hsl(35,15%,72%), hsl(40,20%,94%) 45%, hsl(40,20%,90%) 55%, hsl(35,15%,70%))",
+                  border: "1px solid hsl(35,12%,68%)",
+                  backgroundImage:
+                    "repeating-linear-gradient(0deg, hsl(35,12%,72%) 0 1px, transparent 1px 16px)",
+                  boxShadow:
+                    "inset 1px 0 1px rgba(255,255,255,0.5), 2px 0 4px rgba(0,0,0,0.18)",
                 }}
               />
+              {/* Right stone column */}
+              <div
+                className="absolute top-7 md:top-9 bottom-3 right-[6%] w-[10%] rounded-sm"
+                style={{
+                  background:
+                    "linear-gradient(90deg, hsl(35,15%,70%), hsl(40,20%,90%) 45%, hsl(40,20%,94%) 55%, hsl(35,15%,72%))",
+                  border: "1px solid hsl(35,12%,68%)",
+                  backgroundImage:
+                    "repeating-linear-gradient(0deg, hsl(35,12%,72%) 0 1px, transparent 1px 16px)",
+                  boxShadow:
+                    "inset -1px 0 1px rgba(255,255,255,0.5), -2px 0 4px rgba(0,0,0,0.18)",
+                }}
+              />
+              {/* Column capitals (left/right) */}
+              <div
+                className="absolute top-7 md:top-9 left-[5%] w-[12%] h-2 rounded-sm"
+                style={{
+                  background: "linear-gradient(180deg, hsl(40,18%,96%), hsl(35,15%,78%))",
+                  border: "1px solid hsl(35,12%,65%)",
+                }}
+              />
+              <div
+                className="absolute top-7 md:top-9 right-[5%] w-[12%] h-2 rounded-sm"
+                style={{
+                  background: "linear-gradient(180deg, hsl(40,18%,96%), hsl(35,15%,78%))",
+                  border: "1px solid hsl(35,12%,65%)",
+                }}
+              />
+              {/* Column bases */}
+              <div
+                className="absolute bottom-3 left-[5%] w-[12%] h-2 rounded-sm"
+                style={{
+                  background: "linear-gradient(180deg, hsl(35,15%,78%), hsl(35,12%,62%))",
+                  border: "1px solid hsl(35,12%,55%)",
+                }}
+              />
+              <div
+                className="absolute bottom-3 right-[5%] w-[12%] h-2 rounded-sm"
+                style={{
+                  background: "linear-gradient(180deg, hsl(35,15%,78%), hsl(35,12%,62%))",
+                  border: "1px solid hsl(35,12%,55%)",
+                }}
+              />
+
+              {/* Doorway opening with depth perspective */}
+              <div
+                className="absolute left-[16%] right-[16%]"
+                style={{ top: "calc(1.75rem + 20px)", bottom: "0.75rem" }}
+              >
+                {/* Outer arch - bright entry */}
+                <div
+                  className="absolute inset-0 rounded-t-full overflow-hidden"
+                  style={{
+                    background:
+                      "radial-gradient(ellipse at 50% 110%, hsl(45,80%,88%) 0%, hsl(40,55%,70%) 25%, hsl(30,40%,45%) 55%, hsl(220,35%,12%) 90%)",
+                    boxShadow:
+                      "inset 0 8px 20px rgba(0,0,0,0.55), inset 0 -4px 10px rgba(255,230,180,0.4)",
+                  }}
+                >
+                  {/* Perspective floor inside doorway */}
+                  <div
+                    className="absolute bottom-0 left-1/2 -translate-x-1/2 w-[70%] h-[35%]"
+                    style={{
+                      background:
+                        "linear-gradient(180deg, transparent, hsl(40,30%,55%) 30%, hsl(40,40%,75%))",
+                      clipPath: "polygon(20% 0, 80% 0, 100% 100%, 0 100%)",
+                      opacity: 0.85,
+                    }}
+                  />
+                  {/* Inner depth arch (darker, smaller) */}
+                  <div
+                    className="absolute left-[18%] right-[18%] top-[20%] bottom-[10%] rounded-t-full"
+                    style={{
+                      background:
+                        "radial-gradient(ellipse at 50% 100%, hsl(45,70%,75%) 0%, hsl(35,40%,40%) 50%, hsl(220,40%,8%) 95%)",
+                      boxShadow: "inset 0 6px 14px rgba(0,0,0,0.7)",
+                    }}
+                  />
+                  {/* Light glow at far end */}
+                  <div
+                    className="absolute left-1/2 -translate-x-1/2 bottom-[18%] w-[28%] h-[22%] rounded-full"
+                    style={{
+                      background:
+                        "radial-gradient(ellipse, rgba(255,240,200,0.85), rgba(255,230,180,0) 70%)",
+                      filter: "blur(2px)",
+                    }}
+                  />
+                </div>
+              </div>
+
               {/* Welcome carpet */}
               <div
-                className="absolute bottom-0 left-[6%] right-[6%] h-3"
-                style={{ background: "linear-gradient(180deg, hsl(0,55%,40%), hsl(0,50%,28%))" }}
+                className="absolute bottom-0 left-[18%] right-[18%] h-3"
+                style={{
+                  background:
+                    "linear-gradient(180deg, hsl(0,55%,45%), hsl(0,50%,30%))",
+                  clipPath: "polygon(8% 0, 92% 0, 100% 100%, 0 100%)",
+                }}
               />
             </>
           )}
