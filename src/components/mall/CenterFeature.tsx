@@ -11,19 +11,27 @@ interface CenterFeatureProps {
  */
 const CenterFeature = ({ floorId }: CenterFeatureProps) => {
   const title =
-    floorId === 3 ? "כניסה למתחם" : floorId === 2 ? "תחנת מידע" : "מרפסת";
+    floorId === 3 ? "" : floorId === 2 ? "תחנת מידע" : "מרפסת";
   const subtitle =
-    floorId === 3 ? "ברוכים הבאים" : floorId === 2 ? "שירות ומידע" : "תצפית";
+    floorId === 3 ? "" : floorId === 2 ? "שירות ומידע" : "תצפית";
+  const isEntrance = floorId === 3;
 
   return (
     <div className="hidden md:flex flex-col w-full">
       <div
         className="relative flex flex-col w-full rounded-lg overflow-hidden"
-        style={{
-          border: "2px solid hsl(40,25%,72%)",
-          boxShadow: "0 6px 24px rgba(0,0,0,0.18), inset 0 0 0 1px hsl(40,20%,85%)",
-        }}
+        style={
+          isEntrance
+            ? {}
+            : {
+                border: "2px solid hsl(40,25%,72%)",
+                boxShadow:
+                  "0 6px 24px rgba(0,0,0,0.18), inset 0 0 0 1px hsl(40,20%,85%)",
+              }
+        }
       >
+        {!isEntrance && (
+        <>
         {/* Top gold trim - matches StoreCard */}
         <div
           className="h-[3px]"
@@ -63,13 +71,22 @@ const CenterFeature = ({ floorId }: CenterFeatureProps) => {
             {subtitle}
           </span>
         </div>
+        </>
+        )}
 
         {/* "Image" area - same height as StoreCard image (90px / md:130px) */}
         <div
-          className="relative w-full h-[90px] md:h-[130px] overflow-hidden"
-          style={{
-            background: "linear-gradient(180deg, hsl(220,25%,20%) 0%, hsl(220,22%,10%) 100%)",
-          }}
+          className={`relative w-full overflow-hidden ${
+            isEntrance ? "h-[170px] md:h-[230px]" : "h-[90px] md:h-[130px]"
+          }`}
+          style={
+            isEntrance
+              ? { background: "transparent" }
+              : {
+                  background:
+                    "linear-gradient(180deg, hsl(220,25%,20%) 0%, hsl(220,22%,10%) 100%)",
+                }
+          }
         >
           {/* === Connector columns spanning every floor === */}
           <div
@@ -92,26 +109,26 @@ const CenterFeature = ({ floorId }: CenterFeatureProps) => {
           {/* === Floor-specific scene between the columns === */}
           {floorId === 3 && (
             <>
-              {/* Pediment over doorway */}
+              {/* Pediment over doorway - enlarged to frame bounds */}
               <div
-                className="absolute top-1 left-[14%] right-[14%] h-4"
+                className="absolute top-0 left-[2%] right-[2%] h-8 md:h-10"
                 style={{
                   background: "linear-gradient(180deg, hsl(43,50%,60%), hsl(43,40%,40%))",
                   clipPath: "polygon(0 100%, 50% 0, 100% 100%)",
                 }}
               />
-              {/* Doorway opening */}
+              {/* Doorway opening - enlarged to frame bounds */}
               <div
-                className="absolute top-5 bottom-3 left-[26%] right-[26%] rounded-t-full"
+                className="absolute top-7 md:top-9 bottom-3 left-[8%] right-[8%] rounded-t-full"
                 style={{
                   background:
                     "radial-gradient(ellipse at 50% 0%, hsl(43,55%,35%) 0%, hsl(220,30%,8%) 75%)",
-                  boxShadow: "inset 0 4px 14px rgba(0,0,0,0.7)",
+                  boxShadow: "inset 0 6px 18px rgba(0,0,0,0.75)",
                 }}
               />
               {/* Welcome carpet */}
               <div
-                className="absolute bottom-0 left-[20%] right-[20%] h-2"
+                className="absolute bottom-0 left-[6%] right-[6%] h-3"
                 style={{ background: "linear-gradient(180deg, hsl(0,55%,40%), hsl(0,50%,28%))" }}
               />
             </>
