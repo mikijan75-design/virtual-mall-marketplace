@@ -48,21 +48,21 @@ const Index = () => {
             draggable={false}
           />
 
-          {/* Central original gates overlay — spans floor 1 + floor 2 vertically, centered */}
+          {/* Central original gates overlay — spans floor 1 + floor 2, aligned to the existing structure */}
           <div
             className="absolute pointer-events-none select-none z-20"
             style={{
-              left: "42.7%",
-              width: "16%",
-              top: "0%",
-              height: "100%",
+              left: "42.9%",
+              width: "15.6%",
+              top: "1.5%",
+              height: "97%",
             }}
             aria-hidden="true"
           >
             <img
               src={centralGatesOriginal}
               alt=""
-              className="block w-full h-full object-cover object-center"
+              className="block w-full h-full object-fill"
               draggable={false}
             />
           </div>
