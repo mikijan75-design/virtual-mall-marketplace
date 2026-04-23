@@ -109,140 +109,148 @@ const CenterFeature = ({ floorId }: CenterFeatureProps) => {
           {/* === Floor-specific scene between the columns === */}
           {floorId === 3 && (
             <>
-              {/* Pediment - light stone */}
-              <div
-                className="absolute top-0 left-[2%] right-[2%] h-8 md:h-10"
-                style={{
-                  background:
-                    "linear-gradient(180deg, hsl(40,20%,94%), hsl(35,15%,78%))",
-                  clipPath: "polygon(0 100%, 50% 0, 100% 100%)",
-                  filter: "drop-shadow(0 2px 3px rgba(0,0,0,0.25))",
-                }}
-              />
-              {/* White stone block frame around the entrance (top + sides) */}
-              {/* Top lintel - rows of white stones */}
-              <div
-                className="absolute left-[6%] right-[6%] top-7 md:top-9 h-5 md:h-6 rounded-sm overflow-hidden"
-                style={{
-                  background: "hsl(40,15%,88%)",
-                  border: "1px solid hsl(35,12%,68%)",
-                  backgroundImage:
-                    "repeating-linear-gradient(90deg, hsl(35,12%,72%) 0 1px, transparent 1px 22px), repeating-linear-gradient(0deg, hsl(35,12%,72%) 0 1px, transparent 1px 12px)",
-                  boxShadow: "inset 0 1px 2px rgba(255,255,255,0.6), 0 2px 3px rgba(0,0,0,0.18)",
-                }}
-              />
-              {/* Left stone column */}
-              <div
-                className="absolute top-7 md:top-9 bottom-3 left-[6%] w-[10%] rounded-sm"
-                style={{
-                  background:
-                    "linear-gradient(90deg, hsl(35,15%,72%), hsl(40,20%,94%) 45%, hsl(40,20%,90%) 55%, hsl(35,15%,70%))",
-                  border: "1px solid hsl(35,12%,68%)",
-                  backgroundImage:
-                    "repeating-linear-gradient(0deg, hsl(35,12%,72%) 0 1px, transparent 1px 16px)",
-                  boxShadow:
-                    "inset 1px 0 1px rgba(255,255,255,0.5), 2px 0 4px rgba(0,0,0,0.18)",
-                }}
-              />
-              {/* Right stone column */}
-              <div
-                className="absolute top-7 md:top-9 bottom-3 right-[6%] w-[10%] rounded-sm"
-                style={{
-                  background:
-                    "linear-gradient(90deg, hsl(35,15%,70%), hsl(40,20%,90%) 45%, hsl(40,20%,94%) 55%, hsl(35,15%,72%))",
-                  border: "1px solid hsl(35,12%,68%)",
-                  backgroundImage:
-                    "repeating-linear-gradient(0deg, hsl(35,12%,72%) 0 1px, transparent 1px 16px)",
-                  boxShadow:
-                    "inset -1px 0 1px rgba(255,255,255,0.5), -2px 0 4px rgba(0,0,0,0.18)",
-                }}
-              />
-              {/* Column capitals (left/right) */}
-              <div
-                className="absolute top-7 md:top-9 left-[5%] w-[12%] h-2 rounded-sm"
-                style={{
-                  background: "linear-gradient(180deg, hsl(40,18%,96%), hsl(35,15%,78%))",
-                  border: "1px solid hsl(35,12%,65%)",
-                }}
-              />
-              <div
-                className="absolute top-7 md:top-9 right-[5%] w-[12%] h-2 rounded-sm"
-                style={{
-                  background: "linear-gradient(180deg, hsl(40,18%,96%), hsl(35,15%,78%))",
-                  border: "1px solid hsl(35,12%,65%)",
-                }}
-              />
-              {/* Column bases */}
-              <div
-                className="absolute bottom-3 left-[5%] w-[12%] h-2 rounded-sm"
-                style={{
-                  background: "linear-gradient(180deg, hsl(35,15%,78%), hsl(35,12%,62%))",
-                  border: "1px solid hsl(35,12%,55%)",
-                }}
-              />
-              <div
-                className="absolute bottom-3 right-[5%] w-[12%] h-2 rounded-sm"
-                style={{
-                  background: "linear-gradient(180deg, hsl(35,15%,78%), hsl(35,12%,62%))",
-                  border: "1px solid hsl(35,12%,55%)",
-                }}
-              />
-
-              {/* Doorway opening with depth perspective */}
-              <div
-                className="absolute left-[16%] right-[16%]"
-                style={{ top: "calc(1.75rem + 20px)", bottom: "0.75rem" }}
+              {/* Doorway with arched stone frame (voussoirs) + depth */}
+              <svg
+                className="absolute inset-0 w-full h-full"
+                viewBox="0 0 200 230"
+                preserveAspectRatio="none"
               >
-                {/* Outer arch - bright entry */}
-                <div
-                  className="absolute inset-0 rounded-t-full overflow-hidden"
+                <defs>
+                  <radialGradient id="doorDepth" cx="50%" cy="100%" r="80%">
+                    <stop offset="0%" stopColor="hsl(45,80%,90%)" />
+                    <stop offset="35%" stopColor="hsl(40,50%,65%)" />
+                    <stop offset="70%" stopColor="hsl(30,35%,32%)" />
+                    <stop offset="100%" stopColor="hsl(220,40%,8%)" />
+                  </radialGradient>
+                  <linearGradient id="stoneGrad" x1="0" y1="0" x2="0" y2="1">
+                    <stop offset="0%" stopColor="hsl(40,18%,96%)" />
+                    <stop offset="100%" stopColor="hsl(35,15%,75%)" />
+                  </linearGradient>
+                  <clipPath id="doorClip">
+                    <path d="M 40 230 L 40 110 A 60 60 0 0 1 160 110 L 160 230 Z" />
+                  </clipPath>
+                </defs>
+
+                {/* Inside of doorway (depth gradient) */}
+                <g clipPath="url(#doorClip)">
+                  <path
+                    d="M 40 230 L 40 110 A 60 60 0 0 1 160 110 L 160 230 Z"
+                    fill="url(#doorDepth)"
+                  />
+                  {/* Perspective floor lines toward vanishing point */}
+                  <path
+                    d="M 40 230 L 95 175 L 105 175 L 160 230 Z"
+                    fill="hsl(40,35%,55%)"
+                    opacity="0.55"
+                  />
+                  <line x1="40" y1="230" x2="100" y2="175" stroke="hsl(35,25%,40%)" strokeWidth="0.5" opacity="0.6" />
+                  <line x1="160" y1="230" x2="100" y2="175" stroke="hsl(35,25%,40%)" strokeWidth="0.5" opacity="0.6" />
+                </g>
+
+                {/* Arched stone voussoirs hugging the opening */}
+                {(() => {
+                  const stones: JSX.Element[] = [];
+                  const cx = 100;
+                  const cy = 110;
+                  const rInner = 60;
+                  const rOuter = 78;
+                  const count = 13;
+                  // Arch stones from left base up and over to right base
+                  for (let i = 0; i < count; i++) {
+                    const t = i / count;
+                    const a1 = Math.PI + t * Math.PI;
+                    const a2 = Math.PI + ((i + 1) / count) * Math.PI;
+                    const x1i = cx + rInner * Math.cos(a1);
+                    const y1i = cy + rInner * Math.sin(a1);
+                    const x2i = cx + rInner * Math.cos(a2);
+                    const y2i = cy + rInner * Math.sin(a2);
+                    const x1o = cx + rOuter * Math.cos(a1);
+                    const y1o = cy + rOuter * Math.sin(a1);
+                    const x2o = cx + rOuter * Math.cos(a2);
+                    const y2o = cy + rOuter * Math.sin(a2);
+                    stones.push(
+                      <path
+                        key={`v${i}`}
+                        d={`M ${x1i} ${y1i} L ${x1o} ${y1o} A ${rOuter} ${rOuter} 0 0 1 ${x2o} ${y2o} L ${x2i} ${y2i} A ${rInner} ${rInner} 0 0 0 ${x1i} ${y1i} Z`}
+                        fill="url(#stoneGrad)"
+                        stroke="hsl(35,12%,62%)"
+                        strokeWidth="0.6"
+                      />
+                    );
+                  }
+                  // Side jamb stones (vertical) from arch springline down to floor
+                  const jambRows = 5;
+                  const jambTop = 110;
+                  const jambBottom = 230;
+                  const rowH = (jambBottom - jambTop) / jambRows;
+                  for (let i = 0; i < jambRows; i++) {
+                    const y = jambTop + i * rowH;
+                    const offset = i % 2 === 0 ? 0 : 4;
+                    stones.push(
+                      <rect
+                        key={`lj${i}`}
+                        x={22 + offset}
+                        y={y}
+                        width={18 - offset}
+                        height={rowH}
+                        fill="url(#stoneGrad)"
+                        stroke="hsl(35,12%,62%)"
+                        strokeWidth="0.6"
+                      />,
+                      <rect
+                        key={`rj${i}`}
+                        x={160}
+                        y={y}
+                        width={18 - offset}
+                        height={rowH}
+                        fill="url(#stoneGrad)"
+                        stroke="hsl(35,12%,62%)"
+                        strokeWidth="0.6"
+                      />
+                    );
+                  }
+                  return stones;
+                })()}
+
+                {/* Infinity symbol at the heart of the opening - cream white */}
+                <g
+                  transform="translate(100 140)"
                   style={{
-                    background:
-                      "radial-gradient(ellipse at 50% 110%, hsl(45,80%,88%) 0%, hsl(40,55%,70%) 25%, hsl(30,40%,45%) 55%, hsl(220,35%,12%) 90%)",
-                    boxShadow:
-                      "inset 0 8px 20px rgba(0,0,0,0.55), inset 0 -4px 10px rgba(255,230,180,0.4)",
+                    filter:
+                      "drop-shadow(0 0 6px rgba(255,248,225,0.9)) drop-shadow(0 0 14px rgba(255,240,200,0.55))",
                   }}
                 >
-                  {/* Perspective floor inside doorway */}
-                  <div
-                    className="absolute bottom-0 left-1/2 -translate-x-1/2 w-[70%] h-[35%]"
-                    style={{
-                      background:
-                        "linear-gradient(180deg, transparent, hsl(40,30%,55%) 30%, hsl(40,40%,75%))",
-                      clipPath: "polygon(20% 0, 80% 0, 100% 100%, 0 100%)",
-                      opacity: 0.85,
-                    }}
+                  <path
+                    d="M -22 0 C -22 -10 -10 -10 0 0 C 10 10 22 10 22 0 C 22 -10 10 -10 0 0 C -10 10 -22 10 -22 0 Z"
+                    fill="none"
+                    stroke="hsl(45,55%,95%)"
+                    strokeWidth="3.5"
+                    strokeLinecap="round"
+                    strokeLinejoin="round"
                   />
-                  {/* Inner depth arch (darker, smaller) */}
-                  <div
-                    className="absolute left-[18%] right-[18%] top-[20%] bottom-[10%] rounded-t-full"
-                    style={{
-                      background:
-                        "radial-gradient(ellipse at 50% 100%, hsl(45,70%,75%) 0%, hsl(35,40%,40%) 50%, hsl(220,40%,8%) 95%)",
-                      boxShadow: "inset 0 6px 14px rgba(0,0,0,0.7)",
-                    }}
-                  />
-                  {/* Light glow at far end */}
-                  <div
-                    className="absolute left-1/2 -translate-x-1/2 bottom-[18%] w-[28%] h-[22%] rounded-full"
-                    style={{
-                      background:
-                        "radial-gradient(ellipse, rgba(255,240,200,0.85), rgba(255,230,180,0) 70%)",
-                      filter: "blur(2px)",
-                    }}
-                  />
-                </div>
-              </div>
+                </g>
+              </svg>
 
-              {/* Welcome carpet */}
+              {/* Front welcome carpet with text */}
               <div
-                className="absolute bottom-0 left-[18%] right-[18%] h-3"
+                className="absolute bottom-0 left-[8%] right-[8%] h-5 md:h-6 flex items-center justify-center"
                 style={{
                   background:
-                    "linear-gradient(180deg, hsl(0,55%,45%), hsl(0,50%,30%))",
-                  clipPath: "polygon(8% 0, 92% 0, 100% 100%, 0 100%)",
+                    "linear-gradient(180deg, hsl(0,60%,42%), hsl(0,55%,28%))",
+                  clipPath: "polygon(6% 0, 94% 0, 100% 100%, 0 100%)",
+                  boxShadow:
+                    "inset 0 1px 2px rgba(255,255,255,0.2), 0 -2px 4px rgba(0,0,0,0.25)",
+                  border: "1px solid hsl(40,30%,70%)",
+                  borderBottom: "none",
                 }}
-              />
+              >
+                <span
+                  className="font-frank font-bold text-[9px] md:text-[11px] tracking-wider"
+                  style={{ color: "hsl(45,55%,92%)", textShadow: "0 1px 1px rgba(0,0,0,0.5)" }}
+                >
+                  ברוכים הבאים
+                </span>
+              </div>
             </>
           )}
 
