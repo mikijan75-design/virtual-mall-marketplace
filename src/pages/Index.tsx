@@ -39,14 +39,14 @@ const Index = () => {
       >
         <div
           className="relative mx-auto w-full max-w-[1630px] min-w-[900px]"
-          style={{ aspectRatio: "1630 / 768" }}
+          style={{ aspectRatio: "1630 / 883" }}
         >
           <img
             src={referenceMall}
             alt="מבנה קניון וירטואלי עם כיפת פרסקו, חנויות ושער מרכזי"
             className="block w-full h-full select-none"
             width={1630}
-            height={768}
+            height={883}
             draggable={false}
             style={{ objectFit: "fill" }}
           />
@@ -72,7 +72,7 @@ const Index = () => {
         {/* קומה 3 — חיבור מדויק למבנה העליון */}
         <div
           className="mx-auto w-full max-w-[1630px] min-w-[900px] -mt-px"
-          style={{ transform: "scaleY(1.2)", transformOrigin: "top center", paddingBottom: "3%" }}
+          style={{ transform: "scaleY(1.38)", transformOrigin: "top center", paddingBottom: "6%" }}
         >
           <FloorThreeRow stores={mallFloors[2].stores} />
         </div>
