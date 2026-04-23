@@ -33,7 +33,7 @@ const CenterFeature = ({ floorId }: CenterFeatureProps) => {
               }
         }
       >
-        {!isBalcony && (
+        {!isBalcony && !isEntrance && (
         <>
         {/* Top gold trim - matches StoreCard */}
         <div
