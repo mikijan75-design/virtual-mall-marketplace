@@ -63,11 +63,6 @@ const Index = () => {
             />
           ))}
 
-          {/* Marker: red line at the top edge of the "קומה 1 - קומת הכניסה" sign */}
-          <div
-            className="pointer-events-none absolute left-0 right-0 h-[3px] bg-red-600 shadow-[0_0_4px_rgba(220,38,38,0.7)] z-20"
-            style={{ top: "40.5%" }}
-          />
         </div>
 
         {/* קומה 3 — חיבור מדויק למבנה העליון */}
