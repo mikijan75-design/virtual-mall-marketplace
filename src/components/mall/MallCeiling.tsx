@@ -24,11 +24,9 @@ const MallCeiling = () => {
       <div className="relative mx-auto w-full" style={{ aspectRatio: "1630 / 360" }}>
         {/* קונטיינר כיפה עם clip-path בצורת חצי-אליפסה רחבה */}
         <div
-          className="absolute inset-x-[1.5%] top-0 bottom-[6%]"
+          className="absolute inset-x-[1.5%] top-0 bottom-[6%] overflow-hidden"
           style={{
             clipPath: "ellipse(49% 100% at 50% 100%)",
-            background:
-              "radial-gradient(ellipse 60% 90% at 50% 95%, hsl(45 85% 88%) 0%, hsl(40 55% 72%) 75%, hsl(38 45% 60%) 100%)",
           }}
         >
           {/* תמונת הפרסקו — נמתחת בתוך החצי-אליפסה */}
@@ -36,7 +34,7 @@ const MallCeiling = () => {
             src={ceilingFresco}
             alt="פרסקו תקרת רנסנס - מלאכים, עננים וקרני אור"
             className="absolute inset-0 h-full w-full select-none"
-            style={{ objectFit: "cover", objectPosition: "center 30%" }}
+            style={{ objectFit: "cover", objectPosition: "center center" }}
             draggable={false}
             width={1920}
             height={1080}
