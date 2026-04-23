@@ -15,13 +15,15 @@ const CenterFeature = ({ floorId }: CenterFeatureProps) => {
   const subtitle =
     floorId === 3 ? "" : floorId === 2 ? "שירות ומידע" : "תצפית";
   const isEntrance = floorId === 3;
+  const isInfo = floorId === 2;
+  const noFrame = isEntrance || isInfo;
 
   return (
     <div className="hidden md:flex flex-col w-full">
       <div
         className="relative flex flex-col w-full rounded-lg overflow-hidden"
         style={
-          isEntrance
+          noFrame
             ? {}
             : {
                 border: "2px solid hsl(40,25%,72%)",
@@ -36,38 +38,55 @@ const CenterFeature = ({ floorId }: CenterFeatureProps) => {
         <div
           className="h-[3px]"
           style={{
-            background:
-              "linear-gradient(90deg, hsl(40,15%,65%), hsl(43,45%,70%), hsl(40,15%,65%))",
+            background: isInfo
+              ? "linear-gradient(90deg, hsl(210,40%,75%), hsl(210,55%,85%), hsl(210,40%,75%))"
+              : "linear-gradient(90deg, hsl(40,15%,65%), hsl(43,45%,70%), hsl(40,15%,65%))",
           }}
         />
 
-        {/* Sign band - matches StoreCard sign height */}
+        {/* Sign band */}
         <div
           className="relative z-10 py-2.5 md:py-3 px-2 flex flex-col items-center justify-center gap-0.5"
-          style={{
-            background: "linear-gradient(180deg, hsl(220,25%,18%), hsl(220,22%,12%))",
-            borderBottom: "2px solid hsl(43,55%,45%)",
-          }}
+          style={
+            isInfo
+              ? {
+                  background:
+                    "linear-gradient(180deg, hsl(210,70%,42%), hsl(215,75%,32%))",
+                  borderBottom: "2px solid hsl(210,40%,85%)",
+                }
+              : {
+                  background:
+                    "linear-gradient(180deg, hsl(220,25%,18%), hsl(220,22%,12%))",
+                  borderBottom: "2px solid hsl(43,55%,45%)",
+                }
+          }
         >
-          <div className="absolute top-1 left-1 w-2 h-2 border-t border-l opacity-60" style={{ borderColor: "hsl(43,55%,55%)" }} />
-          <div className="absolute top-1 right-1 w-2 h-2 border-t border-r opacity-60" style={{ borderColor: "hsl(43,55%,55%)" }} />
-          <div className="absolute bottom-1 left-1 w-2 h-2 border-b border-l opacity-60" style={{ borderColor: "hsl(43,55%,55%)" }} />
-          <div className="absolute bottom-1 right-1 w-2 h-2 border-b border-r opacity-60" style={{ borderColor: "hsl(43,55%,55%)" }} />
+          <div className="absolute top-1 left-1 w-2 h-2 border-t border-l opacity-60" style={{ borderColor: isInfo ? "hsl(210,40%,90%)" : "hsl(43,55%,55%)" }} />
+          <div className="absolute top-1 right-1 w-2 h-2 border-t border-r opacity-60" style={{ borderColor: isInfo ? "hsl(210,40%,90%)" : "hsl(43,55%,55%)" }} />
+          <div className="absolute bottom-1 left-1 w-2 h-2 border-b border-l opacity-60" style={{ borderColor: isInfo ? "hsl(210,40%,90%)" : "hsl(43,55%,55%)" }} />
+          <div className="absolute bottom-1 right-1 w-2 h-2 border-b border-r opacity-60" style={{ borderColor: isInfo ? "hsl(210,40%,90%)" : "hsl(43,55%,55%)" }} />
           <span
             className="font-frank font-bold text-[10px] md:text-xs lg:text-sm tracking-wider w-full text-center"
-            style={{ color: "hsl(43,70%,60%)" }}
+            style={{ color: isInfo ? "hsl(0,0%,98%)" : "hsl(43,70%,60%)" }}
           >
             {title}
           </span>
-          <div className="w-6 md:w-8 h-[1.5px] mt-0.5" style={{ background: "hsl(43,55%,45%)" }} />
+          <div className="w-6 md:w-8 h-[1.5px] mt-0.5" style={{ background: isInfo ? "hsl(210,40%,90%)" : "hsl(43,55%,45%)" }} />
         </div>
 
-        {/* Subtitle band - matches StoreCard */}
+        {/* Subtitle band */}
         <div
           className="py-1 text-center"
-          style={{ background: "linear-gradient(180deg, rgba(0,0,0,0.65), rgba(0,0,0,0.8))" }}
+          style={{
+            background: isInfo
+              ? "linear-gradient(180deg, hsl(210,55%,90%), hsl(210,45%,82%))"
+              : "linear-gradient(180deg, rgba(0,0,0,0.65), rgba(0,0,0,0.8))",
+          }}
         >
-          <span className="text-[8px] md:text-[10px] font-heebo font-medium tracking-wide" style={{ color: "hsl(40,30%,85%)" }}>
+          <span
+            className="text-[8px] md:text-[10px] font-heebo font-medium tracking-wide"
+            style={{ color: isInfo ? "hsl(215,70%,28%)" : "hsl(40,30%,85%)" }}
+          >
             {subtitle}
           </span>
         </div>
@@ -80,7 +99,7 @@ const CenterFeature = ({ floorId }: CenterFeatureProps) => {
             isEntrance ? "h-[170px] md:h-[230px]" : "h-[90px] md:h-[130px]"
           }`}
           style={
-            isEntrance
+            noFrame
               ? { background: "transparent" }
               : {
                   background:
