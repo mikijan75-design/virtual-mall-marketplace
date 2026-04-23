@@ -100,30 +100,78 @@ const Index = () => {
 
                     {/* Realistic planter between stores */}
                     {idx % 3 !== 2 && (
-                      <div className="absolute -right-2 md:-right-2.5 bottom-3 z-30 flex flex-col items-center pointer-events-none">
-                        {/* Plant foliage */}
-                        <div className="relative">
+                      <div className="absolute -right-3 md:-right-4 bottom-3 z-30 flex flex-col items-center pointer-events-none">
+                        {/* Lush fruit tree foliage */}
+                        <div className="relative w-8 h-9 md:w-12 md:h-14">
+                          {/* Foliage clusters */}
                           <div
-                            className="w-2.5 h-3 md:w-3 md:h-4 rounded-full"
+                            className="absolute left-1/2 -translate-x-1/2 top-0 w-7 h-7 md:w-11 md:h-11 rounded-full"
                             style={{
-                              background: "radial-gradient(ellipse at 40% 30%, hsl(120,35%,40%), hsl(130,30%,28%))",
-                              boxShadow: "0 1px 3px rgba(0,0,0,0.2)",
+                              background:
+                                "radial-gradient(ellipse at 35% 25%, hsl(95,55%,55%), hsl(125,45%,30%) 70%, hsl(130,40%,22%))",
+                              boxShadow: "0 2px 5px rgba(0,0,0,0.3), inset 0 -2px 4px rgba(0,0,0,0.25)",
                             }}
                           />
                           <div
-                            className="absolute -left-0.5 top-0.5 w-1.5 h-2 md:w-2 md:h-2.5 rounded-full"
+                            className="absolute -left-0.5 top-1.5 w-4 h-4 md:w-6 md:h-6 rounded-full opacity-90"
                             style={{
-                              background: "radial-gradient(ellipse, hsl(115,30%,45%), hsl(125,28%,32%))",
+                              background:
+                                "radial-gradient(ellipse at 40% 30%, hsl(105,50%,50%), hsl(125,42%,28%))",
                             }}
                           />
+                          <div
+                            className="absolute -right-0.5 top-2 w-4 h-4 md:w-6 md:h-6 rounded-full opacity-90"
+                            style={{
+                              background:
+                                "radial-gradient(ellipse at 60% 30%, hsl(115,48%,48%), hsl(130,42%,26%))",
+                            }}
+                          />
+                          {/* Fruits — alternate orange / strawberry / lemon */}
+                          {idx % 3 === 0 && (
+                            <>
+                              {/* Oranges */}
+                              <div className="absolute top-2 left-1.5 w-1.5 h-1.5 md:w-2 md:h-2 rounded-full"
+                                style={{ background: "radial-gradient(circle at 35% 30%, hsl(30,100%,68%), hsl(20,95%,48%))", boxShadow: "0 0 2px rgba(0,0,0,0.3)" }} />
+                              <div className="absolute top-4 right-2 w-1.5 h-1.5 md:w-2 md:h-2 rounded-full"
+                                style={{ background: "radial-gradient(circle at 35% 30%, hsl(32,100%,70%), hsl(22,95%,50%))", boxShadow: "0 0 2px rgba(0,0,0,0.3)" }} />
+                              <div className="absolute top-5 left-3 w-1.5 h-1.5 md:w-2 md:h-2 rounded-full"
+                                style={{ background: "radial-gradient(circle at 35% 30%, hsl(28,100%,65%), hsl(18,95%,45%))", boxShadow: "0 0 2px rgba(0,0,0,0.3)" }} />
+                            </>
+                          )}
+                          {idx % 3 === 1 && (
+                            <>
+                              {/* Strawberries */}
+                              <div className="absolute top-2.5 left-2 w-1.5 h-2 md:w-2 md:h-2.5 rounded-b-full"
+                                style={{ background: "radial-gradient(circle at 35% 25%, hsl(355,90%,68%), hsl(350,85%,42%))", boxShadow: "0 0 2px rgba(0,0,0,0.35)" }} />
+                              <div className="absolute top-4 right-1.5 w-1.5 h-2 md:w-2 md:h-2.5 rounded-b-full"
+                                style={{ background: "radial-gradient(circle at 35% 25%, hsl(355,90%,65%), hsl(350,85%,40%))", boxShadow: "0 0 2px rgba(0,0,0,0.35)" }} />
+                              <div className="absolute top-5 left-3.5 w-1.5 h-2 md:w-2 md:h-2.5 rounded-b-full"
+                                style={{ background: "radial-gradient(circle at 35% 25%, hsl(355,92%,70%), hsl(350,85%,45%))", boxShadow: "0 0 2px rgba(0,0,0,0.35)" }} />
+                            </>
+                          )}
+                          {idx % 3 === 2 && (
+                            <>
+                              {/* Lemons */}
+                              <div className="absolute top-2 left-2 w-2 h-1.5 md:w-2.5 md:h-2 rounded-full"
+                                style={{ background: "radial-gradient(circle at 35% 30%, hsl(55,100%,75%), hsl(48,95%,52%))", boxShadow: "0 0 2px rgba(0,0,0,0.3)" }} />
+                              <div className="absolute top-4.5 right-1.5 w-2 h-1.5 md:w-2.5 md:h-2 rounded-full"
+                                style={{ background: "radial-gradient(circle at 35% 30%, hsl(55,100%,72%), hsl(48,95%,50%))", boxShadow: "0 0 2px rgba(0,0,0,0.3)" }} />
+                            </>
+                          )}
                         </div>
+                        {/* Trunk */}
+                        <div
+                          className="w-1 h-1.5 md:w-1.5 md:h-2 -mt-1"
+                          style={{ background: "linear-gradient(180deg, hsl(28,45%,38%), hsl(22,40%,22%))" }}
+                        />
                         {/* Pot */}
                         <div
-                          className="w-2.5 h-2 md:w-3 md:h-2.5 rounded-b-md -mt-0.5"
+                          className="w-4 h-2.5 md:w-5 md:h-3 rounded-b-md"
                           style={{
-                            background: "linear-gradient(180deg, hsl(20,40%,50%), hsl(15,35%,38%))",
-                            boxShadow: "0 2px 4px rgba(0,0,0,0.15)",
-                            borderTop: "1px solid hsl(20,30%,55%)",
+                            background:
+                              "linear-gradient(180deg, hsl(20,55%,55%), hsl(15,50%,32%))",
+                            boxShadow: "0 2px 5px rgba(0,0,0,0.25), inset 0 1px 2px rgba(255,255,255,0.2)",
+                            borderTop: "1.5px solid hsl(22,45%,62%)",
                           }}
                         />
                       </div>
