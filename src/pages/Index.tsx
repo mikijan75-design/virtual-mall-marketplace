@@ -4,6 +4,7 @@ import MallCeiling from "@/components/mall/MallCeiling";
 import Decorations from "@/components/mall/Decorations";
 import FloorMap from "@/components/mall/FloorMap";
 import StoreCard from "@/components/mall/StoreCard";
+import CenterFeature from "@/components/mall/CenterFeature";
 import mallWall from "@/assets/mall-wall.jpg";
 import marbleFloor from "@/assets/marble-floor.jpg";
 
