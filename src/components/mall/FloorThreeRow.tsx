@@ -184,52 +184,14 @@ const FloorThreeGate = () => (
     style={{ left: `${centralGatePosition.left}%`, width: `${centralGatePosition.width}%` }}
     data-floor3-gate
   >
-    <div className="absolute inset-x-0 top-[7px] flex justify-center">
-      <div className="h-[6px] w-[76%] rounded-full border border-mall-gold/45 bg-mall-wall/70 shadow-[0_1px_3px_rgba(0,0,0,0.2)]" />
-    </div>
-
-    <div
-      className="relative flex-1 overflow-hidden border-x border-t border-mall-gold/60 bg-mall-wall shadow-[inset_0_2px_8px_rgba(255,255,255,0.35)]"
-      style={{
-        borderTopLeftRadius: "42% 24%",
-        borderTopRightRadius: "42% 24%",
-        backgroundImage: `linear-gradient(180deg, hsl(var(--mall-wall) / 0.96) 0%, hsl(var(--mall-floor) / 0.88) 100%), url(${mallWallTexture})`,
-        backgroundBlendMode: "soft-light, normal",
-      }}
-    >
-      <div
-        className="absolute inset-x-[18%] bottom-0 top-[24%] border border-mall-gold/55"
-        style={{
-          borderTopLeftRadius: "50% 38%",
-          borderTopRightRadius: "50% 38%",
-          background: "linear-gradient(180deg, hsl(0 0% 92%) 0%, hsl(0 0% 78%) 100%)",
-          boxShadow: "inset 0 4px 16px rgba(255,255,255,0.5), inset 0 -6px 16px rgba(0,0,0,0.2)",
-        }}
-      >
-        <div
-          className="absolute inset-x-[23%] bottom-0 top-[30%]"
-          style={{
-            borderTopLeftRadius: "50% 46%",
-            borderTopRightRadius: "50% 46%",
-            background: "linear-gradient(180deg, hsl(30 14% 42%) 0%, hsl(28 16% 22%) 66%, hsl(26 18% 14%) 100%)",
-            boxShadow: "inset 0 8px 20px rgba(0,0,0,0.5)",
-          }}
-        />
-      </div>
-
-      <div className="absolute inset-x-[15%] bottom-[3px] flex flex-col gap-[1px]">
-        {[0, 1, 2].map((step) => (
-          <div
-            key={step}
-            className="border-t border-mall-gold/25"
-            style={{
-              height: "4px",
-              marginInline: `${step * 2}px`,
-              background: `linear-gradient(180deg, hsl(35 16% ${72 - step * 5}%) 0%, hsl(35 16% ${60 - step * 5}%) 100%)`,
-            }}
-          />
-        ))}
-      </div>
+    <div className="relative flex-1 overflow-hidden border-x border-t border-mall-gold/60 bg-mall-wall shadow-[inset_0_2px_8px_rgba(255,255,255,0.35)]">
+      <img
+        src={floor3StairsImg}
+        alt="מדרגות שיש מרכזיות עם פסלי אריות"
+        className="absolute inset-0 h-full w-full object-cover object-center"
+        loading="lazy"
+      />
+      <div className="pointer-events-none absolute inset-0 bg-gradient-to-b from-white/10 via-transparent to-black/15" />
     </div>
 
     <div
