@@ -16,7 +16,8 @@ const CenterFeature = ({ floorId }: CenterFeatureProps) => {
     floorId === 3 ? "" : floorId === 2 ? "שירות ומידע" : "תצפית";
   const isEntrance = floorId === 3;
   const isInfo = floorId === 2;
-  const noFrame = isEntrance || isInfo;
+  const isBalcony = floorId === 1;
+  const noFrame = isEntrance || isInfo || isBalcony;
 
   return (
     <div className="hidden md:flex flex-col w-full">
@@ -32,7 +33,7 @@ const CenterFeature = ({ floorId }: CenterFeatureProps) => {
               }
         }
       >
-        {!isEntrance && (
+        {!isEntrance && !isBalcony && (
         <>
         {/* Top gold trim - matches StoreCard */}
         <div
@@ -96,7 +97,7 @@ const CenterFeature = ({ floorId }: CenterFeatureProps) => {
         {/* "Image" area - same height as StoreCard image (90px / md:130px) */}
         <div
           className={`relative w-full overflow-hidden ${
-            isEntrance ? "h-[170px] md:h-[230px]" : "h-[90px] md:h-[130px]"
+            isEntrance || isBalcony ? "h-[170px] md:h-[230px]" : "h-[90px] md:h-[130px]"
           }`}
           style={
             noFrame
@@ -444,53 +445,55 @@ const CenterFeature = ({ floorId }: CenterFeatureProps) => {
             <>
               {/* Roman dome top - connects upward to floor above */}
               <div
-                className="absolute top-0 left-[8%] right-[8%] h-6 rounded-t-full overflow-hidden"
+                className="absolute top-0 left-[4%] right-[4%] h-12 md:h-16 rounded-t-full overflow-hidden"
                 style={{
                   background:
                     "radial-gradient(ellipse at 50% 100%, hsl(43,55%,60%), hsl(43,38%,30%))",
-                  boxShadow: "inset 0 -3px 10px rgba(0,0,0,0.45)",
+                  boxShadow: "inset 0 -5px 18px rgba(0,0,0,0.5), 0 4px 14px rgba(0,0,0,0.35)",
                 }}
               >
                 <div
                   className="absolute inset-0 opacity-50"
                   style={{
                     backgroundImage:
-                      "repeating-linear-gradient(90deg, transparent 0, transparent 7px, rgba(0,0,0,0.3) 7px, rgba(0,0,0,0.3) 8px)",
+                      "repeating-linear-gradient(90deg, transparent 0, transparent 12px, rgba(0,0,0,0.3) 12px, rgba(0,0,0,0.3) 14px)",
                   }}
                 />
               </div>
 
               {/* Center half-height column under dome */}
               <div
-                className="absolute top-6 bottom-[40%] left-1/2 -translate-x-1/2 w-1.5 rounded-sm"
+                className="absolute top-12 md:top-16 bottom-[45%] left-1/2 -translate-x-1/2 w-3 md:w-4 rounded-sm"
                 style={{
                   background:
                     "linear-gradient(90deg, hsl(43,40%,75%), hsl(43,35%,55%), hsl(43,40%,75%))",
+                  boxShadow: "0 0 6px rgba(0,0,0,0.4)",
                 }}
               />
 
               {/* Glass railing */}
-              <div className="absolute bottom-0 left-[10%] right-[10%] h-[36%]">
+              <div className="absolute bottom-0 left-[6%] right-[6%] h-[45%]">
                 <div
                   className="absolute inset-0 rounded-sm"
                   style={{
                     background:
                       "linear-gradient(180deg, rgba(180,210,230,0.28), rgba(140,180,210,0.18))",
-                    border: "1px solid rgba(200,220,240,0.45)",
-                    boxShadow: "inset 0 1px 4px rgba(255,255,255,0.25)",
+                    border: "2px solid rgba(200,220,240,0.55)",
+                    boxShadow: "inset 0 2px 8px rgba(255,255,255,0.3), 0 4px 12px rgba(0,0,0,0.25)",
                   }}
                 />
                 {/* Railing posts */}
-                <div className="absolute top-0 bottom-0 left-[15%] w-0.5" style={{ background: "hsl(43,40%,60%)" }} />
-                <div className="absolute top-0 bottom-0 left-[40%] w-0.5" style={{ background: "hsl(43,40%,60%)" }} />
-                <div className="absolute top-0 bottom-0 left-[60%] w-0.5" style={{ background: "hsl(43,40%,60%)" }} />
-                <div className="absolute top-0 bottom-0 left-[85%] w-0.5" style={{ background: "hsl(43,40%,60%)" }} />
+                <div className="absolute top-0 bottom-0 left-[10%] w-1" style={{ background: "linear-gradient(180deg, hsl(43,55%,68%), hsl(43,35%,38%))" }} />
+                <div className="absolute top-0 bottom-0 left-[30%] w-1" style={{ background: "linear-gradient(180deg, hsl(43,55%,68%), hsl(43,35%,38%))" }} />
+                <div className="absolute top-0 bottom-0 left-[50%] w-1" style={{ background: "linear-gradient(180deg, hsl(43,55%,68%), hsl(43,35%,38%))" }} />
+                <div className="absolute top-0 bottom-0 left-[70%] w-1" style={{ background: "linear-gradient(180deg, hsl(43,55%,68%), hsl(43,35%,38%))" }} />
+                <div className="absolute top-0 bottom-0 left-[90%] w-1" style={{ background: "linear-gradient(180deg, hsl(43,55%,68%), hsl(43,35%,38%))" }} />
                 {/* Top handrail */}
                 <div
-                  className="absolute -top-0.5 left-0 right-0 h-1 rounded-full"
+                  className="absolute -top-1 left-0 right-0 h-2 md:h-2.5 rounded-full"
                   style={{
                     background: "linear-gradient(180deg, hsl(43,55%,68%), hsl(43,40%,40%))",
-                    boxShadow: "0 1px 2px rgba(0,0,0,0.35)",
+                    boxShadow: "0 2px 4px rgba(0,0,0,0.4)",
                   }}
                 />
               </div>
