@@ -48,7 +48,40 @@ const Index = () => {
             width={1630}
             height={883}
             draggable={false}
-            style={{ objectFit: "fill" }}
+            style={{
+              objectFit: "fill",
+              filter:
+                "brightness(1.12) contrast(1.08) saturate(1.18) hue-rotate(-2deg)",
+            }}
+          />
+
+          {/* שכבת ליטוש: בוהק עליון + חמימות זהובה עדינה */}
+          <div
+            aria-hidden
+            className="pointer-events-none absolute inset-0"
+            style={{
+              background:
+                "linear-gradient(to bottom, hsl(45 90% 92% / 0.18) 0%, hsl(45 80% 88% / 0.06) 22%, transparent 45%)",
+              mixBlendMode: "soft-light",
+            }}
+          />
+          <div
+            aria-hidden
+            className="pointer-events-none absolute inset-0"
+            style={{
+              background:
+                "radial-gradient(ellipse 70% 45% at 50% 8%, hsl(48 100% 90% / 0.28), transparent 70%)",
+              mixBlendMode: "screen",
+            }}
+          />
+          <div
+            aria-hidden
+            className="pointer-events-none absolute inset-0"
+            style={{
+              background:
+                "radial-gradient(ellipse 90% 60% at 50% 50%, transparent 55%, hsl(30 40% 20% / 0.18) 100%)",
+              mixBlendMode: "multiply",
+            }}
           />
 
           {storeHotspots.map((hotspot) => (
