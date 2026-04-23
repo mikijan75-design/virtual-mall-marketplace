@@ -127,21 +127,21 @@ const FloorThreeStorefront = ({
         <div className="h-[2px] w-full bg-gradient-to-r from-mall-trim/70 via-mall-gold to-mall-trim/70" />
 
         <div
-          className="relative flex h-[22px] items-center justify-center border-b border-mall-gold/45 px-1 text-center md:h-[24px]"
+          className="relative flex h-[31px] items-center justify-center border-b border-mall-gold/45 px-1 text-center md:h-[34px]"
           style={{ background: content.signTone }}
         >
           <div className="absolute inset-x-[4px] top-[3px] h-px bg-mall-gold/40" />
           <div className="absolute inset-x-[4px] bottom-[3px] h-px bg-mall-gold/35" />
           <span
-            className="font-frank text-[7px] font-bold leading-tight md:text-[8px]"
+            className="font-frank text-[10px] font-bold leading-tight md:text-[11px]"
             style={{ color: content.textTone }}
           >
             {store.name}
           </span>
         </div>
 
-        <div className="flex h-[12px] items-center justify-center border-b border-mall-gold/35 bg-mall-sign/90 px-1 md:h-[13px]">
-          <span className="font-heebo text-[6px] font-medium tracking-[0.05em] text-mall-gold/85 md:text-[6px]">
+        <div className="flex h-[17px] items-center justify-center border-b border-mall-gold/35 bg-mall-sign/90 px-1 md:h-[18px]">
+          <span className="font-heebo text-[9px] font-medium tracking-[0.05em] text-mall-gold/85 md:text-[9px]">
             {content.eyebrow}
           </span>
         </div>
