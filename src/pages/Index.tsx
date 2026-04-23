@@ -37,7 +37,10 @@ const Index = () => {
         className="relative bg-background py-0 overflow-x-auto"
         aria-label="מבנה הקניון הווירטואלי"
       >
-        <div className="relative mx-auto w-full max-w-[1630px] min-w-[900px]">
+        <div
+          className="relative mx-auto w-full max-w-[1630px] min-w-[900px]"
+          style={{ transform: "scaleY(1.2)", transformOrigin: "top center" }}
+        >
           <img
             src={referenceMall}
             alt="מבנה קניון וירטואלי עם כיפת פרסקו, חנויות ושער מרכזי"
@@ -66,7 +69,10 @@ const Index = () => {
         </div>
 
         {/* קומה 3 — חיבור מדויק למבנה העליון */}
-        <div className="mx-auto w-full max-w-[1630px] min-w-[900px] -mt-px">
+        <div
+          className="mx-auto w-full max-w-[1630px] min-w-[900px] -mt-px"
+          style={{ transform: "scaleY(1.2)", transformOrigin: "top center", marginTop: "calc(640px * 0.2 * (100% / 1630))" }}
+        >
           <FloorThreeRow stores={mallFloors[2].stores} />
         </div>
       </main>
