@@ -94,7 +94,7 @@ const Index = () => {
             </div>
 
             <div className="max-w-5xl mx-auto px-2">
-              <div className="relative grid grid-cols-3 md:grid-cols-7 gap-3 md:gap-4">
+              <div className="relative grid grid-cols-3 md:grid-cols-7 gap-7 md:gap-10">
                 {floor.stores.map((store, idx) => {
                   // Insert a center feature column between left 3 stores and right 3 stores
                   const centerSlot = idx === 3 ? (
