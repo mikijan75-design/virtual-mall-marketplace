@@ -107,6 +107,31 @@ const CenterFeature = ({ floorId }: CenterFeatureProps) => {
                 }
           }
         >
+          {/* Wide vertical side stripes layered over the existing background */}
+          {!noFrame && (
+            <>
+              <div
+                className="absolute top-0 bottom-0 left-0 w-[14%] pointer-events-none"
+                style={{
+                  background:
+                    "linear-gradient(180deg, hsl(43,55%,55%), hsl(43,40%,32%) 50%, hsl(43,55%,55%))",
+                  borderRight: "1px solid hsl(43,30%,22%)",
+                  boxShadow:
+                    "inset 0 0 6px rgba(0,0,0,0.35), 1px 0 4px rgba(0,0,0,0.4)",
+                }}
+              />
+              <div
+                className="absolute top-0 bottom-0 right-0 w-[14%] pointer-events-none"
+                style={{
+                  background:
+                    "linear-gradient(180deg, hsl(43,55%,55%), hsl(43,40%,32%) 50%, hsl(43,55%,55%))",
+                  borderLeft: "1px solid hsl(43,30%,22%)",
+                  boxShadow:
+                    "inset 0 0 6px rgba(0,0,0,0.35), -1px 0 4px rgba(0,0,0,0.4)",
+                }}
+              />
+            </>
+          )}
           {/* === Connector columns spanning every floor === */}
           <div
             className="absolute top-0 bottom-0 left-[18%] w-2 rounded-sm"
