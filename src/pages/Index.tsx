@@ -1,9 +1,11 @@
 import { mallFloors } from "@/data/mallData";
+import { Fragment } from "react";
 import MallHeader from "@/components/mall/MallHeader";
 import MallCeiling from "@/components/mall/MallCeiling";
 import Decorations from "@/components/mall/Decorations";
 import FloorMap from "@/components/mall/FloorMap";
 import StoreCard from "@/components/mall/StoreCard";
+import CenterFeature from "@/components/mall/CenterFeature";
 import mallWall from "@/assets/mall-wall.jpg";
 import marbleFloor from "@/assets/marble-floor.jpg";
 
@@ -55,96 +57,16 @@ const Index = () => {
             </div>
 
             <div className="max-w-5xl mx-auto px-2">
-              <div className="relative grid grid-cols-3 md:grid-cols-6 gap-3 md:gap-4">
-                {floor.stores.map((store, idx) => (
-                  <div key={store.id} className="relative">
-                    {/* Central feature column - between store 3 and 4 (after idx 2) */}
-                    {idx === 2 && (
-                      <div
-                        className="hidden md:flex absolute top-0 bottom-0 -right-2 md:-right-2.5 z-40 pointer-events-none"
-                        style={{ width: "0" }}
-                      >
-                        <div
-                          className="absolute top-[-8px] bottom-[-32px] left-1/2 -translate-x-1/2 w-24 md:w-28 flex flex-col items-center justify-start"
-                        >
-                          {floor.id === 3 && (
-                            <div
-                              className="w-full h-full rounded-md flex flex-col items-center justify-center text-center px-1 py-2"
-                              style={{
-                                background: "linear-gradient(180deg, hsl(220,25%,18%), hsl(220,22%,12%))",
-                                border: "2px solid hsl(43,55%,45%)",
-                                boxShadow: "0 6px 20px rgba(0,0,0,0.45), inset 0 1px 0 rgba(255,255,255,0.08)",
-                              }}
-                            >
-                              <span className="text-2xl md:text-3xl">🏛️</span>
-                              <span
-                                className="font-frank font-bold text-[10px] md:text-xs mt-1 leading-tight"
-                                style={{ color: "hsl(43,70%,60%)" }}
-                              >
-                                כניסה למתחם
-                              </span>
-                              <div
-                                className="mt-1 w-10 h-1 rounded-full"
-                                style={{ background: "hsl(43,55%,45%)" }}
-                              />
-                            </div>
-                          )}
-                          {floor.id === 2 && (
-                            <div
-                              className="w-full h-full rounded-md flex flex-col items-center justify-center text-center px-1 py-2"
-                              style={{
-                                background: "linear-gradient(180deg, hsl(220,25%,18%), hsl(220,22%,12%))",
-                                border: "2px solid hsl(43,55%,45%)",
-                                boxShadow: "0 6px 20px rgba(0,0,0,0.45), inset 0 1px 0 rgba(255,255,255,0.08)",
-                              }}
-                            >
-                              <span className="text-2xl md:text-3xl">ℹ️</span>
-                              <span
-                                className="font-frank font-bold text-[10px] md:text-xs mt-1 leading-tight"
-                                style={{ color: "hsl(43,70%,60%)" }}
-                              >
-                                תחנת מידע
-                              </span>
-                              <div
-                                className="mt-1 w-10 h-1 rounded-full"
-                                style={{ background: "hsl(43,55%,45%)" }}
-                              />
-                            </div>
-                          )}
-                          {floor.id === 1 && (
-                            <div
-                              className="w-full h-full rounded-md flex flex-col items-center justify-center text-center px-1 py-2 relative overflow-hidden"
-                              style={{
-                                background: "linear-gradient(180deg, hsl(220,25%,18%), hsl(220,22%,12%))",
-                                border: "2px solid hsl(43,55%,45%)",
-                                boxShadow: "0 6px 20px rgba(0,0,0,0.45), inset 0 1px 0 rgba(255,255,255,0.08)",
-                              }}
-                            >
-                              <span className="text-2xl md:text-3xl">🪴</span>
-                              <span
-                                className="font-frank font-bold text-[10px] md:text-xs mt-1 leading-tight"
-                                style={{ color: "hsl(43,70%,60%)" }}
-                              >
-                                מרפסת
-                              </span>
-                              {/* Railing */}
-                              <div className="mt-1 w-full px-2 flex items-center justify-between">
-                                <div className="w-px h-2 bg-mall-gold/60" />
-                                <div className="w-px h-2 bg-mall-gold/60" />
-                                <div className="w-px h-2 bg-mall-gold/60" />
-                                <div className="w-px h-2 bg-mall-gold/60" />
-                                <div className="w-px h-2 bg-mall-gold/60" />
-                              </div>
-                              <div
-                                className="w-full h-0.5 mt-0.5 rounded-full"
-                                style={{ background: "hsl(43,55%,45%)" }}
-                              />
-                            </div>
-                          )}
-                        </div>
-                      </div>
-                    )}
-
+              <div className="relative grid grid-cols-3 md:grid-cols-7 gap-3 md:gap-4">
+                {floor.stores.map((store, idx) => {
+                  // Insert a center feature column between left 3 stores and right 3 stores
+                  const centerSlot = idx === 3 ? (
+                    <CenterFeature key={`center-${floor.id}`} floorId={floor.id} />
+                  ) : null;
+                  return (
+                  <Fragment key={store.id}>
+                  {centerSlot}
+                  <div className="relative">
                     {/* Recessed ceiling light fixture */}
                     <div className="absolute -top-2 left-1/2 -translate-x-1/2 z-20 flex flex-col items-center pointer-events-none">
                       {/* Light fixture body */}
@@ -207,7 +129,9 @@ const Index = () => {
                       </div>
                     )}
                   </div>
-                ))}
+                  </Fragment>
+                  );
+                })}
               </div>
             </div>
 
