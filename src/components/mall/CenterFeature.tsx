@@ -15,13 +15,15 @@ const CenterFeature = ({ floorId }: CenterFeatureProps) => {
   const subtitle =
     floorId === 3 ? "" : floorId === 2 ? "שירות ומידע" : "תצפית";
   const isEntrance = floorId === 3;
+  const isInfo = floorId === 2;
+  const noFrame = isEntrance || isInfo;
 
   return (
     <div className="hidden md:flex flex-col w-full">
       <div
         className="relative flex flex-col w-full rounded-lg overflow-hidden"
         style={
-          isEntrance
+          noFrame
             ? {}
             : {
                 border: "2px solid hsl(40,25%,72%)",
@@ -36,38 +38,55 @@ const CenterFeature = ({ floorId }: CenterFeatureProps) => {
         <div
           className="h-[3px]"
           style={{
-            background:
-              "linear-gradient(90deg, hsl(40,15%,65%), hsl(43,45%,70%), hsl(40,15%,65%))",
+            background: isInfo
+              ? "linear-gradient(90deg, hsl(210,40%,75%), hsl(210,55%,85%), hsl(210,40%,75%))"
+              : "linear-gradient(90deg, hsl(40,15%,65%), hsl(43,45%,70%), hsl(40,15%,65%))",
           }}
         />
 
-        {/* Sign band - matches StoreCard sign height */}
+        {/* Sign band */}
         <div
           className="relative z-10 py-2.5 md:py-3 px-2 flex flex-col items-center justify-center gap-0.5"
-          style={{
-            background: "linear-gradient(180deg, hsl(220,25%,18%), hsl(220,22%,12%))",
-            borderBottom: "2px solid hsl(43,55%,45%)",
-          }}
+          style={
+            isInfo
+              ? {
+                  background:
+                    "linear-gradient(180deg, hsl(210,70%,42%), hsl(215,75%,32%))",
+                  borderBottom: "2px solid hsl(210,40%,85%)",
+                }
+              : {
+                  background:
+                    "linear-gradient(180deg, hsl(220,25%,18%), hsl(220,22%,12%))",
+                  borderBottom: "2px solid hsl(43,55%,45%)",
+                }
+          }
         >
-          <div className="absolute top-1 left-1 w-2 h-2 border-t border-l opacity-60" style={{ borderColor: "hsl(43,55%,55%)" }} />
-          <div className="absolute top-1 right-1 w-2 h-2 border-t border-r opacity-60" style={{ borderColor: "hsl(43,55%,55%)" }} />
-          <div className="absolute bottom-1 left-1 w-2 h-2 border-b border-l opacity-60" style={{ borderColor: "hsl(43,55%,55%)" }} />
-          <div className="absolute bottom-1 right-1 w-2 h-2 border-b border-r opacity-60" style={{ borderColor: "hsl(43,55%,55%)" }} />
+          <div className="absolute top-1 left-1 w-2 h-2 border-t border-l opacity-60" style={{ borderColor: isInfo ? "hsl(210,40%,90%)" : "hsl(43,55%,55%)" }} />
+          <div className="absolute top-1 right-1 w-2 h-2 border-t border-r opacity-60" style={{ borderColor: isInfo ? "hsl(210,40%,90%)" : "hsl(43,55%,55%)" }} />
+          <div className="absolute bottom-1 left-1 w-2 h-2 border-b border-l opacity-60" style={{ borderColor: isInfo ? "hsl(210,40%,90%)" : "hsl(43,55%,55%)" }} />
+          <div className="absolute bottom-1 right-1 w-2 h-2 border-b border-r opacity-60" style={{ borderColor: isInfo ? "hsl(210,40%,90%)" : "hsl(43,55%,55%)" }} />
           <span
             className="font-frank font-bold text-[10px] md:text-xs lg:text-sm tracking-wider w-full text-center"
-            style={{ color: "hsl(43,70%,60%)" }}
+            style={{ color: isInfo ? "hsl(0,0%,98%)" : "hsl(43,70%,60%)" }}
           >
             {title}
           </span>
-          <div className="w-6 md:w-8 h-[1.5px] mt-0.5" style={{ background: "hsl(43,55%,45%)" }} />
+          <div className="w-6 md:w-8 h-[1.5px] mt-0.5" style={{ background: isInfo ? "hsl(210,40%,90%)" : "hsl(43,55%,45%)" }} />
         </div>
 
-        {/* Subtitle band - matches StoreCard */}
+        {/* Subtitle band */}
         <div
           className="py-1 text-center"
-          style={{ background: "linear-gradient(180deg, rgba(0,0,0,0.65), rgba(0,0,0,0.8))" }}
+          style={{
+            background: isInfo
+              ? "linear-gradient(180deg, hsl(210,55%,90%), hsl(210,45%,82%))"
+              : "linear-gradient(180deg, rgba(0,0,0,0.65), rgba(0,0,0,0.8))",
+          }}
         >
-          <span className="text-[8px] md:text-[10px] font-heebo font-medium tracking-wide" style={{ color: "hsl(40,30%,85%)" }}>
+          <span
+            className="text-[8px] md:text-[10px] font-heebo font-medium tracking-wide"
+            style={{ color: isInfo ? "hsl(215,70%,28%)" : "hsl(40,30%,85%)" }}
+          >
             {subtitle}
           </span>
         </div>
@@ -80,7 +99,7 @@ const CenterFeature = ({ floorId }: CenterFeatureProps) => {
             isEntrance ? "h-[170px] md:h-[230px]" : "h-[90px] md:h-[130px]"
           }`}
           style={
-            isEntrance
+            noFrame
               ? { background: "transparent" }
               : {
                   background:
@@ -300,55 +319,113 @@ const CenterFeature = ({ floorId }: CenterFeatureProps) => {
 
           {floorId === 2 && (
             <>
-              {/* Attendant head */}
-              <div
-                className="absolute top-3 left-1/2 -translate-x-1/2 w-6 h-6 md:w-7 md:h-7 rounded-full"
-                style={{
-                  background:
-                    "radial-gradient(circle at 35% 35%, hsl(28,55%,78%), hsl(28,45%,55%))",
-                  boxShadow: "0 1px 3px rgba(0,0,0,0.4)",
-                }}
-              />
-              {/* Attendant suit / shoulders */}
-              <div
-                className="absolute top-[42%] left-1/2 -translate-x-1/2 w-12 md:w-14 h-7 md:h-8 rounded-t-lg"
-                style={{
-                  background: "linear-gradient(180deg, hsl(220,30%,28%), hsl(220,30%,15%))",
-                }}
-              />
-              {/* Shirt collar */}
-              <div
-                className="absolute top-[46%] left-1/2 -translate-x-1/2 w-2.5 h-3.5"
-                style={{
-                  background: "hsl(0,0%,95%)",
-                  clipPath: "polygon(50% 0, 100% 100%, 0 100%)",
-                }}
-              />
-              {/* Counter / desk */}
-              <div
-                className="absolute bottom-0 left-[10%] right-[10%] h-[38%] rounded-t-md"
-                style={{
-                  background: "linear-gradient(180deg, hsl(43,40%,55%), hsl(30,40%,28%))",
-                  boxShadow:
-                    "0 -2px 8px rgba(0,0,0,0.35), inset 0 1px 0 rgba(255,255,255,0.18)",
-                  border: "1px solid hsl(30,35%,25%)",
-                }}
-              />
-              {/* Desk top edge */}
-              <div
-                className="absolute bottom-[38%] left-[10%] right-[10%] h-1 rounded-sm"
-                style={{ background: "hsl(43,50%,72%)" }}
-              />
-              {/* Monitor on desk */}
-              <div
-                className="absolute bottom-[40%] left-[16%] w-4 h-3 rounded-sm"
-                style={{ background: "hsl(220,30%,10%)", border: "1px solid hsl(220,15%,35%)" }}
-              />
-              {/* Papers */}
-              <div
-                className="absolute bottom-[40%] right-[16%] w-4 h-2 rounded-sm"
-                style={{ background: "hsl(0,0%,92%)" }}
-              />
+              {/* Information kiosk - SVG, no background */}
+              <svg
+                className="absolute inset-0 w-full h-full"
+                viewBox="0 0 200 130"
+                preserveAspectRatio="none"
+              >
+                <defs>
+                  <linearGradient id="kioskCounter" x1="0" y1="0" x2="0" y2="1">
+                    <stop offset="0%" stopColor="hsl(210,55%,92%)" />
+                    <stop offset="60%" stopColor="hsl(210,50%,80%)" />
+                    <stop offset="100%" stopColor="hsl(215,55%,55%)" />
+                  </linearGradient>
+                  <linearGradient id="kioskTop" x1="0" y1="0" x2="0" y2="1">
+                    <stop offset="0%" stopColor="hsl(210,70%,45%)" />
+                    <stop offset="100%" stopColor="hsl(215,75%,32%)" />
+                  </linearGradient>
+                  <linearGradient id="kioskPost" x1="0" y1="0" x2="1" y2="0">
+                    <stop offset="0%" stopColor="hsl(210,30%,72%)" />
+                    <stop offset="50%" stopColor="hsl(0,0%,98%)" />
+                    <stop offset="100%" stopColor="hsl(210,30%,72%)" />
+                  </linearGradient>
+                  <linearGradient id="skin" x1="0" y1="0" x2="0" y2="1">
+                    <stop offset="0%" stopColor="hsl(28,60%,82%)" />
+                    <stop offset="100%" stopColor="hsl(28,45%,68%)" />
+                  </linearGradient>
+                </defs>
+
+                {/* Top sign banner connecting to desk via posts */}
+                <rect x="55" y="2" width="90" height="14" rx="2"
+                  fill="url(#kioskTop)"
+                  stroke="hsl(210,40%,85%)" strokeWidth="0.8" />
+                <text x="100" y="12" textAnchor="middle"
+                  fontFamily="Frank Ruhl Libre, serif" fontWeight="700"
+                  fontSize="8" fill="hsl(0,0%,98%)" letterSpacing="0.5">
+                  תחנת מידע
+                </text>
+                {/* Decorative info "i" badge on the left of sign */}
+                <circle cx="62" cy="9" r="3.2" fill="hsl(0,0%,98%)" stroke="hsl(215,75%,32%)" strokeWidth="0.6" />
+                <text x="62" y="11.4" textAnchor="middle" fontSize="5" fontWeight="700" fill="hsl(215,75%,32%)" fontFamily="Arial">i</text>
+
+                {/* Two posts connecting sign down to the counter */}
+                <rect x="58" y="16" width="3" height="58" fill="url(#kioskPost)" stroke="hsl(210,30%,55%)" strokeWidth="0.4" />
+                <rect x="139" y="16" width="3" height="58" fill="url(#kioskPost)" stroke="hsl(210,30%,55%)" strokeWidth="0.4" />
+
+                {/* === Attendant (more human) === */}
+                {/* Body / shirt - white */}
+                <path d="M 88 90 Q 100 78 112 90 L 116 110 L 84 110 Z"
+                  fill="hsl(0,0%,98%)" stroke="hsl(210,20%,75%)" strokeWidth="0.5" />
+                {/* Blue tie */}
+                <path d="M 100 80 L 97 88 L 100 102 L 103 88 Z" fill="hsl(215,75%,40%)" />
+                {/* Neck */}
+                <rect x="97" y="74" width="6" height="6" fill="url(#skin)" />
+                {/* Head */}
+                <ellipse cx="100" cy="66" rx="8" ry="9" fill="url(#skin)" stroke="hsl(28,40%,55%)" strokeWidth="0.4" />
+                {/* Ears */}
+                <ellipse cx="92" cy="67" rx="1.4" ry="2" fill="hsl(28,50%,70%)" />
+                <ellipse cx="108" cy="67" rx="1.4" ry="2" fill="hsl(28,50%,70%)" />
+                {/* Hair tufts under cap */}
+                <path d="M 92 62 Q 100 58 108 62 L 108 64 Q 100 62 92 64 Z" fill="hsl(28,40%,28%)" />
+                {/* Eyes */}
+                <circle cx="96.5" cy="67" r="0.9" fill="hsl(220,40%,18%)" />
+                <circle cx="103.5" cy="67" r="0.9" fill="hsl(220,40%,18%)" />
+                {/* Eyebrows */}
+                <path d="M 94.5 64.5 L 98.5 64.2" stroke="hsl(28,40%,25%)" strokeWidth="0.6" strokeLinecap="round" />
+                <path d="M 101.5 64.2 L 105.5 64.5" stroke="hsl(28,40%,25%)" strokeWidth="0.6" strokeLinecap="round" />
+                {/* Nose */}
+                <path d="M 100 67.5 L 99 71 L 100.5 71.5 L 101 71" stroke="hsl(28,40%,55%)" strokeWidth="0.5" fill="none" strokeLinecap="round" />
+                {/* Smile */}
+                <path d="M 97 72.5 Q 100 74.5 103 72.5" stroke="hsl(0,40%,40%)" strokeWidth="0.7" fill="none" strokeLinecap="round" />
+                {/* Cap - red/white/blue stripes */}
+                <path d="M 90 60 Q 100 52 110 60 L 110 62 L 90 62 Z" fill="hsl(215,75%,38%)" stroke="hsl(215,55%,22%)" strokeWidth="0.4" />
+                {/* Cap stripes */}
+                <rect x="90" y="56.5" width="20" height="1.6" fill="hsl(0,0%,98%)" />
+                <rect x="90" y="54.4" width="20" height="1.6" fill="hsl(0,75%,50%)" />
+                {/* Cap brim */}
+                <ellipse cx="100" cy="62.5" rx="11" ry="1.5" fill="hsl(215,75%,28%)" />
+                {/* Cap top button */}
+                <circle cx="100" cy="53" r="0.9" fill="hsl(0,0%,98%)" />
+
+                {/* Hands resting on counter */}
+                <ellipse cx="84" cy="103" rx="3" ry="2" fill="url(#skin)" stroke="hsl(28,40%,55%)" strokeWidth="0.3" />
+                <ellipse cx="116" cy="103" rx="3" ry="2" fill="url(#skin)" stroke="hsl(28,40%,55%)" strokeWidth="0.3" />
+
+                {/* === Counter / kiosk desk === */}
+                {/* Desk front panel */}
+                <rect x="40" y="100" width="120" height="30" rx="2"
+                  fill="url(#kioskCounter)"
+                  stroke="hsl(215,55%,45%)" strokeWidth="0.8" />
+                {/* Desk top */}
+                <rect x="36" y="97" width="128" height="5" rx="1.5"
+                  fill="hsl(0,0%,98%)" stroke="hsl(210,30%,60%)" strokeWidth="0.5" />
+                {/* Decorative blue band */}
+                <rect x="40" y="118" width="120" height="3" fill="hsl(215,75%,38%)" />
+                {/* Front "i" emblem panel */}
+                <rect x="92" y="106" width="16" height="10" rx="1.5" fill="hsl(0,0%,98%)" stroke="hsl(215,75%,38%)" strokeWidth="0.6" />
+                <text x="100" y="114.5" textAnchor="middle" fontSize="8" fontWeight="700" fill="hsl(215,75%,38%)" fontFamily="Arial">i</text>
+                {/* Side panels divider lines */}
+                <line x1="70" y1="102" x2="70" y2="118" stroke="hsl(215,40%,60%)" strokeWidth="0.4" />
+                <line x1="130" y1="102" x2="130" y2="118" stroke="hsl(215,40%,60%)" strokeWidth="0.4" />
+
+                {/* Items on desk */}
+                <rect x="46" y="92" width="9" height="6" rx="0.6" fill="hsl(220,30%,12%)" stroke="hsl(210,20%,55%)" strokeWidth="0.4" />
+                <rect x="46.6" y="92.6" width="7.8" height="4.8" fill="hsl(195,70%,55%)" />
+                <rect x="148" y="93" width="8" height="5" fill="hsl(0,0%,98%)" stroke="hsl(210,20%,70%)" strokeWidth="0.3" />
+                <rect x="148" y="94.5" width="8" height="0.5" fill="hsl(210,30%,75%)" />
+                <rect x="148" y="96" width="8" height="0.5" fill="hsl(210,30%,75%)" />
+              </svg>
             </>
           )}
 
