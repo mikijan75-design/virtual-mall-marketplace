@@ -9,6 +9,43 @@ import CenterFeature from "@/components/mall/CenterFeature";
 import mallWall from "@/assets/mall-wall.jpg";
 import marbleFloor from "@/assets/marble-floor.jpg";
 
+const TrashBin = () => (
+  <div className="flex flex-col items-center">
+    {/* Lid */}
+    <div
+      className="w-5 h-1 md:w-6 md:h-1.5 rounded-t-md"
+      style={{
+        background: "linear-gradient(180deg, hsl(210,8%,42%), hsl(210,10%,28%))",
+        boxShadow: "0 1px 2px rgba(0,0,0,0.3)",
+      }}
+    />
+    {/* Body */}
+    <div
+      className="relative w-4 h-6 md:w-5 md:h-8 rounded-b-md overflow-hidden"
+      style={{
+        background:
+          "linear-gradient(180deg, hsl(210,10%,55%), hsl(210,12%,32%))",
+        boxShadow:
+          "0 3px 6px rgba(0,0,0,0.3), inset 0 1px 2px rgba(255,255,255,0.15), inset -2px 0 3px rgba(0,0,0,0.25)",
+        border: "1px solid hsl(210,12%,28%)",
+      }}
+    >
+      {/* Vertical ridges */}
+      <div className="absolute inset-y-1 left-1 w-px bg-black/30" />
+      <div className="absolute inset-y-1 left-1/2 w-px bg-black/30" />
+      <div className="absolute inset-y-1 right-1 w-px bg-black/30" />
+      {/* Recycle label */}
+      <div
+        className="absolute top-1.5 left-1/2 -translate-x-1/2 w-2 h-2 rounded-full"
+        style={{
+          background: "radial-gradient(circle, hsl(140,55%,55%), hsl(140,50%,32%))",
+          boxShadow: "0 0 2px rgba(0,0,0,0.4)",
+        }}
+      />
+    </div>
+  </div>
+);
+
 const Index = () => {
   return (
     <div className="min-h-screen bg-background">
