@@ -101,6 +101,22 @@ const Index = () => {
             />
           ))}
 
+          {/* החלפת הקטע האמצעי (תקרה מקושתת + שער קומה 2) — מידות מדויקות מהמדידה */}
+          <img
+            src={centerSection}
+            alt="קטע אמצעי של הקניון - תקרה מקושתת ושער מרכזי"
+            aria-hidden
+            className="pointer-events-none absolute select-none"
+            draggable={false}
+            style={{
+              left: "45.21%",
+              top: "15.78%",
+              width: "11.17%",
+              height: "83.34%",
+              objectFit: "fill",
+              zIndex: 5,
+            }}
+          />
         </div>
 
         {/* החלפת הקטע האמצעי (תקרה מקושתת + שער קומה 2) — מידות מדויקות מהמדידה */}
