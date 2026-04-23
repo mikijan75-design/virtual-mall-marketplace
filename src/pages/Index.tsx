@@ -13,12 +13,12 @@ const storeHotspots = [
   { id: "s3", left: 58.7, top: 45.25, width: 12.2, height: 22.5 },
   { id: "s2", left: 73.3, top: 45.25, width: 11.8, height: 22.5 },
   { id: "s1", left: 87.1, top: 45.25, width: 11.2, height: 22.5 },
-  { id: "s12", left: 2.6, top: 71.51, width: 11.8, height: 23.7 },
-  { id: "s11", left: 17.0, top: 71.51, width: 11.4, height: 23.7 },
-  { id: "s10", left: 30.5, top: 71.51, width: 12.2, height: 23.7 },
-  { id: "s9", left: 58.7, top: 71.51, width: 12.2, height: 23.7 },
-  { id: "s8", left: 73.3, top: 71.51, width: 11.8, height: 23.7 },
-  { id: "s7", left: 87.1, top: 71.51, width: 11.2, height: 23.7 },
+  { id: "s12", left: 2.6, top: 73.88, width: 11.8, height: 23.7 },
+  { id: "s11", left: 17.0, top: 73.88, width: 11.4, height: 23.7 },
+  { id: "s10", left: 30.5, top: 73.88, width: 12.2, height: 23.7 },
+  { id: "s9", left: 58.7, top: 73.88, width: 12.2, height: 23.7 },
+  { id: "s8", left: 73.3, top: 73.88, width: 11.8, height: 23.7 },
+  { id: "s7", left: 87.1, top: 73.88, width: 11.2, height: 23.7 },
 ];
 
 const Index = () => {
