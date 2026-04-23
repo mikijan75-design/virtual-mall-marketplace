@@ -7,18 +7,18 @@ import MobileMallView from "@/components/mall/MobileMallView";
 import referenceMall from "@/assets/reference-mall-exact.png";
 
 const storeHotspots = [
-  { id: "s6", left: 2.6, top: 38.5, width: 11.8, height: 22.5 },
-  { id: "s5", left: 17.0, top: 38.5, width: 11.4, height: 22.5 },
-  { id: "s4", left: 30.5, top: 38.5, width: 12.2, height: 22.5 },
-  { id: "s3", left: 58.7, top: 38.5, width: 12.2, height: 22.5 },
-  { id: "s2", left: 73.3, top: 38.5, width: 11.8, height: 22.5 },
-  { id: "s1", left: 87.1, top: 38.5, width: 11.2, height: 22.5 },
-  { id: "s12", left: 2.6, top: 64.4, width: 11.8, height: 23.7 },
-  { id: "s11", left: 17.0, top: 64.4, width: 11.4, height: 23.7 },
-  { id: "s10", left: 30.5, top: 64.4, width: 12.2, height: 23.7 },
-  { id: "s9", left: 58.7, top: 64.4, width: 12.2, height: 23.7 },
-  { id: "s8", left: 73.3, top: 64.4, width: 11.8, height: 23.7 },
-  { id: "s7", left: 87.1, top: 64.4, width: 11.2, height: 23.7 },
+  { id: "s6", left: 2.6, top: 45.25, width: 11.8, height: 22.5 },
+  { id: "s5", left: 17.0, top: 45.25, width: 11.4, height: 22.5 },
+  { id: "s4", left: 30.5, top: 45.25, width: 12.2, height: 22.5 },
+  { id: "s3", left: 58.7, top: 45.25, width: 12.2, height: 22.5 },
+  { id: "s2", left: 73.3, top: 45.25, width: 11.8, height: 22.5 },
+  { id: "s1", left: 87.1, top: 45.25, width: 11.2, height: 22.5 },
+  { id: "s12", left: 2.6, top: 71.51, width: 11.8, height: 23.7 },
+  { id: "s11", left: 17.0, top: 71.51, width: 11.4, height: 23.7 },
+  { id: "s10", left: 30.5, top: 71.51, width: 12.2, height: 23.7 },
+  { id: "s9", left: 58.7, top: 71.51, width: 12.2, height: 23.7 },
+  { id: "s8", left: 73.3, top: 71.51, width: 11.8, height: 23.7 },
+  { id: "s7", left: 87.1, top: 71.51, width: 11.2, height: 23.7 },
 ];
 
 const Index = () => {
