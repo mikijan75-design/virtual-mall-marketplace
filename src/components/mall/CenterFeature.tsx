@@ -16,7 +16,8 @@ const CenterFeature = ({ floorId }: CenterFeatureProps) => {
     floorId === 3 ? "" : floorId === 2 ? "שירות ומידע" : "תצפית";
   const isEntrance = floorId === 3;
   const isInfo = floorId === 2;
-  const noFrame = isEntrance || isInfo;
+  const isBalcony = floorId === 1;
+  const noFrame = isEntrance || isInfo || isBalcony;
 
   return (
     <div className="hidden md:flex flex-col w-full">
@@ -96,7 +97,7 @@ const CenterFeature = ({ floorId }: CenterFeatureProps) => {
         {/* "Image" area - same height as StoreCard image (90px / md:130px) */}
         <div
           className={`relative w-full overflow-hidden ${
-            isEntrance ? "h-[170px] md:h-[230px]" : "h-[90px] md:h-[130px]"
+            isEntrance || isBalcony ? "h-[170px] md:h-[230px]" : "h-[90px] md:h-[130px]"
           }`}
           style={
             noFrame
