@@ -207,16 +207,170 @@ const GardenPlant = ({ variant }: { variant: GardenVariant }) => {
   );
 };
 
-const Decorations = () => {
-  const order: GardenVariant[] = ["rose", "sunflower", "tulip", "fern", "lavender", "tropical"];
+/**
+ * Continuous hedge: a wide SVG strip with overlapping shrub bumps,
+ * scattered flowers, butterflies, mushrooms and grass tufts spanning
+ * edge to edge.
+ */
+const HedgeRow = () => {
+  // Bumpy hedge top profile
+  const bumps = Array.from({ length: 28 }, (_, i) => {
+    const x = (i / 27) * 1000;
+    const h = 70 + Math.sin(i * 1.3) * 10 + (i % 3) * 4;
+    return { x, h };
+  });
+  const topPath =
+    `M0 110 ` +
+    bumps.map((b) => `Q${b.x - 10} ${110 - b.h - 10} ${b.x} ${110 - b.h}`).join(" ") +
+    ` L1000 110 Z`;
+
+  // Random-ish flower positions
+  const flowers = [
+    { x: 40, y: 55, c: "hsl(355,80%,60%)", k: "hsl(45,95%,60%)" },
+    { x: 95, y: 35, c: "hsl(45,95%,62%)", k: "hsl(25,55%,28%)" },
+    { x: 150, y: 50, c: "hsl(320,70%,65%)", k: "hsl(50,95%,60%)" },
+    { x: 210, y: 30, c: "hsl(15,90%,60%)", k: "hsl(50,90%,60%)" },
+    { x: 270, y: 55, c: "hsl(270,60%,65%)", k: "hsl(50,95%,55%)" },
+    { x: 325, y: 40, c: "hsl(0,80%,60%)", k: "hsl(45,90%,55%)" },
+    { x: 385, y: 50, c: "hsl(45,95%,62%)", k: "hsl(25,55%,28%)" },
+    { x: 445, y: 35, c: "hsl(335,70%,62%)", k: "hsl(50,95%,60%)" },
+    { x: 505, y: 55, c: "hsl(20,90%,60%)", k: "hsl(50,90%,55%)" },
+    { x: 560, y: 32, c: "hsl(280,65%,68%)", k: "hsl(45,95%,55%)" },
+    { x: 620, y: 50, c: "hsl(355,80%,60%)", k: "hsl(45,95%,60%)" },
+    { x: 680, y: 38, c: "hsl(45,95%,62%)", k: "hsl(25,55%,28%)" },
+    { x: 740, y: 55, c: "hsl(320,70%,65%)", k: "hsl(50,95%,60%)" },
+    { x: 800, y: 33, c: "hsl(15,90%,60%)", k: "hsl(50,90%,60%)" },
+    { x: 860, y: 50, c: "hsl(270,60%,65%)", k: "hsl(50,95%,55%)" },
+    { x: 920, y: 40, c: "hsl(0,80%,60%)", k: "hsl(45,90%,55%)" },
+    { x: 970, y: 55, c: "hsl(335,70%,62%)", k: "hsl(50,95%,60%)" },
+  ];
+
+  // Tall flower stems poking above hedge
+  const tallFlowers = [
+    { x: 70, h: 30, c: "hsl(355,80%,55%)" },
+    { x: 180, h: 36, c: "hsl(45,95%,58%)" },
+    { x: 300, h: 28, c: "hsl(320,70%,60%)" },
+    { x: 420, h: 34, c: "hsl(20,90%,58%)" },
+    { x: 540, h: 30, c: "hsl(270,60%,62%)" },
+    { x: 660, h: 36, c: "hsl(0,80%,58%)" },
+    { x: 780, h: 30, c: "hsl(45,95%,60%)" },
+    { x: 900, h: 34, c: "hsl(335,70%,60%)" },
+  ];
+
+  // Butterflies
+  const butterflies = [
+    { x: 130, y: 18, c: "hsl(280,70%,68%)" },
+    { x: 480, y: 12, c: "hsl(45,90%,62%)" },
+    { x: 820, y: 16, c: "hsl(330,70%,68%)" },
+  ];
+
   return (
-    <div className="flex justify-between items-end max-w-5xl mx-auto px-6 py-4">
-      <GardenPlant variant={order[0]} />
-      <GardenPlant variant={order[1]} />
-      <div className="hidden md:block"><GardenPlant variant={order[2]} /></div>
-      <div className="hidden md:block"><GardenPlant variant={order[3]} /></div>
-      <GardenPlant variant={order[4]} />
-      <GardenPlant variant={order[5]} />
+    <div className="w-full">
+      <svg viewBox="0 0 1000 130" preserveAspectRatio="none" className="w-full h-32 md:h-40 block overflow-visible">
+        <defs>
+          <linearGradient id="hedge-grad" x1="0" y1="0" x2="0" y2="1">
+            <stop offset="0%" stopColor="hsl(110,55%,42%)" />
+            <stop offset="55%" stopColor="hsl(125,55%,28%)" />
+            <stop offset="100%" stopColor="hsl(135,55%,18%)" />
+          </linearGradient>
+          <linearGradient id="soil-grad" x1="0" y1="0" x2="0" y2="1">
+            <stop offset="0%" stopColor="hsl(25,45%,32%)" />
+            <stop offset="100%" stopColor="hsl(20,50%,18%)" />
+          </linearGradient>
+          <radialGradient id="leaf-cluster" cx="0.4" cy="0.3">
+            <stop offset="0%" stopColor="hsl(95,60%,55%)" />
+            <stop offset="100%" stopColor="hsl(130,55%,25%)" />
+          </radialGradient>
+        </defs>
+
+        {/* Soil bed */}
+        <rect x="0" y="105" width="1000" height="25" fill="url(#soil-grad)" />
+        {/* Soil texture dots */}
+        {Array.from({ length: 60 }, (_, i) => (
+          <circle key={i} cx={(i * 17) % 1000} cy={108 + (i % 4) * 4} r="0.8" fill="hsl(20,40%,12%)" opacity="0.5" />
+        ))}
+
+        {/* Hedge body */}
+        <path d={topPath} fill="url(#hedge-grad)" stroke="hsl(135,55%,15%)" strokeWidth="0.8" />
+
+        {/* Foliage cluster bumps for depth */}
+        {Array.from({ length: 36 }, (_, i) => {
+          const cx = (i / 35) * 1000 + 8;
+          const cy = 60 + Math.sin(i * 0.9) * 8 + (i % 2) * 6;
+          const r = 14 + (i % 3) * 3;
+          return <circle key={i} cx={cx} cy={cy} r={r} fill="url(#leaf-cluster)" opacity="0.55" />;
+        })}
+
+        {/* Tall flower stems */}
+        {tallFlowers.map((f, i) => (
+          <g key={i}>
+            <path d={`M${f.x} 50 Q${f.x + 1} ${50 - f.h / 2} ${f.x} ${50 - f.h}`} stroke="hsl(125,55%,30%)" strokeWidth="1.4" fill="none" />
+            <ellipse cx={f.x - 3} cy={50 - f.h / 2} rx="3" ry="1.2" fill="hsl(120,55%,32%)" transform={`rotate(-25 ${f.x - 3} ${50 - f.h / 2})`} />
+            {/* Bloom */}
+            {[0, 60, 120, 180, 240, 300].map((a) => (
+              <ellipse key={a} cx={f.x} cy={50 - f.h - 2} rx="2" ry="3" fill={f.c} transform={`rotate(${a} ${f.x} ${50 - f.h})`} />
+            ))}
+            <circle cx={f.x} cy={50 - f.h} r="1.6" fill="hsl(45,90%,55%)" />
+          </g>
+        ))}
+
+        {/* Scattered flowers nestled in hedge */}
+        {flowers.map((f, i) => (
+          <g key={i} transform={`translate(${f.x} ${f.y})`}>
+            {[0, 60, 120, 180, 240, 300].map((a) => (
+              <ellipse key={a} cx="0" cy="-3" rx="2" ry="3" fill={f.c} transform={`rotate(${a})`} />
+            ))}
+            <circle cx="0" cy="0" r="1.6" fill={f.k} />
+          </g>
+        ))}
+
+        {/* Mushrooms at the base */}
+        {[{ x: 60, c: "hsl(0,75%,50%)" }, { x: 350, c: "hsl(30,85%,55%)" }, { x: 720, c: "hsl(0,70%,50%)" }, { x: 940, c: "hsl(30,80%,55%)" }].map((m, i) => (
+          <g key={i} transform={`translate(${m.x} 108)`}>
+            <rect x="-2" y="-2" width="4" height="6" rx="1" fill="hsl(40,30%,90%)" />
+            <ellipse cx="0" cy="-2" rx="6" ry="3.5" fill={m.c} />
+            <circle cx="-2.5" cy="-2.5" r="0.8" fill="white" opacity="0.85" />
+            <circle cx="2" cy="-2" r="0.7" fill="white" opacity="0.85" />
+            <circle cx="0" cy="-3.5" r="0.6" fill="white" opacity="0.85" />
+          </g>
+        ))}
+
+        {/* Grass tufts */}
+        {Array.from({ length: 22 }, (_, i) => {
+          const x = i * 47 + 12;
+          return (
+            <g key={i} transform={`translate(${x} 110)`}>
+              <path d="M-3 0 Q-2 -6 -1 0" stroke="hsl(95,55%,38%)" strokeWidth="0.8" fill="none" />
+              <path d="M-1 0 Q0 -8 1 0" stroke="hsl(110,60%,42%)" strokeWidth="0.8" fill="none" />
+              <path d="M1 0 Q2 -6 3 0" stroke="hsl(95,55%,38%)" strokeWidth="0.8" fill="none" />
+            </g>
+          );
+        })}
+
+        {/* Stones */}
+        {[{ x: 110, w: 4 }, { x: 280, w: 3 }, { x: 470, w: 5 }, { x: 640, w: 3.2 }, { x: 850, w: 4 }].map((s, i) => (
+          <ellipse key={i} cx={s.x} cy="120" rx={s.w} ry={s.w * 0.5} fill="hsl(215,8%,55%)" stroke="hsl(220,8%,25%)" strokeWidth="0.3" />
+        ))}
+
+        {/* Butterflies */}
+        {butterflies.map((b, i) => (
+          <g key={i} transform={`translate(${b.x} ${b.y})`}>
+            <ellipse cx="-3" cy="-1" rx="3" ry="4" fill={b.c} opacity="0.9" />
+            <ellipse cx="3" cy="-1" rx="3" ry="4" fill={b.c} opacity="0.9" />
+            <ellipse cx="-2.5" cy="2.5" rx="2" ry="2.5" fill={b.c} opacity="0.85" />
+            <ellipse cx="2.5" cy="2.5" rx="2" ry="2.5" fill={b.c} opacity="0.85" />
+            <line x1="0" y1="-3.5" x2="0" y2="3.5" stroke="hsl(30,20%,15%)" strokeWidth="0.7" />
+          </g>
+        ))}
+      </svg>
+    </div>
+  );
+};
+
+const Decorations = () => {
+  return (
+    <div className="w-full">
+      <HedgeRow />
     </div>
   );
 };
