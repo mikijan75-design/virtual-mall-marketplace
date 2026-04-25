@@ -6,7 +6,6 @@ import Decorations from "@/components/mall/Decorations";
 import FloorMap from "@/components/mall/FloorMap";
 import StoreCard from "@/components/mall/StoreCard";
 import CenterFeature from "@/components/mall/CenterFeature";
-import SaleRibbon from "@/components/mall/SaleRibbon";
 import mallWall from "@/assets/mall-wall.jpg";
 import marbleFloor from "@/assets/marble-floor.jpg";
 
@@ -63,7 +62,7 @@ const Index = () => {
         <MallCeiling />
 
         {/* All floors stacked */}
-        {mallFloors.map((floor, floorIdx) => (
+        {mallFloors.map((floor) => (
           <div key={floor.id} className="mb-6">
             {/* Floor label */}
             <div className="text-center my-4">
@@ -101,8 +100,6 @@ const Index = () => {
                   const centerSlot = idx === 3 ? (
                     <CenterFeature key={`center-${floor.id}`} floorId={floor.id} />
                   ) : null;
-                  // Sale ribbon on a couple of stores per floor for visual interest
-                  const showSale = (floorIdx === 0 && idx === 0) || (floorIdx === 1 && idx === 3) || (floorIdx === 2 && idx === 5);
                   return (
                   <Fragment key={store.id}>
                   {centerSlot}
@@ -137,7 +134,6 @@ const Index = () => {
                     </div>
 
                     <StoreCard store={store} storeIndex={idx} />
-                    {showSale && <SaleRibbon />}
 
                     {/* Planter centered in the gap between stores (skip last in each row half) */}
                     {idx % 3 !== 2 && (
