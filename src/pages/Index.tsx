@@ -6,6 +6,8 @@ import Decorations from "@/components/mall/Decorations";
 import FloorMap from "@/components/mall/FloorMap";
 import StoreCard from "@/components/mall/StoreCard";
 import CenterFeature from "@/components/mall/CenterFeature";
+import FloorTransit from "@/components/mall/MallTransit";
+import SaleRibbon from "@/components/mall/SaleRibbon";
 import mallWall from "@/assets/mall-wall.jpg";
 import marbleFloor from "@/assets/marble-floor.jpg";
 
@@ -62,8 +64,11 @@ const Index = () => {
         <MallCeiling />
 
         {/* All floors stacked */}
-        {mallFloors.map((floor) => (
-          <div key={floor.id} className="mb-6">
+        {mallFloors.map((floor, floorIdx) => (
+          <div key={floor.id} className="mb-6 relative">
+            {/* Side transit overlay (elevators, stairs, escalator, people, service icons) */}
+            <FloorTransit floorIndex={floorIdx} />
+
             {/* Floor label */}
             <div className="text-center my-4">
               <span
@@ -93,13 +98,15 @@ const Index = () => {
               />
             </div>
 
-            <div className="max-w-5xl mx-auto px-2">
+            <div className="max-w-5xl mx-auto px-2 md:px-[170px]">
               <div className="relative grid grid-cols-3 md:grid-cols-7 gap-3 md:gap-4">
                 {floor.stores.map((store, idx) => {
                   // Insert a center feature column between left 3 stores and right 3 stores
                   const centerSlot = idx === 3 ? (
                     <CenterFeature key={`center-${floor.id}`} floorId={floor.id} />
                   ) : null;
+                  // Sale ribbon on a couple of stores per floor for visual interest
+                  const showSale = (floorIdx === 0 && idx === 0) || (floorIdx === 1 && idx === 3) || (floorIdx === 2 && idx === 5);
                   return (
                   <Fragment key={store.id}>
                   {centerSlot}
@@ -134,6 +141,7 @@ const Index = () => {
                     </div>
 
                     <StoreCard store={store} storeIndex={idx} />
+                    {showSale && <SaleRibbon />}
 
                     {/* Planter centered in the gap between stores (skip last in each row half) */}
                     {idx % 3 !== 2 && (
