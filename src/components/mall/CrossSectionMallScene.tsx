@@ -295,7 +295,7 @@ const CrossSectionMallScene = ({ floors }: CrossSectionMallSceneProps) => {
           ))}
         </div>
 
-        <div className="absolute bottom-0 left-0 right-0 z-30">
+        <div className="relative z-10 left-0 right-0">
           <Decorations />
         </div>
       </div>
