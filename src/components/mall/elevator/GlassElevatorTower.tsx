@@ -67,7 +67,7 @@ const FloorLanding = ({
   passenger,
 }: {
   top: string;
-  passenger?: "blue" | "rose";
+  passenger?: "blue" | "rose" | "group";
 }) => (
   <div className="absolute left-[-48%] right-[-72%] z-30 h-[9%]" style={{ top }}>
     <div className="absolute bottom-0 left-0 right-0 h-[28%] bg-[linear-gradient(180deg,#e9ddc6,#c5ae83)] shadow-[0_3px_8px_rgba(70,50,25,0.18)]" />
@@ -88,15 +88,22 @@ const FloorLanding = ({
         style={{ left: `${left}%` }}
       />
     ))}
-    {passenger === "blue" && (
-      <ElevatorPassenger className="bottom-[14%] left-[30%] h-11 w-6 md:h-14 md:w-7" />
-    )}
-    {passenger === "rose" && (
+    {/* Group of passengers standing side-by-side, centered under the rail */}
+    <div className="absolute bottom-[14%] left-[20%] right-[12%] flex items-end justify-center gap-1">
       <ElevatorPassenger
-        className="bottom-[13%] left-[34%] h-11 w-6 md:h-14 md:w-7"
-        shirt="hsl(344,39%,66%)"
+        className="relative h-11 w-6 md:h-14 md:w-7"
+        shirt={passenger === "rose" ? "hsl(344,39%,66%)" : "hsl(213,48%,58%)"}
       />
-    )}
+      <ElevatorPassenger
+        className="relative h-11 w-6 md:h-14 md:w-7"
+        shirt="hsl(45,60%,55%)"
+        flip
+      />
+      <ElevatorPassenger
+        className="relative h-11 w-6 md:h-14 md:w-7"
+        shirt={passenger === "blue" ? "hsl(199,42%,60%)" : "hsl(155,40%,50%)"}
+      />
+    </div>
   </div>
 );
 
@@ -107,9 +114,9 @@ const GlassElevatorTower = ({ side }: { side: "left" | "right" }) => (
     }`}
     aria-hidden="true"
   >
-    <FloorLanding top="20%" passenger={side === "left" ? "blue" : undefined} />
-    <FloorLanding top="50%" passenger={side === "right" ? "rose" : undefined} />
-    <FloorLanding top="80%" />
+    <FloorLanding top="20%" passenger={side === "left" ? "blue" : "rose"} />
+    <FloorLanding top="50%" passenger={side === "right" ? "rose" : "blue"} />
+    <FloorLanding top="80%" passenger="blue" />
 
     <div className="absolute inset-y-0 left-0 w-[78%]" style={glassPaneStyle}>
       <div className="absolute inset-0 bg-[linear-gradient(115deg,transparent_0%,transparent_35%,rgba(255,255,255,0.56)_43%,transparent_53%,transparent_100%)]" />
