@@ -71,7 +71,6 @@ const idOverrides: Record<string, Partial<{ name: string; bg: string; text: stri
 const defaultStyle = { bg: "linear-gradient(135deg, #f5f0e8, #ede4d8)", text: "#3a2a20", accent: "#c9a96e", font: "font-frank", image: "", subtitle: "", logo: undefined as string | undefined, subtitleLogo: undefined as string | undefined };
 
 const romanNumerals = ["I", "II", "III", "IV", "V", "VI"];
-const statusStoreIds = new Set(["s6", "s7", "s9", "s13", "s14"]);
 
 interface StoreCardProps {
   store: Store;
@@ -84,11 +83,6 @@ const StoreCard = ({ store, storeIndex }: StoreCardProps) => {
   const override = idOverrides[store.id];
   const style = override ? { ...baseStyle, ...override } : baseStyle;
   const displayName = override?.name ?? store.name;
-  const statusLabel = statusStoreIds.has(store.id)
-    ? store.id === "s9"
-      ? "להשכרה"
-      : "בקרוב"
-    : null;
 
   return (
     <button
@@ -98,19 +92,15 @@ const StoreCard = ({ store, storeIndex }: StoreCardProps) => {
     >
       {/* Elegant outer frame */}
       <div
-        className="relative flex w-full flex-col overflow-hidden rounded-sm bg-stone-100"
+        className="relative flex flex-col w-full rounded-lg overflow-hidden"
         style={{
           border: "2px solid hsl(40,25%,72%)",
-          boxShadow:
-            "0 8px 20px rgba(70,45,20,0.14), inset 0 0 0 1px hsl(40,20%,88%)",
+          boxShadow: "0 6px 24px rgba(0,0,0,0.12), inset 0 0 0 1px hsl(40,20%,85%)",
         }}
       >
-        <div className="pointer-events-none absolute inset-y-0 left-0 z-20 w-[3px] bg-gradient-to-b from-stone-50 via-stone-300 to-stone-100" />
-        <div className="pointer-events-none absolute inset-y-0 right-0 z-20 w-[3px] bg-gradient-to-b from-stone-50 via-stone-300 to-stone-100" />
-
         {/* Top gold trim */}
         <div
-          className="h-[4px]"
+          className="h-[3px]"
           style={{ background: "linear-gradient(90deg, hsl(40,15%,65%), hsl(43,45%,70%), hsl(40,15%,65%))" }}
         />
 
@@ -127,11 +117,10 @@ const StoreCard = ({ store, storeIndex }: StoreCardProps) => {
           </div>
         ) : (
           <div
-            className="relative z-10 flex flex-col items-center justify-center gap-0.5 px-2 py-2.5 md:py-3"
+            className="relative z-10 py-2.5 md:py-3 px-2 flex flex-col items-center justify-center gap-0.5"
             style={{
               background: style.bg,
               borderBottom: `2px solid ${style.accent}`,
-              boxShadow: "inset 0 1px 0 rgba(255,255,255,0.7)",
             }}
           >
             {/* Corner accents */}
@@ -181,27 +170,18 @@ const StoreCard = ({ store, storeIndex }: StoreCardProps) => {
             <img
               src={style.image}
               alt={store.name}
-              className="h-[90px] w-full object-cover transition-transform duration-700 group-hover:scale-110 md:h-[130px]"
+              className="w-full h-[90px] md:h-[130px] object-cover transition-transform duration-700 group-hover:scale-110"
               loading="lazy"
               width={512}
               height={512}
             />
-            <div className="absolute left-[14%] top-0 h-full w-px bg-white/65" />
-            <div className="absolute right-[14%] top-0 h-full w-px bg-white/65" />
-            <div className="absolute left-0 right-0 top-0 h-2 bg-gradient-to-b from-white/65 to-transparent" />
             {/* Glass reflection overlay */}
             <div
               className="absolute inset-0 pointer-events-none"
               style={{
-                background:
-                  "linear-gradient(155deg, rgba(255,255,255,0.24) 0%, transparent 34%, transparent 62%, rgba(255,255,255,0.09) 100%)",
+                background: "linear-gradient(155deg, rgba(255,255,255,0.18) 0%, transparent 35%, transparent 60%, rgba(255,255,255,0.06) 100%)",
               }}
             />
-            {statusLabel && (
-              <div className="pointer-events-none absolute right-1 top-3 z-30 -rotate-12 rounded-sm border border-white/70 bg-red-700/85 px-2 py-0.5 font-frank text-[9px] font-black tracking-wide text-white shadow-md md:text-[10px]">
-                {statusLabel}
-              </div>
-            )}
             {/* Hover warm glow */}
             <div
               className="absolute inset-0 opacity-0 group-hover:opacity-100 transition-opacity duration-500 pointer-events-none"
@@ -212,7 +192,7 @@ const StoreCard = ({ store, storeIndex }: StoreCardProps) => {
           </div>
         ) : (
           <div
-            className="relative flex min-h-[90px] items-center justify-center md:min-h-[130px]"
+            className="relative min-h-[90px] md:min-h-[130px] flex items-center justify-center"
             style={{ background: "linear-gradient(180deg, hsl(40,8%,96%), hsl(40,6%,92%))" }}
           >
             <span className="text-2xl md:text-3xl">{store.logoEmoji}</span>
@@ -221,7 +201,7 @@ const StoreCard = ({ store, storeIndex }: StoreCardProps) => {
 
         {/* Bottom gold trim */}
         <div
-          className="h-[4px]"
+          className="h-[3px]"
           style={{ background: "linear-gradient(90deg, hsl(40,15%,65%), hsl(43,45%,70%), hsl(40,15%,65%))" }}
         />
 
