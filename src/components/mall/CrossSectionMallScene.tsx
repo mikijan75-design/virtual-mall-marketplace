@@ -263,32 +263,32 @@ const CrossSectionMallScene = ({ floors }: CrossSectionMallSceneProps) => {
               {/* Escalators between floors */}
               {index < displayFloors.length - 1 && (
                 <>
-                  <Escalator className="left-[1%] -bottom-12 h-24 w-[23%]" />
-                  <Escalator className="right-[1%] -bottom-12 h-24 w-[23%]" reverse />
+                  <Escalator className="left-[9%] -bottom-12 h-24 w-[22%]" />
+                  <Escalator className="right-[9%] -bottom-12 h-24 w-[22%]" reverse />
                 </>
               )}
               {/* Per-floor signs */}
               {index === 0 && (
                 <>
-                  <InfoSign className="left-[11%] top-1/2 -translate-y-1/2" />
-                  <RestroomSign className="right-[6%] top-1/2 -translate-y-1/2" />
-                  <Person className="left-[6.5%] top-[40%]" />
-                  <Person className="right-[8%] top-[40%]" flip />
+                  <InfoSign className="left-[18%] top-1/2 -translate-y-1/2" />
+                  <RestroomSign className="right-[14%] top-1/2 -translate-y-1/2" />
+                  <Person className="left-[14%] top-[40%]" />
+                  <Person className="right-[16%] top-[40%]" flip />
                 </>
               )}
               {index === 1 && (
                 <>
-                  <Person className="left-[1.5%] top-[40%]" shirt="hsl(213,48%,58%)" />
-                  <Person className="right-[15%] top-[40%]" shirt="hsl(192,45%,62%)" flip />
+                  <Person className="left-[10%] top-[40%]" shirt="hsl(213,48%,58%)" />
+                  <Person className="right-[22%] top-[40%]" shirt="hsl(192,45%,62%)" flip />
                 </>
               )}
               {index === 2 && (
                 <>
-                  <InfoSign className="left-[1.5%] bottom-4" />
-                  <RestroomSign className="left-[3.5%] top-4" />
-                  <Person className="left-[24%] bottom-4" shirt="hsl(205,55%,58%)" />
-                  <Person className="right-[25%] bottom-4" shirt="hsl(205,55%,58%)" flip />
-                  <Person className="right-[5%] top-1/2" shirt="hsl(332,35%,68%)" flip />
+                  <InfoSign className="left-[10%] bottom-4" />
+                  <RestroomSign className="left-[12%] top-4" />
+                  <Person className="left-[28%] bottom-4" shirt="hsl(205,55%,58%)" />
+                  <Person className="right-[30%] bottom-4" shirt="hsl(205,55%,58%)" flip />
+                  <Person className="right-[13%] top-1/2" shirt="hsl(332,35%,68%)" flip />
                 </>
               )}
             </div>
