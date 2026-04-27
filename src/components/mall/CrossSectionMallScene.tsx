@@ -236,7 +236,6 @@ const CrossSectionMallScene = ({ floors }: CrossSectionMallSceneProps) => {
           backgroundSize: "420px 420px",
         }}
       >
-        <div className="absolute inset-0 bg-[linear-gradient(90deg,rgba(255,255,255,0.45)_0_1px,transparent_1px_8.3%),linear-gradient(0deg,rgba(185,170,145,0.22)_0_1px,transparent_1px_8.3%)] opacity-45" />
         <MarbleWallPanels />
 
         <div className="relative z-20 h-[86px] bg-[#ece2d1] shadow-[0_8px_18px_rgba(75,55,35,0.18)] md:h-[122px]">
@@ -272,23 +271,25 @@ const CrossSectionMallScene = ({ floors }: CrossSectionMallSceneProps) => {
                 <>
                   <InfoSign className="left-[18%] top-1/2 -translate-y-1/2" />
                   <RestroomSign className="right-[14%] top-1/2 -translate-y-1/2" />
-                  <Person className="left-[14%] top-[40%]" />
-                  <Person className="right-[16%] top-[40%]" flip />
+                  <Person className="left-[26%] bottom-12" />
+                  <Person className="right-[28%] bottom-12" flip />
+                  <Person className="left-[44%] bottom-12" shirt="hsl(15,55%,55%)" />
                 </>
               )}
               {index === 1 && (
                 <>
-                  <Person className="left-[10%] top-[40%]" shirt="hsl(213,48%,58%)" />
-                  <Person className="right-[22%] top-[40%]" shirt="hsl(192,45%,62%)" flip />
+                  <Person className="left-[22%] bottom-12" shirt="hsl(213,48%,58%)" />
+                  <Person className="right-[24%] bottom-12" shirt="hsl(192,45%,62%)" flip />
+                  <Person className="left-[48%] bottom-12" shirt="hsl(45,60%,55%)" />
                 </>
               )}
               {index === 2 && (
                 <>
                   <InfoSign className="left-[10%] bottom-4" />
                   <RestroomSign className="left-[12%] top-4" />
-                  <Person className="left-[28%] bottom-4" shirt="hsl(205,55%,58%)" />
-                  <Person className="right-[30%] bottom-4" shirt="hsl(205,55%,58%)" flip />
-                  <Person className="right-[13%] top-1/2" shirt="hsl(332,35%,68%)" flip />
+                  <Person className="left-[28%] bottom-12" shirt="hsl(205,55%,58%)" />
+                  <Person className="right-[30%] bottom-12" shirt="hsl(205,55%,58%)" flip />
+                  <Person className="left-[50%] bottom-12" shirt="hsl(332,35%,68%)" />
                 </>
               )}
             </div>
