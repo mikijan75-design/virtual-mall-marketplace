@@ -91,7 +91,7 @@ const MarbleWallPanels = () => (
 );
 
 const GlassGuardRail = () => (
-  <div className="pointer-events-none absolute bottom-9 left-[3%] right-[3%] z-[35] hidden h-12 md:block" aria-hidden="true">
+  <div className="pointer-events-none absolute bottom-[84px] left-[3%] right-[3%] z-[35] hidden h-12 md:block" aria-hidden="true">
     <div
       className="absolute inset-0 overflow-hidden rounded-sm"
       style={{
