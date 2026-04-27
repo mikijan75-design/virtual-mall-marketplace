@@ -189,7 +189,7 @@ const MarbleSlab = ({ className = "" }: { className?: string }) => (
   />
 );
 
-const SceneFloor = ({ floor, hidePlants = false }: { floor: Floor; hidePlants?: boolean }) => (
+const SceneFloor = ({ floor }: { floor: Floor }) => (
   <section id={`floor-${floor.id}`} className="relative min-h-[235px] w-full md:min-h-[285px]">
     {/* Top marble strip (ceiling of this floor) */}
     <MarbleSlab className="top-0 h-8 md:h-10" />
@@ -206,7 +206,7 @@ const SceneFloor = ({ floor, hidePlants = false }: { floor: Floor; hidePlants?: 
             {storeIndex === 3 && <CenterFeature floorId={floor.id} />}
             <div className="relative">
               <StoreCard store={store} storeIndex={storeIndex} />
-              {!hidePlants && (storeIndex === 1 || storeIndex === 4) && (
+              {(storeIndex === 1 || storeIndex === 4) && (
                 <div
                   className="absolute -right-2 bottom-2 z-40 hidden h-10 w-8 rounded-t-full md:block"
                   style={{
@@ -259,7 +259,7 @@ const CrossSectionMallScene = ({ floors }: CrossSectionMallSceneProps) => {
         <div className="relative z-10 flex flex-col">
           {displayFloors.map((floor, index) => (
             <div key={floor.id} className="relative">
-              <SceneFloor floor={floor} hidePlants={floor.id === 3} />
+              <SceneFloor floor={floor} />
               {/* Escalators between floors */}
               {index < displayFloors.length - 1 && (
                 <>
