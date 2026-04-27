@@ -156,8 +156,8 @@ const SceneFloor = ({ floor }: { floor: Floor }) => (
     <MarbleSlab className="bottom-0 h-8 md:h-10" />
     <FloorLabel>{floor.name}</FloorLabel>
 
-    <div className="relative mx-auto w-[51%] px-2 pt-12 pb-12 z-30">
-      <div className="grid grid-cols-3 gap-2 md:grid-cols-7 md:gap-3">
+    <div className="relative mx-auto w-full max-w-5xl px-2 pt-12 pb-12 z-30">
+      <div className="grid grid-cols-3 gap-3 md:grid-cols-7 md:gap-4">
         {floor.stores.map((store, storeIndex) => (
           <Fragment key={store.id}>
             {storeIndex === 3 && <CenterFeature floorId={floor.id} />}
