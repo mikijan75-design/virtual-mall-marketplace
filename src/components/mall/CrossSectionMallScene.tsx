@@ -70,17 +70,83 @@ const RestroomSign = ({ className = "" }: { className?: string }) => (
   </div>
 );
 
+const DownlightRow = ({ className = "" }: { className?: string }) => (
+  <div className={`absolute left-0 right-0 z-30 hidden justify-around px-14 md:flex ${className}`} aria-hidden="true">
+    {Array.from({ length: 12 }, (_, index) => (
+      <div key={index} className="relative h-3 w-3 rounded-full bg-white shadow-[0_0_14px_rgba(255,244,210,0.95)]">
+        <div className="absolute left-1/2 top-2 h-12 w-20 -translate-x-1/2 bg-[radial-gradient(ellipse_at_top,rgba(255,238,190,0.35),transparent_68%)]" />
+      </div>
+    ))}
+  </div>
+);
+
+const MarbleWallPanels = () => (
+  <div className="pointer-events-none absolute inset-0 z-0 hidden md:block" aria-hidden="true">
+    {Array.from({ length: 12 }, (_, index) => (
+      <div
+        key={index}
+        className="absolute top-[110px] bottom-[40px] border-x border-white/45"
+        style={{
+          left: `${index * 8.33}%`,
+          width: "8.33%",
+          background:
+            "linear-gradient(180deg, rgba(255,255,255,0.22), transparent 18%, transparent 78%, rgba(170,145,110,0.12))",
+        }}
+      />
+    ))}
+  </div>
+);
+
+const GlassGuardRail = () => (
+  <div className="pointer-events-none absolute bottom-9 left-[3%] right-[3%] z-[35] hidden h-12 md:block" aria-hidden="true">
+    <div
+      className="absolute inset-0 overflow-hidden rounded-sm"
+      style={{
+        background:
+          "linear-gradient(180deg, hsla(190,80%,92%,0.46), hsla(193,58%,70%,0.22))",
+        border: "1px solid hsla(190,55%,62%,0.58)",
+        boxShadow:
+          "inset 0 1px 10px hsla(190,100%,96%,0.58), inset 0 -2px 8px hsla(190,60%,42%,0.18), 0 4px 12px rgba(45,75,82,0.14)",
+      }}
+    >
+      <div className="absolute inset-0 bg-[linear-gradient(112deg,transparent_0%,transparent_38%,rgba(255,255,255,0.6)_44%,transparent_52%,transparent_100%)]" />
+    </div>
+    <div className="absolute -top-1 left-0 right-0 h-2 rounded-full bg-[linear-gradient(180deg,#f9ffff,#90aab0_65%,#5b7075)] shadow-[0_2px_5px_rgba(0,0,0,0.28)]" />
+    {[8, 22, 36, 50, 64, 78, 92].map((left) => (
+      <div
+        key={left}
+        className="absolute top-0 bottom-0 w-px bg-[linear-gradient(180deg,#ffffff,#86a3aa)] shadow-[0_0_4px_rgba(255,255,255,0.6)]"
+        style={{ left: `${left}%` }}
+      />
+    ))}
+  </div>
+);
+
+const FloorLightSpots = () => (
+  <div className="pointer-events-none absolute inset-x-[7%] top-9 z-20 hidden justify-between md:flex" aria-hidden="true">
+    {Array.from({ length: 7 }, (_, index) => (
+      <div
+        key={index}
+        className="h-16 w-24 rounded-full bg-[radial-gradient(ellipse_at_top,rgba(255,239,190,0.26),transparent_70%)]"
+      />
+    ))}
+  </div>
+);
+
 const ElevatorTower = ({ side }: { side: "left" | "right" }) => (
   <div
-    className={`absolute top-[80px] bottom-[60px] z-30 hidden w-[8%] md:block ${
+    className={`absolute top-[78px] bottom-[58px] z-30 hidden w-[8.5%] md:block ${
       side === "left" ? "left-[16%]" : "right-[16%]"
     }`}
     style={glassStyle}
   >
+    <div className="absolute inset-x-0 top-0 h-full border-x border-white/40" />
     <div className="absolute inset-x-[18%] top-[8%] h-[18%] rounded-sm border border-slate-600/40 bg-slate-200/35 shadow-inner" />
     <div className="absolute inset-x-[18%] top-[39%] h-[18%] rounded-sm border border-slate-600/40 bg-slate-200/30 shadow-inner" />
     <div className="absolute inset-x-[18%] top-[70%] h-[18%] rounded-sm border border-slate-600/40 bg-slate-200/35 shadow-inner" />
     <div className="absolute left-1/2 top-0 h-full w-px bg-white/55" />
+    <div className="absolute inset-y-0 left-[22%] w-px bg-cyan-950/20" />
+    <div className="absolute inset-y-0 right-[22%] w-px bg-cyan-950/20" />
     <div className="absolute inset-0 bg-[linear-gradient(115deg,transparent_0%,transparent_35%,rgba(255,255,255,0.55)_42%,transparent_55%,transparent_100%)]" />
   </div>
 );
@@ -149,14 +215,16 @@ const MarbleSlab = ({ className = "" }: { className?: string }) => (
 );
 
 const SceneFloor = ({ floor }: { floor: Floor }) => (
-  <section id={`floor-${floor.id}`} className="relative w-full">
+  <section id={`floor-${floor.id}`} className="relative min-h-[235px] w-full md:min-h-[285px]">
     {/* Top marble strip (ceiling of this floor) */}
-    <MarbleSlab className="top-0 h-7 md:h-9" />
+    <MarbleSlab className="top-0 h-8 md:h-10" />
     {/* Bottom marble strip (floor surface) */}
-    <MarbleSlab className="bottom-0 h-8 md:h-10" />
+    <MarbleSlab className="bottom-0 h-9 md:h-12" />
     <FloorLabel>{floor.name}</FloorLabel>
+    <FloorLightSpots />
+    <GlassGuardRail />
 
-    <div className="relative mx-auto w-full max-w-5xl px-2 pt-12 pb-12 z-30">
+    <div className="relative z-30 mx-auto w-full max-w-5xl px-2 pb-16 pt-14 md:pt-16">
       <div className="grid grid-cols-3 gap-3 md:grid-cols-7 md:gap-4">
         {floor.stores.map((store, storeIndex) => (
           <Fragment key={store.id}>
@@ -187,24 +255,26 @@ const CrossSectionMallScene = ({ floors }: CrossSectionMallSceneProps) => {
   return (
     <main className="min-h-screen overflow-x-hidden bg-[#efe7d8] py-3 font-heebo">
       <div
-        className="relative mx-auto w-full max-w-[1280px] overflow-hidden border-y border-[#c9b98e] shadow-2xl"
+        className="relative mx-auto w-full max-w-[1360px] overflow-hidden border-y border-[#c9b98e] shadow-2xl"
         style={{
-          backgroundImage: `linear-gradient(rgba(255,255,255,0.62), rgba(255,255,255,0.62)), url(${mallWall})`,
+          backgroundImage: `linear-gradient(rgba(255,255,255,0.58), rgba(255,255,255,0.58)), url(${mallWall})`,
           backgroundSize: "420px 420px",
         }}
       >
         <div className="absolute inset-0 bg-[linear-gradient(90deg,rgba(255,255,255,0.45)_0_1px,transparent_1px_8.3%),linear-gradient(0deg,rgba(185,170,145,0.22)_0_1px,transparent_1px_8.3%)] opacity-45" />
+        <MarbleWallPanels />
 
-        <div className="relative z-20 h-[80px] md:h-[110px] bg-[#ece2d1] shadow-[0_8px_18px_rgba(75,55,35,0.18)]">
+        <div className="relative z-20 h-[86px] bg-[#ece2d1] shadow-[0_8px_18px_rgba(75,55,35,0.18)] md:h-[122px]">
           <div
-            className="absolute -left-[2%] -right-[2%] -top-[60%] h-[160%] overflow-hidden rounded-b-[50%] border-[3px] border-[#b8944d]"
+            className="absolute -left-[3%] -right-[3%] -top-[70%] h-[178%] overflow-hidden rounded-b-[50%] border-[4px] border-[#b8944d]"
             style={{
               backgroundImage: `url(${ceilingFresco})`,
               backgroundSize: "cover",
               backgroundPosition: "center 42%",
-              boxShadow: "inset 0 -16px 34px rgba(90,60,25,0.2), 0 3px 9px rgba(0,0,0,0.18)",
+              boxShadow: "inset 0 -18px 34px rgba(90,60,25,0.2), inset 0 0 0 8px rgba(246,224,166,0.18), 0 3px 9px rgba(0,0,0,0.18)",
             }}
           />
+          <DownlightRow className="bottom-4" />
           <div className="absolute bottom-0 h-3 w-full bg-gradient-to-b from-[#d9c17a] via-[#9f7d36] to-[#d9c17a]" />
         </div>
 
