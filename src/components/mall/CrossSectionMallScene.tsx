@@ -195,6 +195,19 @@ const SceneFloor = ({ floor }: { floor: Floor }) => (
     <MarbleSlab className="top-0 h-8 md:h-10" />
     {/* Bottom marble strip (floor surface) */}
     <MarbleSlab className="bottom-0 h-9 md:h-12" />
+    {/* Marble walkway between guard rail and shops */}
+    <div
+      className="absolute left-[3%] right-[3%] bottom-[84px] z-[25] h-7 md:h-9"
+      style={{
+        backgroundImage: `url(${marbleFloor})`,
+        backgroundSize: "240px 240px",
+        boxShadow:
+          "inset 0 2px 6px rgba(255,255,255,0.42), inset 0 -2px 6px rgba(70,55,40,0.18), 0 3px 8px rgba(0,0,0,0.18)",
+        borderTop: "1px solid rgba(255,255,255,0.55)",
+        borderBottom: "1px solid rgba(120,100,75,0.35)",
+      }}
+      aria-hidden="true"
+    />
     <FloorLabel>{floor.name}</FloorLabel>
     <FloorLightSpots />
     <GlassGuardRail />
