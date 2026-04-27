@@ -249,9 +249,9 @@ const CrossSectionMallScene = ({ floors }: CrossSectionMallSceneProps) => {
           ))}
         </div>
 
-        <div className="absolute bottom-0 left-0 right-0 z-30">
-          <Decorations />
-        </div>
+      </div>
+      <div className="mx-auto w-full max-w-[1280px]">
+        <Decorations />
       </div>
     </main>
   );
