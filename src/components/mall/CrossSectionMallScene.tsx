@@ -3,7 +3,7 @@ import type { Floor } from "@/data/mallData";
 import StoreCard from "./StoreCard";
 import CenterFeature from "./CenterFeature";
 import Decorations from "./Decorations";
-import GlassElevatorTower from "./GlassElevatorTower";
+import GlassElevatorTower from "./elevator/GlassElevatorTower";
 import ceilingFresco from "@/assets/ceiling-fresco.jpg";
 import mallWall from "@/assets/mall-wall.jpg";
 import marbleFloor from "@/assets/marble-floor.jpg";
