@@ -39,7 +39,7 @@ const ElevatorCabin = ({
   className?: string;
   occupied?: boolean;
 }) => (
-  <div className={`absolute left-[18%] right-[18%] h-[18%] ${className}`}>
+  <div className={`absolute left-[18%] right-[18%] h-[14%] ${className}`}>
     <div
       className="absolute inset-0 rounded-sm"
       style={{
@@ -132,7 +132,7 @@ const GlassElevatorTower = ({ side }: { side: "left" | "right" }) => (
       ))}
       <ElevatorCabin className="top-[7%]" occupied={side === "left"} />
       <ElevatorCabin className="top-[39%]" occupied={side === "right"} />
-      <div className="absolute left-[18%] right-[18%] top-[72%] h-[18%] rounded-sm border border-slate-600/35 bg-slate-100/20 shadow-inner" />
+      <div className="absolute left-[18%] right-[18%] top-[72%] h-[14%] rounded-sm border border-slate-600/35 bg-slate-100/20 shadow-inner" />
       <div className="absolute bottom-[12%] left-[8%] right-[8%] h-[24%] bg-[linear-gradient(135deg,transparent_42%,rgba(255,255,255,0.54)_47%,transparent_55%)]" />
     </div>
 
