@@ -72,7 +72,7 @@ const RestroomSign = ({ className = "" }: { className?: string }) => (
 
 const ElevatorTower = ({ side }: { side: "left" | "right" }) => (
   <div
-    className={`absolute top-[15.5%] z-30 hidden h-[70%] w-[8%] md:block ${
+    className={`absolute top-[80px] bottom-[60px] z-30 hidden w-[8%] md:block ${
       side === "left" ? "left-[16%]" : "right-[16%]"
     }`}
     style={glassStyle}
@@ -148,15 +148,15 @@ const MarbleSlab = ({ className = "" }: { className?: string }) => (
   />
 );
 
-const floorPositions = ["top-[16.5%]", "top-[44.5%]", "top-[72.5%]"];
-
-const SceneFloor = ({ floor, index }: { floor: Floor; index: number }) => (
-  <section id={`floor-${floor.id}`} className={`absolute left-0 right-0 h-[26%] ${floorPositions[index]}`}>
-    <MarbleSlab className="top-0 h-[16%]" />
-    <MarbleSlab className="bottom-0 h-[18%]" />
+const SceneFloor = ({ floor }: { floor: Floor }) => (
+  <section id={`floor-${floor.id}`} className="relative w-full">
+    {/* Top marble strip (ceiling of this floor) */}
+    <MarbleSlab className="top-0 h-7 md:h-9" />
+    {/* Bottom marble strip (floor surface) */}
+    <MarbleSlab className="bottom-0 h-8 md:h-10" />
     <FloorLabel>{floor.name}</FloorLabel>
 
-    <div className="absolute left-[24.5%] right-[24.5%] top-[21%] z-30">
+    <div className="relative mx-auto w-[51%] px-2 pt-12 pb-12 z-30">
       <div className="grid grid-cols-3 gap-2 md:grid-cols-7 md:gap-3">
         {floor.stores.map((store, storeIndex) => (
           <Fragment key={store.id}>
@@ -187,7 +187,7 @@ const CrossSectionMallScene = ({ floors }: CrossSectionMallSceneProps) => {
   return (
     <main className="min-h-screen overflow-x-hidden bg-[#efe7d8] py-3 font-heebo">
       <div
-        className="relative mx-auto aspect-[2.12/1] w-full max-w-[1280px] overflow-hidden border-y border-[#c9b98e] shadow-2xl"
+        className="relative mx-auto w-full max-w-[1280px] overflow-hidden border-y border-[#c9b98e] shadow-2xl"
         style={{
           backgroundImage: `linear-gradient(rgba(255,255,255,0.62), rgba(255,255,255,0.62)), url(${mallWall})`,
           backgroundSize: "420px 420px",
@@ -195,9 +195,9 @@ const CrossSectionMallScene = ({ floors }: CrossSectionMallSceneProps) => {
       >
         <div className="absolute inset-0 bg-[linear-gradient(90deg,rgba(255,255,255,0.45)_0_1px,transparent_1px_8.3%),linear-gradient(0deg,rgba(185,170,145,0.22)_0_1px,transparent_1px_8.3%)] opacity-45" />
 
-        <div className="absolute left-0 right-0 top-0 z-20 h-[17%] bg-[#ece2d1] shadow-[0_8px_18px_rgba(75,55,35,0.18)]">
+        <div className="relative z-20 h-[80px] md:h-[110px] bg-[#ece2d1] shadow-[0_8px_18px_rgba(75,55,35,0.18)]">
           <div
-            className="absolute -left-[2%] -right-[2%] -top-[70%] h-[168%] overflow-hidden rounded-b-[50%] border-[3px] border-[#b8944d]"
+            className="absolute -left-[2%] -right-[2%] -top-[60%] h-[160%] overflow-hidden rounded-b-[50%] border-[3px] border-[#b8944d]"
             style={{
               backgroundImage: `url(${ceilingFresco})`,
               backgroundSize: "cover",
@@ -210,28 +210,45 @@ const CrossSectionMallScene = ({ floors }: CrossSectionMallSceneProps) => {
 
         <ElevatorTower side="left" />
         <ElevatorTower side="right" />
-        <Escalator className="left-[1%] top-[30%] h-[17%] w-[23%]" />
-        <Escalator className="left-[1%] top-[57.5%] h-[17%] w-[23%]" reverse />
-        <Escalator className="right-[1%] top-[30%] h-[17%] w-[23%]" reverse />
-        <Escalator className="right-[1%] top-[57.5%] h-[17%] w-[23%]" />
 
-        {displayFloors.map((floor, index) => (
-          <SceneFloor key={floor.id} floor={floor} index={index} />
-        ))}
-
-        <InfoSign className="left-[11%] top-[28%]" />
-        <InfoSign className="left-[1.5%] bottom-[13%]" />
-        <RestroomSign className="right-[6%] top-[28%]" />
-        <RestroomSign className="left-[3.5%] bottom-[13%]" />
-
-        <Person className="left-[6.5%] top-[20%]" />
-        <Person className="left-[20%] top-[27%]" shirt="hsl(30,55%,68%)" flip />
-        <Person className="right-[8%] top-[20%]" flip />
-        <Person className="left-[1.5%] top-[51%]" shirt="hsl(213,48%,58%)" />
-        <Person className="right-[15%] top-[51%]" shirt="hsl(192,45%,62%)" flip />
-        <Person className="left-[24%] bottom-[12%]" shirt="hsl(205,55%,58%)" />
-        <Person className="right-[25%] bottom-[12%]" shirt="hsl(205,55%,58%)" flip />
-        <Person className="right-[5%] bottom-[23%]" shirt="hsl(332,35%,68%)" flip />
+        <div className="relative z-10 flex flex-col">
+          {displayFloors.map((floor, index) => (
+            <div key={floor.id} className="relative">
+              <SceneFloor floor={floor} />
+              {/* Escalators between floors */}
+              {index < displayFloors.length - 1 && (
+                <>
+                  <Escalator className="left-[1%] -bottom-12 h-24 w-[23%]" />
+                  <Escalator className="right-[1%] -bottom-12 h-24 w-[23%]" reverse />
+                </>
+              )}
+              {/* Per-floor signs */}
+              {index === 0 && (
+                <>
+                  <InfoSign className="left-[11%] top-1/2 -translate-y-1/2" />
+                  <RestroomSign className="right-[6%] top-1/2 -translate-y-1/2" />
+                  <Person className="left-[6.5%] top-[40%]" />
+                  <Person className="right-[8%] top-[40%]" flip />
+                </>
+              )}
+              {index === 1 && (
+                <>
+                  <Person className="left-[1.5%] top-[40%]" shirt="hsl(213,48%,58%)" />
+                  <Person className="right-[15%] top-[40%]" shirt="hsl(192,45%,62%)" flip />
+                </>
+              )}
+              {index === 2 && (
+                <>
+                  <InfoSign className="left-[1.5%] bottom-4" />
+                  <RestroomSign className="left-[3.5%] top-4" />
+                  <Person className="left-[24%] bottom-4" shirt="hsl(205,55%,58%)" />
+                  <Person className="right-[25%] bottom-4" shirt="hsl(205,55%,58%)" flip />
+                  <Person className="right-[5%] top-1/2" shirt="hsl(332,35%,68%)" flip />
+                </>
+              )}
+            </div>
+          ))}
+        </div>
 
         <div className="absolute bottom-0 left-0 right-0 z-30">
           <Decorations />
