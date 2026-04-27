@@ -3,6 +3,7 @@ import type { Floor } from "@/data/mallData";
 import StoreCard from "./StoreCard";
 import CenterFeature from "./CenterFeature";
 import Decorations from "./Decorations";
+import GlassElevatorTower from "./GlassElevatorTower";
 import ceilingFresco from "@/assets/ceiling-fresco.jpg";
 import mallWall from "@/assets/mall-wall.jpg";
 import marbleFloor from "@/assets/marble-floor.jpg";
@@ -10,14 +11,6 @@ import marbleFloor from "@/assets/marble-floor.jpg";
 interface CrossSectionMallSceneProps {
   floors: Floor[];
 }
-
-const glassStyle = {
-  background:
-    "linear-gradient(120deg, hsla(190,70%,88%,0.34), hsla(192,60%,78%,0.16) 45%, hsla(185,70%,94%,0.42))",
-  border: "2px solid hsla(190,45%,46%,0.45)",
-  boxShadow:
-    "inset 0 0 22px hsla(190,80%,96%,0.48), 0 6px 20px rgba(20,50,60,0.16)",
-} as const;
 
 const Person = ({
   className = "",
@@ -130,24 +123,6 @@ const FloorLightSpots = () => (
         className="h-16 w-24 rounded-full bg-[radial-gradient(ellipse_at_top,rgba(255,239,190,0.26),transparent_70%)]"
       />
     ))}
-  </div>
-);
-
-const ElevatorTower = ({ side }: { side: "left" | "right" }) => (
-  <div
-    className={`absolute top-[78px] bottom-[58px] z-30 hidden w-[8.5%] md:block ${
-      side === "left" ? "left-[16%]" : "right-[16%]"
-    }`}
-    style={glassStyle}
-  >
-    <div className="absolute inset-x-0 top-0 h-full border-x border-white/40" />
-    <div className="absolute inset-x-[18%] top-[8%] h-[18%] rounded-sm border border-slate-600/40 bg-slate-200/35 shadow-inner" />
-    <div className="absolute inset-x-[18%] top-[39%] h-[18%] rounded-sm border border-slate-600/40 bg-slate-200/30 shadow-inner" />
-    <div className="absolute inset-x-[18%] top-[70%] h-[18%] rounded-sm border border-slate-600/40 bg-slate-200/35 shadow-inner" />
-    <div className="absolute left-1/2 top-0 h-full w-px bg-white/55" />
-    <div className="absolute inset-y-0 left-[22%] w-px bg-cyan-950/20" />
-    <div className="absolute inset-y-0 right-[22%] w-px bg-cyan-950/20" />
-    <div className="absolute inset-0 bg-[linear-gradient(115deg,transparent_0%,transparent_35%,rgba(255,255,255,0.55)_42%,transparent_55%,transparent_100%)]" />
   </div>
 );
 
@@ -278,8 +253,8 @@ const CrossSectionMallScene = ({ floors }: CrossSectionMallSceneProps) => {
           <div className="absolute bottom-0 h-3 w-full bg-gradient-to-b from-[#d9c17a] via-[#9f7d36] to-[#d9c17a]" />
         </div>
 
-        <ElevatorTower side="left" />
-        <ElevatorTower side="right" />
+        <GlassElevatorTower side="left" />
+        <GlassElevatorTower side="right" />
 
         <div className="relative z-10 flex flex-col">
           {displayFloors.map((floor, index) => (
