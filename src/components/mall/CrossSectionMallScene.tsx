@@ -72,8 +72,8 @@ const RestroomSign = ({ className = "" }: { className?: string }) => (
 
 const ElevatorTower = ({ side }: { side: "left" | "right" }) => (
   <div
-    className={`absolute top-[80px] bottom-[60px] z-30 hidden w-[8%] md:block ${
-      side === "left" ? "left-[16%]" : "right-[16%]"
+    className={`absolute top-[120px] bottom-[60px] z-30 hidden w-[60px] lg:w-[72px] md:block ${
+      side === "left" ? "left-3 lg:left-5" : "right-3 lg:right-5"
     }`}
     style={glassStyle}
   >
@@ -218,32 +218,31 @@ const CrossSectionMallScene = ({ floors }: CrossSectionMallSceneProps) => {
               {/* Escalators between floors */}
               {index < displayFloors.length - 1 && (
                 <>
-                  <Escalator className="left-[1%] -bottom-12 h-24 w-[23%]" />
-                  <Escalator className="right-[1%] -bottom-12 h-24 w-[23%]" reverse />
+                  <Escalator className="left-[80px] lg:left-[96px] -bottom-12 h-24 w-[110px] lg:w-[140px]" />
+                  <Escalator className="right-[80px] lg:right-[96px] -bottom-12 h-24 w-[110px] lg:w-[140px]" reverse />
                 </>
               )}
               {/* Per-floor signs */}
               {index === 0 && (
                 <>
-                  <InfoSign className="left-[11%] top-1/2 -translate-y-1/2" />
-                  <RestroomSign className="right-[6%] top-1/2 -translate-y-1/2" />
-                  <Person className="left-[6.5%] top-[40%]" />
-                  <Person className="right-[8%] top-[40%]" flip />
+                  <InfoSign className="left-[88px] lg:left-[108px] top-1/2 -translate-y-1/2" />
+                  <RestroomSign className="right-[84px] lg:right-[104px] top-1/2 -translate-y-1/2" />
+                  <Person className="left-[88px] lg:left-[108px] bottom-4" />
+                  <Person className="right-[84px] lg:right-[104px] bottom-4" flip />
                 </>
               )}
               {index === 1 && (
                 <>
-                  <Person className="left-[1.5%] top-[40%]" shirt="hsl(213,48%,58%)" />
-                  <Person className="right-[15%] top-[40%]" shirt="hsl(192,45%,62%)" flip />
+                  <Person className="left-[88px] lg:left-[108px] bottom-4" shirt="hsl(213,48%,58%)" />
+                  <Person className="right-[84px] lg:right-[104px] bottom-4" shirt="hsl(192,45%,62%)" flip />
                 </>
               )}
               {index === 2 && (
                 <>
-                  <InfoSign className="left-[1.5%] bottom-4" />
-                  <RestroomSign className="left-[3.5%] top-4" />
-                  <Person className="left-[24%] bottom-4" shirt="hsl(205,55%,58%)" />
-                  <Person className="right-[25%] bottom-4" shirt="hsl(205,55%,58%)" flip />
-                  <Person className="right-[5%] top-1/2" shirt="hsl(332,35%,68%)" flip />
+                  <InfoSign className="left-[88px] lg:left-[108px] top-1/2 -translate-y-1/2" />
+                  <RestroomSign className="right-[84px] lg:right-[104px] top-1/2 -translate-y-1/2" />
+                  <Person className="left-[88px] lg:left-[108px] bottom-4" shirt="hsl(205,55%,58%)" />
+                  <Person className="right-[84px] lg:right-[104px] bottom-4" shirt="hsl(205,55%,58%)" flip />
                 </>
               )}
             </div>
