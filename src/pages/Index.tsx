@@ -2,10 +2,12 @@ import { mallFloors } from "@/data/mallData";
 import MallHeader from "@/components/mall/MallHeader";
 import FloorMap from "@/components/mall/FloorMap";
 import CrossSectionMallScene from "@/components/mall/CrossSectionMallScene";
+import MeasurementRulers from "@/components/MeasurementRulers";
 
 const Index = () => {
   return (
-    <div className="min-h-screen bg-background">
+    <div className="min-h-screen bg-background relative">
+      <MeasurementRulers />
       <MallHeader />
       <CrossSectionMallScene floors={mallFloors} />
 
