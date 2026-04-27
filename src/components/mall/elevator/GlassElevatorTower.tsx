@@ -72,7 +72,7 @@ const FloorLanding = ({
   <div className="absolute left-[-48%] right-[-72%] z-30 h-[9%]" style={{ top }}>
     <div className="absolute bottom-0 left-0 right-0 h-[28%] bg-[linear-gradient(180deg,#e9ddc6,#c5ae83)] shadow-[0_3px_8px_rgba(70,50,25,0.18)]" />
     <div
-      className="absolute left-[8%] right-[4%] top-[4%] bottom-[28%] rounded-sm"
+      className="absolute left-[8%] right-[4%] bottom-[28%] h-[18%] rounded-sm"
       style={{
         background:
           "linear-gradient(180deg, hsla(190,80%,91%,0.48), hsla(195,58%,70%,0.24))",
@@ -80,11 +80,11 @@ const FloorLanding = ({
         boxShadow: "inset 0 1px 10px rgba(255,255,255,0.5)",
       }}
     />
-    <div className="absolute left-[8%] right-[4%] top-[1%] h-1.5 rounded-full bg-[linear-gradient(180deg,#f7ffff,#87a3aa_70%,#536970)]" />
+    <div className="absolute left-[8%] right-[4%] bottom-[45%] h-1.5 rounded-full bg-[linear-gradient(180deg,#f7ffff,#87a3aa_70%,#536970)]" />
     {[18, 42, 66, 88].map((left) => (
       <div
         key={left}
-        className="absolute top-[3%] bottom-[28%] w-px bg-[linear-gradient(180deg,#ffffff,#77969d)]"
+        className="absolute bottom-[28%] h-[18%] w-px bg-[linear-gradient(180deg,#ffffff,#77969d)]"
         style={{ left: `${left}%` }}
       />
     ))}
