@@ -1,4 +1,4 @@
-import { Fragment } from "react";
+import { Fragment, useId } from "react";
 import type { Floor } from "@/data/mallData";
 import StoreCard from "./StoreCard";
 import CenterFeature from "./CenterFeature";
@@ -126,37 +126,96 @@ const FloorLightSpots = () => (
   </div>
 );
 
-const Escalator = ({
-  className,
-  reverse = false,
-}: {
-  className: string;
-  reverse?: boolean;
-}) => {
-  const railId = `rail-${reverse ? "r" : "l"}`;
+const PhotoReferenceEscalator = ({ className = "" }: { className?: string }) => {
+  const gradientId = useId().replace(/:/g, "");
+  const railGradientId = `${gradientId}-rail`;
+  const glassGradientId = `${gradientId}-glass`;
+  const treadGradientId = `${gradientId}-tread`;
 
   return (
-    <svg className={`absolute z-20 hidden md:block ${className}`} viewBox="0 0 250 130" preserveAspectRatio="none" aria-hidden="true">
+    <svg
+      className={`pointer-events-none absolute z-[36] hidden md:block ${className}`}
+      viewBox="0 0 360 205"
+      preserveAspectRatio="none"
+      aria-hidden="true"
+    >
       <defs>
-        <linearGradient id={railId} x1="0" x2="1">
-          <stop offset="0%" stopColor="hsl(193,28%,44%)" />
-          <stop offset="50%" stopColor="hsl(190,35%,74%)" />
-          <stop offset="100%" stopColor="hsl(193,28%,44%)" />
+        <linearGradient id={railGradientId} x1="0" x2="1">
+          <stop offset="0%" stopColor="hsl(190,18%,24%)" />
+          <stop offset="45%" stopColor="hsl(188,28%,62%)" />
+          <stop offset="100%" stopColor="hsl(190,20%,28%)" />
         </linearGradient>
+        <linearGradient id={glassGradientId} x1="0" x2="0" y1="0" y2="1">
+          <stop offset="0%" stopColor="hsla(190,80%,91%,0.56)" />
+          <stop offset="100%" stopColor="hsla(194,48%,62%,0.2)" />
+        </linearGradient>
+        <linearGradient id={treadGradientId} x1="0" x2="1">
+          <stop offset="0%" stopColor="hsl(38,20%,80%)" />
+          <stop offset="100%" stopColor="hsl(34,18%,55%)" />
+        </linearGradient>
+        <filter id={`${gradientId}-shadow`} x="-12%" y="-18%" width="124%" height="136%">
+          <feDropShadow dx="0" dy="5" stdDeviation="4" floodColor="rgba(35,45,45,0.28)" />
+        </filter>
       </defs>
-      <g transform={reverse ? "translate(250 0) scale(-1 1)" : undefined}>
-        <path d="M12 104 H48 L190 28 H236" fill="none" stroke="hsl(195,28%,36%)" strokeWidth="18" strokeLinecap="round" opacity="0.85" />
-        <path d="M12 104 H48 L190 28 H236" fill="none" stroke={`url(#${railId})`} strokeWidth="11" strokeLinecap="round" />
-        <path d="M16 88 H43 L184 13 H232" fill="none" stroke="hsl(195,25%,25%)" strokeWidth="4" strokeLinecap="round" />
-        <path d="M17 87 H43 L184 12 H232" fill="none" stroke="hsl(190,45%,78%)" strokeWidth="2" strokeLinecap="round" />
-        {Array.from({ length: 8 }, (_, i) => (
+
+      <g filter={`url(#${gradientId}-shadow)`}>
+        <path d="M34 139 H126 L151 158 H54 Z" fill="hsl(38,32%,74%)" stroke="hsl(39,22%,48%)" strokeWidth="1.5" />
+        <path d="M58 76 H130 L170 94 H96 Z" fill="hsl(38,32%,74%)" stroke="hsl(39,22%,48%)" strokeWidth="1.5" />
+        <path d="M208 33 H320 L340 50 H224 Z" fill="hsl(38,32%,74%)" stroke="hsl(39,22%,48%)" strokeWidth="1.5" />
+
+        <polygon points="43,128 112,128 271,53 224,53" fill={`url(#${glassGradientId})`} stroke="hsl(191,35%,45%)" strokeWidth="1.7" />
+        <polygon points="86,89 139,89 293,156 246,156" fill={`url(#${glassGradientId})`} stroke="hsl(191,35%,45%)" strokeWidth="1.7" />
+        <polygon points="60,63 124,63 250,18 308,18 319,29 260,30 131,78 71,78" fill={`url(#${glassGradientId})`} stroke="hsl(191,35%,45%)" strokeWidth="1.5" opacity="0.95" />
+
+        <path d="M42 132 H110 L263 59 H320" fill="none" stroke="hsl(193,24%,29%)" strokeWidth="20" strokeLinecap="round" />
+        <path d="M42 132 H110 L263 59 H320" fill="none" stroke={`url(#${railGradientId})`} strokeWidth="12" strokeLinecap="round" />
+        <path d="M80 85 H137 L292 151 H333" fill="none" stroke="hsl(193,24%,29%)" strokeWidth="20" strokeLinecap="round" />
+        <path d="M80 85 H137 L292 151 H333" fill="none" stroke={`url(#${railGradientId})`} strokeWidth="12" strokeLinecap="round" />
+        <path d="M63 64 H124 L254 22 H318" fill="none" stroke="hsl(193,24%,29%)" strokeWidth="15" strokeLinecap="round" />
+        <path d="M63 64 H124 L254 22 H318" fill="none" stroke={`url(#${railGradientId})`} strokeWidth="8" strokeLinecap="round" />
+
+        <path d="M60 120 H108 L252 52 H305" fill="none" stroke={`url(#${treadGradientId})`} strokeWidth="16" strokeLinecap="butt" opacity="0.92" />
+        <path d="M96 93 H136 L284 157 H322" fill="none" stroke={`url(#${treadGradientId})`} strokeWidth="16" strokeLinecap="butt" opacity="0.9" />
+
+        {Array.from({ length: 11 }, (_, index) => (
           <path
-            key={i}
-            d={`M${65 + i * 17} ${90 - i * 9} l14 -7`}
-            stroke="hsl(35,20%,64%)"
-            strokeWidth="2"
-            opacity="0.7"
+            key={`upper-${index}`}
+            d={`M${122 + index * 13.4} ${113 - index * 6.2} l16 -7.6`}
+            stroke="hsl(32,18%,42%)"
+            strokeWidth="1.9"
+            opacity="0.72"
           />
+        ))}
+        {Array.from({ length: 10 }, (_, index) => (
+          <path
+            key={`lower-${index}`}
+            d={`M${149 + index * 14.2} ${101 + index * 6.1} l-16 -6.8`}
+            stroke="hsl(32,18%,42%)"
+            strokeWidth="1.9"
+            opacity="0.72"
+          />
+        ))}
+        {Array.from({ length: 8 }, (_, index) => (
+          <path
+            key={`back-${index}`}
+            d={`M${131 + index * 15.8} ${60 - index * 5.1} l14 -4.6`}
+            stroke="hsl(32,18%,42%)"
+            strokeWidth="1.6"
+            opacity="0.58"
+          />
+        ))}
+
+        <path d="M37 111 H103 L246 43 H315" fill="none" stroke="hsl(190,24%,18%)" strokeWidth="4" strokeLinecap="round" />
+        <path d="M82 73 H143 L296 139 H336" fill="none" stroke="hsl(190,24%,18%)" strokeWidth="4" strokeLinecap="round" />
+        <path d="M58 54 H120 L250 12 H322" fill="none" stroke="hsl(190,24%,18%)" strokeWidth="3.5" strokeLinecap="round" />
+        <path d="M38 109 H102 L245 42 H315" fill="none" stroke="hsl(183,38%,76%)" strokeWidth="1.5" strokeLinecap="round" opacity="0.9" />
+        <path d="M83 72 H143 L296 138 H336" fill="none" stroke="hsl(183,38%,76%)" strokeWidth="1.5" strokeLinecap="round" opacity="0.9" />
+
+        {[65, 92, 119].map((x) => (
+          <path key={`landing-${x}`} d={`M${x} 128 v18`} stroke="hsla(188,34%,42%,0.75)" strokeWidth="1" />
+        ))}
+        {[83, 111, 139].map((x) => (
+          <path key={`middle-${x}`} d={`M${x} 64 v19`} stroke="hsla(188,34%,42%,0.75)" strokeWidth="1" />
         ))}
       </g>
     </svg>
@@ -262,10 +321,7 @@ const CrossSectionMallScene = ({ floors }: CrossSectionMallSceneProps) => {
               <SceneFloor floor={floor} />
               {/* Escalators between floors */}
               {index < displayFloors.length - 1 && (
-                <>
-                  <Escalator className="left-[9%] -bottom-12 h-24 w-[22%]" />
-                  <Escalator className="right-[9%] -bottom-12 h-24 w-[22%]" reverse />
-                </>
+                <PhotoReferenceEscalator className="left-1/2 -bottom-20 h-44 w-[44%] -translate-x-1/2" />
               )}
               {/* Per-floor signs */}
               {index === 0 && (
