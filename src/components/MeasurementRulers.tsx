@@ -1,33 +1,19 @@
-import { useEffect, useState } from "react";
+import { TICK_BAND_PX } from "./MeasurementRulers.constants";
 
 const TICKS = Array.from({ length: 41 }, (_, i) => i); // 0..40
 
+/**
+ * Two rulers, each 0..40, that always span the FULL content of the page —
+ * regardless of browser zoom level. They are rendered as `absolute` inside
+ * the page wrapper (not `fixed`), so "40" always lines up exactly with the
+ * end of the page and there is no extra scroll area beyond them.
+ */
 const MeasurementRulers = () => {
-  const [size, setSize] = useState({ w: 0, h: 0 });
-
-  useEffect(() => {
-    const update = () => {
-      setSize({
-        w: document.documentElement.scrollWidth,
-        h: document.documentElement.scrollHeight,
-      });
-    };
-    update();
-    window.addEventListener("resize", update);
-    const ro = new ResizeObserver(update);
-    ro.observe(document.body);
-    return () => {
-      window.removeEventListener("resize", update);
-      ro.disconnect();
-    };
-  }, []);
-
   return (
     <>
       {/* Vertical ruler — far left, full page height */}
       <div
-        className="absolute left-0 top-0 z-[9999] w-7 bg-yellow-300 border-r-2 border-black text-black font-mono text-[10px] pointer-events-none"
-        style={{ height: size.h || "100%" }}
+        className="absolute left-0 top-0 bottom-0 z-[9999] w-7 bg-yellow-300 border-r-2 border-black text-black font-mono text-[10px] pointer-events-none"
       >
         {TICKS.map((t) => {
           const top = (t / 40) * 100;
@@ -44,10 +30,12 @@ const MeasurementRulers = () => {
         })}
       </div>
 
-      {/* Horizontal ruler — bottom, full page width, fixed so it's always visible */}
+      {/* Horizontal ruler — bottom of the page, full page width.
+          `absolute` (not fixed) so 0 and 40 line up exactly with the page
+          edges and zoom-out cannot create extra scrollable area. */}
       <div
-        className="fixed left-0 bottom-0 z-[9999] h-7 bg-yellow-300 border-t-2 border-black text-black font-mono text-[10px] pointer-events-none"
-        style={{ width: "100vw" }}
+        className="absolute left-0 right-0 bottom-0 z-[9999] bg-yellow-300 border-t-2 border-black text-black font-mono text-[10px] pointer-events-none"
+        style={{ height: TICK_BAND_PX }}
       >
         {TICKS.map((t) => {
           const left = (t / 40) * 100;

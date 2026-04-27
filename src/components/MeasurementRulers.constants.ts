@@ -1,0 +1,1 @@
+export const TICK_BAND_PX = 28; // matches Tailwind h-7 / w-7
