@@ -272,13 +272,6 @@ const CrossSectionMallScene = ({ floors }: CrossSectionMallSceneProps) => {
           {displayFloors.map((floor, index) => (
             <div key={floor.id} className="relative">
               <SceneFloor floor={floor} />
-              {/* Escalators between floors */}
-              {index < displayFloors.length - 1 && (
-                <>
-                  <Escalator className="left-[9%] -bottom-12 h-24 w-[22%]" />
-                  <Escalator className="right-[9%] -bottom-12 h-24 w-[22%]" reverse />
-                </>
-              )}
               {/* Per-floor signs */}
               {index === 0 && (
                 <>
