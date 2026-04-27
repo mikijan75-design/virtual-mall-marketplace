@@ -1,6 +1,7 @@
 import { TICK_BAND_PX } from "./MeasurementRulers.constants";
 
-const TICKS = Array.from({ length: 41 }, (_, i) => i); // 0..40
+const H_TICKS = Array.from({ length: 41 }, (_, i) => i); // 0..40 horizontal
+const V_TICKS = Array.from({ length: 81 }, (_, i) => i); // 0..80 vertical
 
 /**
  * Two rulers, each 0..40, that always span the FULL content of the page —
@@ -15,8 +16,9 @@ const MeasurementRulers = () => {
       <div
         className="absolute left-0 top-0 bottom-0 z-[9999] w-7 bg-yellow-300 border-r-2 border-black text-black font-mono text-[10px] pointer-events-none"
       >
-        {TICKS.map((t) => {
-          const top = (t / 40) * 100;
+        {V_TICKS.map((t) => {
+          // 0 at the bottom, 80 at the top
+          const top = ((80 - t) / 80) * 100;
           return (
             <div
               key={`v-${t}`}
@@ -37,7 +39,7 @@ const MeasurementRulers = () => {
         className="absolute left-0 right-0 bottom-0 z-[9999] bg-yellow-300 border-t-2 border-black text-black font-mono text-[10px] pointer-events-none"
         style={{ height: TICK_BAND_PX }}
       >
-        {TICKS.map((t) => {
+        {H_TICKS.map((t) => {
           const left = (t / 40) * 100;
           return (
             <div
