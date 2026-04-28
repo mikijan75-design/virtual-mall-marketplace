@@ -353,23 +353,23 @@ const CrossSectionMallScene = ({ floors }: CrossSectionMallSceneProps) => {
               {/* Per-floor signs */}
               {index === 0 && (
                 <>
-                  <Person className="left-[26%] bottom-9" />
-                  <Person className="right-[28%] bottom-9" flip />
-                  <Person className="left-[44%] bottom-9" shirt="hsl(15,55%,55%)" />
+                  <Person className="left-[26%] bottom-9" style="longHair" shirt="hsl(345,55%,58%)" hair="hsl(28,55%,30%)" />
+                  <Person className="right-[28%] bottom-9" flip style="hat" shirt="hsl(215,35%,38%)" />
+                  <Person className="left-[44%] bottom-9" shirt="hsl(15,55%,55%)" style="bag" />
                 </>
               )}
               {index === 1 && (
                 <>
-                  <Person className="left-[22%] bottom-9" shirt="hsl(213,48%,58%)" />
-                  <Person className="right-[24%] bottom-9" shirt="hsl(192,45%,62%)" flip />
-                  <Person className="left-[48%] bottom-9" shirt="hsl(45,60%,55%)" />
+                  <Person className="left-[22%] bottom-9" shirt="hsl(213,48%,58%)" style="shortHair" />
+                  <Person className="right-[24%] bottom-9" shirt="hsl(192,45%,62%)" flip style="cane" hair="hsl(0,0%,82%)" />
+                  <Person className="left-[48%] bottom-9" shirt="hsl(280,40%,58%)" style="longHair" hair="hsl(38,65%,55%)" />
                 </>
               )}
               {index === 2 && (
                 <>
-                  <Person className="left-[28%] bottom-9" shirt="hsl(205,55%,58%)" />
-                  <Person className="right-[30%] bottom-9" shirt="hsl(205,55%,58%)" flip />
-                  <Person className="left-[50%] bottom-9" shirt="hsl(332,35%,68%)" />
+                  <Person className="left-[28%] bottom-9" shirt="hsl(205,55%,58%)" style="hat" />
+                  <Person className="right-[30%] bottom-9" shirt="hsl(155,40%,50%)" flip style="bag" />
+                  <Person className="left-[50%] bottom-9" shirt="hsl(332,55%,62%)" style="longHair" hair="hsl(20,45%,18%)" />
                 </>
               )}
             </div>
