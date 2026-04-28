@@ -92,32 +92,40 @@ const FloorLanding = ({
     ))}
     {/* Slight-slant connector railing — anchored to the elevator landing rail,
         extending toward the mall center on the inner side */}
-    <div
-      className={`absolute bottom-[8%] h-[38%] w-[20%] z-[94] ${
-        side === "left"
-          ? "left-[100%] origin-left -skew-y-[12deg]"
-          : "right-[100%] origin-right skew-y-[12deg]"
+    {/* Trapezoid SVG connector — outer corners (top + bottom) touch the elevator
+        landing rail; inner corners touch the floor's GlassGuardRail. */}
+    <svg
+      className={`absolute z-[94] ${
+        side === "left" ? "left-[100%]" : "right-[100%]"
       }`}
+      style={{ bottom: "-8%", height: "54%", width: "26%" }}
+      viewBox="0 0 100 100"
+      preserveAspectRatio="none"
+      aria-hidden="true"
     >
-      <div
-        className="absolute inset-0 rounded-sm"
-        style={{
-          background:
-            "linear-gradient(180deg, hsla(190,80%,92%,0.46), hsla(193,58%,70%,0.22))",
-          border: "1px solid hsla(190,55%,62%,0.58)",
-          boxShadow:
-            "inset 0 1px 8px hsla(190,100%,96%,0.55), 0 3px 8px rgba(45,75,82,0.14)",
-        }}
-      />
-      <div className="absolute -top-[3px] left-0 right-0 h-1.5 rounded-full bg-[linear-gradient(180deg,#f9ffff,#90aab0_65%,#5b7075)] shadow-[0_2px_4px_rgba(0,0,0,0.28)]" />
-      {[20, 50, 80].map((l) => (
-        <div
-          key={l}
-          className="absolute top-0 bottom-0 w-px bg-[linear-gradient(180deg,#ffffff,#86a3aa)]"
-          style={{ left: `${l}%` }}
+      <g transform={side === "right" ? "translate(100 0) scale(-1 1)" : undefined}>
+        {/* Glass panel: outer edge y=30..100 (elevator rail), inner edge y=70..90 (floor rail) */}
+        <polygon
+          points="0,30 0,100 100,90 100,70"
+          fill="hsla(190,72%,84%,0.32)"
+          stroke="hsla(190,55%,62%,0.65)"
+          strokeWidth="1"
         />
-      ))}
-    </div>
+        {/* Top cap rail */}
+        <line x1="0" y1="30" x2="100" y2="70" stroke="#90aab0" strokeWidth="3" strokeLinecap="round" />
+        <line x1="0" y1="29" x2="100" y2="69" stroke="#f9ffff" strokeWidth="1.2" strokeLinecap="round" />
+        {/* Bottom edge */}
+        <line x1="0" y1="100" x2="100" y2="90" stroke="#5b7075" strokeWidth="1.2" strokeLinecap="round" opacity="0.65" />
+        {/* Balusters */}
+        {[25, 50, 75].map((p) => {
+          const yTop = 30 + (70 - 30) * (p / 100);
+          const yBot = 100 + (90 - 100) * (p / 100);
+          return (
+            <line key={p} x1={p} y1={yTop} x2={p} y2={yBot} stroke="#86a3aa" strokeWidth="0.8" opacity="0.85" />
+          );
+        })}
+      </g>
+    </svg>
     {/* Group of passengers standing side-by-side, centered under the rail */}
     <div className="absolute bottom-[14%] left-[20%] right-[12%] flex items-end justify-center gap-1">
       <ElevatorPassenger
