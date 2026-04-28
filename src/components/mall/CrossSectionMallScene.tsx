@@ -114,10 +114,10 @@ const GlassGuardRail = () => (
     ))}
     {/* Orange contact dots — top/bottom corners of the floor guard rail */}
     {[
-      { left: "0%", top: "-4px" },
-      { left: "0%", bottom: "-4px" },
-      { right: "0%", top: "-4px" },
-      { right: "0%", bottom: "-4px" },
+      { left: "13.3%", top: "-4px" },
+      { left: "13.3%", bottom: "-4px" },
+      { right: "13.3%", top: "-4px" },
+      { right: "13.3%", bottom: "-4px" },
     ].map((pos, i) => (
       <div
         key={`dot-${i}`}
