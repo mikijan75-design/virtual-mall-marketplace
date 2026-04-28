@@ -93,35 +93,37 @@ const FloorLanding = ({
     {/* Slight-slant connector railing — anchored to the elevator landing rail,
         extending toward the mall center on the inner side */}
     {/* Trapezoid SVG connector — outer corners (top + bottom) touch the elevator
-        landing rail; inner corners touch the floor's GlassGuardRail. */}
+        landing rail; inner corners touch the floor's GlassGuardRail. The whole
+        SVG occupies exactly the elevator rail's vertical band and slants gently
+        downward by 20% of the band toward the inner (mall-center) side. */}
     <svg
       className={`absolute z-[94] ${
         side === "left" ? "left-[100%]" : "right-[100%]"
       }`}
-      style={{ bottom: "-8%", height: "54%", width: "26%" }}
+      style={{ bottom: "8%", height: "38%", width: "22%" }}
       viewBox="0 0 100 100"
       preserveAspectRatio="none"
       aria-hidden="true"
     >
       <g transform={side === "right" ? "translate(100 0) scale(-1 1)" : undefined}>
-        {/* Glass panel: outer edge y=30..100 (elevator rail), inner edge y=70..90 (floor rail) */}
+        {/* Outer edge (touching elevator rail): y 0..100. Inner edge (floor rail): y 20..120 — slight downward slant */}
         <polygon
-          points="0,30 0,100 100,90 100,70"
+          points="0,0 0,100 100,120 100,20"
           fill="hsla(190,72%,84%,0.32)"
-          stroke="hsla(190,55%,62%,0.65)"
-          strokeWidth="1"
+          stroke="hsla(190,55%,62%,0.7)"
+          strokeWidth="1.2"
         />
         {/* Top cap rail */}
-        <line x1="0" y1="30" x2="100" y2="70" stroke="#90aab0" strokeWidth="3" strokeLinecap="round" />
-        <line x1="0" y1="29" x2="100" y2="69" stroke="#f9ffff" strokeWidth="1.2" strokeLinecap="round" />
+        <line x1="0" y1="0" x2="100" y2="20" stroke="#90aab0" strokeWidth="6" strokeLinecap="round" />
+        <line x1="0" y1="-1" x2="100" y2="19" stroke="#f9ffff" strokeWidth="2" strokeLinecap="round" />
         {/* Bottom edge */}
-        <line x1="0" y1="100" x2="100" y2="90" stroke="#5b7075" strokeWidth="1.2" strokeLinecap="round" opacity="0.65" />
-        {/* Balusters */}
-        {[25, 50, 75].map((p) => {
-          const yTop = 30 + (70 - 30) * (p / 100);
-          const yBot = 100 + (90 - 100) * (p / 100);
+        <line x1="0" y1="100" x2="100" y2="120" stroke="#5b7075" strokeWidth="2" strokeLinecap="round" opacity="0.75" />
+        {/* Balusters following the slant */}
+        {[20, 45, 70, 90].map((p) => {
+          const yTop = 0 + 20 * (p / 100);
+          const yBot = 100 + 20 * (p / 100);
           return (
-            <line key={p} x1={p} y1={yTop} x2={p} y2={yBot} stroke="#86a3aa" strokeWidth="0.8" opacity="0.85" />
+            <line key={p} x1={p} y1={yTop} x2={p} y2={yBot} stroke="#86a3aa" strokeWidth="1" opacity="0.9" />
           );
         })}
       </g>
