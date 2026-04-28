@@ -69,7 +69,7 @@ const FloorLanding = ({
   top: string;
   passenger?: "blue" | "rose" | "group";
 }) => (
-  <div className="absolute left-[-48%] right-[-72%] z-30 h-[9%]" style={{ top }}>
+  <div className="absolute left-[-48%] right-[-72%] z-[95] h-[9%]" style={{ top }}>
     <div className="absolute bottom-0 left-0 right-0 h-[28%] bg-[linear-gradient(180deg,#e9ddc6,#c5ae83)] shadow-[0_3px_8px_rgba(70,50,25,0.18)]" />
     <div
       className="absolute left-[8%] right-[4%] bottom-[28%] h-[18%] rounded-sm"
