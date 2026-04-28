@@ -115,6 +115,42 @@ const GlassGuardRail = () => (
   </div>
 );
 
+const ElevatorRailConnector = ({ side }: { side: "left" | "right" }) => {
+  // Bridges from the elevator landing rail (outer edge) to the floor's GlassGuardRail (inner edge),
+  // with a slight slant downward toward the mall center for a natural transition.
+  const positionClass =
+    side === "left"
+      ? "left-[3%] w-[7.5%] origin-right -skew-y-[10deg]"
+      : "right-[3%] w-[7.5%] origin-left skew-y-[10deg]";
+  return (
+    <div
+      className={`pointer-events-none absolute bottom-3 z-[92] hidden h-12 md:block ${positionClass}`}
+      aria-hidden="true"
+    >
+      <div
+        className="absolute inset-0 overflow-hidden rounded-sm"
+        style={{
+          background:
+            "linear-gradient(180deg, hsla(190,80%,92%,0.46), hsla(193,58%,70%,0.22))",
+          border: "1px solid hsla(190,55%,62%,0.58)",
+          boxShadow:
+            "inset 0 1px 10px hsla(190,100%,96%,0.58), inset 0 -2px 8px hsla(190,60%,42%,0.18), 0 4px 12px rgba(45,75,82,0.14)",
+        }}
+      >
+        <div className="absolute inset-0 bg-[linear-gradient(112deg,transparent_0%,transparent_38%,rgba(255,255,255,0.6)_44%,transparent_52%,transparent_100%)]" />
+      </div>
+      <div className="absolute -top-1 left-0 right-0 h-2 rounded-full bg-[linear-gradient(180deg,#f9ffff,#90aab0_65%,#5b7075)] shadow-[0_2px_5px_rgba(0,0,0,0.28)]" />
+      {[15, 50, 85].map((left) => (
+        <div
+          key={left}
+          className="absolute top-0 bottom-0 w-px bg-[linear-gradient(180deg,#ffffff,#86a3aa)] shadow-[0_0_4px_rgba(255,255,255,0.6)]"
+          style={{ left: `${left}%` }}
+        />
+      ))}
+    </div>
+  );
+};
+
 const FloorLightSpots = () => (
   <div className="pointer-events-none absolute inset-x-[7%] top-9 z-20 hidden justify-between md:flex" aria-hidden="true">
     {Array.from({ length: 7 }, (_, index) => (
