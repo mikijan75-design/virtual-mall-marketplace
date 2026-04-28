@@ -132,23 +132,6 @@ const FloorLanding = ({
             <line key={p} x1={p} y1={yTop} x2={p} y2={yBot} stroke="#86a3aa" strokeWidth="1" opacity="0.9" />
           );
         })}
-        {/* Orange contact dots at the four corners of the connector */}
-        {[
-          { cx: 0, cy: 0 },
-          { cx: 0, cy: 100 },
-          { cx: 100, cy: -8 },
-          { cx: 100, cy: 92 },
-        ].map((p, i) => (
-          <circle
-            key={`c-${i}`}
-            cx={p.cx}
-            cy={p.cy}
-            r="3"
-            fill="#f97316"
-            stroke="#ffffff"
-            strokeWidth="0.8"
-          />
-        ))}
       </g>
     </svg>
     {/* Group of passengers standing side-by-side, centered under the rail */}
