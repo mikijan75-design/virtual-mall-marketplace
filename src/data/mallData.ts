@@ -18,7 +18,7 @@ export interface Floor {
 export const mallFloors: Floor[] = [
   {
     id: 1,
-    name: "קומה 1 - קומת הכניסה",
+    name: "קומה 1 - קומת כניסה",
     stores: [
       { id: "s13", name: "מסעדה איטלקית", floor: 1, position: 1, category: "מזון", signColor: "from-red-500 to-orange-600", logoEmoji: "🍕", description: "פסטה ופיצה אותנטית" },
       { id: "s14", name: "קפה בוטיק", floor: 1, position: 2, category: "מזון", signColor: "from-amber-700 to-yellow-800", logoEmoji: "☕", description: "קפה ומאפים" },
@@ -30,7 +30,7 @@ export const mallFloors: Floor[] = [
   },
   {
     id: 2,
-    name: "קומה 2 - קומת הפנאי",
+    name: "קומה 2 - קומת פנאי",
     stores: [
       { id: "s7", name: "ספורט עיוותי", floor: 2, position: 1, category: "ספורט", signColor: "from-red-400 to-rose-600", logoEmoji: "🏋️", description: "חנות ספורט אקסטרים" },
       { id: "s8", name: "אמבטיות מתקדמות", floor: 2, position: 2, category: "בית", signColor: "from-sky-400 to-indigo-600", logoEmoji: "🛁", description: "עיצוב חדרי אמבטיה" },
@@ -42,7 +42,7 @@ export const mallFloors: Floor[] = [
   },
   {
     id: 3,
-    name: "קומה 3 - קומת העיצוב",
+    name: "קומה 3 - קומת עיצוב",
     stores: [
       { id: "s1", name: "אופנה עילית", floor: 3, position: 1, category: "אופנה", signColor: "from-pink-500 to-purple-600", logoEmoji: "👗", description: "בוטיק אופנה יוקרתי" },
       { id: "s2", name: "טכנולוגיה מתקדמת", floor: 3, position: 2, category: "טכנולוגיה", signColor: "from-cyan-400 to-blue-600", logoEmoji: "💻", description: "גאדג'טים וטכנולוגיה" },
