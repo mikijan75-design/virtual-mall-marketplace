@@ -35,36 +35,83 @@ const Person = ({
       style={{ transform: flip ? "scaleX(-1)" : undefined }}
       aria-hidden="true"
     >
-      {/* Long hair behind head — drawn first so face overlays */}
+      {/* === PROFILE HEAD (looking right; flip prop mirrors entire SVG) === */}
+      {/* Long hair flows down the back of the head (drawn first) */}
       {isFemale && (
         <path
-          d="M9.5 8 Q8 18 9 28 L11 30 L11 14 Q11 7 15 6.5 Q19 7 19 14 L19 30 L21 28 Q22 18 20.5 8 Q18 4 15 4 Q12 4 9.5 8 Z"
-          fill={hair}
-          stroke="hsl(25,40%,15%)"
-          strokeWidth="0.6"
-        />
-      )}
-
-      {/* Head */}
-      <circle cx="15" cy="8" r="4.5" fill="hsl(31,45%,72%)" stroke="hsl(25,35%,42%)" strokeWidth="0.8" />
-
-      {/* Short hair cap */}
-      {style === "shortHair" && (
-        <path
-          d="M10.7 7.5 Q10 4 15 3.6 Q20 4 19.3 7.5 Q17 5.6 15 5.6 Q13 5.6 10.7 7.5 Z"
+          d="M14 4 Q9 4 9 9 Q8 14 9 19 Q8 25 10.5 30 L13 30 L13 12 Q13 8 15 7 Z"
           fill={hair}
           stroke="hsl(25,40%,15%)"
           strokeWidth="0.5"
         />
       )}
 
-      {/* Hat (fedora-ish) */}
+      {/* Profile head silhouette: rounded skull + brow + nose + lips + chin */}
+      <path
+        d="M11.5 8
+           Q11.5 3.8 15 3.8
+           Q19 3.8 19.2 7.6
+           Q19.4 9 19 10.2
+           L19.6 10.6
+           Q20.2 11 19.6 11.4
+           L18.8 11.6
+           Q19 12.2 18.4 12.4
+           L17.6 12.4
+           Q17.6 13 17.2 13.2
+           L15.6 13.2
+           Q14.4 13.2 13.4 12.4
+           Q11.6 11 11.5 8 Z"
+        fill="hsl(31,45%,72%)"
+        stroke="hsl(25,35%,42%)"
+        strokeWidth="0.7"
+      />
+
+      {/* Ear */}
+      <path
+        d="M13.4 8.6 Q12.6 8.6 12.7 9.6 Q12.8 10.4 13.6 10.5 Z"
+        fill="hsl(28,40%,64%)"
+        stroke="hsl(25,35%,42%)"
+        strokeWidth="0.4"
+      />
+      <path d="M13.1 9.5 Q13.4 9.6 13.4 10" stroke="hsl(25,35%,38%)" strokeWidth="0.3" fill="none" />
+
+      {/* Eye (looking right/forward) */}
+      <circle cx="17.4" cy="8.4" r="0.55" fill="hsl(220,25%,18%)" />
+      <path d="M16.7 8 Q17.4 7.6 18 8" stroke="hsl(25,40%,28%)" strokeWidth="0.35" fill="none" strokeLinecap="round" />
+
+      {/* Eyebrow */}
+      <path d="M16.6 7.3 Q17.4 7 18.1 7.3" stroke={hair} strokeWidth="0.55" fill="none" strokeLinecap="round" />
+
+      {/* Mouth */}
+      <path d="M17.6 11.4 Q18.2 11.6 18.6 11.3" stroke="hsl(0,45%,32%)" strokeWidth="0.4" fill="none" strokeLinecap="round" />
+
+      {/* Short hair (profile cap covering top + back) */}
+      {style === "shortHair" && (
+        <path
+          d="M11.5 8 Q11.4 4 15 3.6 Q19 4 19.4 8 Q19 6 17 5.6 Q14 5.4 12.4 6.6 Q11.6 7.4 11.5 8 Z"
+          fill={hair}
+          stroke="hsl(25,40%,15%)"
+          strokeWidth="0.5"
+        />
+      )}
+
+      {/* Hat (fedora-ish, profile) */}
       {style === "hat" && (
         <>
-          <ellipse cx="15" cy="6.6" rx="6.5" ry="1.2" fill="hsl(28,35%,22%)" stroke="hsl(25,40%,12%)" strokeWidth="0.5" />
-          <path d="M11.5 6.6 Q11.5 2.4 15 2.2 Q18.5 2.4 18.5 6.6 Z" fill="hsl(28,35%,22%)" stroke="hsl(25,40%,12%)" strokeWidth="0.5" />
-          <rect x="11.5" y="5.6" width="7" height="1" fill="hsl(43,55%,45%)" opacity="0.85" />
+          <ellipse cx="15" cy="6.4" rx="6" ry="1.1" fill="hsl(28,35%,22%)" stroke="hsl(25,40%,12%)" strokeWidth="0.5" />
+          <path d="M12 6.4 Q12 2.8 15 2.6 Q18 2.8 18 6.4 Z" fill="hsl(28,35%,22%)" stroke="hsl(25,40%,12%)" strokeWidth="0.5" />
+          <rect x="12" y="5.6" width="6" height="0.9" fill="hsl(43,55%,45%)" opacity="0.85" />
         </>
+      )}
+
+      {/* Female top-of-head hair cap */}
+      {isFemale && (
+        <path
+          d="M11.6 7.6 Q11.5 4 15 3.8 Q18.6 4 19 7 Q18 5.6 15.6 5.6 Q12.8 5.6 11.6 7.6 Z"
+          fill={hair}
+          stroke="hsl(25,40%,15%)"
+          strokeWidth="0.4"
+        />
       )}
 
       {/* Body / shirt — flared bottom for female silhouette (skirt) */}
