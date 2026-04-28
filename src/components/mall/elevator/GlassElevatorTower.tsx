@@ -39,7 +39,7 @@ const ElevatorCabin = ({
   className?: string;
   occupied?: boolean;
 }) => (
-  <div className={`absolute left-[18%] right-[18%] h-[10%] ${className}`}>
+  <div className={`absolute left-[18%] right-[18%] h-[12%] ${className}`}>
     <div
       className="absolute inset-0 rounded-sm"
       style={{
