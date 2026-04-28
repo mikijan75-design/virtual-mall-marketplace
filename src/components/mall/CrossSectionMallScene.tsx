@@ -112,32 +112,6 @@ const GlassGuardRail = () => (
         style={{ left: `${left}%` }}
       />
     ))}
-    {/* Orange contact dots — top/bottom corners of the floor guard rail */}
-    {[
-      { left: "13.3%", top: "-4px" },
-      { left: "13.3%", bottom: "-4px" },
-      { right: "13.3%", top: "-4px" },
-      { right: "13.3%", bottom: "-4px" },
-    ].map((pos, i) => (
-      <div
-        key={`dot-${i}`}
-        className="absolute z-[96] h-2 w-2 rounded-full bg-orange-500 shadow-[0_0_6px_rgba(249,115,22,0.9)] ring-1 ring-white/80"
-        style={pos as CSSProperties}
-      />
-    ))}
-    {/* Orange connector lines from floor-rail dots out to elevator-landing rail dots */}
-    {[
-      { left: "9.5%", width: "3.8%", top: "-1px" },
-      { left: "9.5%", width: "3.8%", bottom: "-1px" },
-      { right: "9.5%", width: "3.8%", top: "-1px" },
-      { right: "9.5%", width: "3.8%", bottom: "-1px" },
-    ].map((pos, i) => (
-      <div
-        key={`connector-${i}`}
-        className="absolute z-[95] h-[2px] bg-orange-500 shadow-[0_0_4px_rgba(249,115,22,0.85)]"
-        style={pos as CSSProperties}
-      />
-    ))}
   </div>
 );
 
@@ -301,8 +275,6 @@ const CrossSectionMallScene = ({ floors }: CrossSectionMallSceneProps) => {
               {/* Per-floor signs */}
               {index === 0 && (
                 <>
-                  <InfoSign className="left-[18%] top-1/2 -translate-y-1/2" />
-                  <RestroomSign className="right-[14%] top-1/2 -translate-y-1/2" />
                   <Person className="left-[26%] bottom-9" />
                   <Person className="right-[28%] bottom-9" flip />
                   <Person className="left-[44%] bottom-9" shirt="hsl(15,55%,55%)" />
@@ -317,8 +289,6 @@ const CrossSectionMallScene = ({ floors }: CrossSectionMallSceneProps) => {
               )}
               {index === 2 && (
                 <>
-                  <InfoSign className="left-[10%] bottom-4" />
-                  <RestroomSign className="left-[12%] top-4" />
                   <Person className="left-[28%] bottom-9" shirt="hsl(205,55%,58%)" />
                   <Person className="right-[30%] bottom-9" shirt="hsl(205,55%,58%)" flip />
                   <Person className="left-[50%] bottom-9" shirt="hsl(332,35%,68%)" />

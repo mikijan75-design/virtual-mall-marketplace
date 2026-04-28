@@ -85,11 +85,6 @@ const FloorLanding = ({
       }}
     />
     <div className="absolute left-[8%] right-[4%] bottom-[45%] h-1.5 rounded-full bg-[linear-gradient(180deg,#f7ffff,#87a3aa_70%,#536970)] z-[95]" />
-    {/* Orange contact dots at the four corners of the elevator landing rail */}
-    <div className="absolute z-[97] h-2 w-2 -translate-x-1/2 translate-y-1/2 rounded-full bg-orange-500 shadow-[0_0_6px_rgba(249,115,22,0.9)] ring-1 ring-white/80" style={{ left: "8%", bottom: "44%" }} />
-    <div className="absolute z-[97] h-2 w-2 -translate-x-1/2 translate-y-1/2 rounded-full bg-orange-500 shadow-[0_0_6px_rgba(249,115,22,0.9)] ring-1 ring-white/80" style={{ left: "8%", bottom: "8%" }} />
-    <div className="absolute z-[97] h-2 w-2 translate-x-1/2 translate-y-1/2 rounded-full bg-orange-500 shadow-[0_0_6px_rgba(249,115,22,0.9)] ring-1 ring-white/80" style={{ right: "4%", bottom: "44%" }} />
-    <div className="absolute z-[97] h-2 w-2 translate-x-1/2 translate-y-1/2 rounded-full bg-orange-500 shadow-[0_0_6px_rgba(249,115,22,0.9)] ring-1 ring-white/80" style={{ right: "4%", bottom: "8%" }} />
     {[18, 42, 66, 88].map((left) => (
       <div
         key={left}
