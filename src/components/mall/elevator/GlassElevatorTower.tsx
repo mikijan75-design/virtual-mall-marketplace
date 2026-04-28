@@ -109,7 +109,7 @@ const FloorLanding = ({
 
 const GlassElevatorTower = ({ side }: { side: "left" | "right" }) => (
   <div
-    className={`pointer-events-none absolute top-[116px] bottom-[193px] z-[34] hidden w-[7%] md:block ${
+    className={`pointer-events-none absolute top-[116px] bottom-[193px] z-[95] hidden w-[7%] md:block ${
       side === "left" ? "left-[0.5%]" : "right-[0.5%]"
     }`}
     aria-hidden="true"
