@@ -172,41 +172,184 @@ const Person = ({
 
 const Stroller = ({ className = "", flip = false }: { className?: string; flip?: boolean }) => (
   <svg
-    className={`absolute z-40 h-12 w-14 md:h-16 md:w-20 ${className}`}
-    viewBox="0 0 60 60"
+    className={`absolute z-40 h-12 w-16 md:h-16 md:w-24 ${className}`}
+    viewBox="0 0 80 60"
     style={{ transform: flip ? "scaleX(-1)" : undefined }}
     aria-hidden="true"
   >
-    {/* Handle */}
-    <path d="M6 18 Q4 16 6 14 L14 14" stroke="hsl(220,18%,28%)" strokeWidth="2" fill="none" strokeLinecap="round" />
-    {/* Frame down to wheels */}
-    <path d="M14 14 L40 14 L46 42" stroke="hsl(220,18%,28%)" strokeWidth="2" fill="none" strokeLinecap="round" />
-    <path d="M14 14 L18 42" stroke="hsl(220,18%,28%)" strokeWidth="2" fill="none" strokeLinecap="round" />
-    {/* Bassinet body */}
+    <defs>
+      <linearGradient id="bassinetGrad" x1="0" y1="0" x2="0" y2="1">
+        <stop offset="0%" stopColor="hsl(345,55%,68%)" />
+        <stop offset="55%" stopColor="hsl(345,55%,55%)" />
+        <stop offset="100%" stopColor="hsl(345,55%,38%)" />
+      </linearGradient>
+      <linearGradient id="canopyGrad" x1="0" y1="0" x2="0" y2="1">
+        <stop offset="0%" stopColor="hsl(200,65%,68%)" />
+        <stop offset="100%" stopColor="hsl(205,55%,42%)" />
+      </linearGradient>
+      <linearGradient id="frameGrad" x1="0" y1="0" x2="0" y2="1">
+        <stop offset="0%" stopColor="hsl(0,0%,82%)" />
+        <stop offset="60%" stopColor="hsl(220,8%,38%)" />
+        <stop offset="100%" stopColor="hsl(220,12%,18%)" />
+      </linearGradient>
+      <radialGradient id="wheelGrad" cx="40%" cy="40%" r="60%">
+        <stop offset="0%" stopColor="hsl(220,8%,32%)" />
+        <stop offset="100%" stopColor="hsl(220,15%,10%)" />
+      </radialGradient>
+    </defs>
+
+    {/* === Frame === */}
+    {/* Curved chrome handle (extends out the back) */}
     <path
-      d="M14 14 Q14 30 22 32 L40 32 Q46 30 44 16 Q44 12 40 14 Z"
-      fill="hsl(345,45%,58%)"
-      stroke="hsl(345,40%,30%)"
-      strokeWidth="0.7"
+      d="M6 24 Q3 18 6 16 Q10 14 14 16 L20 18"
+      stroke="url(#frameGrad)"
+      strokeWidth="2.4"
+      fill="none"
+      strokeLinecap="round"
     />
-    {/* Canopy / sun shade */}
+    {/* Handle grip wrap */}
+    <path d="M5 22 Q4 19 6 17" stroke="hsl(28,55%,32%)" strokeWidth="3.2" fill="none" strokeLinecap="round" />
+    <path d="M5 22 Q4 19 6 17" stroke="hsl(28,30%,18%)" strokeWidth="0.6" fill="none" strokeLinecap="round" strokeDasharray="0.8 1.2" />
+
+    {/* Front diagonal frame to front wheel */}
+    <path d="M62 22 L70 48" stroke="url(#frameGrad)" strokeWidth="2.4" fill="none" strokeLinecap="round" />
+    {/* Rear diagonal frame to rear wheel */}
+    <path d="M22 22 L18 48" stroke="url(#frameGrad)" strokeWidth="2.4" fill="none" strokeLinecap="round" />
+    {/* Lower cross bar */}
+    <path d="M20 38 L66 38" stroke="url(#frameGrad)" strokeWidth="1.6" fill="none" strokeLinecap="round" />
+    {/* Brake lever near rear wheel */}
+    <path d="M22 44 L26 44" stroke="hsl(0,55%,42%)" strokeWidth="1.4" strokeLinecap="round" />
+
+    {/* === Bassinet body — elegant rounded carriage === */}
     <path
-      d="M22 14 Q22 4 36 6 Q44 8 42 16"
-      fill="hsl(195,55%,55%)"
-      stroke="hsl(195,40%,28%)"
-      strokeWidth="0.7"
+      d="M18 26
+         Q18 16 30 14
+         L58 14
+         Q70 16 66 28
+         Q64 34 56 36
+         L28 36
+         Q20 35 18 26 Z"
+      fill="url(#bassinetGrad)"
+      stroke="hsl(345,55%,28%)"
+      strokeWidth="0.9"
     />
-    {/* Baby head peeking */}
-    <circle cx="32" cy="20" r="3.4" fill="hsl(31,52%,80%)" stroke="hsl(25,35%,45%)" strokeWidth="0.5" />
-    <circle cx="33.4" cy="20" r="0.5" fill="hsl(220,25%,18%)" />
-    <path d="M32.6 21.4 Q33.2 21.6 33.8 21.3" stroke="hsl(0,45%,32%)" strokeWidth="0.3" fill="none" strokeLinecap="round" />
-    {/* Tiny tuft of hair */}
-    <path d="M30.4 18.4 Q31.4 17.4 32.6 17.6" stroke="hsl(28,40%,28%)" strokeWidth="0.55" fill="none" strokeLinecap="round" />
-    {/* Wheels */}
-    <circle cx="18" cy="46" r="5" fill="hsl(220,15%,18%)" stroke="hsl(220,12%,8%)" strokeWidth="0.6" />
-    <circle cx="18" cy="46" r="1.4" fill="hsl(0,0%,72%)" />
-    <circle cx="46" cy="46" r="5" fill="hsl(220,15%,18%)" stroke="hsl(220,12%,8%)" strokeWidth="0.6" />
-    <circle cx="46" cy="46" r="1.4" fill="hsl(0,0%,72%)" />
+    {/* Decorative gold trim around the rim */}
+    <path
+      d="M19 24 Q19 17 30 15.5 L58 15.5 Q68 17 65 26"
+      stroke="hsl(43,75%,62%)"
+      strokeWidth="1.1"
+      fill="none"
+      strokeLinecap="round"
+    />
+    {/* Subtle quilted stitching */}
+    <path d="M28 22 L32 28 M36 21 L40 27 M44 21 L48 27 M52 21 L56 27" stroke="hsl(345,55%,30%)" strokeWidth="0.35" opacity="0.6" />
+    {/* Tiny gold star emblem on side */}
+    <circle cx="46" cy="30" r="1.4" fill="hsl(43,80%,68%)" stroke="hsl(43,55%,32%)" strokeWidth="0.3" />
+
+    {/* === Canopy — domed sunshade with scalloped edge === */}
+    <path
+      d="M30 14
+         Q26 -2 50 0
+         Q66 2 62 16"
+      fill="url(#canopyGrad)"
+      stroke="hsl(205,55%,22%)"
+      strokeWidth="0.9"
+    />
+    {/* Canopy ribs */}
+    <path d="M34 11 Q40 4 48 2" stroke="hsl(205,55%,28%)" strokeWidth="0.45" fill="none" />
+    <path d="M40 8 Q48 2 56 4" stroke="hsl(205,55%,28%)" strokeWidth="0.45" fill="none" />
+    {/* Scalloped fringe under canopy */}
+    <path
+      d="M30 14 Q33 17 36 14 Q39 17 42 14 Q45 17 48 14 Q51 17 54 14 Q57 17 60 14 Q61 15 62 16"
+      fill="hsl(43,75%,62%)"
+      stroke="hsl(43,55%,32%)"
+      strokeWidth="0.4"
+    />
+    {/* Bow on top of canopy */}
+    <path d="M44 -1 Q46 -3 48 -1 Q50 -3 52 -1 Q50 1 48 -1 Q46 1 44 -1 Z" fill="hsl(43,80%,68%)" stroke="hsl(43,55%,32%)" strokeWidth="0.35" />
+    <circle cx="48" cy="0" r="0.7" fill="hsl(43,55%,38%)" />
+
+    {/* === Baby peeking out (profile, sleepy/content) === */}
+    {/* Soft blanket tucked over the front */}
+    <path
+      d="M30 22 Q40 18 56 22 Q60 24 60 28 Q56 30 50 30 L34 30 Q30 28 30 22 Z"
+      fill="hsl(48,75%,90%)"
+      stroke="hsl(45,40%,55%)"
+      strokeWidth="0.4"
+    />
+    {/* Blanket pattern dots */}
+    <circle cx="38" cy="25" r="0.5" fill="hsl(345,55%,55%)" opacity="0.7" />
+    <circle cx="44" cy="27" r="0.5" fill="hsl(205,55%,55%)" opacity="0.7" />
+    <circle cx="50" cy="25" r="0.5" fill="hsl(345,55%,55%)" opacity="0.7" />
+    {/* Baby head — profile */}
+    <path
+      d="M48 22
+         Q48 16 53 16
+         Q58 16 58.4 20
+         Q58.6 21.4 58 22.6
+         L58.6 23
+         Q59.2 23.4 58.6 23.8
+         L57.8 24
+         Q57.6 24.6 57 24.8
+         L52 24.8
+         Q49 24.5 48 22 Z"
+      fill="hsl(31,55%,82%)"
+      stroke="hsl(25,35%,45%)"
+      strokeWidth="0.5"
+    />
+    {/* Baby eye (closed/peaceful) */}
+    <path d="M55.6 20.6 Q56.2 20.2 56.8 20.6" stroke="hsl(25,35%,28%)" strokeWidth="0.45" fill="none" strokeLinecap="round" />
+    {/* Tiny rosy cheek */}
+    <circle cx="55.5" cy="22.4" r="0.7" fill="hsl(0,55%,72%)" opacity="0.65" />
+    {/* Baby mouth */}
+    <path d="M56.8 23.4 Q57.4 23.6 57.8 23.3" stroke="hsl(0,45%,32%)" strokeWidth="0.32" fill="none" strokeLinecap="round" />
+    {/* Tuft of hair */}
+    <path d="M50 17.5 Q52.5 14.5 55 16.5" stroke="hsl(28,40%,28%)" strokeWidth="0.6" fill="none" strokeLinecap="round" />
+    {/* Tiny hand poking up */}
+    <circle cx="40" cy="20.5" r="1" fill="hsl(31,55%,82%)" stroke="hsl(25,35%,45%)" strokeWidth="0.35" />
+
+    {/* === Wheels — large rear, small front, with spokes === */}
+    {/* Rear wheel */}
+    <circle cx="16" cy="50" r="6.5" fill="url(#wheelGrad)" stroke="hsl(220,12%,6%)" strokeWidth="0.6" />
+    <circle cx="16" cy="50" r="4.6" fill="none" stroke="hsl(0,0%,38%)" strokeWidth="0.4" />
+    <circle cx="16" cy="50" r="1.8" fill="hsl(0,0%,82%)" stroke="hsl(0,0%,42%)" strokeWidth="0.4" />
+    {[0, 45, 90, 135].map((a) => (
+      <line
+        key={`rs${a}`}
+        x1={16 + Math.cos((a * Math.PI) / 180) * 1.6}
+        y1={50 + Math.sin((a * Math.PI) / 180) * 1.6}
+        x2={16 + Math.cos((a * Math.PI) / 180) * 4.4}
+        y2={50 + Math.sin((a * Math.PI) / 180) * 4.4}
+        stroke="hsl(0,0%,68%)"
+        strokeWidth="0.45"
+      />
+    ))}
+    {[0, 45, 90, 135].map((a) => (
+      <line
+        key={`rs2${a}`}
+        x1={16 - Math.cos((a * Math.PI) / 180) * 1.6}
+        y1={50 - Math.sin((a * Math.PI) / 180) * 1.6}
+        x2={16 - Math.cos((a * Math.PI) / 180) * 4.4}
+        y2={50 - Math.sin((a * Math.PI) / 180) * 4.4}
+        stroke="hsl(0,0%,68%)"
+        strokeWidth="0.45"
+      />
+    ))}
+    {/* Front wheel (smaller, swivel) */}
+    <circle cx="72" cy="51" r="5" fill="url(#wheelGrad)" stroke="hsl(220,12%,6%)" strokeWidth="0.6" />
+    <circle cx="72" cy="51" r="3.4" fill="none" stroke="hsl(0,0%,38%)" strokeWidth="0.4" />
+    <circle cx="72" cy="51" r="1.4" fill="hsl(0,0%,82%)" stroke="hsl(0,0%,42%)" strokeWidth="0.35" />
+    {[0, 45, 90, 135].map((a) => (
+      <line
+        key={`fs${a}`}
+        x1={72 + Math.cos((a * Math.PI) / 180) * 1.3}
+        y1={51 + Math.sin((a * Math.PI) / 180) * 1.3}
+        x2={72 + Math.cos((a * Math.PI) / 180) * 3.2}
+        y2={51 + Math.sin((a * Math.PI) / 180) * 3.2}
+        stroke="hsl(0,0%,68%)"
+        strokeWidth="0.4"
+      />
+    ))}
   </svg>
 );
 
