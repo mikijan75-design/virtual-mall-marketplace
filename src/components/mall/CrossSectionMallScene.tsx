@@ -20,14 +20,21 @@ const Person = ({
   flip = false,
   style = "shortHair",
   hair = "hsl(28,35%,22%)",
+  bagColor,
 }: {
   className?: string;
   shirt?: string;
   flip?: boolean;
   style?: PersonStyle;
   hair?: string;
+  bagColor?: string;
 }) => {
   const isFemale = style === "longHair";
+  // Women always carry a shopping bag; men only when style === "bag"
+  const showBag = style === "bag" || isFemale;
+  const resolvedBagColor =
+    bagColor ?? (isFemale ? "hsl(0,0%,96%)" : "hsl(345,55%,45%)");
+  const bagStroke = isFemale ? "hsl(0,0%,55%)" : "hsl(345,40%,25%)";
   return (
     <svg
       className={`absolute z-40 h-12 w-7 md:h-16 md:w-9 ${className}`}
@@ -151,11 +158,11 @@ const Person = ({
       )}
 
       {/* Shopping bag (right hand) */}
-      {style === "bag" && (
+      {showBag && (
         <>
           <path d="M22.5 28 Q25 26 27.5 28" stroke="hsl(0,0%,15%)" strokeWidth="0.8" fill="none" />
-          <rect x="22" y="28" width="6" height="8" fill="hsl(345,55%,45%)" stroke="hsl(345,40%,25%)" strokeWidth="0.6" />
-          <rect x="23" y="30" width="4" height="0.6" fill="hsl(43,70%,75%)" opacity="0.85" />
+          <rect x="22" y="28" width="6" height="8" fill={resolvedBagColor} stroke={bagStroke} strokeWidth="0.6" />
+          <rect x="23" y="30" width="4" height="0.6" fill="hsl(43,70%,55%)" opacity="0.7" />
         </>
       )}
     </svg>
@@ -400,7 +407,7 @@ const CrossSectionMallScene = ({ floors }: CrossSectionMallSceneProps) => {
               {/* Per-floor signs */}
               {index === 0 && (
                 <>
-                  <Person className="left-[26%] bottom-9" style="longHair" shirt="hsl(345,55%,58%)" hair="hsl(28,55%,30%)" />
+                  <Person className="left-[26%] bottom-9" style="longHair" shirt="hsl(345,55%,58%)" hair="hsl(28,55%,30%)" bagColor="hsl(0,0%,96%)" />
                   <Person className="right-[28%] bottom-9" flip style="hat" shirt="hsl(215,35%,38%)" />
                   <Person className="left-[44%] bottom-9" shirt="hsl(15,55%,55%)" style="bag" />
                 </>
@@ -409,14 +416,14 @@ const CrossSectionMallScene = ({ floors }: CrossSectionMallSceneProps) => {
                 <>
                   <Person className="left-[22%] bottom-9" shirt="hsl(213,48%,58%)" style="shortHair" />
                   <Person className="right-[24%] bottom-9" shirt="hsl(192,45%,62%)" flip style="cane" hair="hsl(0,0%,82%)" />
-                  <Person className="left-[48%] bottom-9" shirt="hsl(280,40%,58%)" style="longHair" hair="hsl(38,65%,55%)" />
+                  <Person className="left-[48%] bottom-9" shirt="hsl(280,40%,58%)" style="longHair" hair="hsl(38,65%,55%)" bagColor="hsl(48,90%,62%)" />
                 </>
               )}
               {index === 2 && (
                 <>
                   <Person className="left-[28%] bottom-9" shirt="hsl(205,55%,58%)" style="hat" />
                   <Person className="right-[30%] bottom-9" shirt="hsl(155,40%,50%)" flip style="bag" />
-                  <Person className="left-[50%] bottom-9" shirt="hsl(332,55%,62%)" style="longHair" hair="hsl(20,45%,18%)" />
+                  <Person className="left-[50%] bottom-9" shirt="hsl(332,55%,62%)" style="longHair" hair="hsl(20,45%,18%)" bagColor="hsl(48,90%,62%)" />
                 </>
               )}
             </div>
