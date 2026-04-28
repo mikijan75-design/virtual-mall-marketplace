@@ -109,14 +109,14 @@ const FloorLanding = ({
 
 const GlassElevatorTower = ({ side }: { side: "left" | "right" }) => (
   <div
-    className={`pointer-events-none absolute top-[76px] bottom-[48px] z-[34] hidden w-[7%] md:block ${
+    className={`pointer-events-none absolute top-[116px] bottom-[128px] z-[34] hidden w-[7%] md:block ${
       side === "left" ? "left-[0.5%]" : "right-[0.5%]"
     }`}
     aria-hidden="true"
   >
-    <FloorLanding top="20%" passenger={side === "left" ? "blue" : "rose"} />
+    <FloorLanding top="18%" passenger={side === "left" ? "blue" : "rose"} />
     <FloorLanding top="50%" passenger={side === "right" ? "rose" : "blue"} />
-    <FloorLanding top="80%" passenger="blue" />
+    <FloorLanding top="82%" passenger="blue" />
 
     <div className="absolute inset-y-0 left-0 w-[78%]" style={glassPaneStyle}>
       <div className="absolute inset-0 bg-[linear-gradient(115deg,transparent_0%,transparent_35%,rgba(255,255,255,0.56)_43%,transparent_53%,transparent_100%)]" />
@@ -130,9 +130,9 @@ const GlassElevatorTower = ({ side }: { side: "left" | "right" }) => (
           style={{ top: `${top}%` }}
         />
       ))}
-      <ElevatorCabin className="top-[7%]" occupied={side === "left"} />
-      <ElevatorCabin className="top-[39%]" occupied={side === "right"} />
-      <div className="absolute left-[18%] right-[18%] top-[72%] h-[10%] rounded-sm border border-slate-600/35 bg-slate-100/20 shadow-inner" />
+      <ElevatorCabin className="top-[3%]" occupied={side === "left"} />
+      <ElevatorCabin className="top-[40%]" occupied={side === "right"} />
+      <div className="absolute left-[18%] right-[18%] top-[78%] h-[11%] rounded-sm border border-slate-600/35 bg-slate-100/20 shadow-inner" />
       <div className="absolute bottom-[12%] left-[8%] right-[8%] h-[24%] bg-[linear-gradient(135deg,transparent_42%,rgba(255,255,255,0.54)_47%,transparent_55%)]" />
     </div>
 
