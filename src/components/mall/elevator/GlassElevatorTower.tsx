@@ -90,36 +90,6 @@ const FloorLanding = ({
     <div className="absolute z-[97] h-2 w-2 -translate-x-1/2 translate-y-1/2 rounded-full bg-orange-500 shadow-[0_0_6px_rgba(249,115,22,0.9)] ring-1 ring-white/80" style={{ left: "8%", bottom: "8%" }} />
     <div className="absolute z-[97] h-2 w-2 translate-x-1/2 translate-y-1/2 rounded-full bg-orange-500 shadow-[0_0_6px_rgba(249,115,22,0.9)] ring-1 ring-white/80" style={{ right: "4%", bottom: "44%" }} />
     <div className="absolute z-[97] h-2 w-2 translate-x-1/2 translate-y-1/2 rounded-full bg-orange-500 shadow-[0_0_6px_rgba(249,115,22,0.9)] ring-1 ring-white/80" style={{ right: "4%", bottom: "8%" }} />
-    {/* Orange connector lines from elevator-rail inner dots to the floor-rail dots */}
-    {(() => {
-      const innerSide = side === "left" ? "right" : "left";
-      const lineStyleTop: CSSProperties = {
-        [innerSide]: "4%",
-        bottom: "calc(44% - 1px)",
-        width: "60%",
-        height: "2px",
-        [side === "left" ? "marginRight" : "marginLeft"]: "4px",
-      } as CSSProperties;
-      const lineStyleBottom: CSSProperties = {
-        [innerSide]: "4%",
-        bottom: "calc(8% - 1px)",
-        width: "60%",
-        height: "2px",
-        [side === "left" ? "marginRight" : "marginLeft"]: "4px",
-      } as CSSProperties;
-      return (
-        <>
-          <div
-            className="absolute z-[96] bg-orange-500 shadow-[0_0_4px_rgba(249,115,22,0.8)]"
-            style={lineStyleTop}
-          />
-          <div
-            className="absolute z-[96] bg-orange-500 shadow-[0_0_4px_rgba(249,115,22,0.8)]"
-            style={lineStyleBottom}
-          />
-        </>
-      );
-    })()}
     {[18, 42, 66, 88].map((left) => (
       <div
         key={left}
