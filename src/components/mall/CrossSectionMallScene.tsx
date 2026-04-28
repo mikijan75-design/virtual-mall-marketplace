@@ -170,6 +170,46 @@ const Person = ({
 };
 
 
+const Stroller = ({ className = "", flip = false }: { className?: string; flip?: boolean }) => (
+  <svg
+    className={`absolute z-40 h-12 w-14 md:h-16 md:w-20 ${className}`}
+    viewBox="0 0 60 60"
+    style={{ transform: flip ? "scaleX(-1)" : undefined }}
+    aria-hidden="true"
+  >
+    {/* Handle */}
+    <path d="M6 18 Q4 16 6 14 L14 14" stroke="hsl(220,18%,28%)" strokeWidth="2" fill="none" strokeLinecap="round" />
+    {/* Frame down to wheels */}
+    <path d="M14 14 L40 14 L46 42" stroke="hsl(220,18%,28%)" strokeWidth="2" fill="none" strokeLinecap="round" />
+    <path d="M14 14 L18 42" stroke="hsl(220,18%,28%)" strokeWidth="2" fill="none" strokeLinecap="round" />
+    {/* Bassinet body */}
+    <path
+      d="M14 14 Q14 30 22 32 L40 32 Q46 30 44 16 Q44 12 40 14 Z"
+      fill="hsl(345,45%,58%)"
+      stroke="hsl(345,40%,30%)"
+      strokeWidth="0.7"
+    />
+    {/* Canopy / sun shade */}
+    <path
+      d="M22 14 Q22 4 36 6 Q44 8 42 16"
+      fill="hsl(195,55%,55%)"
+      stroke="hsl(195,40%,28%)"
+      strokeWidth="0.7"
+    />
+    {/* Baby head peeking */}
+    <circle cx="32" cy="20" r="3.4" fill="hsl(31,52%,80%)" stroke="hsl(25,35%,45%)" strokeWidth="0.5" />
+    <circle cx="33.4" cy="20" r="0.5" fill="hsl(220,25%,18%)" />
+    <path d="M32.6 21.4 Q33.2 21.6 33.8 21.3" stroke="hsl(0,45%,32%)" strokeWidth="0.3" fill="none" strokeLinecap="round" />
+    {/* Tiny tuft of hair */}
+    <path d="M30.4 18.4 Q31.4 17.4 32.6 17.6" stroke="hsl(28,40%,28%)" strokeWidth="0.55" fill="none" strokeLinecap="round" />
+    {/* Wheels */}
+    <circle cx="18" cy="46" r="5" fill="hsl(220,15%,18%)" stroke="hsl(220,12%,8%)" strokeWidth="0.6" />
+    <circle cx="18" cy="46" r="1.4" fill="hsl(0,0%,72%)" />
+    <circle cx="46" cy="46" r="5" fill="hsl(220,15%,18%)" stroke="hsl(220,12%,8%)" strokeWidth="0.6" />
+    <circle cx="46" cy="46" r="1.4" fill="hsl(0,0%,72%)" />
+  </svg>
+);
+
 const InfoSign = ({ className = "" }: { className?: string }) => (
   <div
     className={`absolute z-30 flex h-10 w-10 items-center justify-center rounded-md border text-xl font-black text-white shadow-lg ${className}`}
@@ -424,6 +464,27 @@ const CrossSectionMallScene = ({ floors }: CrossSectionMallSceneProps) => {
                   <Person className="left-[28%] bottom-9" shirt="hsl(205,55%,58%)" style="hat" />
                   <Person className="right-[30%] bottom-9" shirt="hsl(155,40%,50%)" flip style="bag" />
                   <Person className="left-[50%] bottom-9" shirt="hsl(332,55%,62%)" style="longHair" hair="hsl(20,45%,18%)" bagColor="hsl(48,90%,62%)" />
+                  {/* Family walking right: dad, mom, child */}
+                  <Person className="left-[18%] bottom-2" shirt="hsl(210,40%,42%)" style="shortHair" hair="hsl(28,30%,18%)" />
+                  <Person className="left-[22%] bottom-2" shirt="hsl(340,50%,55%)" style="longHair" hair="hsl(25,50%,25%)" bagColor="hsl(0,0%,96%)" />
+                  <svg className="absolute left-[25.5%] bottom-2 z-40 h-8 w-5 md:h-11 md:w-6" viewBox="0 0 30 60" aria-hidden="true">
+                    {/* Child profile head */}
+                    <path d="M11.5 10 Q11.5 5.8 15 5.8 Q19 5.8 19.2 9.6 Q19.4 11 19 12.2 L19.6 12.6 Q20.2 13 19.6 13.4 L18.8 13.6 Q19 14.2 18.4 14.4 L17.6 14.4 Q17.6 15 17.2 15.2 L15.6 15.2 Q14.4 15.2 13.4 14.4 Q11.6 13 11.5 10 Z" fill="hsl(31,45%,72%)" stroke="hsl(25,35%,42%)" strokeWidth="0.7" />
+                    <circle cx="17.4" cy="10.4" r="0.55" fill="hsl(220,25%,18%)" />
+                    <path d="M16.6 9.3 Q17.4 9 18.1 9.3" stroke="hsl(28,35%,22%)" strokeWidth="0.55" fill="none" strokeLinecap="round" />
+                    <path d="M10.7 9.5 Q10 6 15 5.6 Q20 6 19.3 9.5 Q17 7.6 15 7.6 Q13 7.6 10.7 9.5 Z" fill="hsl(28,35%,22%)" stroke="hsl(25,40%,15%)" strokeWidth="0.5" />
+                    <path d="M12 15.2 L18 15.2 L19.5 30 L10.5 30 Z" fill="hsl(45,75%,55%)" stroke="hsl(45,50%,32%)" strokeWidth="0.8" />
+                    <path d="M12 18 L8 27" stroke="hsl(45,50%,32%)" strokeWidth="1.8" strokeLinecap="round" />
+                    <path d="M18 18 L22 27" stroke="hsl(45,50%,32%)" strokeWidth="1.8" strokeLinecap="round" />
+                    <path d="M13 30 L9 48" stroke="hsl(215,25%,38%)" strokeWidth="2" strokeLinecap="round" />
+                    <path d="M17 30 L21 48" stroke="hsl(215,25%,38%)" strokeWidth="2" strokeLinecap="round" />
+                    <path d="M7 49 L12 49" stroke="hsl(30,18%,18%)" strokeWidth="1.8" strokeLinecap="round" />
+                    <path d="M19 49 L24 49" stroke="hsl(30,18%,18%)" strokeWidth="1.8" strokeLinecap="round" />
+                  </svg>
+                  {/* Two women with stroller coming from the right (flipped) */}
+                  <Person className="right-[16%] bottom-2" flip style="longHair" shirt="hsl(280,45%,55%)" hair="hsl(18,55%,22%)" bagColor="hsl(48,90%,62%)" />
+                  <Stroller className="right-[21%] bottom-2" flip />
+                  <Person className="right-[33%] bottom-2" flip style="longHair" shirt="hsl(170,40%,48%)" hair="hsl(35,60%,42%)" bagColor="hsl(0,0%,96%)" />
                 </>
               )}
             </div>
