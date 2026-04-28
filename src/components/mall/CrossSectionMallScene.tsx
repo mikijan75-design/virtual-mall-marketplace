@@ -112,32 +112,6 @@ const GlassGuardRail = () => (
         style={{ left: `${left}%` }}
       />
     ))}
-    {/* Orange contact dots — top/bottom corners of the floor guard rail */}
-    {[
-      { left: "13.3%", top: "-4px" },
-      { left: "13.3%", bottom: "-4px" },
-      { right: "13.3%", top: "-4px" },
-      { right: "13.3%", bottom: "-4px" },
-    ].map((pos, i) => (
-      <div
-        key={`dot-${i}`}
-        className="absolute z-[96] h-2 w-2 rounded-full bg-orange-500 shadow-[0_0_6px_rgba(249,115,22,0.9)] ring-1 ring-white/80"
-        style={pos as CSSProperties}
-      />
-    ))}
-    {/* Orange connector lines from floor-rail dots out to elevator-landing rail dots */}
-    {[
-      { left: "9.5%", width: "3.8%", top: "-1px" },
-      { left: "9.5%", width: "3.8%", bottom: "-1px" },
-      { right: "9.5%", width: "3.8%", top: "-1px" },
-      { right: "9.5%", width: "3.8%", bottom: "-1px" },
-    ].map((pos, i) => (
-      <div
-        key={`connector-${i}`}
-        className="absolute z-[95] h-[2px] bg-orange-500 shadow-[0_0_4px_rgba(249,115,22,0.85)]"
-        style={pos as CSSProperties}
-      />
-    ))}
   </div>
 );
 
