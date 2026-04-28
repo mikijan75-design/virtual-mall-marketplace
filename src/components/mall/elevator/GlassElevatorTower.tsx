@@ -100,28 +100,29 @@ const FloorLanding = ({
       className={`absolute z-[94] ${
         side === "left" ? "left-[100%]" : "right-[100%]"
       }`}
-      style={{ bottom: "8%", height: "38%", width: "22%" }}
+      style={{ bottom: "8%", height: "38%", width: "26%" }}
       viewBox="0 0 100 100"
       preserveAspectRatio="none"
       aria-hidden="true"
     >
       <g transform={side === "right" ? "translate(100 0) scale(-1 1)" : undefined}>
-        {/* Outer edge (touching elevator rail): y 0..100. Inner edge (floor rail): y 20..120 — slight downward slant */}
+        {/* Outer corners (left): y 0 (top), y 100 (bottom) — touching elevator rail.
+            Inner corners (right): y -8 (top), y 92 (bottom) — slight upward slant toward floor rail. */}
         <polygon
-          points="0,0 0,100 100,120 100,20"
+          points="0,0 0,100 100,92 100,-8"
           fill="hsla(190,72%,84%,0.32)"
           stroke="hsla(190,55%,62%,0.7)"
           strokeWidth="1.2"
         />
-        {/* Top cap rail */}
-        <line x1="0" y1="0" x2="100" y2="20" stroke="#90aab0" strokeWidth="6" strokeLinecap="round" />
-        <line x1="0" y1="-1" x2="100" y2="19" stroke="#f9ffff" strokeWidth="2" strokeLinecap="round" />
-        {/* Bottom edge */}
-        <line x1="0" y1="100" x2="100" y2="120" stroke="#5b7075" strokeWidth="2" strokeLinecap="round" opacity="0.75" />
-        {/* Balusters following the slant */}
+        {/* Top cap rail — connects elevator rail top corner to floor rail top corner */}
+        <line x1="0" y1="0" x2="100" y2="-8" stroke="#90aab0" strokeWidth="6" strokeLinecap="round" />
+        <line x1="0" y1="-1" x2="100" y2="-9" stroke="#f9ffff" strokeWidth="2" strokeLinecap="round" />
+        {/* Bottom edge — connects elevator rail bottom corner to floor rail bottom corner */}
+        <line x1="0" y1="100" x2="100" y2="92" stroke="#5b7075" strokeWidth="2" strokeLinecap="round" opacity="0.75" />
+        {/* Balusters */}
         {[20, 45, 70, 90].map((p) => {
-          const yTop = 0 + 20 * (p / 100);
-          const yBot = 100 + 20 * (p / 100);
+          const yTop = 0 + (-8) * (p / 100);
+          const yBot = 100 + (-8) * (p / 100);
           return (
             <line key={p} x1={p} y1={yTop} x2={p} y2={yBot} stroke="#86a3aa" strokeWidth="1" opacity="0.9" />
           );
