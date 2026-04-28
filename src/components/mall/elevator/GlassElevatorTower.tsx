@@ -65,9 +65,11 @@ const ElevatorCabin = ({
 const FloorLanding = ({
   top,
   passenger,
+  side,
 }: {
   top: string;
   passenger?: "blue" | "rose" | "group";
+  side: "left" | "right";
 }) => (
   <div className="absolute left-[-48%] right-[-72%] z-30 h-[9%]" style={{ top }}>
     <div className="absolute bottom-0 left-0 right-0 h-[28%] bg-[linear-gradient(180deg,#e9ddc6,#c5ae83)] shadow-[0_3px_8px_rgba(70,50,25,0.18)]" />
@@ -88,6 +90,34 @@ const FloorLanding = ({
         style={{ left: `${left}%` }}
       />
     ))}
+    {/* Slight-slant connector railing — anchored to the elevator landing rail,
+        extending toward the mall center on the inner side */}
+    <div
+      className={`absolute bottom-[8%] h-[38%] w-[20%] z-[94] ${
+        side === "left"
+          ? "left-[100%] origin-left -skew-y-[12deg]"
+          : "right-[100%] origin-right skew-y-[12deg]"
+      }`}
+    >
+      <div
+        className="absolute inset-0 rounded-sm"
+        style={{
+          background:
+            "linear-gradient(180deg, hsla(190,80%,92%,0.46), hsla(193,58%,70%,0.22))",
+          border: "1px solid hsla(190,55%,62%,0.58)",
+          boxShadow:
+            "inset 0 1px 8px hsla(190,100%,96%,0.55), 0 3px 8px rgba(45,75,82,0.14)",
+        }}
+      />
+      <div className="absolute -top-[3px] left-0 right-0 h-1.5 rounded-full bg-[linear-gradient(180deg,#f9ffff,#90aab0_65%,#5b7075)] shadow-[0_2px_4px_rgba(0,0,0,0.28)]" />
+      {[20, 50, 80].map((l) => (
+        <div
+          key={l}
+          className="absolute top-0 bottom-0 w-px bg-[linear-gradient(180deg,#ffffff,#86a3aa)]"
+          style={{ left: `${l}%` }}
+        />
+      ))}
+    </div>
     {/* Group of passengers standing side-by-side, centered under the rail */}
     <div className="absolute bottom-[14%] left-[20%] right-[12%] flex items-end justify-center gap-1">
       <ElevatorPassenger
@@ -114,9 +144,9 @@ const GlassElevatorTower = ({ side }: { side: "left" | "right" }) => (
     }`}
     aria-hidden="true"
   >
-    <FloorLanding top="29%" passenger={side === "left" ? "blue" : "rose"} />
-    <FloorLanding top="63%" passenger={side === "right" ? "rose" : "blue"} />
-    <FloorLanding top="98%" passenger="blue" />
+    <FloorLanding top="29%" side={side} passenger={side === "left" ? "blue" : "rose"} />
+    <FloorLanding top="63%" side={side} passenger={side === "right" ? "rose" : "blue"} />
+    <FloorLanding top="98%" side={side} passenger="blue" />
 
     <div className="absolute inset-y-0 left-0 w-[78%]" style={glassPaneStyle}>
       <div className="absolute inset-0 bg-[linear-gradient(115deg,transparent_0%,transparent_35%,rgba(255,255,255,0.56)_43%,transparent_53%,transparent_100%)]" />
