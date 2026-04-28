@@ -1,4 +1,4 @@
-import { Fragment } from "react";
+import { Fragment, type CSSProperties } from "react";
 import type { Floor } from "@/data/mallData";
 import StoreCard from "./StoreCard";
 import CenterFeature from "./CenterFeature";
@@ -110,6 +110,19 @@ const GlassGuardRail = () => (
         key={left}
         className="absolute top-0 bottom-0 w-px bg-[linear-gradient(180deg,#ffffff,#86a3aa)] shadow-[0_0_4px_rgba(255,255,255,0.6)]"
         style={{ left: `${left}%` }}
+      />
+    ))}
+    {/* Orange contact dots — top/bottom corners of the floor guard rail */}
+    {[
+      { left: "0%", top: "-4px" },
+      { left: "0%", bottom: "-4px" },
+      { right: "0%", top: "-4px" },
+      { right: "0%", bottom: "-4px" },
+    ].map((pos, i) => (
+      <div
+        key={`dot-${i}`}
+        className="absolute z-[96] h-2 w-2 rounded-full bg-orange-500 shadow-[0_0_6px_rgba(249,115,22,0.9)] ring-1 ring-white/80"
+        style={pos as CSSProperties}
       />
     ))}
   </div>
