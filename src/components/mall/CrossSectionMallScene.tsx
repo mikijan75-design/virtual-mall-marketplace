@@ -275,8 +275,6 @@ const CrossSectionMallScene = ({ floors }: CrossSectionMallSceneProps) => {
               {/* Per-floor signs */}
               {index === 0 && (
                 <>
-                  <InfoSign className="left-[18%] top-1/2 -translate-y-1/2" />
-                  <RestroomSign className="right-[14%] top-1/2 -translate-y-1/2" />
                   <Person className="left-[26%] bottom-9" />
                   <Person className="right-[28%] bottom-9" flip />
                   <Person className="left-[44%] bottom-9" shirt="hsl(15,55%,55%)" />
@@ -291,8 +289,6 @@ const CrossSectionMallScene = ({ floors }: CrossSectionMallSceneProps) => {
               )}
               {index === 2 && (
                 <>
-                  <InfoSign className="left-[10%] bottom-4" />
-                  <RestroomSign className="left-[12%] top-4" />
                   <Person className="left-[28%] bottom-9" shirt="hsl(205,55%,58%)" />
                   <Person className="right-[30%] bottom-9" shirt="hsl(205,55%,58%)" flip />
                   <Person className="left-[50%] bottom-9" shirt="hsl(332,35%,68%)" />
