@@ -92,32 +92,43 @@ const FloorLanding = ({
     ))}
     {/* Slight-slant connector railing — anchored to the elevator landing rail,
         extending toward the mall center on the inner side */}
-    <div
-      className={`absolute bottom-[8%] h-[38%] w-[20%] z-[94] ${
-        side === "left"
-          ? "left-[100%] origin-left -skew-y-[12deg]"
-          : "right-[100%] origin-right skew-y-[12deg]"
+    {/* Trapezoid SVG connector — outer corners (top + bottom) touch the elevator
+        landing rail; inner corners touch the floor's GlassGuardRail. The whole
+        SVG occupies exactly the elevator rail's vertical band and slants gently
+        downward by 20% of the band toward the inner (mall-center) side. */}
+    <svg
+      className={`absolute z-[94] ${
+        side === "left" ? "left-[100%]" : "right-[100%]"
       }`}
+      style={{ bottom: "8%", height: "38%", width: "26%" }}
+      viewBox="0 0 100 100"
+      preserveAspectRatio="none"
+      aria-hidden="true"
     >
-      <div
-        className="absolute inset-0 rounded-sm"
-        style={{
-          background:
-            "linear-gradient(180deg, hsla(190,80%,92%,0.46), hsla(193,58%,70%,0.22))",
-          border: "1px solid hsla(190,55%,62%,0.58)",
-          boxShadow:
-            "inset 0 1px 8px hsla(190,100%,96%,0.55), 0 3px 8px rgba(45,75,82,0.14)",
-        }}
-      />
-      <div className="absolute -top-[3px] left-0 right-0 h-1.5 rounded-full bg-[linear-gradient(180deg,#f9ffff,#90aab0_65%,#5b7075)] shadow-[0_2px_4px_rgba(0,0,0,0.28)]" />
-      {[20, 50, 80].map((l) => (
-        <div
-          key={l}
-          className="absolute top-0 bottom-0 w-px bg-[linear-gradient(180deg,#ffffff,#86a3aa)]"
-          style={{ left: `${l}%` }}
+      <g transform={side === "right" ? "translate(100 0) scale(-1 1)" : undefined}>
+        {/* Outer corners (left): y 0 (top), y 100 (bottom) — touching elevator rail.
+            Inner corners (right): y -8 (top), y 92 (bottom) — slight upward slant toward floor rail. */}
+        <polygon
+          points="0,0 0,100 100,92 100,-8"
+          fill="hsla(190,72%,84%,0.32)"
+          stroke="hsla(190,55%,62%,0.7)"
+          strokeWidth="1.2"
         />
-      ))}
-    </div>
+        {/* Top cap rail — connects elevator rail top corner to floor rail top corner */}
+        <line x1="0" y1="0" x2="100" y2="-8" stroke="#90aab0" strokeWidth="6" strokeLinecap="round" />
+        <line x1="0" y1="-1" x2="100" y2="-9" stroke="#f9ffff" strokeWidth="2" strokeLinecap="round" />
+        {/* Bottom edge — connects elevator rail bottom corner to floor rail bottom corner */}
+        <line x1="0" y1="100" x2="100" y2="92" stroke="#5b7075" strokeWidth="2" strokeLinecap="round" opacity="0.75" />
+        {/* Balusters */}
+        {[20, 45, 70, 90].map((p) => {
+          const yTop = 0 + (-8) * (p / 100);
+          const yBot = 100 + (-8) * (p / 100);
+          return (
+            <line key={p} x1={p} y1={yTop} x2={p} y2={yBot} stroke="#86a3aa" strokeWidth="1" opacity="0.9" />
+          );
+        })}
+      </g>
+    </svg>
     {/* Group of passengers standing side-by-side, centered under the rail */}
     <div className="absolute bottom-[14%] left-[20%] right-[12%] flex items-end justify-center gap-1">
       <ElevatorPassenger
