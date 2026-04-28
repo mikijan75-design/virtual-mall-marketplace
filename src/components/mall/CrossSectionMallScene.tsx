@@ -342,7 +342,7 @@ const SceneFloor = ({ floor }: { floor: Floor }) => (
     />
     <FloorLabel>{floor.name}</FloorLabel>
     <FloorLightSpots />
-    <GlassGuardRail />
+    {floor.id !== 1 && <GlassGuardRail />}
 
     <div className="relative z-30 mx-auto w-full max-w-5xl px-2 pb-16 pt-14 md:pt-16">
       <div className="grid grid-cols-3 gap-3 md:grid-cols-7 md:gap-4">
