@@ -624,10 +624,10 @@ const CrossSectionMallScene = ({ floors }: CrossSectionMallSceneProps) => {
                     <path d="M7 49 L12 49" stroke="hsl(30,18%,18%)" strokeWidth="1.8" strokeLinecap="round" />
                     <path d="M19 49 L24 49" stroke="hsl(30,18%,18%)" strokeWidth="1.8" strokeLinecap="round" />
                   </svg>
-                  {/* Two women with stroller coming from the right (flipped) */}
-                  <Person className="right-[16%] bottom-2" flip style="longHair" shirt="hsl(280,45%,55%)" hair="hsl(18,55%,22%)" bagColor="hsl(48,90%,62%)" />
-                  <Stroller className="right-[21%] bottom-2" flip />
-                  <Person className="right-[33%] bottom-2" flip style="longHair" shirt="hsl(170,40%,48%)" hair="hsl(35,60%,42%)" bagColor="hsl(0,0%,96%)" />
+                  {/* Two women walking together (toward the left). One pushes the stroller. */}
+                  <Stroller className="right-[14%] bottom-1" flip />
+                  <Person className="right-[22%] bottom-2" flip style="longHair" shirt="hsl(280,45%,55%)" hair="hsl(18,55%,22%)" bagColor="hsl(48,90%,62%)" />
+                  <Person className="right-[26%] bottom-2" flip style="longHair" shirt="hsl(170,40%,48%)" hair="hsl(35,60%,42%)" bagColor="hsl(0,0%,96%)" />
                 </>
               )}
             </div>
