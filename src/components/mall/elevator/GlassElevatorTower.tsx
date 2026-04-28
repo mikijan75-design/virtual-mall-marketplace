@@ -31,29 +31,82 @@ const ElevatorPassenger = ({
       style={{ transform: flip ? "scaleX(-1)" : undefined }}
       aria-hidden="true"
     >
+      {/* Long hair down the back of the head */}
       {isFemale && (
         <path
-          d="M8.5 8 Q7 18 8 28 L10 30 L10 14 Q10 7 14 6.5 Q18 7 18 14 L18 30 L20 28 Q21 18 19.5 8 Q17 4 14 4 Q11 4 8.5 8 Z"
-          fill={hair}
-          stroke="hsl(25,40%,15%)"
-          strokeWidth="0.6"
-        />
-      )}
-      <circle cx="14" cy="8" r="4.5" fill="hsl(30,46%,74%)" stroke="hsl(26,36%,42%)" strokeWidth="0.8" />
-      {style === "shortHair" && (
-        <path
-          d="M9.7 7.5 Q9 4 14 3.6 Q19 4 18.3 7.5 Q16 5.6 14 5.6 Q12 5.6 9.7 7.5 Z"
+          d="M13 4 Q8 4 8 9 Q7 14 8 19 Q7 25 9.5 30 L12 30 L12 12 Q12 8 14 7 Z"
           fill={hair}
           stroke="hsl(25,40%,15%)"
           strokeWidth="0.5"
         />
       )}
+
+      {/* Profile head (looking right) */}
+      <path
+        d="M10.5 8
+           Q10.5 3.8 14 3.8
+           Q18 3.8 18.2 7.6
+           Q18.4 9 18 10.2
+           L18.6 10.6
+           Q19.2 11 18.6 11.4
+           L17.8 11.6
+           Q18 12.2 17.4 12.4
+           L16.6 12.4
+           Q16.6 13 16.2 13.2
+           L14.6 13.2
+           Q13.4 13.2 12.4 12.4
+           Q10.6 11 10.5 8 Z"
+        fill="hsl(30,46%,74%)"
+        stroke="hsl(26,36%,42%)"
+        strokeWidth="0.7"
+      />
+
+      {/* Ear */}
+      <path
+        d="M12.4 8.6 Q11.6 8.6 11.7 9.6 Q11.8 10.4 12.6 10.5 Z"
+        fill="hsl(28,40%,64%)"
+        stroke="hsl(25,35%,42%)"
+        strokeWidth="0.4"
+      />
+      <path d="M12.1 9.5 Q12.4 9.6 12.4 10" stroke="hsl(25,35%,38%)" strokeWidth="0.3" fill="none" />
+
+      {/* Eye */}
+      <circle cx="16.4" cy="8.4" r="0.55" fill="hsl(220,25%,18%)" />
+      <path d="M15.7 8 Q16.4 7.6 17 8" stroke="hsl(25,40%,28%)" strokeWidth="0.35" fill="none" strokeLinecap="round" />
+
+      {/* Eyebrow */}
+      <path d="M15.6 7.3 Q16.4 7 17.1 7.3" stroke={hair} strokeWidth="0.55" fill="none" strokeLinecap="round" />
+
+      {/* Mouth */}
+      <path d="M16.6 11.4 Q17.2 11.6 17.6 11.3" stroke="hsl(0,45%,32%)" strokeWidth="0.4" fill="none" strokeLinecap="round" />
+
+      {/* Short hair cap */}
+      {style === "shortHair" && (
+        <path
+          d="M10.5 8 Q10.4 4 14 3.6 Q18 4 18.4 8 Q18 6 16 5.6 Q13 5.4 11.4 6.6 Q10.6 7.4 10.5 8 Z"
+          fill={hair}
+          stroke="hsl(25,40%,15%)"
+          strokeWidth="0.5"
+        />
+      )}
+
+      {/* Hat */}
       {style === "hat" && (
         <>
-          <ellipse cx="14" cy="6.6" rx="6.5" ry="1.2" fill="hsl(28,35%,22%)" stroke="hsl(25,40%,12%)" strokeWidth="0.5" />
-          <path d="M10.5 6.6 Q10.5 2.4 14 2.2 Q17.5 2.4 17.5 6.6 Z" fill="hsl(28,35%,22%)" stroke="hsl(25,40%,12%)" strokeWidth="0.5" />
-          <rect x="10.5" y="5.6" width="7" height="1" fill="hsl(43,55%,45%)" opacity="0.85" />
+          <ellipse cx="14" cy="6.4" rx="6" ry="1.1" fill="hsl(28,35%,22%)" stroke="hsl(25,40%,12%)" strokeWidth="0.5" />
+          <path d="M11 6.4 Q11 2.8 14 2.6 Q17 2.8 17 6.4 Z" fill="hsl(28,35%,22%)" stroke="hsl(25,40%,12%)" strokeWidth="0.5" />
+          <rect x="11" y="5.6" width="6" height="0.9" fill="hsl(43,55%,45%)" opacity="0.85" />
         </>
+      )}
+
+      {/* Female top-of-head hair cap */}
+      {isFemale && (
+        <path
+          d="M10.6 7.6 Q10.5 4 14 3.8 Q17.6 4 18 7 Q17 5.6 14.6 5.6 Q11.8 5.6 10.6 7.6 Z"
+          fill={hair}
+          stroke="hsl(25,40%,15%)"
+          strokeWidth="0.4"
+        />
       )}
       {isFemale ? (
         <path d="M10 13 L18 13 L22 32 L6 32 Z" fill={shirt} stroke="hsl(204,35%,30%)" strokeWidth="0.8" />
