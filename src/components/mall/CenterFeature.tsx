@@ -447,7 +447,7 @@ const CenterFeature = ({ floorId }: CenterFeatureProps) => {
             </>
           )}
 
-          {floorId === 1 && (
+          {isBalcony && (
             <>
               {/* Modern ceiling dome with neon LED frame casting light downward */}
               <div
