@@ -117,6 +117,7 @@ const ElevatorCabin = ({
       <ElevatorPassenger
         className="bottom-[5%] left-1/2 h-10 w-5 -translate-x-1/2 md:h-12 md:w-6"
         shirt="hsl(199,42%,60%)"
+        style="hat"
       />
     )}
   </div>
