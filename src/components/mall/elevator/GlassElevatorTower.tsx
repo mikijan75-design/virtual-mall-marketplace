@@ -114,9 +114,9 @@ const GlassElevatorTower = ({ side }: { side: "left" | "right" }) => (
     }`}
     aria-hidden="true"
   >
-    <FloorLanding top="20%" passenger={side === "left" ? "blue" : "rose"} />
-    <FloorLanding top="54%" passenger={side === "right" ? "rose" : "blue"} />
-    <FloorLanding top="89%" passenger="blue" />
+    <FloorLanding top="29%" passenger={side === "left" ? "blue" : "rose"} />
+    <FloorLanding top="63%" passenger={side === "right" ? "rose" : "blue"} />
+    <FloorLanding top="98%" passenger="blue" />
 
     <div className="absolute inset-y-0 left-0 w-[78%]" style={glassPaneStyle}>
       <div className="absolute inset-0 bg-[linear-gradient(115deg,transparent_0%,transparent_35%,rgba(255,255,255,0.56)_43%,transparent_53%,transparent_100%)]" />
