@@ -125,11 +125,6 @@ const GlassGuardRail = () => (
         style={pos as CSSProperties}
       />
     ))}
-    {/* Orange line connecting the two top dots of the floor guard rail */}
-    <div
-      className="absolute z-[96] h-0.5 bg-orange-500 shadow-[0_0_6px_rgba(249,115,22,0.9)]"
-      style={{ left: "13.3%", right: "13.3%", top: "-3px" }}
-    />
   </div>
 );
 
