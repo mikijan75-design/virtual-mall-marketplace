@@ -14,9 +14,9 @@ const CenterFeature = ({ floorId }: CenterFeatureProps) => {
     floorId === 3 ? "כניסה" : floorId === 2 ? "תחנת מידע" : "מרפסת";
   const subtitle =
     floorId === 3 ? "מיי" : floorId === 2 ? "שירות ומידע" : "תצפית";
-  const isEntrance = floorId === 3;
+  const isEntrance = floorId === 1;
   const isInfo = floorId === 2;
-  const isBalcony = floorId === 1;
+  const isBalcony = floorId === 3;
   const noFrame = isEntrance || isInfo || isBalcony;
 
   return (
@@ -158,7 +158,7 @@ const CenterFeature = ({ floorId }: CenterFeatureProps) => {
           />
 
           {/* === Floor-specific scene between the columns === */}
-          {floorId === 3 && (
+          {isEntrance && (
             <>
               {/* Doorway with arched stone frame (voussoirs) + depth */}
               <svg
