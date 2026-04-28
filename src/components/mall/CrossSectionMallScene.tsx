@@ -170,6 +170,46 @@ const Person = ({
 };
 
 
+const Stroller = ({ className = "", flip = false }: { className?: string; flip?: boolean }) => (
+  <svg
+    className={`absolute z-40 h-12 w-14 md:h-16 md:w-20 ${className}`}
+    viewBox="0 0 60 60"
+    style={{ transform: flip ? "scaleX(-1)" : undefined }}
+    aria-hidden="true"
+  >
+    {/* Handle */}
+    <path d="M6 18 Q4 16 6 14 L14 14" stroke="hsl(220,18%,28%)" strokeWidth="2" fill="none" strokeLinecap="round" />
+    {/* Frame down to wheels */}
+    <path d="M14 14 L40 14 L46 42" stroke="hsl(220,18%,28%)" strokeWidth="2" fill="none" strokeLinecap="round" />
+    <path d="M14 14 L18 42" stroke="hsl(220,18%,28%)" strokeWidth="2" fill="none" strokeLinecap="round" />
+    {/* Bassinet body */}
+    <path
+      d="M14 14 Q14 30 22 32 L40 32 Q46 30 44 16 Q44 12 40 14 Z"
+      fill="hsl(345,45%,58%)"
+      stroke="hsl(345,40%,30%)"
+      strokeWidth="0.7"
+    />
+    {/* Canopy / sun shade */}
+    <path
+      d="M22 14 Q22 4 36 6 Q44 8 42 16"
+      fill="hsl(195,55%,55%)"
+      stroke="hsl(195,40%,28%)"
+      strokeWidth="0.7"
+    />
+    {/* Baby head peeking */}
+    <circle cx="32" cy="20" r="3.4" fill="hsl(31,52%,80%)" stroke="hsl(25,35%,45%)" strokeWidth="0.5" />
+    <circle cx="33.4" cy="20" r="0.5" fill="hsl(220,25%,18%)" />
+    <path d="M32.6 21.4 Q33.2 21.6 33.8 21.3" stroke="hsl(0,45%,32%)" strokeWidth="0.3" fill="none" strokeLinecap="round" />
+    {/* Tiny tuft of hair */}
+    <path d="M30.4 18.4 Q31.4 17.4 32.6 17.6" stroke="hsl(28,40%,28%)" strokeWidth="0.55" fill="none" strokeLinecap="round" />
+    {/* Wheels */}
+    <circle cx="18" cy="46" r="5" fill="hsl(220,15%,18%)" stroke="hsl(220,12%,8%)" strokeWidth="0.6" />
+    <circle cx="18" cy="46" r="1.4" fill="hsl(0,0%,72%)" />
+    <circle cx="46" cy="46" r="5" fill="hsl(220,15%,18%)" stroke="hsl(220,12%,8%)" strokeWidth="0.6" />
+    <circle cx="46" cy="46" r="1.4" fill="hsl(0,0%,72%)" />
+  </svg>
+);
+
 const InfoSign = ({ className = "" }: { className?: string }) => (
   <div
     className={`absolute z-30 flex h-10 w-10 items-center justify-center rounded-md border text-xl font-black text-white shadow-lg ${className}`}
