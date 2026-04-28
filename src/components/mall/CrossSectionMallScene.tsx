@@ -20,14 +20,21 @@ const Person = ({
   flip = false,
   style = "shortHair",
   hair = "hsl(28,35%,22%)",
+  bagColor,
 }: {
   className?: string;
   shirt?: string;
   flip?: boolean;
   style?: PersonStyle;
   hair?: string;
+  bagColor?: string;
 }) => {
   const isFemale = style === "longHair";
+  // Women always carry a shopping bag; men only when style === "bag"
+  const showBag = style === "bag" || isFemale;
+  const resolvedBagColor =
+    bagColor ?? (isFemale ? "hsl(0,0%,96%)" : "hsl(345,55%,45%)");
+  const bagStroke = isFemale ? "hsl(0,0%,55%)" : "hsl(345,40%,25%)";
   return (
     <svg
       className={`absolute z-40 h-12 w-7 md:h-16 md:w-9 ${className}`}
@@ -151,11 +158,11 @@ const Person = ({
       )}
 
       {/* Shopping bag (right hand) */}
-      {style === "bag" && (
+      {showBag && (
         <>
           <path d="M22.5 28 Q25 26 27.5 28" stroke="hsl(0,0%,15%)" strokeWidth="0.8" fill="none" />
-          <rect x="22" y="28" width="6" height="8" fill="hsl(345,55%,45%)" stroke="hsl(345,40%,25%)" strokeWidth="0.6" />
-          <rect x="23" y="30" width="4" height="0.6" fill="hsl(43,70%,75%)" opacity="0.85" />
+          <rect x="22" y="28" width="6" height="8" fill={resolvedBagColor} stroke={bagStroke} strokeWidth="0.6" />
+          <rect x="23" y="30" width="4" height="0.6" fill="hsl(43,70%,55%)" opacity="0.7" />
         </>
       )}
     </svg>
