@@ -217,6 +217,7 @@ const FloorLanding = ({
         shirt={passenger === "rose" ? "hsl(344,39%,66%)" : "hsl(213,48%,58%)"}
         style="longHair"
         hair="hsl(28,55%,30%)"
+        bagColor={side === "left" ? "hsl(0,0%,96%)" : "hsl(48,90%,62%)"}
       />
       <ElevatorPassenger
         className="relative h-11 w-6 md:h-14 md:w-7"
