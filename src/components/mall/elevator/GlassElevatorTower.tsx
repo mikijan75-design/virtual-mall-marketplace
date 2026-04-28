@@ -88,24 +88,6 @@ const FloorLanding = ({
     <div className="absolute z-[97] h-2 w-2 -translate-x-1/2 translate-y-1/2 rounded-full bg-orange-500 shadow-[0_0_6px_rgba(249,115,22,0.9)] ring-1 ring-white/80" style={{ left: "8%", bottom: "8%" }} />
     <div className="absolute z-[97] h-2 w-2 translate-x-1/2 translate-y-1/2 rounded-full bg-orange-500 shadow-[0_0_6px_rgba(249,115,22,0.9)] ring-1 ring-white/80" style={{ right: "4%", bottom: "44%" }} />
     <div className="absolute z-[97] h-2 w-2 translate-x-1/2 translate-y-1/2 rounded-full bg-orange-500 shadow-[0_0_6px_rgba(249,115,22,0.9)] ring-1 ring-white/80" style={{ right: "4%", bottom: "8%" }} />
-    {/* Diagonal orange connector lines — top dots and bottom dots between
-        the elevator landing rail and the nearest floor guard rail */}
-    <svg
-      className={`absolute z-[96] pointer-events-none ${
-        side === "left" ? "left-[100%]" : "right-[100%]"
-      }`}
-      style={{ bottom: "8%", height: "38%", width: "26%" }}
-      viewBox="0 0 100 100"
-      preserveAspectRatio="none"
-      aria-hidden="true"
-    >
-      <g transform={side === "right" ? "translate(100 0) scale(-1 1)" : undefined}>
-        {/* Top diagonal: from elevator top-inner dot (0,0) to floor top dot (100,-8) */}
-        <line x1="0" y1="0" x2="100" y2="-8" stroke="#f97316" strokeWidth="1.5" strokeLinecap="round" vectorEffect="non-scaling-stroke" />
-        {/* Bottom diagonal: from elevator bottom-inner dot (0,100) to floor bottom dot (100,92) */}
-        <line x1="0" y1="100" x2="100" y2="92" stroke="#f97316" strokeWidth="1.5" strokeLinecap="round" vectorEffect="non-scaling-stroke" />
-      </g>
-    </svg>
     {[18, 42, 66, 88].map((left) => (
       <div
         key={left}
