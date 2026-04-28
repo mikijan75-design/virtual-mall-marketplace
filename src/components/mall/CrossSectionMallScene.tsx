@@ -122,7 +122,7 @@ const GlassGuardRail = () => (
       <div
         key={`dot-${i}`}
         className="absolute z-[96] h-2 w-2 rounded-full bg-orange-500 shadow-[0_0_6px_rgba(249,115,22,0.9)] ring-1 ring-white/80"
-        style={pos as React.CSSProperties}
+        style={pos as CSSProperties}
       />
     ))}
   </div>
