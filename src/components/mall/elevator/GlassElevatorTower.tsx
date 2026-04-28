@@ -72,7 +72,7 @@ const FloorLanding = ({
   <div className="absolute left-[-48%] right-[-72%] z-30 h-[9%]" style={{ top }}>
     <div className="absolute bottom-0 left-0 right-0 h-[28%] bg-[linear-gradient(180deg,#e9ddc6,#c5ae83)] shadow-[0_3px_8px_rgba(70,50,25,0.18)]" />
     <div
-      className="absolute left-[8%] right-[4%] bottom-[28%] h-[18%] rounded-sm z-[95]"
+      className="absolute left-[8%] right-[4%] bottom-[8%] h-[38%] rounded-sm z-[95]"
       style={{
         background:
           "linear-gradient(180deg, hsla(190,80%,91%,0.48), hsla(195,58%,70%,0.24))",
@@ -84,7 +84,7 @@ const FloorLanding = ({
     {[18, 42, 66, 88].map((left) => (
       <div
         key={left}
-        className="absolute bottom-[28%] h-[18%] w-px bg-[linear-gradient(180deg,#ffffff,#77969d)] z-[95]"
+        className="absolute bottom-[8%] h-[38%] w-px bg-[linear-gradient(180deg,#ffffff,#77969d)] z-[95]"
         style={{ left: `${left}%` }}
       />
     ))}
