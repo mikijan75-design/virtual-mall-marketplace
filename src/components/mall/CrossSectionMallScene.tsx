@@ -1,4 +1,4 @@
-import { Fragment } from "react";
+import { Fragment, type CSSProperties } from "react";
 import type { Floor } from "@/data/mallData";
 import StoreCard from "./StoreCard";
 import CenterFeature from "./CenterFeature";
