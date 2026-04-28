@@ -12,31 +12,109 @@ interface CrossSectionMallSceneProps {
   floors: Floor[];
 }
 
+type PersonStyle = "longHair" | "shortHair" | "hat" | "cane" | "bag" | "plain";
+
 const Person = ({
   className = "",
   shirt = "hsl(203,45%,62%)",
   flip = false,
+  style = "shortHair",
+  hair = "hsl(28,35%,22%)",
 }: {
   className?: string;
   shirt?: string;
   flip?: boolean;
-}) => (
-  <svg
-    className={`absolute z-40 h-12 w-7 md:h-16 md:w-9 ${className}`}
-    viewBox="0 0 30 60"
-    style={{ transform: flip ? "scaleX(-1)" : undefined }}
-    aria-hidden="true"
-  >
-    <circle cx="15" cy="8" r="4.5" fill="hsl(31,45%,72%)" stroke="hsl(25,35%,42%)" strokeWidth="0.8" />
-    <path d="M11 13 L19 13 L21 31 L9 31 Z" fill={shirt} stroke="hsl(205,35%,32%)" strokeWidth="0.8" />
-    <path d="M11 16 L5 27" stroke="hsl(205,35%,32%)" strokeWidth="2" strokeLinecap="round" />
-    <path d="M19 16 L25 27" stroke="hsl(205,35%,32%)" strokeWidth="2" strokeLinecap="round" />
-    <path d="M12 31 L7 51" stroke="hsl(215,25%,38%)" strokeWidth="2.4" strokeLinecap="round" />
-    <path d="M18 31 L23 51" stroke="hsl(215,25%,38%)" strokeWidth="2.4" strokeLinecap="round" />
-    <path d="M5 52 L11 52" stroke="hsl(30,18%,18%)" strokeWidth="2" strokeLinecap="round" />
-    <path d="M21 52 L27 52" stroke="hsl(30,18%,18%)" strokeWidth="2" strokeLinecap="round" />
-  </svg>
-);
+  style?: PersonStyle;
+  hair?: string;
+}) => {
+  const isFemale = style === "longHair";
+  return (
+    <svg
+      className={`absolute z-40 h-12 w-7 md:h-16 md:w-9 ${className}`}
+      viewBox="0 0 30 60"
+      style={{ transform: flip ? "scaleX(-1)" : undefined }}
+      aria-hidden="true"
+    >
+      {/* Long hair behind head — drawn first so face overlays */}
+      {isFemale && (
+        <path
+          d="M9.5 8 Q8 18 9 28 L11 30 L11 14 Q11 7 15 6.5 Q19 7 19 14 L19 30 L21 28 Q22 18 20.5 8 Q18 4 15 4 Q12 4 9.5 8 Z"
+          fill={hair}
+          stroke="hsl(25,40%,15%)"
+          strokeWidth="0.6"
+        />
+      )}
+
+      {/* Head */}
+      <circle cx="15" cy="8" r="4.5" fill="hsl(31,45%,72%)" stroke="hsl(25,35%,42%)" strokeWidth="0.8" />
+
+      {/* Short hair cap */}
+      {style === "shortHair" && (
+        <path
+          d="M10.7 7.5 Q10 4 15 3.6 Q20 4 19.3 7.5 Q17 5.6 15 5.6 Q13 5.6 10.7 7.5 Z"
+          fill={hair}
+          stroke="hsl(25,40%,15%)"
+          strokeWidth="0.5"
+        />
+      )}
+
+      {/* Hat (fedora-ish) */}
+      {style === "hat" && (
+        <>
+          <ellipse cx="15" cy="6.6" rx="6.5" ry="1.2" fill="hsl(28,35%,22%)" stroke="hsl(25,40%,12%)" strokeWidth="0.5" />
+          <path d="M11.5 6.6 Q11.5 2.4 15 2.2 Q18.5 2.4 18.5 6.6 Z" fill="hsl(28,35%,22%)" stroke="hsl(25,40%,12%)" strokeWidth="0.5" />
+          <rect x="11.5" y="5.6" width="7" height="1" fill="hsl(43,55%,45%)" opacity="0.85" />
+        </>
+      )}
+
+      {/* Body / shirt — flared bottom for female silhouette (skirt) */}
+      {isFemale ? (
+        <path d="M11 13 L19 13 L23 32 L7 32 Z" fill={shirt} stroke="hsl(205,35%,32%)" strokeWidth="0.8" />
+      ) : (
+        <path d="M11 13 L19 13 L21 31 L9 31 Z" fill={shirt} stroke="hsl(205,35%,32%)" strokeWidth="0.8" />
+      )}
+
+      {/* Arms */}
+      <path d="M11 16 L5 27" stroke="hsl(205,35%,32%)" strokeWidth="2" strokeLinecap="round" />
+      <path d="M19 16 L25 27" stroke="hsl(205,35%,32%)" strokeWidth="2" strokeLinecap="round" />
+
+      {/* Legs (or skirt bottom for female) */}
+      {isFemale ? (
+        <>
+          <path d="M12 32 L9 51" stroke="hsl(215,25%,38%)" strokeWidth="2.2" strokeLinecap="round" />
+          <path d="M18 32 L21 51" stroke="hsl(215,25%,38%)" strokeWidth="2.2" strokeLinecap="round" />
+        </>
+      ) : (
+        <>
+          <path d="M12 31 L7 51" stroke="hsl(215,25%,38%)" strokeWidth="2.4" strokeLinecap="round" />
+          <path d="M18 31 L23 51" stroke="hsl(215,25%,38%)" strokeWidth="2.4" strokeLinecap="round" />
+        </>
+      )}
+
+      {/* Feet */}
+      <path d="M5 52 L11 52" stroke="hsl(30,18%,18%)" strokeWidth="2" strokeLinecap="round" />
+      <path d="M21 52 L27 52" stroke="hsl(30,18%,18%)" strokeWidth="2" strokeLinecap="round" />
+
+      {/* Walking cane (right hand) */}
+      {style === "cane" && (
+        <>
+          <path d="M25 27 L27 53" stroke="hsl(28,55%,32%)" strokeWidth="1.4" strokeLinecap="round" />
+          <path d="M25 27 Q26.5 25.5 27.5 27.5" stroke="hsl(28,55%,32%)" strokeWidth="1.4" fill="none" strokeLinecap="round" />
+        </>
+      )}
+
+      {/* Shopping bag (right hand) */}
+      {style === "bag" && (
+        <>
+          <path d="M22.5 28 Q25 26 27.5 28" stroke="hsl(0,0%,15%)" strokeWidth="0.8" fill="none" />
+          <rect x="22" y="28" width="6" height="8" fill="hsl(345,55%,45%)" stroke="hsl(345,40%,25%)" strokeWidth="0.6" />
+          <rect x="23" y="30" width="4" height="0.6" fill="hsl(43,70%,75%)" opacity="0.85" />
+        </>
+      )}
+    </svg>
+  );
+};
+
 
 const InfoSign = ({ className = "" }: { className?: string }) => (
   <div
@@ -275,23 +353,23 @@ const CrossSectionMallScene = ({ floors }: CrossSectionMallSceneProps) => {
               {/* Per-floor signs */}
               {index === 0 && (
                 <>
-                  <Person className="left-[26%] bottom-9" />
-                  <Person className="right-[28%] bottom-9" flip />
-                  <Person className="left-[44%] bottom-9" shirt="hsl(15,55%,55%)" />
+                  <Person className="left-[26%] bottom-9" style="longHair" shirt="hsl(345,55%,58%)" hair="hsl(28,55%,30%)" />
+                  <Person className="right-[28%] bottom-9" flip style="hat" shirt="hsl(215,35%,38%)" />
+                  <Person className="left-[44%] bottom-9" shirt="hsl(15,55%,55%)" style="bag" />
                 </>
               )}
               {index === 1 && (
                 <>
-                  <Person className="left-[22%] bottom-9" shirt="hsl(213,48%,58%)" />
-                  <Person className="right-[24%] bottom-9" shirt="hsl(192,45%,62%)" flip />
-                  <Person className="left-[48%] bottom-9" shirt="hsl(45,60%,55%)" />
+                  <Person className="left-[22%] bottom-9" shirt="hsl(213,48%,58%)" style="shortHair" />
+                  <Person className="right-[24%] bottom-9" shirt="hsl(192,45%,62%)" flip style="cane" hair="hsl(0,0%,82%)" />
+                  <Person className="left-[48%] bottom-9" shirt="hsl(280,40%,58%)" style="longHair" hair="hsl(38,65%,55%)" />
                 </>
               )}
               {index === 2 && (
                 <>
-                  <Person className="left-[28%] bottom-9" shirt="hsl(205,55%,58%)" />
-                  <Person className="right-[30%] bottom-9" shirt="hsl(205,55%,58%)" flip />
-                  <Person className="left-[50%] bottom-9" shirt="hsl(332,35%,68%)" />
+                  <Person className="left-[28%] bottom-9" shirt="hsl(205,55%,58%)" style="hat" />
+                  <Person className="right-[30%] bottom-9" shirt="hsl(155,40%,50%)" flip style="bag" />
+                  <Person className="left-[50%] bottom-9" shirt="hsl(332,55%,62%)" style="longHair" hair="hsl(20,45%,18%)" />
                 </>
               )}
             </div>
