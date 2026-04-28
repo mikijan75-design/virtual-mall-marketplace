@@ -1,3 +1,5 @@
+import type { CSSProperties } from "react";
+
 const glassPaneStyle = {
   background:
     "linear-gradient(120deg, hsla(188,72%,88%,0.42), hsla(190,54%,74%,0.18) 48%, hsla(184,75%,95%,0.5))",
