@@ -654,7 +654,7 @@ const CrossSectionMallScene = ({ floors }: CrossSectionMallSceneProps) => {
           ))}
         </div>
 
-        <div className="relative z-10 left-0 right-0 translate-y-[33px]">
+        <div className="relative z-10 left-0 right-0 -translate-y-2">
           <Decorations />
         </div>
       </div>
