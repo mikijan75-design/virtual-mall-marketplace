@@ -171,183 +171,204 @@ const Person = ({
 
 
 const Stroller = ({ className = "", flip = false }: { className?: string; flip?: boolean }) => (
+  // Designed in default orientation: handle on the RIGHT side, stroller faces LEFT.
+  // When flip=true, handle ends up on the LEFT side and stroller faces RIGHT.
   <svg
-    className={`absolute z-40 h-12 w-16 md:h-16 md:w-24 ${className}`}
-    viewBox="0 0 80 60"
-    style={{ transform: flip ? "scaleX(-1)" : undefined }}
+    className={`absolute z-40 h-14 w-20 md:h-20 md:w-28 ${className}`}
+    viewBox="0 0 100 70"
+    style={{ transform: flip ? "scaleX(-1)" : undefined, overflow: "visible" }}
     aria-hidden="true"
   >
     <defs>
       <linearGradient id="bassinetGrad" x1="0" y1="0" x2="0" y2="1">
-        <stop offset="0%" stopColor="hsl(345,55%,68%)" />
-        <stop offset="55%" stopColor="hsl(345,55%,55%)" />
-        <stop offset="100%" stopColor="hsl(345,55%,38%)" />
+        <stop offset="0%" stopColor="hsl(345,60%,72%)" />
+        <stop offset="55%" stopColor="hsl(345,58%,52%)" />
+        <stop offset="100%" stopColor="hsl(345,55%,32%)" />
       </linearGradient>
       <linearGradient id="canopyGrad" x1="0" y1="0" x2="0" y2="1">
-        <stop offset="0%" stopColor="hsl(200,65%,68%)" />
-        <stop offset="100%" stopColor="hsl(205,55%,42%)" />
+        <stop offset="0%" stopColor="hsl(200,70%,72%)" />
+        <stop offset="100%" stopColor="hsl(205,60%,38%)" />
       </linearGradient>
       <linearGradient id="frameGrad" x1="0" y1="0" x2="0" y2="1">
-        <stop offset="0%" stopColor="hsl(0,0%,82%)" />
-        <stop offset="60%" stopColor="hsl(220,8%,38%)" />
-        <stop offset="100%" stopColor="hsl(220,12%,18%)" />
+        <stop offset="0%" stopColor="hsl(0,0%,92%)" />
+        <stop offset="50%" stopColor="hsl(220,8%,55%)" />
+        <stop offset="100%" stopColor="hsl(220,12%,22%)" />
       </linearGradient>
-      <radialGradient id="wheelGrad" cx="40%" cy="40%" r="60%">
-        <stop offset="0%" stopColor="hsl(220,8%,32%)" />
-        <stop offset="100%" stopColor="hsl(220,15%,10%)" />
+      <radialGradient id="wheelGrad" cx="38%" cy="38%" r="65%">
+        <stop offset="0%" stopColor="hsl(220,10%,38%)" />
+        <stop offset="100%" stopColor="hsl(220,18%,8%)" />
       </radialGradient>
+      <linearGradient id="blanketGrad" x1="0" y1="0" x2="0" y2="1">
+        <stop offset="0%" stopColor="hsl(48,85%,94%)" />
+        <stop offset="100%" stopColor="hsl(45,55%,78%)" />
+      </linearGradient>
     </defs>
 
-    {/* === Frame === */}
-    {/* Curved chrome handle (extends out the back) */}
+    {/* ===== FRAME ===== */}
+    {/* Long elegant chrome handle on the RIGHT, sweeping up and over */}
     <path
-      d="M6 24 Q3 18 6 16 Q10 14 14 16 L20 18"
+      d="M86 36 Q94 30 92 22 Q90 16 84 16 L78 16"
       stroke="url(#frameGrad)"
-      strokeWidth="2.4"
+      strokeWidth="2.6"
       fill="none"
       strokeLinecap="round"
     />
-    {/* Handle grip wrap */}
-    <path d="M5 22 Q4 19 6 17" stroke="hsl(28,55%,32%)" strokeWidth="3.2" fill="none" strokeLinecap="round" />
-    <path d="M5 22 Q4 19 6 17" stroke="hsl(28,30%,18%)" strokeWidth="0.6" fill="none" strokeLinecap="round" strokeDasharray="0.8 1.2" />
+    {/* Leather handle grip */}
+    <path d="M84 17 L78 17" stroke="hsl(28,55%,28%)" strokeWidth="3.6" strokeLinecap="round" />
+    <path d="M84 17 L78 17" stroke="hsl(28,30%,14%)" strokeWidth="0.7" strokeLinecap="round" strokeDasharray="0.9 1.4" />
 
-    {/* Front diagonal frame to front wheel */}
-    <path d="M62 22 L70 48" stroke="url(#frameGrad)" strokeWidth="2.4" fill="none" strokeLinecap="round" />
-    {/* Rear diagonal frame to rear wheel */}
-    <path d="M22 22 L18 48" stroke="url(#frameGrad)" strokeWidth="2.4" fill="none" strokeLinecap="round" />
-    {/* Lower cross bar */}
-    <path d="M20 38 L66 38" stroke="url(#frameGrad)" strokeWidth="1.6" fill="none" strokeLinecap="round" />
-    {/* Brake lever near rear wheel */}
-    <path d="M22 44 L26 44" stroke="hsl(0,55%,42%)" strokeWidth="1.4" strokeLinecap="round" />
+    {/* Diagonal struts down to wheels */}
+    <path d="M78 30 L20 56" stroke="url(#frameGrad)" strokeWidth="2.4" fill="none" strokeLinecap="round" />
+    <path d="M30 30 L74 56" stroke="url(#frameGrad)" strokeWidth="2.4" fill="none" strokeLinecap="round" />
+    {/* Suspension axle bar */}
+    <path d="M22 54 L74 54" stroke="hsl(220,12%,28%)" strokeWidth="1.2" fill="none" strokeLinecap="round" />
 
-    {/* === Bassinet body — elegant rounded carriage === */}
+    {/* ===== BASSINET — elegant carriage shape ===== */}
     <path
-      d="M18 26
-         Q18 16 30 14
-         L58 14
-         Q70 16 66 28
-         Q64 34 56 36
-         L28 36
-         Q20 35 18 26 Z"
+      d="M22 36
+         Q22 22 38 20
+         L70 20
+         Q86 22 80 38
+         Q76 44 66 44
+         L34 44
+         Q24 43 22 36 Z"
       fill="url(#bassinetGrad)"
-      stroke="hsl(345,55%,28%)"
+      stroke="hsl(345,55%,22%)"
       strokeWidth="0.9"
     />
-    {/* Decorative gold trim around the rim */}
+    {/* Highlight ribbon */}
     <path
-      d="M19 24 Q19 17 30 15.5 L58 15.5 Q68 17 65 26"
-      stroke="hsl(43,75%,62%)"
-      strokeWidth="1.1"
+      d="M26 30 Q40 26 70 28 Q78 30 78 34"
+      stroke="hsl(345,80%,88%)"
+      strokeWidth="0.9"
+      fill="none"
+      strokeLinecap="round"
+      opacity="0.7"
+    />
+    {/* Gold trim along the rim */}
+    <path
+      d="M23 32 Q24 23 38 21.5 L70 21.5 Q82 23 79 33"
+      stroke="hsl(43,80%,62%)"
+      strokeWidth="1.2"
       fill="none"
       strokeLinecap="round"
     />
-    {/* Subtle quilted stitching */}
-    <path d="M28 22 L32 28 M36 21 L40 27 M44 21 L48 27 M52 21 L56 27" stroke="hsl(345,55%,30%)" strokeWidth="0.35" opacity="0.6" />
-    {/* Tiny gold star emblem on side */}
-    <circle cx="46" cy="30" r="1.4" fill="hsl(43,80%,68%)" stroke="hsl(43,55%,32%)" strokeWidth="0.3" />
+    {/* Quilted stitching diamonds */}
+    <g stroke="hsl(345,55%,28%)" strokeWidth="0.35" opacity="0.55" fill="none">
+      <path d="M32 28 L36 34 M40 27 L44 33 M48 27 L52 33 M56 27 L60 33 M64 28 L68 34" />
+      <path d="M36 28 L32 34 M44 27 L40 33 M52 27 L48 33 M60 27 L56 33 M68 28 L64 34" />
+    </g>
+    {/* Gold emblem */}
+    <circle cx="51" cy="38" r="1.8" fill="hsl(43,85%,68%)" stroke="hsl(43,55%,30%)" strokeWidth="0.35" />
+    <circle cx="51" cy="38" r="0.7" fill="hsl(43,55%,32%)" />
 
-    {/* === Canopy — domed sunshade with scalloped edge === */}
+    {/* ===== CANOPY ===== */}
     <path
-      d="M30 14
-         Q26 -2 50 0
-         Q66 2 62 16"
+      d="M34 20
+         Q28 2 54 2
+         Q72 4 68 22"
       fill="url(#canopyGrad)"
-      stroke="hsl(205,55%,22%)"
+      stroke="hsl(205,55%,18%)"
       strokeWidth="0.9"
     />
-    {/* Canopy ribs */}
-    <path d="M34 11 Q40 4 48 2" stroke="hsl(205,55%,28%)" strokeWidth="0.45" fill="none" />
-    <path d="M40 8 Q48 2 56 4" stroke="hsl(205,55%,28%)" strokeWidth="0.45" fill="none" />
-    {/* Scalloped fringe under canopy */}
+    <path d="M38 16 Q46 6 54 4" stroke="hsl(205,55%,24%)" strokeWidth="0.45" fill="none" />
+    <path d="M46 10 Q54 4 62 6" stroke="hsl(205,55%,24%)" strokeWidth="0.45" fill="none" />
+    {/* Scalloped fringe */}
     <path
-      d="M30 14 Q33 17 36 14 Q39 17 42 14 Q45 17 48 14 Q51 17 54 14 Q57 17 60 14 Q61 15 62 16"
-      fill="hsl(43,75%,62%)"
-      stroke="hsl(43,55%,32%)"
+      d="M34 20 Q37 23 40 20 Q43 23 46 20 Q49 23 52 20 Q55 23 58 20 Q61 23 64 20 Q66 21 68 22"
+      fill="hsl(43,80%,62%)"
+      stroke="hsl(43,55%,28%)"
       strokeWidth="0.4"
     />
-    {/* Bow on top of canopy */}
-    <path d="M44 -1 Q46 -3 48 -1 Q50 -3 52 -1 Q50 1 48 -1 Q46 1 44 -1 Z" fill="hsl(43,80%,68%)" stroke="hsl(43,55%,32%)" strokeWidth="0.35" />
-    <circle cx="48" cy="0" r="0.7" fill="hsl(43,55%,38%)" />
+    {/* Bow on top */}
+    <path d="M48 1 Q50 -2 52 1 Q54 -2 56 1 Q54 3 52 1 Q50 3 48 1 Z" fill="hsl(43,85%,70%)" stroke="hsl(43,55%,30%)" strokeWidth="0.35" />
+    <circle cx="52" cy="1" r="0.8" fill="hsl(43,55%,32%)" />
 
-    {/* === Baby peeking out (profile, sleepy/content) === */}
-    {/* Soft blanket tucked over the front */}
+    {/* ===== BABY peeking out ===== */}
+    {/* Soft blanket */}
     <path
-      d="M30 22 Q40 18 56 22 Q60 24 60 28 Q56 30 50 30 L34 30 Q30 28 30 22 Z"
-      fill="hsl(48,75%,90%)"
-      stroke="hsl(45,40%,55%)"
+      d="M34 30 Q46 26 66 30 Q70 32 70 36 Q64 38 56 38 L38 38 Q34 36 34 30 Z"
+      fill="url(#blanketGrad)"
+      stroke="hsl(45,40%,52%)"
       strokeWidth="0.4"
     />
-    {/* Blanket pattern dots */}
-    <circle cx="38" cy="25" r="0.5" fill="hsl(345,55%,55%)" opacity="0.7" />
-    <circle cx="44" cy="27" r="0.5" fill="hsl(205,55%,55%)" opacity="0.7" />
-    <circle cx="50" cy="25" r="0.5" fill="hsl(345,55%,55%)" opacity="0.7" />
-    {/* Baby head — profile */}
+    <circle cx="42" cy="33" r="0.55" fill="hsl(345,55%,55%)" opacity="0.7" />
+    <circle cx="50" cy="35" r="0.55" fill="hsl(205,55%,55%)" opacity="0.7" />
+    <circle cx="58" cy="33" r="0.55" fill="hsl(345,55%,55%)" opacity="0.7" />
+    {/* Baby head — profile facing left */}
     <path
-      d="M48 22
-         Q48 16 53 16
-         Q58 16 58.4 20
-         Q58.6 21.4 58 22.6
-         L58.6 23
-         Q59.2 23.4 58.6 23.8
-         L57.8 24
-         Q57.6 24.6 57 24.8
-         L52 24.8
-         Q49 24.5 48 22 Z"
-      fill="hsl(31,55%,82%)"
-      stroke="hsl(25,35%,45%)"
+      d="M40 30
+         Q40 22 46 21.5
+         Q52 21.5 52.4 26
+         Q52.4 28 51.6 29.4
+         L52.2 29.6
+         Q52.6 30 52.2 30.4
+         L51.4 30.6
+         Q51 31.2 50.4 31.4
+         L45 31.4
+         Q41 31 40 30 Z"
+      fill="hsl(31,60%,84%)"
+      stroke="hsl(25,35%,42%)"
       strokeWidth="0.5"
     />
-    {/* Baby eye (closed/peaceful) */}
-    <path d="M55.6 20.6 Q56.2 20.2 56.8 20.6" stroke="hsl(25,35%,28%)" strokeWidth="0.45" fill="none" strokeLinecap="round" />
-    {/* Tiny rosy cheek */}
-    <circle cx="55.5" cy="22.4" r="0.7" fill="hsl(0,55%,72%)" opacity="0.65" />
-    {/* Baby mouth */}
-    <path d="M56.8 23.4 Q57.4 23.6 57.8 23.3" stroke="hsl(0,45%,32%)" strokeWidth="0.32" fill="none" strokeLinecap="round" />
-    {/* Tuft of hair */}
-    <path d="M50 17.5 Q52.5 14.5 55 16.5" stroke="hsl(28,40%,28%)" strokeWidth="0.6" fill="none" strokeLinecap="round" />
-    {/* Tiny hand poking up */}
-    <circle cx="40" cy="20.5" r="1" fill="hsl(31,55%,82%)" stroke="hsl(25,35%,45%)" strokeWidth="0.35" />
+    <path d="M41.6 26 Q42.2 25.6 42.8 26" stroke="hsl(25,35%,24%)" strokeWidth="0.5" fill="none" strokeLinecap="round" />
+    <circle cx="42.2" cy="28" r="0.75" fill="hsl(0,55%,72%)" opacity="0.7" />
+    <path d="M40.6 29 Q41.2 29.4 41.8 29.1" stroke="hsl(0,45%,30%)" strokeWidth="0.35" fill="none" strokeLinecap="round" />
+    <path d="M44 22.5 Q47 19.5 50 21.5" stroke="hsl(28,40%,26%)" strokeWidth="0.7" fill="none" strokeLinecap="round" />
+    {/* Tiny hand */}
+    <circle cx="60" cy="28" r="1.1" fill="hsl(31,60%,84%)" stroke="hsl(25,35%,42%)" strokeWidth="0.35" />
 
-    {/* === Wheels — large rear, small front, with spokes === */}
-    {/* Rear wheel */}
-    <circle cx="16" cy="50" r="6.5" fill="url(#wheelGrad)" stroke="hsl(220,12%,6%)" strokeWidth="0.6" />
-    <circle cx="16" cy="50" r="4.6" fill="none" stroke="hsl(0,0%,38%)" strokeWidth="0.4" />
-    <circle cx="16" cy="50" r="1.8" fill="hsl(0,0%,82%)" stroke="hsl(0,0%,42%)" strokeWidth="0.4" />
+    {/* ===== WHEELS ===== */}
+    {/* Rear (left) — large */}
+    <circle cx="20" cy="58" r="7.5" fill="url(#wheelGrad)" stroke="hsl(220,15%,5%)" strokeWidth="0.7" />
+    <circle cx="20" cy="58" r="5.4" fill="none" stroke="hsl(0,0%,42%)" strokeWidth="0.45" />
+    <circle cx="20" cy="58" r="2" fill="hsl(0,0%,86%)" stroke="hsl(0,0%,40%)" strokeWidth="0.4" />
+    {[0, 30, 60, 90, 120, 150].map((a) => (
+      <line
+        key={`rsp${a}`}
+        x1={20 + Math.cos((a * Math.PI) / 180) * 2}
+        y1={58 + Math.sin((a * Math.PI) / 180) * 2}
+        x2={20 + Math.cos((a * Math.PI) / 180) * 5.2}
+        y2={58 + Math.sin((a * Math.PI) / 180) * 5.2}
+        stroke="hsl(0,0%,72%)"
+        strokeWidth="0.5"
+      />
+    ))}
+    {[0, 30, 60, 90, 120, 150].map((a) => (
+      <line
+        key={`rsp2${a}`}
+        x1={20 - Math.cos((a * Math.PI) / 180) * 2}
+        y1={58 - Math.sin((a * Math.PI) / 180) * 2}
+        x2={20 - Math.cos((a * Math.PI) / 180) * 5.2}
+        y2={58 - Math.sin((a * Math.PI) / 180) * 5.2}
+        stroke="hsl(0,0%,72%)"
+        strokeWidth="0.5"
+      />
+    ))}
+    {/* Front (right) — smaller swivel */}
+    <circle cx="74" cy="60" r="6" fill="url(#wheelGrad)" stroke="hsl(220,15%,5%)" strokeWidth="0.6" />
+    <circle cx="74" cy="60" r="4" fill="none" stroke="hsl(0,0%,42%)" strokeWidth="0.4" />
+    <circle cx="74" cy="60" r="1.6" fill="hsl(0,0%,86%)" stroke="hsl(0,0%,40%)" strokeWidth="0.35" />
     {[0, 45, 90, 135].map((a) => (
       <line
-        key={`rs${a}`}
-        x1={16 + Math.cos((a * Math.PI) / 180) * 1.6}
-        y1={50 + Math.sin((a * Math.PI) / 180) * 1.6}
-        x2={16 + Math.cos((a * Math.PI) / 180) * 4.4}
-        y2={50 + Math.sin((a * Math.PI) / 180) * 4.4}
-        stroke="hsl(0,0%,68%)"
+        key={`fsp${a}`}
+        x1={74 + Math.cos((a * Math.PI) / 180) * 1.5}
+        y1={60 + Math.sin((a * Math.PI) / 180) * 1.5}
+        x2={74 + Math.cos((a * Math.PI) / 180) * 3.8}
+        y2={60 + Math.sin((a * Math.PI) / 180) * 3.8}
+        stroke="hsl(0,0%,72%)"
         strokeWidth="0.45"
       />
     ))}
     {[0, 45, 90, 135].map((a) => (
       <line
-        key={`rs2${a}`}
-        x1={16 - Math.cos((a * Math.PI) / 180) * 1.6}
-        y1={50 - Math.sin((a * Math.PI) / 180) * 1.6}
-        x2={16 - Math.cos((a * Math.PI) / 180) * 4.4}
-        y2={50 - Math.sin((a * Math.PI) / 180) * 4.4}
-        stroke="hsl(0,0%,68%)"
+        key={`fsp2${a}`}
+        x1={74 - Math.cos((a * Math.PI) / 180) * 1.5}
+        y1={60 - Math.sin((a * Math.PI) / 180) * 1.5}
+        x2={74 - Math.cos((a * Math.PI) / 180) * 3.8}
+        y2={60 - Math.sin((a * Math.PI) / 180) * 3.8}
+        stroke="hsl(0,0%,72%)"
         strokeWidth="0.45"
-      />
-    ))}
-    {/* Front wheel (smaller, swivel) */}
-    <circle cx="72" cy="51" r="5" fill="url(#wheelGrad)" stroke="hsl(220,12%,6%)" strokeWidth="0.6" />
-    <circle cx="72" cy="51" r="3.4" fill="none" stroke="hsl(0,0%,38%)" strokeWidth="0.4" />
-    <circle cx="72" cy="51" r="1.4" fill="hsl(0,0%,82%)" stroke="hsl(0,0%,42%)" strokeWidth="0.35" />
-    {[0, 45, 90, 135].map((a) => (
-      <line
-        key={`fs${a}`}
-        x1={72 + Math.cos((a * Math.PI) / 180) * 1.3}
-        y1={51 + Math.sin((a * Math.PI) / 180) * 1.3}
-        x2={72 + Math.cos((a * Math.PI) / 180) * 3.2}
-        y2={51 + Math.sin((a * Math.PI) / 180) * 3.2}
-        stroke="hsl(0,0%,68%)"
-        strokeWidth="0.4"
       />
     ))}
   </svg>
