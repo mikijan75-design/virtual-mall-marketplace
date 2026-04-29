@@ -525,8 +525,8 @@ const CenterFeature = ({ floorId }: CenterFeatureProps) => {
                 </div>
               ))}
 
-              {/* Modern glass railing — light blue, glossy */}
-              <div className="absolute bottom-[34%] left-[6%] right-[6%] h-[24%]">
+              {/* Modern glass railing — light blue, glossy. Extended up to the neon LED. */}
+              <div className="absolute top-[6%] bottom-[22%] left-[6%] right-[6%]">
                 <div
                   className="absolute inset-0 rounded-sm overflow-hidden"
                   style={{
