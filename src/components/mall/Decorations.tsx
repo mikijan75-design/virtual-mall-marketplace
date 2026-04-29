@@ -162,17 +162,12 @@ const PicketBorder = () => (
 
 const GardenPromenade = () => (
   <div
-    className="relative isolate w-full overflow-hidden border-t border-[#c7b37d] bg-[#d5d7c3]"
+    className="relative isolate w-full overflow-visible"
     aria-label="Reference-inspired plant garden with colorful flowers and clipped shrubs"
   >
-    <svg viewBox="0 0 1400 190" preserveAspectRatio="none" className="block h-44 w-full md:h-56" role="img">
+    <svg viewBox="0 0 1400 110" preserveAspectRatio="none" className="block h-28 w-full md:h-36" role="img">
       <title>Plant garden inspired by the reference image</title>
       <defs>
-        <linearGradient id="garden-sky-walkway" x1="0" y1="0" x2="0" y2="1">
-          <stop offset="0%" stopColor="#c5d2cf" />
-          <stop offset="44%" stopColor="#d6d7c3" />
-          <stop offset="100%" stopColor="#c0b77c" />
-        </linearGradient>
         <linearGradient id="garden-soil" x1="0" y1="0" x2="0" y2="1">
           <stop offset="0%" stopColor="#766032" />
           <stop offset="55%" stopColor="#4c3a21" />
@@ -188,26 +183,16 @@ const GardenPromenade = () => (
         </pattern>
       </defs>
 
-      <rect width="1400" height="190" fill="url(#garden-sky-walkway)" />
-      <rect x="0" y="0" width="1400" height="106" fill="url(#paving-lines)" opacity="0.55" />
+      {/* Garden starts directly at the floor — no sky/walkway background */}
+      <g transform="translate(0,-80)">
+        <rect x="0" y="112" width="1400" height="78" fill="url(#garden-soil)" />
+        <path d="M0 113 C105 94 218 105 330 114 S562 121 720 108 1015 111 1165 104 1345 104 1400 112 V148 H0 Z" fill="url(#garden-grass)" />
+        <path d="M0 119 C155 101 265 116 390 121 S640 113 800 116 1072 112 1224 110 1352 110 1400 118" fill="none" stroke="#a4c568" strokeWidth="5" opacity="0.78" />
 
-      <g opacity="0.5">
-        {[155, 340, 520, 705, 880, 1060, 1242].map((x) => (
-          <path key={x} d={`M${x} 14 V96`} stroke="#87948d" strokeWidth="2" />
-        ))}
-        {[230, 798, 1126].map((x) => (
-          <path key={x} d={`M${x - 30} 32 L${x + 30} 86`} stroke="#6e807a" strokeWidth="7" strokeLinecap="round" opacity="0.34" />
-        ))}
-      </g>
+        <PicketBorder />
 
-      <rect x="0" y="112" width="1400" height="78" fill="url(#garden-soil)" />
-      <path d="M0 113 C105 94 218 105 330 114 S562 121 720 108 1015 111 1165 104 1345 104 1400 112 V148 H0 Z" fill="url(#garden-grass)" />
-      <path d="M0 119 C155 101 265 116 390 121 S640 113 800 116 1072 112 1224 110 1352 110 1400 118" fill="none" stroke="#a4c568" strokeWidth="5" opacity="0.78" />
-
-      <PicketBorder />
-
-      {conifers.map((plant) => (
-        <Conifer key={plant.x} {...plant} />
+        {conifers.map((plant) => (
+          <Conifer key={plant.x} {...plant} />
       ))}
       {topiary.map((plant) => (
         <TopiaryBall key={plant.x} {...plant} />
