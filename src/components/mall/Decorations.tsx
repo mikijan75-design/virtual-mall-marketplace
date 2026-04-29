@@ -252,6 +252,7 @@ const GardenPromenade = () => (
       </g>
 
       <path d="M0 188 H1400" stroke="#1f2f1d" strokeWidth="4" opacity="0.35" />
+      </g>
     </svg>
   </div>
 );
