@@ -449,39 +449,28 @@ const CenterFeature = ({ floorId }: CenterFeatureProps) => {
 
           {isBalcony && (
             <>
-              {/* Modern ceiling dome with neon LED frame casting light downward */}
+              {/* Neon LED ring — moved up to where the dark dome used to be */}
               <div
-                className="absolute top-0 left-[4%] right-[4%] h-14 md:h-20 rounded-b-[60%] overflow-visible"
+                className="absolute top-0 left-[10%] right-[10%] h-[3px] md:h-[4px] rounded-full"
                 style={{
                   background:
-                    "radial-gradient(ellipse at 50% 0%, hsl(210,30%,22%), hsl(215,35%,12%) 80%)",
+                    "linear-gradient(90deg, hsl(195,100%,75%), hsl(200,100%,88%), hsl(195,100%,75%))",
                   boxShadow:
-                    "inset 0 -8px 22px rgba(0,0,0,0.55), 0 4px 14px rgba(0,0,0,0.35)",
+                    "0 0 12px hsl(195,100%,70%), 0 0 24px hsl(200,100%,65%), 0 0 40px hsl(200,100%,60%)",
                 }}
-              >
-                {/* Neon LED ring */}
-                <div
-                  className="absolute bottom-0 left-[6%] right-[6%] h-[3px] md:h-[4px] rounded-full"
-                  style={{
-                    background:
-                      "linear-gradient(90deg, hsl(195,100%,75%), hsl(200,100%,88%), hsl(195,100%,75%))",
-                    boxShadow:
-                      "0 0 12px hsl(195,100%,70%), 0 0 24px hsl(200,100%,65%), 0 0 40px hsl(200,100%,60%)",
-                  }}
-                />
-                {/* Inner secondary LED line */}
-                <div
-                  className="absolute bottom-2 left-[14%] right-[14%] h-[2px] rounded-full opacity-80"
-                  style={{
-                    background: "linear-gradient(90deg, transparent, hsl(195,100%,85%), transparent)",
-                    boxShadow: "0 0 8px hsl(195,100%,70%)",
-                  }}
-                />
-              </div>
+              />
+              {/* Inner secondary LED line */}
+              <div
+                className="absolute top-2 left-[18%] right-[18%] h-[2px] rounded-full opacity-80"
+                style={{
+                  background: "linear-gradient(90deg, transparent, hsl(195,100%,85%), transparent)",
+                  boxShadow: "0 0 8px hsl(195,100%,70%)",
+                }}
+              />
 
               {/* Light cone projecting downward from the LED frame */}
               <div
-                className="absolute top-14 md:top-20 left-1/2 -translate-x-1/2 pointer-events-none"
+                className="absolute top-1 left-1/2 -translate-x-1/2 pointer-events-none"
                 style={{
                   width: "85%",
                   height: "55%",
