@@ -103,7 +103,7 @@ const CenterFeature = ({ floorId }: CenterFeatureProps) => {
         {/* "Image" area - same height as StoreCard image (90px / md:130px) */}
         <div
           className={`relative w-full overflow-hidden ${
-            isEntrance || isBalcony ? "h-[170px] md:h-[230px]" : "h-[90px] md:h-[130px]"
+            isEntrance ? "h-[170px] md:h-[230px]" : "h-[90px] md:h-[130px]"
           }`}
           style={
             noFrame
