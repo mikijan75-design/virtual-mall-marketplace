@@ -1,3 +1,5 @@
+import { Link } from "react-router-dom";
+
 type InfoSection = {
   title: string;
   icon: string;
@@ -16,17 +18,16 @@ const infoSections: InfoSection[] = [
     icon: "🏪",
     accentIcons: ["👨‍💼💡", "🤝"],
     body: [
-      "מיזם דינמי שמבסס, לקוח על המידע",
-      "המעשיר האישית והרווח בכל כנסת ומעודד,",
-      "מתוך החיבור מהיוצרים ללקוחות.",
+      "בית לעיצוב ויצירה ישראלי,",
+      "הנגשה של יזמים יבואנים ואומנים פרטיים,",
+      "חנויות בוטיק של בעלי מלאכה ועשייה.",
     ],
   },
   {
     title: "החזון והערכים",
     icon: "⚙️",
     accentIcons: ["👍"],
-    body: ["כועלו בל צרכים וחלורה וחוצירה."],
-    boldLine: "חלוציות, יצירה והערכה",
+    body: ["מתן ערך לפועלו של האחר", "וחיבוק היזדמנויות."],
     art: "sun",
   },
   {
@@ -118,9 +119,9 @@ const InfoBlock = ({ section }: { section: InfoSection }) => (
         {section.bullets && (
           <ul className="mt-1 space-y-1">
             {section.bullets.map((bullet) => (
-              <li key={bullet} className="flex items-center justify-end gap-3">
-                <span>{bullet}</span>
+              <li key={bullet} className="flex items-center justify-start gap-3">
                 <span className="h-2.5 w-2.5 rounded-full bg-[#f49634]" aria-hidden="true" />
+                <span>{bullet}</span>
               </li>
             ))}
           </ul>
@@ -206,6 +207,16 @@ const InfoPage = () => {
               <InfoBlock key={section.title} section={section} />
             ))}
           </div>
+        </div>
+
+        <div className="relative z-10 mt-10 flex justify-center">
+          <Link
+            to="/"
+            className="inline-flex items-center gap-2 rounded-full bg-[#f49634] px-8 py-3 text-lg font-black text-white shadow-[0_6px_18px_rgba(244,150,52,0.35)] transition-transform hover:scale-105 hover:bg-[#e0852b]"
+          >
+            <span aria-hidden="true">→</span>
+            חזרה לאתר
+          </Link>
         </div>
       </main>
     </div>
