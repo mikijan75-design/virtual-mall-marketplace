@@ -88,7 +88,7 @@ const ShipArt = () => (
 );
 
 const SectionHeading = ({ title, icon }: { title: string; icon: string }) => (
-  <div className="mb-2 flex items-center justify-end gap-3">
+  <div className="mb-2 flex items-center justify-start gap-3">
     <span className="grid h-10 w-10 place-items-center text-3xl leading-none">{icon}</span>
     <h2 className="rounded-full bg-[#fbecd8] px-4 py-0.5 text-[clamp(1.35rem,2.6vw,2rem)] font-black leading-tight text-[#3b2618] shadow-[inset_0_-8px_0_rgba(246,171,82,0.16)]">
       {title}
@@ -101,7 +101,7 @@ const InfoBlock = ({ section }: { section: InfoSection }) => (
     {section.art === "sun" && <SunArt />}
     {section.art === "ship" && <ShipArt />}
     <SectionHeading title={section.title} icon={section.icon} />
-    <div className="flex items-start justify-end gap-5">
+    <div className="flex items-start justify-start gap-5">
       {section.accentIcons && (
         <div className="mt-1 hidden w-12 flex-col items-center gap-4 text-3xl leading-none sm:flex" aria-hidden="true">
           {section.accentIcons.map((accentIcon) => (
@@ -190,8 +190,8 @@ const InfoPage = () => {
           <span className="absolute right-[67%] top-10 h-2 w-5 rotate-[-35deg] rounded-full bg-[#f49634]" aria-hidden="true" />
         </header>
 
-        <div className="relative z-10 mt-8 grid items-center gap-8 lg:grid-cols-[1.05fr_0.95fr]">
-          <div className="order-2 flex flex-col items-center lg:order-1">
+        <div className="relative z-10 mt-8 grid items-center gap-8 lg:grid-cols-[0.95fr_1.05fr]">
+          <div className="order-2 flex flex-col items-center lg:order-2">
             <div className="relative mb-3 inline-flex items-center">
               <DecorativeLeaf className="-right-10 top-1" rotate={42} />
               <h2 className="rounded-full bg-[#fbecd8] px-5 py-1 text-center text-[clamp(1.5rem,3vw,2.3rem)] font-black leading-none text-[#3b2618] shadow-[inset_0_-8px_0_rgba(246,171,82,0.16)]">
@@ -201,7 +201,7 @@ const InfoPage = () => {
             <CycleDiagram />
           </div>
 
-          <div className="order-1 space-y-8 lg:order-2">
+          <div className="order-1 space-y-8 lg:order-1">
             {infoSections.map((section) => (
               <InfoBlock key={section.title} section={section} />
             ))}
