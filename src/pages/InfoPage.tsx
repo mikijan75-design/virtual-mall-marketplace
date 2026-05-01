@@ -1,3 +1,5 @@
+import { Link } from "react-router-dom";
+
 type InfoSection = {
   title: string;
   icon: string;
@@ -205,6 +207,16 @@ const InfoPage = () => {
               <InfoBlock key={section.title} section={section} />
             ))}
           </div>
+        </div>
+
+        <div className="relative z-10 mt-10 flex justify-center">
+          <Link
+            to="/"
+            className="inline-flex items-center gap-2 rounded-full bg-[#f49634] px-8 py-3 text-lg font-black text-white shadow-[0_6px_18px_rgba(244,150,52,0.35)] transition-transform hover:scale-105 hover:bg-[#e0852b]"
+          >
+            <span aria-hidden="true">→</span>
+            חזרה לאתר
+          </Link>
         </div>
       </main>
     </div>
