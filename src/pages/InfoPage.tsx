@@ -101,7 +101,7 @@ const InfoBlock = ({ section }: { section: InfoSection }) => (
     {section.art === "sun" && <SunArt />}
     {section.art === "ship" && <ShipArt />}
     <SectionHeading title={section.title} icon={section.icon} />
-    <div className="flex items-start justify-end gap-5">
+    <div className="flex items-start justify-start gap-5">
       {section.accentIcons && (
         <div className="mt-1 hidden w-12 flex-col items-center gap-4 text-3xl leading-none sm:flex" aria-hidden="true">
           {section.accentIcons.map((accentIcon) => (
