@@ -117,9 +117,9 @@ const InfoBlock = ({ section }: { section: InfoSection }) => (
         {section.bullets && (
           <ul className="mt-1 space-y-1">
             {section.bullets.map((bullet) => (
-              <li key={bullet} className="flex items-center justify-end gap-3">
-                <span>{bullet}</span>
+              <li key={bullet} className="flex items-center justify-start gap-3">
                 <span className="h-2.5 w-2.5 rounded-full bg-[#f49634]" aria-hidden="true" />
+                <span>{bullet}</span>
               </li>
             ))}
           </ul>
