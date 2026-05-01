@@ -2,6 +2,8 @@ interface CenterFeatureProps {
   floorId: number;
 }
 
+import { Link } from "react-router-dom";
+
 /**
  * Center feature occupies one store-width slot and matches store card dimensions:
  * - Top sign band (~36-48px) + subtitle band (~24px) + image area (90px / md:130px)
@@ -351,7 +353,13 @@ const CenterFeature = ({ floorId }: CenterFeatureProps) => {
 
           {floorId === 2 && (
             <>
-              {/* Information kiosk - SVG, no background */}
+              {/* Information kiosk - clickable, navigates to /info */}
+              <Link
+                to="/info"
+                aria-label="תחנת מידע"
+                title="תחנת מידע - לחץ למעבר לעמוד המידע"
+                className="absolute inset-0 z-20 cursor-pointer block transition-transform hover:scale-[1.03] focus:outline-none focus:ring-2 focus:ring-sky-400 rounded-md"
+              >
               <svg
                 className="absolute inset-0 w-full h-full"
                 viewBox="0 0 200 130"
@@ -444,6 +452,7 @@ const CenterFeature = ({ floorId }: CenterFeatureProps) => {
                 <line x1="161" y1="92" x2="171" y2="92" stroke="hsl(210,30%,75%)" strokeWidth="0.5" />
                 <line x1="161" y1="94" x2="171" y2="94" stroke="hsl(210,30%,75%)" strokeWidth="0.5" />
               </svg>
+              </Link>
             </>
           )}
 
