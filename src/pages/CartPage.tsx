@@ -1,12 +1,14 @@
 import { CreditCard, Minus, Plus, Trash2 } from "lucide-react";
 import type { ReactNode } from "react";
 import { useSearchParams } from "react-router-dom";
-import { useEffect, useRef } from "react";
+import { useEffect, useRef, useState } from "react";
 import BackButton from "@/components/BackButton";
 import MallHeader from "@/components/mall/MallHeader";
 import MallFooter from "@/components/mall/MallFooter";
 import PageTracker from "@/components/PageTracker";
 import { useCart, type CartItem } from "@/context/CartContext";
+import { Dialog, DialogContent, DialogHeader, DialogTitle, DialogDescription } from "@/components/ui/dialog";
+import { useToast } from "@/hooks/use-toast";
 import imMezuzahsCollection from "@/assets/stores/im-mezuzahs-collection.png";
 
 const mezuzahColBounds = [0, 0.0403, 0.0772, 0.1129, 0.1485, 0.1851, 0.2205, 0.2554, 0.2911, 0.3261, 0.362, 0.397, 0.4314, 0.467, 0.5026, 0.538, 0.5739, 0.6096, 0.6449, 0.6809, 0.7162, 0.7515, 0.7875, 0.8228, 0.8584, 0.8937, 0.9297, 0.9657, 1];
@@ -68,14 +70,17 @@ const PaymentButton = ({
   children,
   className,
   ariaLabel,
+  onClick,
 }: {
   children: ReactNode;
   className: string;
   ariaLabel: string;
+  onClick?: () => void;
 }) => (
   <button
     type="button"
     aria-label={ariaLabel}
+    onClick={onClick}
     className={`flex h-[45px] w-full items-center justify-center rounded-[5px] border border-black/20 text-[23px] font-black shadow-[inset_0_1px_0_rgba(255,255,255,0.22)] ${className}`}
   >
     {children}
@@ -86,6 +91,14 @@ const CartPage = () => {
   const { items, addItem, removeItem, updateQuantity, clearCart } = useCart();
   const [params, setParams] = useSearchParams();
   const seededRef = useRef(false);
+  const [paymentOpen, setPaymentOpen] = useState(false);
+  const { toast } = useToast();
+
+  const handlePay = (method: string) => {
+    setPaymentOpen(false);
+    toast({ title: "התשלום בוצע", description: `שולם בהצלחה באמצעות ${method}.` });
+    clearCart();
+  };
 
   // Backwards compatibility: if a legacy ?col=&row= URL lands here, seed the cart once
   useEffect(() => {
@@ -351,10 +364,10 @@ const CartPage = () => {
               </button>
               <button
                 type="button"
-                onClick={() => clearCart()}
+                onClick={() => setPaymentOpen(true)}
                 className="rounded-[5px] bg-gradient-to-b from-[#126f78] to-[#075a65] px-5 py-2 text-[16px] font-black text-white shadow"
               >
-                סיום קנייה
+                תשלום
               </button>
             </div>
           )}
@@ -373,6 +386,62 @@ const CartPage = () => {
       </div>
       </main>
       <MallFooter />
+      <Dialog open={paymentOpen} onOpenChange={setPaymentOpen}>
+        <DialogContent dir="rtl" className="max-w-[420px]">
+          <DialogHeader>
+            <DialogTitle className="text-right text-[22px] font-black">בחר אמצעי תשלום</DialogTitle>
+            <DialogDescription className="text-right">
+              סכום לתשלום: {fmt(total)}
+            </DialogDescription>
+          </DialogHeader>
+          <div className="space-y-[9px]">
+            <PaymentButton
+              ariaLabel="תשלום בכרטיס אשראי"
+              className="gap-3 bg-gradient-to-b from-[#1b7279] to-[#095762] text-white"
+              onClick={() => handlePay("כרטיס אשראי")}
+            >
+              <CreditCard className="h-[32px] w-[32px]" strokeWidth={3.5} />
+              <span>כרטיס אשראי</span>
+            </PaymentButton>
+            <PaymentButton
+              ariaLabel="תשלום ב-bit"
+              className="bg-gradient-to-b from-[#4bd970] to-[#24bd4d] text-white"
+              onClick={() => handlePay("bit")}
+            >
+              bit
+            </PaymentButton>
+            <PaymentButton
+              ariaLabel="תשלום ב-PayPal"
+              className="bg-gradient-to-b from-[#12a9e7] to-[#0478bd] text-white"
+              onClick={() => handlePay("PayPal")}
+            >
+              <span className="text-[20px] font-black italic">P PayPal</span>
+            </PaymentButton>
+            <PaymentButton
+              ariaLabel="תשלום ב-Google Pay"
+              className="border-[#7a7a7a] bg-white text-[22px]"
+              onClick={() => handlePay("Google Pay")}
+            >
+              <span>
+                <span className="text-[#4285f4]">G</span>
+                <span className="text-[#db4437]">o</span>
+                <span className="text-[#f4b400]">o</span>
+                <span className="text-[#4285f4]">g</span>
+                <span className="text-[#0f9d58]">l</span>
+                <span className="text-[#db4437]">e</span>
+                <span className="text-[#5f6368]"> Pay</span>
+              </span>
+            </PaymentButton>
+            <PaymentButton
+              ariaLabel="תשלום ב-Apple Pay"
+              className="bg-black text-white"
+              onClick={() => handlePay("Apple Pay")}
+            >
+              <span className="text-[27px]">Apple Pay</span>
+            </PaymentButton>
+          </div>
+        </DialogContent>
+      </Dialog>
     </div>
   );
 };
