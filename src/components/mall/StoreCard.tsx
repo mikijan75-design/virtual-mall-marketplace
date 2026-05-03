@@ -21,7 +21,6 @@ import bakeryImg from "@/assets/stores/bakery.jpg";
 import juiceImg from "@/assets/stores/juice.jpg";
 import comingSoonImg from "@/assets/stores/coming-soon.png";
 import forRentImg from "@/assets/stores/for-rent.png";
-import israelMezuzahsLogo from "@/assets/stores/israel-mezuzahs-logo.png";
 
 const brandStyles: Record<string, { bg: string; text: string; accent: string; font: string; image: string; subtitle: string; logo?: string; subtitleLogo?: string }> = {
   "אופנה עילית": { bg: "linear-gradient(135deg, #f5eef0, #ede4e8)", text: "#3a2a30", accent: "#c9a96e", font: "font-frank", image: fashionImg, subtitle: "קוטור יוקרה" },
@@ -67,10 +66,6 @@ const idOverrides: Record<string, Partial<{ name: string; bg: string; text: stri
   },
   s13: comingSoonOverride,
   s14: comingSoonOverride,
-  s2: {
-    name: "Israel Mezuzahs",
-    logo: israelMezuzahsLogo,
-  },
 };
 
 const defaultStyle = { bg: "linear-gradient(135deg, #f5f0e8, #ede4d8)", text: "#3a2a20", accent: "#c9a96e", font: "font-frank", image: "", subtitle: "", logo: undefined as string | undefined, subtitleLogo: undefined as string | undefined };
@@ -112,17 +107,13 @@ const StoreCard = ({ store, storeIndex }: StoreCardProps) => {
         {/* Brand sign */}
         {style.logo ? (
           <div
-            className="relative z-10 py-2.5 md:py-3 px-2 flex items-center justify-center overflow-hidden"
+            className="relative z-10 flex items-center justify-center overflow-hidden"
             style={{
               background: "#ffffff",
               borderBottom: `2px solid ${style.accent}`,
             }}
           >
-            <img
-              src={style.logo}
-              alt={store.name}
-              className="w-full object-contain block h-[28px] md:h-[34px]"
-            />
+            <img src={style.logo} alt={store.name} className="w-full h-full object-contain py-1 px-2" style={{ minHeight: "36px", maxHeight: "48px" }} />
           </div>
         ) : (
           <div
