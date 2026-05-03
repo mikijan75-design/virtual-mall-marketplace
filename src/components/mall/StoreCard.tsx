@@ -22,6 +22,7 @@ import juiceImg from "@/assets/stores/juice.jpg";
 import comingSoonImg from "@/assets/stores/coming-soon.png";
 import forRentImg from "@/assets/stores/for-rent.png";
 import IsraelMezuzahsWordmark from "@/components/mall/IsraelMezuzahsWordmark";
+import OliveWoodEpoxyWordmark from "@/components/mall/OliveWoodEpoxyWordmark";
 
 type BrandStyle = {
   bg: string;
@@ -33,6 +34,7 @@ type BrandStyle = {
   logo?: string;
   subtitleLogo?: string;
   codedWordmark?: "israel-mezuzahs";
+  codedSubtitle?: "olive-wood-epoxy";
 };
 
 const brandStyles: Record<string, BrandStyle> = {
@@ -84,6 +86,7 @@ const idOverrides: Record<string, Partial<BrandStyle & { name: string }>> = {
     accent: "#10252b",
     subtitle: "מזוזות ועוד",
     codedWordmark: "israel-mezuzahs",
+    codedSubtitle: "olive-wood-epoxy",
   },
 };
 
@@ -178,7 +181,17 @@ const StoreCard = ({ store, storeIndex }: StoreCardProps) => {
         )}
 
         {/* Subtitle bar */}
-        {style.subtitleLogo ? (
+        {style.codedSubtitle === "olive-wood-epoxy" ? (
+          <div
+            className={SUBTITLE_BAND_CLASS}
+            style={{ background: "#f8f7f2" }}
+          >
+            <OliveWoodEpoxyWordmark
+              className="w-full h-full"
+              preserveAspectRatio="none"
+            />
+          </div>
+        ) : style.subtitleLogo ? (
           <div
             className={SUBTITLE_BAND_CLASS}
             style={{
