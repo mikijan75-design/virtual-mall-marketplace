@@ -1,59 +1,11 @@
-import { CreditCard, Minus, Plus } from "lucide-react";
+import { CreditCard, Minus, Plus, Trash2, ShoppingBag } from "lucide-react";
 import type { ReactNode } from "react";
+import { Link } from "react-router-dom";
 import BackButton from "@/components/BackButton";
 import MallHeader from "@/components/mall/MallHeader";
 import MallFooter from "@/components/mall/MallFooter";
 import PageTracker from "@/components/PageTracker";
-
-const HeadphonesThumbnail = () => (
-  <svg viewBox="0 0 180 180" role="img" aria-label="אוזניות SENSE PRO" className="h-full w-full">
-    <defs>
-      <radialGradient id="cartBand" cx="36%" cy="18%" r="78%">
-        <stop offset="0" stopColor="#7e8787" />
-        <stop offset="0.45" stopColor="#3e4848" />
-        <stop offset="1" stopColor="#171f20" />
-      </radialGradient>
-      <radialGradient id="cartCup" cx="36%" cy="24%" r="78%">
-        <stop offset="0" stopColor="#858986" />
-        <stop offset="0.45" stopColor="#555a56" />
-        <stop offset="1" stopColor="#151a19" />
-      </radialGradient>
-      <linearGradient id="cartMetal" x1="0" x2="1">
-        <stop offset="0" stopColor="#d7d8d3" />
-        <stop offset="0.48" stopColor="#5e6661" />
-        <stop offset="1" stopColor="#eef0eb" />
-      </linearGradient>
-      <filter id="cartShadow" x="-30%" y="-20%" width="160%" height="150%">
-        <feDropShadow dx="0" dy="8" stdDeviation="8" floodColor="#0c1110" floodOpacity="0.28" />
-      </filter>
-    </defs>
-
-    <g filter="url(#cartShadow)">
-      <path
-        d="M42 105 C36 61 53 28 90 28 C127 28 144 61 138 105"
-        fill="none"
-        stroke="url(#cartBand)"
-        strokeLinecap="round"
-        strokeWidth="20"
-      />
-      <path
-        d="M52 70 C62 43 78 39 90 39 C102 39 118 43 128 70"
-        fill="none"
-        stroke="#111918"
-        strokeLinecap="round"
-        strokeOpacity="0.24"
-        strokeWidth="8"
-      />
-      <path d="M45 96 L45 118" stroke="url(#cartMetal)" strokeLinecap="round" strokeWidth="8" />
-      <path d="M135 96 L135 118" stroke="url(#cartMetal)" strokeLinecap="round" strokeWidth="8" />
-      <ellipse cx="55" cy="128" rx="27" ry="37" transform="rotate(-14 55 128)" fill="url(#cartCup)" />
-      <ellipse cx="123" cy="128" rx="29" ry="39" transform="rotate(18 123 128)" fill="url(#cartCup)" />
-      <ellipse cx="56" cy="128" rx="17" ry="25" transform="rotate(-14 56 128)" fill="#171d1d" opacity="0.7" />
-      <ellipse cx="122" cy="128" rx="18" ry="26" transform="rotate(18 122 128)" fill="#4b4f4c" opacity="0.9" />
-      <path d="M105 82 C116 82 122 85 126 94" fill="none" stroke="#a8aaa4" strokeLinecap="round" strokeWidth="4" />
-    </g>
-  </svg>
-);
+import { useCart } from "@/contexts/CartContext";
 
 const PaymentButton = ({
   children,
@@ -74,6 +26,13 @@ const PaymentButton = ({
 );
 
 const CartPage = () => {
+  const { items, setQuantity, removeItem, subtotal } = useCart();
+  const VAT_RATE = 0.17;
+  const vat = subtotal * VAT_RATE;
+  const shipping = items.length > 0 ? 35 : 0;
+  const total = subtotal + vat + shipping;
+  const fmt = (n: number) => `₪${n.toLocaleString("he-IL", { maximumFractionDigits: 2 })}`;
+
   return (
     <div className="min-h-screen flex flex-col bg-white">
       <MallHeader />
@@ -151,51 +110,125 @@ const CartPage = () => {
               <div className="px-3 py-[9px] text-center">מוצר</div>
             </div>
 
-            <div className="grid min-h-[154px] grid-cols-[120px_1fr] border-b border-[#2d7075] bg-white md:grid-cols-[120px_120px_120px_1fr]">
-              <div className="flex items-center justify-center border-l border-[#2d7075] px-3 text-[18px] font-black">₪699</div>
-              <div className="hidden items-center justify-center border-l border-[#2d7075] px-3 text-[18px] font-black md:flex">₪699</div>
-              <div className="hidden items-center justify-center border-l border-[#2d7075] px-3 md:flex">
-                <div className="flex h-[34px] items-center overflow-hidden rounded-[5px] border border-[#a4aaa7] bg-white shadow-sm">
-                  <button type="button" aria-label="הפחת כמות" className="flex h-full w-8 items-center justify-center bg-[#f5f5f5]">
-                    <Minus className="h-4 w-4" />
-                  </button>
-                  <span className="flex h-full w-[38px] items-center justify-center border-x border-[#d0d0d0] text-[18px] font-bold">1</span>
-                  <button type="button" aria-label="הוסף כמות" className="flex h-full w-8 items-center justify-center bg-[#eef3f1]">
-                    <Plus className="h-4 w-4" />
-                  </button>
-                </div>
+            {items.length === 0 ? (
+              <div className="flex flex-col items-center justify-center gap-3 bg-white px-4 py-12 text-center">
+                <ShoppingBag className="h-12 w-12 text-[#888]" />
+                <p className="text-[18px] font-medium text-[#555]">הסל ריק</p>
+                <Link to="/" className="text-[16px] font-bold text-[#0a6770] underline">
+                  המשך לקנייה
+                </Link>
               </div>
-              <div className="grid grid-cols-[1fr_126px] items-center gap-4 px-[14px] py-[14px]">
-                <p className="text-right text-[18px] font-medium leading-[1.25]">
-                  SENSE PRO אוזניות
-                  <br />
-                  אלחוטיות - סנס פרו
-                </p>
-                <div className="flex h-[126px] items-center justify-center rounded-[5px] bg-[#f1f2f2] p-2">
-                  <HeadphonesThumbnail />
-                </div>
-              </div>
-              <div className="col-span-2 grid grid-cols-3 border-t border-[#2d7075] text-center text-[15px] md:hidden">
-                <div className="border-l border-[#2d7075] p-2">
-                  <div className="font-black">מחיר יחידה</div>
-                  <div>₪699</div>
-                </div>
-                <div className="border-l border-[#2d7075] p-2">
-                  <div className="font-black">כמות</div>
-                  <div>1</div>
-                </div>
-                <div className="p-2">
-                  <div className="font-black">סכום ביניים</div>
-                  <div>₪699</div>
-                </div>
-              </div>
-            </div>
+            ) : (
+              items.map((item) => {
+                const lineTotal = item.unitPrice * item.quantity;
+                return (
+                  <div
+                    key={item.id}
+                    className="grid min-h-[154px] grid-cols-[120px_1fr] border-b border-[#2d7075] bg-white md:grid-cols-[120px_120px_120px_1fr]"
+                  >
+                    <div className="flex items-center justify-center border-l border-[#2d7075] px-3 text-[18px] font-black">
+                      {fmt(lineTotal)}
+                    </div>
+                    <div className="hidden items-center justify-center border-l border-[#2d7075] px-3 text-[18px] font-black md:flex">
+                      {fmt(item.unitPrice)}
+                    </div>
+                    <div className="hidden items-center justify-center border-l border-[#2d7075] px-3 md:flex">
+                      <div className="flex h-[34px] items-center overflow-hidden rounded-[5px] border border-[#a4aaa7] bg-white shadow-sm">
+                        <button
+                          type="button"
+                          aria-label="הפחת כמות"
+                          onClick={() => setQuantity(item.id, item.quantity - 1)}
+                          className="flex h-full w-8 items-center justify-center bg-[#f5f5f5]"
+                        >
+                          <Minus className="h-4 w-4" />
+                        </button>
+                        <span className="flex h-full w-[38px] items-center justify-center border-x border-[#d0d0d0] text-[18px] font-bold">
+                          {item.quantity}
+                        </span>
+                        <button
+                          type="button"
+                          aria-label="הוסף כמות"
+                          onClick={() => setQuantity(item.id, item.quantity + 1)}
+                          className="flex h-full w-8 items-center justify-center bg-[#eef3f1]"
+                        >
+                          <Plus className="h-4 w-4" />
+                        </button>
+                      </div>
+                    </div>
+                    <div className="grid grid-cols-[1fr_126px] items-center gap-4 px-[14px] py-[14px]">
+                      <div className="text-right">
+                        <p className="text-[18px] font-medium leading-[1.25]">{item.name}</p>
+                        <button
+                          type="button"
+                          onClick={() => removeItem(item.id)}
+                          className="mt-2 inline-flex items-center gap-1 text-[14px] font-bold text-[#a3343c] hover:underline"
+                        >
+                          <Trash2 className="h-4 w-4" />
+                          הסר
+                        </button>
+                      </div>
+                      <div className="flex h-[126px] items-center justify-center overflow-hidden rounded-[5px] bg-[#f1f2f2] p-2">
+                        {item.image ? (
+                          item.imageBgSize ? (
+                            <div
+                              className="h-full w-full rounded-[3px]"
+                              style={{
+                                backgroundImage: `url(${item.image})`,
+                                backgroundRepeat: "no-repeat",
+                                backgroundSize: item.imageBgSize,
+                                backgroundPosition: item.imageBgPosition,
+                              }}
+                            />
+                          ) : (
+                            <img src={item.image} alt={item.name} className="h-full w-full object-contain" />
+                          )
+                        ) : (
+                          <ShoppingBag className="h-10 w-10 text-[#888]" />
+                        )}
+                      </div>
+                    </div>
+                    <div className="col-span-2 grid grid-cols-3 border-t border-[#2d7075] text-center text-[15px] md:hidden">
+                      <div className="border-l border-[#2d7075] p-2">
+                        <div className="font-black">מחיר יחידה</div>
+                        <div>{fmt(item.unitPrice)}</div>
+                      </div>
+                      <div className="border-l border-[#2d7075] p-2">
+                        <div className="font-black">כמות</div>
+                        <div className="flex items-center justify-center gap-1">
+                          <button
+                            type="button"
+                            onClick={() => setQuantity(item.id, item.quantity - 1)}
+                            aria-label="הפחת"
+                            className="rounded border border-[#a4aaa7] px-1"
+                          >
+                            <Minus className="h-3 w-3" />
+                          </button>
+                          <span className="font-bold">{item.quantity}</span>
+                          <button
+                            type="button"
+                            onClick={() => setQuantity(item.id, item.quantity + 1)}
+                            aria-label="הוסף"
+                            className="rounded border border-[#a4aaa7] px-1"
+                          >
+                            <Plus className="h-3 w-3" />
+                          </button>
+                        </div>
+                      </div>
+                      <div className="p-2">
+                        <div className="font-black">סכום ביניים</div>
+                        <div>{fmt(lineTotal)}</div>
+                      </div>
+                    </div>
+                  </div>
+                );
+              })
+            )}
 
-            {[
-              ["סכום כולל (לפני מיסים)", "₪ 699"],
-              ['מע"מ (17%)', "₪699"],
-              ["דמי משלוח", "דמי משלוח"],
-            ].map(([label, value]) => (
+            {([
+              ["סכום ביניים", fmt(subtotal)],
+              ['מע"מ (17%)', fmt(vat)],
+              ["דמי משלוח", items.length === 0 ? "—" : fmt(shipping)],
+            ] as const).map(([label, value]) => (
               <div key={label} className="grid grid-cols-[120px_1fr] border-b border-[#2d7075] bg-white text-[18px] font-medium">
                 <div className="border-l border-[#2d7075] px-3 py-[8px] text-center font-black">{value}</div>
                 <div className="px-3 py-[8px] text-center">{label}</div>
@@ -203,7 +236,7 @@ const CartPage = () => {
             ))}
 
             <div className="grid grid-cols-[120px_1fr] bg-gradient-to-b from-[#136c74] to-[#07515b] text-[18px] font-black text-white">
-              <div className="border-l border-[#5d8c8f] px-3 py-[9px] text-center">₪843.08</div>
+              <div className="border-l border-[#5d8c8f] px-3 py-[9px] text-center">{fmt(total)}</div>
               <div className="px-3 py-[9px] text-center">סכום כולל לתשלום</div>
             </div>
           </div>
