@@ -12,6 +12,7 @@ import imProduct5 from "@/assets/stores/im-product-5.png";
 import imProduct6 from "@/assets/stores/im-product-6.png";
 import imProduct7 from "@/assets/stores/im-product-7.png";
 import imProduct8 from "@/assets/stores/im-product-8.png";
+import imCategoriesDisplay from "@/assets/stores/im-categories-display.png";
 
 const israelMezuzahsProducts = [
   { src: imProduct1, name: "פמוטי שבת", slug: "shabbat-candles" },
@@ -131,6 +132,16 @@ const StorePage = () => {
                       <p className="text-sm font-heebo text-foreground text-center">{p.name}</p>
                     </Link>
                   ))}
+                </div>
+
+                {/* Categories display photo */}
+                <div className="mt-6">
+                  <img
+                    src={imCategoriesDisplay}
+                    alt="תצוגת קטגוריות המוצרים של Israel Mezuzahs"
+                    className="w-full h-auto rounded-lg shadow-md object-contain"
+                    loading="lazy"
+                  />
                 </div>
               </>
             ) : (
