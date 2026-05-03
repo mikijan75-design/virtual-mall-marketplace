@@ -589,7 +589,7 @@ const CrossSectionMallScene = ({ floors }: CrossSectionMallSceneProps) => {
 
         <div className="relative z-20 h-[161px] bg-[#ece2d1] shadow-[0_8px_18px_rgba(75,55,35,0.18)] md:h-[197px]">
           <div
-            className="absolute -left-[3%] -right-[3%] -top-[70%] h-[178%] overflow-hidden"
+            className="absolute -left-[3%] -right-[3%] -top-[70%] bottom-0 overflow-hidden"
             style={{
               backgroundImage: `url(${ceilingFresco})`,
               backgroundSize: "cover",
