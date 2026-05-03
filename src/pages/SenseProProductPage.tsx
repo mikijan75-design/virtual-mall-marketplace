@@ -233,9 +233,9 @@ const SenseProProductPage = () => {
 
           <div className="mt-[20px]">
             <Section title="מפרט טכני">
-              <ul className="list-inside list-disc text-[16px] font-semibold leading-[1.45]">
-                {productSpecs.map((spec) => (
-                  <li key={spec}>{spec}</li>
+              <ul className="list-inside list-disc text-[16px] font-semibold leading-[1.45] whitespace-pre-line">
+                {productSpecs.map((spec, index) => (
+                  <li key={index}>{spec}</li>
                 ))}
               </ul>
             </Section>
