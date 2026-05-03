@@ -1,6 +1,7 @@
 import { useParams, Link } from "react-router-dom";
 import { mallFloors } from "@/data/mallData";
 import MallHeader from "@/components/mall/MallHeader";
+import MallFooter from "@/components/mall/MallFooter";
 import PageTracker from "@/components/PageTracker";
 import israelMezuzahsAbout from "@/assets/stores/israel-mezuzahs-about.png";
 import imBeadLogo from "@/assets/stores/im-bead-logo.png";
@@ -41,6 +42,7 @@ const StorePage = () => {
           <h2 className="text-2xl font-frank font-bold text-foreground">החנות לא נמצאה</h2>
           <Link to="/" className="text-mall-gold hover:underline font-heebo">חזרה לקניון ←</Link>
         </div>
+        <MallFooter />
       </div>
     );
   }
