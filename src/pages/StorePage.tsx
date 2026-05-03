@@ -56,7 +56,8 @@ const StorePage = () => {
             <img
               src={imBeadLogo}
               alt="Israel Mezuzahs logo"
-              className="block mx-auto mb-4 h-24 md:h-32 w-auto object-contain drop-shadow-lg"
+              className="block mx-auto mb-4 h-24 md:h-32 w-auto object-contain"
+              style={{ filter: "drop-shadow(8px 10px 6px rgba(0,0,0,0.55))" }}
             />
           ) : (
             <span className="text-6xl md:text-8xl block mb-4">{store.logoEmoji}</span>
