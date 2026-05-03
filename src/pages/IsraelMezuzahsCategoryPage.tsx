@@ -162,8 +162,7 @@ const IsraelMezuzahsCategoryPage = () => {
   };
 
   const openZoomAtCell = (col: number, row: number) => {
-    setSnapshot({ col, row });
-    setZoomOpen(true);
+    navigate(`/sense-pro?col=${col}&row=${row}`);
   };
 
   if (!category) {
