@@ -137,7 +137,7 @@ const StoreCard = ({ store, storeIndex }: StoreCardProps) => {
           <div
             className={SIGN_BAND_CLASS}
             style={{
-              background: "#8ccfd0",
+              background: "#cdeced",
               borderBottom: `2px solid ${style.accent}`,
             }}
           >
