@@ -383,6 +383,62 @@ const CartPage = () => {
       </div>
       </main>
       <MallFooter />
+      <Dialog open={paymentOpen} onOpenChange={setPaymentOpen}>
+        <DialogContent dir="rtl" className="max-w-[420px]">
+          <DialogHeader>
+            <DialogTitle className="text-right text-[22px] font-black">בחר אמצעי תשלום</DialogTitle>
+            <DialogDescription className="text-right">
+              סכום לתשלום: {fmt(total)}
+            </DialogDescription>
+          </DialogHeader>
+          <div className="space-y-[9px]">
+            <PaymentButton
+              ariaLabel="תשלום בכרטיס אשראי"
+              className="gap-3 bg-gradient-to-b from-[#1b7279] to-[#095762] text-white"
+              onClick={() => handlePay("כרטיס אשראי")}
+            >
+              <CreditCard className="h-[32px] w-[32px]" strokeWidth={3.5} />
+              <span>כרטיס אשראי</span>
+            </PaymentButton>
+            <PaymentButton
+              ariaLabel="תשלום ב-bit"
+              className="bg-gradient-to-b from-[#4bd970] to-[#24bd4d] text-white"
+              onClick={() => handlePay("bit")}
+            >
+              bit
+            </PaymentButton>
+            <PaymentButton
+              ariaLabel="תשלום ב-PayPal"
+              className="bg-gradient-to-b from-[#12a9e7] to-[#0478bd] text-white"
+              onClick={() => handlePay("PayPal")}
+            >
+              <span className="text-[20px] font-black italic">P PayPal</span>
+            </PaymentButton>
+            <PaymentButton
+              ariaLabel="תשלום ב-Google Pay"
+              className="border-[#7a7a7a] bg-white text-[22px]"
+              onClick={() => handlePay("Google Pay")}
+            >
+              <span>
+                <span className="text-[#4285f4]">G</span>
+                <span className="text-[#db4437]">o</span>
+                <span className="text-[#f4b400]">o</span>
+                <span className="text-[#4285f4]">g</span>
+                <span className="text-[#0f9d58]">l</span>
+                <span className="text-[#db4437]">e</span>
+                <span className="text-[#5f6368]"> Pay</span>
+              </span>
+            </PaymentButton>
+            <PaymentButton
+              ariaLabel="תשלום ב-Apple Pay"
+              className="bg-black text-white"
+              onClick={() => handlePay("Apple Pay")}
+            >
+              <span className="text-[27px]">Apple Pay</span>
+            </PaymentButton>
+          </div>
+        </DialogContent>
+      </Dialog>
     </div>
   );
 };
