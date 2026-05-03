@@ -265,15 +265,17 @@ const IsraelMezuzahsCategoryPage = () => {
                   )}
                 </div>
                 <Dialog open={zoomOpen} onOpenChange={setZoomOpen}>
-                  <DialogContent className="max-w-2xl p-4">
+                  <DialogContent className="max-w-md p-6 flex flex-col items-center">
                     {snapshot && (
                       <div
-                        className="w-full aspect-square rounded-lg shadow-inner"
+                        className="rounded-lg shadow-inner bg-secondary"
                         style={{
+                          width: 240,
+                          height: 480,
                           backgroundImage: `url(${imMezuzahsCollection})`,
                           backgroundRepeat: "no-repeat",
-                          backgroundSize: `${snapshot.bgW * 1.6}px ${snapshot.bgH * 1.6}px`,
-                          backgroundPosition: `${snapshot.bgX * 1.6 - 100}px ${snapshot.bgY * 1.6 - 100}px`,
+                          backgroundSize: `${gridCols * 100}% ${gridRows * 100}%`,
+                          backgroundPosition: `${(snapshot.col / (gridCols - 1)) * 100}% ${(snapshot.row / (gridRows - 1)) * 100}%`,
                         }}
                       />
                     )}
