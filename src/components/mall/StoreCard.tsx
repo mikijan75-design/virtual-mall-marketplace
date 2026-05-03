@@ -21,6 +21,7 @@ import bakeryImg from "@/assets/stores/bakery.jpg";
 import juiceImg from "@/assets/stores/juice.jpg";
 import comingSoonImg from "@/assets/stores/coming-soon.png";
 import forRentImg from "@/assets/stores/for-rent.png";
+import israelMezuzahsLogo from "@/assets/stores/israel-mezuzahs-logo.png";
 
 const brandStyles: Record<string, { bg: string; text: string; accent: string; font: string; image: string; subtitle: string; logo?: string; subtitleLogo?: string }> = {
   "אופנה עילית": { bg: "linear-gradient(135deg, #f5eef0, #ede4e8)", text: "#3a2a30", accent: "#c9a96e", font: "font-frank", image: fashionImg, subtitle: "קוטור יוקרה" },
@@ -66,6 +67,10 @@ const idOverrides: Record<string, Partial<{ name: string; bg: string; text: stri
   },
   s13: comingSoonOverride,
   s14: comingSoonOverride,
+  s2: {
+    name: "Israel Mezuzahs",
+    logo: israelMezuzahsLogo,
+  },
 };
 
 const defaultStyle = { bg: "linear-gradient(135deg, #f5f0e8, #ede4d8)", text: "#3a2a20", accent: "#c9a96e", font: "font-frank", image: "", subtitle: "", logo: undefined as string | undefined, subtitleLogo: undefined as string | undefined };
