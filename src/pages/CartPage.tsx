@@ -1,5 +1,6 @@
 import { CreditCard, Minus, Plus } from "lucide-react";
 import type { ReactNode } from "react";
+import BackButton from "@/components/BackButton";
 
 const HeadphonesThumbnail = () => (
   <svg viewBox="0 0 180 180" role="img" aria-label="אוזניות SENSE PRO" className="h-full w-full">
@@ -72,6 +73,7 @@ const PaymentButton = ({
 const CartPage = () => {
   return (
     <main className="min-h-screen bg-white font-heebo text-[#111]" dir="rtl">
+      <BackButton />
       <div className="mx-auto grid max-w-[1000px] grid-cols-1 gap-5 px-2 py-5 lg:grid-cols-[274px_1fr]" dir="rtl">
         <aside className="order-2 space-y-[7px] lg:order-1">
           <section className="rounded-[6px] border border-[#537a7c] bg-[#eef5f4] p-[11px] shadow-[0_1px_8px_rgba(0,0,0,0.16)]">
