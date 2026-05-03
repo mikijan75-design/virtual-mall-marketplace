@@ -10,6 +10,7 @@ import SenseProProductPage from "./pages/SenseProProductPage.tsx";
 import CartPage from "./pages/CartPage.tsx";
 import InfoPage from "./pages/InfoPage.tsx";
 import NotFound from "./pages/NotFound.tsx";
+import { CartProvider } from "./context/CartContext";
 
 const queryClient = new QueryClient();
 
@@ -19,6 +20,7 @@ const App = () => (
       <Toaster />
       <Sonner />
       <BrowserRouter>
+      <CartProvider>
         <Routes>
           <Route path="/" element={<Index />} />
           <Route path="/cart" element={<CartPage />} />
@@ -29,6 +31,7 @@ const App = () => (
           <Route path="/info" element={<InfoPage />} />
           <Route path="*" element={<NotFound />} />
         </Routes>
+      </CartProvider>
       </BrowserRouter>
     </TooltipProvider>
   </QueryClientProvider>
