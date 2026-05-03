@@ -6,6 +6,7 @@ import PageTracker from "@/components/PageTracker";
 import { Dialog, DialogContent } from "@/components/ui/dialog";
 import { Button } from "@/components/ui/button";
 import { ChevronLeft, ChevronRight, Check } from "lucide-react";
+import { useCart } from "@/context/CartContext";
 import imProduct1 from "@/assets/stores/im-product-1.png";
 import imProduct2 from "@/assets/stores/im-product-2.png";
 import imProduct3 from "@/assets/stores/im-product-3.png";
@@ -118,6 +119,7 @@ export const imCategories: IMCategory[] = [
 const IsraelMezuzahsCategoryPage = () => {
   const { categorySlug } = useParams<{ categorySlug: string }>();
   const navigate = useNavigate();
+  const { addItem: addToCart } = useCart();
   const categoryIdx = imCategories.findIndex((c) => c.slug === categorySlug);
   const category = categoryIdx >= 0 ? imCategories[categoryIdx] : undefined;
   const isMezuzahs = category?.slug === "mezuzahs";
@@ -360,7 +362,17 @@ const IsraelMezuzahsCategoryPage = () => {
                       onClick={() => {
                         if (!snapshot) return;
                         setZoomOpen(false);
-                        navigate(`/cart?col=${snapshot.col}&row=${snapshot.row}`);
+                        const itemNumber = snapshot.row * gridCols + snapshot.col + 1;
+                        addToCart({
+                          id: `mezuzah-${snapshot.col}-${snapshot.row}`,
+                          type: "mezuzah",
+                          name: `מזוזה מס׳ ${itemNumber}`,
+                          brand: "Israel Mezuzahs",
+                          unitPrice: 150,
+                          shippingPerItem: 20,
+                          meta: { col: snapshot.col, row: snapshot.row, itemNumber },
+                        });
+                        navigate(`/cart`);
                       }}
                     >
                       <Check className="h-4 w-4 ml-2" />
