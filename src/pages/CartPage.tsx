@@ -70,14 +70,17 @@ const PaymentButton = ({
   children,
   className,
   ariaLabel,
+  onClick,
 }: {
   children: ReactNode;
   className: string;
   ariaLabel: string;
+  onClick?: () => void;
 }) => (
   <button
     type="button"
     aria-label={ariaLabel}
+    onClick={onClick}
     className={`flex h-[45px] w-full items-center justify-center rounded-[5px] border border-black/20 text-[23px] font-black shadow-[inset_0_1px_0_rgba(255,255,255,0.22)] ${className}`}
   >
     {children}
