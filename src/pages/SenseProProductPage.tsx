@@ -37,6 +37,23 @@ const productSpecs = [
   "\n\n\n",
 ];
 
+const mezuzahColors = [
+  "כחול ים",
+  "טורקיז",
+  "ירוק זית",
+  "ענבר",
+  "זהב",
+  "ורוד עתיק",
+  "סגול מלכותי",
+  "אדום יין",
+  "שחור פחם",
+  "לבן שנהב",
+  "חום קפה",
+  "כתום שקיעה",
+];
+
+const colorForItem = (n: number) => mezuzahColors[(n - 1) % mezuzahColors.length];
+
 const shippingNotes = ["פרטים", "אפשרות לאיסוף עצמי"];
 
 const ImagePlaceholder = ({ src, compact = false }: { src?: string | null; compact?: boolean }) => {
@@ -339,8 +356,8 @@ const SenseProProductPage = () => {
               + {mezuzah?.shippingPerItem ?? 25} ₪ דמי משלוח
             </p>
 
-            <div className="mx-auto mt-[10px] w-fit rounded-[6px] border border-[#c6b681] bg-[#fff7dd] px-[12px] py-[6px] text-[14px] shadow-[0_1px_2px_rgba(0,0,0,0.08)]">
-              מבצע :🎉
+            <div className="mx-auto mt-[10px] w-fit rounded-[6px] border border-[#c6b681] bg-[#fff7dd] px-[12px] py-[6px] text-[14px] font-bold shadow-[0_1px_2px_rgba(0,0,0,0.08)]">
+              🎉 מבצע: משלוח חינם על פריט שני
             </div>
 
             <div className="mt-[12px] space-y-[9px]">
@@ -379,11 +396,19 @@ const SenseProProductPage = () => {
 
           <div className="mt-[20px]">
             <Section title="מפרט טכני">
-              <ul className="list-inside list-disc text-[16px] font-semibold leading-[1.45] whitespace-pre-line">
-                {productSpecs.map((spec, index) => (
-                  <li key={index}>{spec}</li>
-                ))}
-              </ul>
+              {mezuzah ? (
+                <ul className="list-inside list-disc pr-2 text-[15px] font-semibold leading-[1.55]">
+                  <li>צבע: {colorForItem(mezuzah.itemNumber)}</li>
+                  <li>חומר: אפוקסי יצוק בעבודת יד</li>
+                  <li>עץ: עץ זית מארץ ישראל</li>
+                </ul>
+              ) : (
+                <ul className="list-inside list-disc text-[16px] font-semibold leading-[1.45] whitespace-pre-line">
+                  {productSpecs.map((spec, index) => (
+                    <li key={index}>{spec}</li>
+                  ))}
+                </ul>
+              )}
             </Section>
 
             <Section title="שאלות ותשובות">
