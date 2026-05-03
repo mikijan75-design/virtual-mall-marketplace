@@ -376,6 +376,7 @@ const IsraelMezuzahsCategoryPage = () => {
                           title: "נוסף לעגלה",
                           description: `מזוזה מס׳ ${itemNumber} נוספה לעגלה. ניתן להמשיך בבחירה ולעבור לעגלה דרך האייקון בבר העליון.`,
                         });
+                        setZoomOpen(false);
                       }}
                     >
                       <Check className="h-4 w-4 ml-2" />
