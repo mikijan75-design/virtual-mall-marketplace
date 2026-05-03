@@ -21,8 +21,21 @@ import bakeryImg from "@/assets/stores/bakery.jpg";
 import juiceImg from "@/assets/stores/juice.jpg";
 import comingSoonImg from "@/assets/stores/coming-soon.png";
 import forRentImg from "@/assets/stores/for-rent.png";
+import IsraelMezuzahsWordmark from "@/components/mall/IsraelMezuzahsWordmark";
 
-const brandStyles: Record<string, { bg: string; text: string; accent: string; font: string; image: string; subtitle: string; logo?: string; subtitleLogo?: string }> = {
+type BrandStyle = {
+  bg: string;
+  text: string;
+  accent: string;
+  font: string;
+  image: string;
+  subtitle: string;
+  logo?: string;
+  subtitleLogo?: string;
+  codedWordmark?: "israel-mezuzahs";
+};
+
+const brandStyles: Record<string, BrandStyle> = {
   "אופנה עילית": { bg: "linear-gradient(135deg, #f5eef0, #ede4e8)", text: "#3a2a30", accent: "#c9a96e", font: "font-frank", image: fashionImg, subtitle: "קוטור יוקרה" },
   "טכנולוגיה מתקדמת": { bg: "linear-gradient(135deg, #e8f0f8, #dbe6f2)", text: "#1a3a5c", accent: "#4fc3f7", font: "font-heebo", image: techImg, subtitle: "גאדג'טים מהעתיד" },
   "חנות עיצוב": { bg: "linear-gradient(135deg, #f8f0e8, #f0e6d8)", text: "#4a3520", accent: "#d4a373", font: "font-frank", image: designImg, subtitle: "סטודיו לציור" },
@@ -52,7 +65,7 @@ const comingSoonOverride = {
   subtitle: "בשיפוצים",
 };
 
-const idOverrides: Record<string, Partial<{ name: string; bg: string; text: string; accent: string; font: string; image: string; subtitle: string; logo: string; subtitleLogo: string }>> = {
+const idOverrides: Record<string, Partial<BrandStyle & { name: string }>> = {
   s6: comingSoonOverride,
   s7: comingSoonOverride,
   s9: {
@@ -66,9 +79,15 @@ const idOverrides: Record<string, Partial<{ name: string; bg: string; text: stri
   },
   s13: comingSoonOverride,
   s14: comingSoonOverride,
+  s2: {
+    name: "Israel Mezuzahs",
+    accent: "#10252b",
+    subtitle: "מזוזות ועוד",
+    codedWordmark: "israel-mezuzahs",
+  },
 };
 
-const defaultStyle = { bg: "linear-gradient(135deg, #f5f0e8, #ede4d8)", text: "#3a2a20", accent: "#c9a96e", font: "font-frank", image: "", subtitle: "", logo: undefined as string | undefined, subtitleLogo: undefined as string | undefined };
+const defaultStyle: BrandStyle = { bg: "linear-gradient(135deg, #f5f0e8, #ede4d8)", text: "#3a2a20", accent: "#c9a96e", font: "font-frank", image: "", subtitle: "", logo: undefined, subtitleLogo: undefined };
 
 const romanNumerals = ["I", "II", "III", "IV", "V", "VI"];
 
@@ -105,7 +124,19 @@ const StoreCard = ({ store, storeIndex }: StoreCardProps) => {
         />
 
         {/* Brand sign */}
-        {style.logo ? (
+        {style.codedWordmark === "israel-mezuzahs" ? (
+          <div
+            className="relative z-10 flex items-center justify-center overflow-hidden"
+            style={{
+              background: "#8ccfd0",
+              borderBottom: `2px solid ${style.accent}`,
+              minHeight: "36px",
+              maxHeight: "48px",
+            }}
+          >
+            <IsraelMezuzahsWordmark style={{ width: "100%", height: "100%" }} />
+          </div>
+        ) : style.logo ? (
           <div
             className="relative z-10 flex items-center justify-center overflow-hidden"
             style={{
