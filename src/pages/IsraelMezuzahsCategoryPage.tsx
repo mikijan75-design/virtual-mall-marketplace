@@ -128,8 +128,11 @@ const IsraelMezuzahsCategoryPage = () => {
   const [zoomOpen, setZoomOpen] = useState(false);
   const [snapshot, setSnapshot] = useState<{ col: number; row: number } | null>(null);
 
-  const gridCols = 30;
-  const gridRows = 5;
+  // Boundaries detected from the source image (white-gap midpoints, normalized 0..1)
+  const colBounds = [0, 0.0403, 0.0772, 0.1129, 0.1485, 0.1851, 0.2205, 0.2554, 0.2911, 0.3261, 0.362, 0.397, 0.4314, 0.467, 0.5026, 0.538, 0.5739, 0.6096, 0.6449, 0.6809, 0.7162, 0.7515, 0.7875, 0.8228, 0.8584, 0.8937, 0.9297, 0.9657, 1];
+  const rowBounds = [0, 0.2078, 0.4077, 0.6061, 0.8045, 1];
+  const gridCols = colBounds.length - 1;
+  const gridRows = rowBounds.length - 1;
 
   const handleMove = (e: React.MouseEvent<HTMLDivElement>) => {
     const img = imgRef.current;
@@ -213,15 +216,15 @@ const IsraelMezuzahsCategoryPage = () => {
                     draggable={false}
                   />
                   <div
-                    className="absolute inset-0 grid"
-                    style={{
-                      gridTemplateColumns: `repeat(${gridCols}, 1fr)`,
-                      gridTemplateRows: `repeat(${gridRows}, 1fr)`,
-                    }}
+                    className="absolute inset-0"
                   >
                     {Array.from({ length: gridCols * gridRows }).map((_, i) => {
                       const col = i % gridCols;
                       const row = Math.floor(i / gridCols);
+                      const left = colBounds[col] * 100;
+                      const right = (1 - colBounds[col + 1]) * 100;
+                      const top = rowBounds[row] * 100;
+                      const bottom = (1 - rowBounds[row + 1]) * 100;
                       return (
                         <button
                           key={i}
@@ -231,7 +234,8 @@ const IsraelMezuzahsCategoryPage = () => {
                             e.stopPropagation();
                             openZoomAtCell(col, row);
                           }}
-                          className="border border-mall-gold/30 hover:border-mall-gold hover:bg-mall-gold/20 transition-colors cursor-pointer"
+                          className="absolute border border-mall-gold/30 hover:border-mall-gold hover:bg-mall-gold/20 transition-colors cursor-pointer"
+                          style={{ left: `${left}%`, right: `${right}%`, top: `${top}%`, bottom: `${bottom}%` }}
                         />
                       );
                     })}
