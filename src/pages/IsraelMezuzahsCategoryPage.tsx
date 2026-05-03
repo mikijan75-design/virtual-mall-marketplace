@@ -119,6 +119,7 @@ export const imCategories: IMCategory[] = [
 const IsraelMezuzahsCategoryPage = () => {
   const { categorySlug } = useParams<{ categorySlug: string }>();
   const navigate = useNavigate();
+  const { addItem: addToCart } = useCart();
   const categoryIdx = imCategories.findIndex((c) => c.slug === categorySlug);
   const category = categoryIdx >= 0 ? imCategories[categoryIdx] : undefined;
   const isMezuzahs = category?.slug === "mezuzahs";
