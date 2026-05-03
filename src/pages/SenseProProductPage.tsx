@@ -31,8 +31,8 @@ const galleryImages = [
 
 const productSpecs = [
   "\n",
-  "ביטול רעשים אקטיבי",
-  "מתחברים גם באוזניות אלחוטיות",
+  "\n",
+  "\n\n\n",
 ];
 
 const shippingNotes = ["פרטים", "אפשרות לאיסוף עצמי"];
