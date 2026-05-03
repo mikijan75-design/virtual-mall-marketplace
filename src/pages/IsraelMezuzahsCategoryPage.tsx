@@ -1,4 +1,5 @@
 import { useParams, Link } from "react-router-dom";
+import { useRef, useState } from "react";
 import MallHeader from "@/components/mall/MallHeader";
 import PageTracker from "@/components/PageTracker";
 import imProduct1 from "@/assets/stores/im-product-1.png";
@@ -116,6 +117,34 @@ const IsraelMezuzahsCategoryPage = () => {
   const category = categoryIdx >= 0 ? imCategories[categoryIdx] : undefined;
   const isMezuzahs = category?.slug === "mezuzahs";
 
+  const lensSize = 180;
+  const zoom = 2.5;
+  const imgRef = useRef<HTMLImageElement>(null);
+  const [lens, setLens] = useState<{ x: number; y: number; bgX: number; bgY: number; bgW: number; bgH: number; visible: boolean }>({
+    x: 0, y: 0, bgX: 0, bgY: 0, bgW: 0, bgH: 0, visible: false,
+  });
+
+  const handleMove = (e: React.MouseEvent<HTMLDivElement>) => {
+    const img = imgRef.current;
+    if (!img) return;
+    const rect = img.getBoundingClientRect();
+    const x = e.clientX - rect.left;
+    const y = e.clientY - rect.top;
+    if (x < 0 || y < 0 || x > rect.width || y > rect.height) {
+      setLens((l) => ({ ...l, visible: false }));
+      return;
+    }
+    setLens({
+      x,
+      y,
+      bgW: rect.width * zoom,
+      bgH: rect.height * zoom,
+      bgX: -(x * zoom - lensSize / 2),
+      bgY: -(y * zoom - lensSize / 2),
+      visible: true,
+    });
+  };
+
   if (!category) {
     return (
       <div className="min-h-screen bg-background">
@@ -158,11 +187,34 @@ const IsraelMezuzahsCategoryPage = () => {
                 <p className="text-muted-foreground font-heebo leading-relaxed max-w-3xl mx-auto mb-6">
                   {category.description}
                 </p>
-                <img
-                  src={imMezuzahsCollection}
-                  alt={category.name}
-                  className="w-full h-auto rounded-lg shadow-md"
-                />
+                <div
+                  className="relative inline-block w-full overflow-hidden rounded-lg shadow-md cursor-crosshair"
+                  onMouseMove={handleMove}
+                  onMouseLeave={() => setLens((l) => ({ ...l, visible: false }))}
+                >
+                  <img
+                    ref={imgRef}
+                    src={imMezuzahsCollection}
+                    alt={category.name}
+                    className="w-full h-auto block select-none"
+                    draggable={false}
+                  />
+                  {lens.visible && (
+                    <div
+                      className="pointer-events-none absolute rounded-full border-4 border-white shadow-2xl ring-2 ring-black/30"
+                      style={{
+                        width: lensSize,
+                        height: lensSize,
+                        left: lens.x - lensSize / 2,
+                        top: lens.y - lensSize / 2,
+                        backgroundImage: `url(${imMezuzahsCollection})`,
+                        backgroundRepeat: "no-repeat",
+                        backgroundSize: `${lens.bgW}px ${lens.bgH}px`,
+                        backgroundPosition: `${lens.bgX}px ${lens.bgY}px`,
+                      }}
+                    />
+                  )}
+                </div>
               </div>
             ) : (
               <>
