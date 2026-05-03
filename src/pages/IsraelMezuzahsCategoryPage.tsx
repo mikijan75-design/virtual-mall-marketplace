@@ -361,7 +361,6 @@ const IsraelMezuzahsCategoryPage = () => {
                       className="mt-4 bg-mall-gold text-mall-sign hover:bg-mall-gold/90 font-heebo font-bold"
                       onClick={() => {
                         if (!snapshot) return;
-                        setZoomOpen(false);
                         const itemNumber = snapshot.row * gridCols + snapshot.col + 1;
                         addToCart({
                           id: `mezuzah-${snapshot.col}-${snapshot.row}`,
@@ -372,7 +371,10 @@ const IsraelMezuzahsCategoryPage = () => {
                           shippingPerItem: 20,
                           meta: { col: snapshot.col, row: snapshot.row, itemNumber },
                         });
-                        navigate(`/cart`);
+                        toast({
+                          title: "נוסף לעגלה",
+                          description: `מזוזה מס׳ ${itemNumber} נוספה לעגלה. ניתן להמשיך בבחירה ולעבור לעגלה דרך האייקון בבר העליון.`,
+                        });
                       }}
                     >
                       <Check className="h-4 w-4 ml-2" />
