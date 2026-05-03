@@ -2,6 +2,7 @@ import { useParams, Link } from "react-router-dom";
 import { mallFloors } from "@/data/mallData";
 import MallHeader from "@/components/mall/MallHeader";
 import israelMezuzahsAbout from "@/assets/stores/israel-mezuzahs-about.png";
+import imBeadLogo from "@/assets/stores/im-bead-logo.png";
 import imProduct1 from "@/assets/stores/im-product-1.png";
 import imProduct2 from "@/assets/stores/im-product-2.png";
 import imProduct3 from "@/assets/stores/im-product-3.png";
@@ -51,7 +52,15 @@ const StorePage = () => {
       {/* Store banner */}
       <div className={`bg-gradient-to-r ${store.signColor} py-8 md:py-12`}>
         <div className="container mx-auto text-center text-white">
-          <span className="text-6xl md:text-8xl block mb-4">{store.logoEmoji}</span>
+          {isIsraelMezuzahs ? (
+            <img
+              src={imBeadLogo}
+              alt="Israel Mezuzahs logo"
+              className="block mx-auto mb-4 h-24 md:h-32 w-auto object-contain drop-shadow-lg"
+            />
+          ) : (
+            <span className="text-6xl md:text-8xl block mb-4">{store.logoEmoji}</span>
+          )}
           <h1 className="text-3xl md:text-5xl font-frank font-bold mb-2">
             {isIsraelMezuzahs ? "Israel Mezuzahs" : store.name}
           </h1>
