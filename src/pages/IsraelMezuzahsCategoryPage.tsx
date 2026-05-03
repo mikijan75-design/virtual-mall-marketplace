@@ -9,6 +9,7 @@ import imProduct5 from "@/assets/stores/im-product-5.png";
 import imProduct6 from "@/assets/stores/im-product-6.png";
 import imProduct7 from "@/assets/stores/im-product-7.png";
 import imProduct8 from "@/assets/stores/im-product-8.png";
+import imMezuzahsCollection from "@/assets/stores/im-mezuzahs-collection.png";
 
 export interface IMCategory {
   slug: string;
@@ -113,6 +114,7 @@ const IsraelMezuzahsCategoryPage = () => {
   const { categorySlug } = useParams<{ categorySlug: string }>();
   const categoryIdx = imCategories.findIndex((c) => c.slug === categorySlug);
   const category = categoryIdx >= 0 ? imCategories[categoryIdx] : undefined;
+  const isMezuzahs = category?.slug === "mezuzahs";
 
   if (!category) {
     return (
@@ -148,48 +150,66 @@ const IsraelMezuzahsCategoryPage = () => {
       <div className="container mx-auto py-12 px-4">
         <div className="max-w-5xl mx-auto">
           <div className="bg-card border border-border rounded-xl p-6 md:p-8 shadow-lg">
-            <div className="grid grid-cols-1 md:grid-cols-2 gap-6 mb-10 items-center">
-              <img
-                src={category.hero}
-                alt={category.name}
-                className="w-full h-auto rounded-lg shadow-md object-cover aspect-square"
-              />
-              <div className="text-right">
-                <h2 className="text-2xl font-frank font-bold text-foreground mb-3">
+            {isMezuzahs ? (
+              <div className="text-center">
+                <h2 className="text-3xl md:text-4xl font-frank font-bold text-foreground mb-2">
                   על {category.name}
                 </h2>
-                <p className="text-muted-foreground font-heebo leading-relaxed">
+                <p className="text-muted-foreground font-heebo leading-relaxed max-w-3xl mx-auto mb-6">
                   {category.description}
                 </p>
+                <img
+                  src={imMezuzahsCollection}
+                  alt={category.name}
+                  className="w-full h-auto rounded-lg shadow-md"
+                />
               </div>
-            </div>
-
-            <h3 className="text-xl font-frank font-bold text-foreground mb-4 text-right">
-              דגמים בקטגוריה
-            </h3>
-            <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 gap-4">
-              {category.items.map((item, i) => (
-                <div
-                  key={i}
-                  className="bg-muted rounded-lg p-4 border border-border flex flex-col"
-                >
-                  <div className="w-full aspect-square bg-secondary rounded-md mb-3 overflow-hidden">
-                    <img
-                      src={item.img}
-                      alt={item.name}
-                      className="w-full h-full object-cover"
-                      loading="lazy"
-                    />
+            ) : (
+              <>
+                <div className="grid grid-cols-1 md:grid-cols-2 gap-6 mb-10 items-center">
+                  <img
+                    src={category.hero}
+                    alt={category.name}
+                    className="w-full h-auto rounded-lg shadow-md object-cover aspect-square"
+                  />
+                  <div className="text-right">
+                    <h2 className="text-2xl font-frank font-bold text-foreground mb-3">
+                      על {category.name}
+                    </h2>
+                    <p className="text-muted-foreground font-heebo leading-relaxed">
+                      {category.description}
+                    </p>
                   </div>
-                  <p className="text-base font-heebo font-bold text-foreground text-right mb-1">
-                    {item.name}
-                  </p>
-                  <p className="text-sm text-muted-foreground font-heebo text-right">
-                    {item.description}
-                  </p>
                 </div>
-              ))}
-            </div>
+
+                <h3 className="text-xl font-frank font-bold text-foreground mb-4 text-right">
+                  דגמים בקטגוריה
+                </h3>
+                <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 gap-4">
+                  {category.items.map((item, i) => (
+                    <div
+                      key={i}
+                      className="bg-muted rounded-lg p-4 border border-border flex flex-col"
+                    >
+                      <div className="w-full aspect-square bg-secondary rounded-md mb-3 overflow-hidden">
+                        <img
+                          src={item.img}
+                          alt={item.name}
+                          className="w-full h-full object-cover"
+                          loading="lazy"
+                        />
+                      </div>
+                      <p className="text-base font-heebo font-bold text-foreground text-right mb-1">
+                        {item.name}
+                      </p>
+                      <p className="text-sm text-muted-foreground font-heebo text-right">
+                        {item.description}
+                      </p>
+                    </div>
+                  ))}
+                </div>
+              </>
+            )}
           </div>
 
           <div className="text-center mt-8 flex flex-wrap gap-4 justify-center">
