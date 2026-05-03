@@ -130,11 +130,12 @@ const StoreCard = ({ store, storeIndex }: StoreCardProps) => {
             style={{
               background: "#8ccfd0",
               borderBottom: `2px solid ${style.accent}`,
-              minHeight: "36px",
-              maxHeight: "48px",
             }}
           >
-            <IsraelMezuzahsWordmark style={{ width: "100%", height: "100%" }} />
+            <IsraelMezuzahsWordmark
+              className="w-full h-full"
+              style={{ minHeight: "36px", maxHeight: "48px", objectFit: "contain" }}
+            />
           </div>
         ) : style.logo ? (
           <div
