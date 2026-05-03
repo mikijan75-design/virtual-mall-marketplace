@@ -1,5 +1,6 @@
 import { mallFloors } from "@/data/mallData";
 import MallHeader from "@/components/mall/MallHeader";
+import PageTracker from "@/components/PageTracker";
 import FloorMap from "@/components/mall/FloorMap";
 import CrossSectionMallScene from "@/components/mall/CrossSectionMallScene";
 import MeasurementRulers from "@/components/MeasurementRulers";
@@ -18,6 +19,7 @@ const Index = () => {
     >
       <MeasurementRulers />
       <MallHeader />
+      <PageTracker />
       <CrossSectionMallScene floors={mallFloors} />
 
       {/* Floor Map */}

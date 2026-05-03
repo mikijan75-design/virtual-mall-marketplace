@@ -1,5 +1,6 @@
 import { useParams, Link } from "react-router-dom";
 import MallHeader from "@/components/mall/MallHeader";
+import PageTracker from "@/components/PageTracker";
 import imProduct1 from "@/assets/stores/im-product-1.png";
 import imProduct2 from "@/assets/stores/im-product-2.png";
 import imProduct3 from "@/assets/stores/im-product-3.png";
@@ -110,12 +111,14 @@ export const imCategories: IMCategory[] = [
 
 const IsraelMezuzahsCategoryPage = () => {
   const { categorySlug } = useParams<{ categorySlug: string }>();
-  const category = imCategories.find((c) => c.slug === categorySlug);
+  const categoryIdx = imCategories.findIndex((c) => c.slug === categorySlug);
+  const category = categoryIdx >= 0 ? imCategories[categoryIdx] : undefined;
 
   if (!category) {
     return (
       <div className="min-h-screen bg-background">
         <MallHeader />
+        <PageTracker storeId="s2" />
         <div className="flex flex-col items-center justify-center py-20 gap-4">
           <span className="text-6xl">🔍</span>
           <h2 className="text-2xl font-frank font-bold text-foreground">הקטגוריה לא נמצאה</h2>
@@ -130,6 +133,7 @@ const IsraelMezuzahsCategoryPage = () => {
   return (
     <div className="min-h-screen bg-background">
       <MallHeader />
+      <PageTracker storeId="s2" categorySlug={category.slug} categoryIndex={categoryIdx + 1} />
 
       <div className="bg-gradient-to-r from-cyan-400 to-blue-600 py-8 md:py-12">
         <div className="container mx-auto text-center text-white px-4">
