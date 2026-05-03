@@ -1,5 +1,8 @@
 import { Link } from "react-router-dom";
 import type { ReactNode } from "react";
+import MallHeader from "@/components/mall/MallHeader";
+import MallFooter from "@/components/mall/MallFooter";
+import PageTracker from "@/components/PageTracker";
 
 type DesignedIconName =
   | "storefront"
@@ -338,7 +341,9 @@ const CycleDiagram = () => (
 
 const InfoPage = () => {
   return (
-    <div className="min-h-screen bg-[#fffdfb] p-0 font-heebo text-[#3b2618]" dir="rtl">
+    <div className="min-h-screen flex flex-col bg-[#fffdfb] p-0 font-heebo text-[#3b2618]" dir="rtl">
+      <MallHeader />
+      <PageTracker />
       <main className="relative mx-auto min-h-screen w-full max-w-[1280px] overflow-hidden bg-white px-[clamp(1.5rem,5vw,5rem)] py-[clamp(1.2rem,3vw,2rem)] shadow-[0_0_35px_rgba(91,55,19,0.08)]">
         <div className="absolute -left-10 top-0 h-[64px] w-[230px] rounded-br-[90px] bg-gradient-to-r from-[#f8b65c] to-[#fee5bf]" aria-hidden="true" />
         <div className="absolute -right-8 top-[-66px] h-32 w-32 rounded-full border-[26px] border-[#fbecd8]" aria-hidden="true" />
@@ -395,6 +400,7 @@ const InfoPage = () => {
           </Link>
         </div>
       </main>
+      <MallFooter />
     </div>
   );
 };
