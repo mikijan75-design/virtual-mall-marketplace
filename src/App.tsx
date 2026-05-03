@@ -7,6 +7,7 @@ import Index from "./pages/Index.tsx";
 import StorePage from "./pages/StorePage.tsx";
 import IsraelMezuzahsCategoryPage from "./pages/IsraelMezuzahsCategoryPage.tsx";
 import SenseProProductPage from "./pages/SenseProProductPage.tsx";
+import CartPage from "./pages/CartPage.tsx";
 import InfoPage from "./pages/InfoPage.tsx";
 import NotFound from "./pages/NotFound.tsx";
 
@@ -20,6 +21,7 @@ const App = () => (
       <BrowserRouter>
         <Routes>
           <Route path="/" element={<Index />} />
+          <Route path="/cart" element={<CartPage />} />
           <Route path="/sense-pro" element={<SenseProProductPage />} />
           <Route path="/product/sense-pro" element={<SenseProProductPage />} />
           <Route path="/store/:storeId" element={<StorePage />} />
