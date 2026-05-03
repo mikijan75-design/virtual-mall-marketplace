@@ -90,6 +90,7 @@ const idOverrides: Record<string, Partial<BrandStyle & { name: string }>> = {
 const defaultStyle: BrandStyle = { bg: "linear-gradient(135deg, #f5f0e8, #ede4d8)", text: "#3a2a20", accent: "#c9a96e", font: "font-frank", image: "", subtitle: "", logo: undefined, subtitleLogo: undefined };
 
 const romanNumerals = ["I", "II", "III", "IV", "V", "VI"];
+const STORE_CARD_CLASS = "h-[174px] min-h-[174px] max-h-[174px] md:h-[214px] md:min-h-[214px] md:max-h-[214px]";
 const SIGN_BAND_CLASS = "relative z-10 flex h-[48px] min-h-[48px] max-h-[48px] items-center justify-center overflow-hidden";
 const SUBTITLE_BAND_CLASS = "flex h-[26px] min-h-[26px] max-h-[26px] items-center justify-center overflow-hidden text-center";
 const IMAGE_AREA_CLASS = "h-[90px] min-h-[90px] max-h-[90px] md:h-[130px] md:min-h-[130px] md:max-h-[130px]";
@@ -109,12 +110,12 @@ const StoreCard = ({ store, storeIndex }: StoreCardProps) => {
   return (
     <button
       onClick={() => navigate(`/store/${store.id}`)}
-      className="group relative flex flex-col w-full cursor-pointer transition-all duration-300 hover:scale-[1.03] focus:outline-none"
+      className={`group relative flex w-full flex-col ${STORE_CARD_CLASS} cursor-pointer transition-all duration-300 hover:scale-[1.03] focus:outline-none`}
       aria-label={`כניסה לחנות ${store.name}`}
     >
       {/* Elegant outer frame */}
       <div
-        className="relative flex flex-col w-full rounded-lg overflow-hidden"
+        className="relative flex h-full w-full flex-col overflow-hidden rounded-lg"
         style={{
           border: "2px solid hsl(40,25%,72%)",
           boxShadow: "0 6px 24px rgba(0,0,0,0.12), inset 0 0 0 1px hsl(40,20%,85%)",
@@ -201,11 +202,11 @@ const StoreCard = ({ store, storeIndex }: StoreCardProps) => {
 
         {/* Realistic store image */}
         {style.image ? (
-          <div className="relative overflow-hidden">
+          <div className={`relative overflow-hidden ${IMAGE_AREA_CLASS}`}>
             <img
               src={style.image}
               alt={store.name}
-              className={`w-full ${IMAGE_AREA_CLASS} object-cover transition-transform duration-700 group-hover:scale-110`}
+              className="h-full w-full object-cover transition-transform duration-700 group-hover:scale-110"
               loading="lazy"
               width={512}
               height={512}
