@@ -1,10 +1,13 @@
-import { Heart, MessageCircle, Star } from "lucide-react";
+import { Heart, MessageCircle, Star, Check } from "lucide-react";
 import type { ReactNode } from "react";
-import { Link } from "react-router-dom";
+import { Link, useSearchParams } from "react-router-dom";
 import BackButton from "@/components/BackButton";
 import MallHeader from "@/components/mall/MallHeader";
 import MallFooter from "@/components/mall/MallFooter";
 import PageTracker from "@/components/PageTracker";
+import imMezuzahsCollection from "@/assets/stores/im-mezuzahs-collection.png";
+import { useCart } from "@/context/CartContext";
+import { toast } from "@/hooks/use-toast";
 
 const galleryImages = [
   {
@@ -150,7 +153,107 @@ const Section = ({ title, children }: { title: string; children: ReactNode }) =>
   </section>
 );
 
+// Boundaries from IsraelMezuzahsCategoryPage
+const colBounds = [0, 0.0403, 0.0772, 0.1129, 0.1485, 0.1851, 0.2205, 0.2554, 0.2911, 0.3261, 0.362, 0.397, 0.4314, 0.467, 0.5026, 0.538, 0.5739, 0.6096, 0.6449, 0.6809, 0.7162, 0.7515, 0.7875, 0.8228, 0.8584, 0.8937, 0.9297, 0.9657, 1];
+const rowBounds = [0, 0.2078, 0.4077, 0.6061, 0.8045, 1];
+const gridCols = colBounds.length - 1;
+
+const MezuzahProductView = ({ col, row }: { col: number; row: number }) => {
+  const { addItem } = useCart();
+  const itemNumber = row * gridCols + col + 1;
+  const cw = colBounds[col + 1] - colBounds[col];
+  const rh = rowBounds[row + 1] - rowBounds[row];
+  const bgW = 100 / cw;
+  const bgH = 100 / rh;
+  const px = (colBounds[col] / (1 - cw)) * 100;
+  const py = (rowBounds[row] / (1 - rh)) * 100;
+
+  const handleAdd = () => {
+    addItem({
+      id: `mezuzah-${col}-${row}`,
+      type: "mezuzah",
+      name: `מזוזה מס׳ ${itemNumber}`,
+      brand: "Israel Mezuzahs",
+      unitPrice: 150,
+      shippingPerItem: 20,
+      meta: { col, row, itemNumber },
+    });
+    toast({
+      title: "נוסף לעגלה",
+      description: `מזוזה מס׳ ${itemNumber} נוספה לעגלה. ניתן להמשיך בבחירה ולעבור לעגלה דרך האייקון בבר העליון.`,
+    });
+  };
+
+  return (
+    <div className="min-h-screen flex flex-col bg-background">
+      <MallHeader />
+      <PageTracker storeId="s2" categorySlug="mezuzahs" />
+      <BackButton />
+      <main className="flex-1" dir="rtl">
+        <div className="container mx-auto px-4 py-10 max-w-5xl">
+          <div className="grid grid-cols-1 md:grid-cols-2 gap-8 items-start bg-card border border-border rounded-xl p-6 md:p-8 shadow-lg">
+            <div
+              className="rounded-lg shadow-inner bg-secondary mx-auto"
+              style={{
+                width: 280,
+                height: 560,
+                backgroundImage: `url(${imMezuzahsCollection})`,
+                backgroundRepeat: "no-repeat",
+                backgroundSize: `${bgW}% ${bgH}%`,
+                backgroundPosition: `${px}% ${py}%`,
+                filter: "saturate(1.6) contrast(1.15) brightness(1.05)",
+              }}
+              aria-label={`מזוזה מס׳ ${itemNumber}`}
+            />
+            <div className="text-right">
+              <h1 className="text-3xl md:text-4xl font-frank font-bold text-foreground mb-2">
+                מזוזה מס׳ {itemNumber}
+              </h1>
+              <p className="text-muted-foreground font-heebo mb-4">
+                Israel Mezuzahs • מזוזה מעוצבת בעבודת יד מעץ זית מארץ ישראל בשילוב אפוקסי בגוונים מרהיבים. כל פריט ייחודי וקיים בעותק יחיד.
+              </p>
+              <table className="w-full font-heebo text-sm mb-5">
+                <tbody className="divide-y divide-border">
+                  <tr><td className="py-2 text-muted-foreground">מחיר לפריט</td><td className="py-2 font-bold text-mall-gold text-left">₪150</td></tr>
+                  <tr><td className="py-2 text-muted-foreground">כולל מע״מ</td><td className="py-2 font-bold text-foreground text-left">כן</td></tr>
+                  <tr><td className="py-2 text-muted-foreground">משלוח לפריט</td><td className="py-2 font-bold text-foreground text-left">₪20</td></tr>
+                  <tr><td className="py-2 text-muted-foreground">פריט שני</td><td className="py-2 font-bold text-mall-gold text-left">משלוח חינם</td></tr>
+                </tbody>
+              </table>
+              <button
+                onClick={handleAdd}
+                className="inline-flex items-center justify-center gap-2 bg-mall-gold text-mall-sign hover:bg-mall-gold/90 font-heebo font-bold px-6 py-3 rounded-lg shadow-md transition-colors"
+              >
+                <Check className="h-5 w-5" />
+                הוספה לעגלה
+              </button>
+              <div className="mt-4">
+                <Link
+                  to="/store/s2/category/mezuzahs"
+                  className="inline-block text-mall-gold hover:underline font-heebo"
+                >
+                  ← חזרה לבחירת מזוזה נוספת
+                </Link>
+              </div>
+            </div>
+          </div>
+        </div>
+      </main>
+      <MallFooter />
+    </div>
+  );
+};
+
 const SenseProProductPage = () => {
+  const [searchParams] = useSearchParams();
+  const colParam = searchParams.get("col");
+  const rowParam = searchParams.get("row");
+  const isMezuzah = colParam !== null && rowParam !== null;
+
+  if (isMezuzah) {
+    return <MezuzahProductView col={parseInt(colParam!, 10)} row={parseInt(rowParam!, 10)} />;
+  }
+
   return (
     <div className="min-h-screen flex flex-col bg-white">
       <MallHeader />
