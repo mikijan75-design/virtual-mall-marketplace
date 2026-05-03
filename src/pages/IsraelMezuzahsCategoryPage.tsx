@@ -1,4 +1,4 @@
-import { useParams, Link } from "react-router-dom";
+import { useParams, Link, useNavigate } from "react-router-dom";
 import { useRef, useState } from "react";
 import MallHeader from "@/components/mall/MallHeader";
 import MallFooter from "@/components/mall/MallFooter";
@@ -6,7 +6,6 @@ import PageTracker from "@/components/PageTracker";
 import { Dialog, DialogContent } from "@/components/ui/dialog";
 import { Button } from "@/components/ui/button";
 import { ChevronLeft, ChevronRight, Check } from "lucide-react";
-import { toast } from "sonner";
 import imProduct1 from "@/assets/stores/im-product-1.png";
 import imProduct2 from "@/assets/stores/im-product-2.png";
 import imProduct3 from "@/assets/stores/im-product-3.png";
