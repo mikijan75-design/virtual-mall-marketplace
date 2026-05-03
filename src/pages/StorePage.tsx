@@ -181,6 +181,7 @@ const StorePage = () => {
           </div>
         </div>
       </div>
+      <MallFooter />
     </div>
   );
 };
