@@ -1,6 +1,7 @@
 import { Heart, MessageCircle, Star } from "lucide-react";
 import type { ReactNode } from "react";
 import { Link } from "react-router-dom";
+import BackButton from "@/components/BackButton";
 
 const galleryImages = [
   {
@@ -149,6 +150,7 @@ const Section = ({ title, children }: { title: string; children: ReactNode }) =>
 const SenseProProductPage = () => {
   return (
     <main className="min-h-screen bg-white font-heebo text-[#101010]" dir="rtl">
+      <BackButton />
       <div
         className="mx-auto grid max-w-[984px] grid-cols-1 gap-8 px-[6px] py-11 lg:grid-cols-[432px_1fr_184px] lg:gap-[56px]"
         dir="ltr"
