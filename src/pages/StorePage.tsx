@@ -1,6 +1,7 @@
 import { useParams, Link } from "react-router-dom";
 import { mallFloors } from "@/data/mallData";
 import MallHeader from "@/components/mall/MallHeader";
+import PageTracker from "@/components/PageTracker";
 import israelMezuzahsAbout from "@/assets/stores/israel-mezuzahs-about.png";
 import imBeadLogo from "@/assets/stores/im-bead-logo.png";
 import imProduct1 from "@/assets/stores/im-product-1.png";
@@ -48,7 +49,8 @@ const StorePage = () => {
   return (
     <div className="min-h-screen bg-background">
       <MallHeader />
-      
+      <PageTracker storeId={store.id} />
+
       {/* Store banner */}
       <div className={`bg-gradient-to-r ${store.signColor} py-8 md:py-12`}>
         <div className="container mx-auto text-center text-white">
