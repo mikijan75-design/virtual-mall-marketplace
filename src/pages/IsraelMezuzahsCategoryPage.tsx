@@ -11,6 +11,7 @@ import imProduct6 from "@/assets/stores/im-product-6.png";
 import imProduct7 from "@/assets/stores/im-product-7.png";
 import imProduct8 from "@/assets/stores/im-product-8.png";
 import imMezuzahsCollection from "@/assets/stores/im-mezuzahs-collection.png";
+import { toast } from "@/hooks/use-toast";
 
 export interface IMCategory {
   slug: string;
@@ -117,6 +118,10 @@ const IsraelMezuzahsCategoryPage = () => {
   const category = categoryIdx >= 0 ? imCategories[categoryIdx] : undefined;
   const isMezuzahs = category?.slug === "mezuzahs";
 
+  // Grid overlay configuration matching the blue lines in the collection image
+  const GRID_ROWS = 5;
+  const GRID_COLS = 28;
+
   const lensSize = 180;
   const zoom = 2.5;
   const imgRef = useRef<HTMLImageElement>(null);
@@ -199,6 +204,38 @@ const IsraelMezuzahsCategoryPage = () => {
                     className="w-full h-auto block select-none"
                     draggable={false}
                   />
+                  {/* Grid overlay aligned with the blue separator lines */}
+                  <div
+                    className="pointer-events-none absolute inset-0 grid"
+                    style={{
+                      gridTemplateRows: `repeat(${GRID_ROWS}, 1fr)`,
+                      gridTemplateColumns: `repeat(${GRID_COLS}, 1fr)`,
+                    }}
+                  >
+                    {Array.from({ length: GRID_ROWS * GRID_COLS }).map((_, idx) => {
+                      const row = Math.floor(idx / GRID_COLS) + 1;
+                      const col = (idx % GRID_COLS) + 1;
+                      return (
+                        <div
+                          key={idx}
+                          className="relative flex items-center justify-center group"
+                        >
+                          <button
+                            type="button"
+                            aria-label={`מזוזה שורה ${row} עמודה ${col}`}
+                            onClick={(e) => {
+                              e.stopPropagation();
+                              toast({
+                                title: `מזוזה ${row}.${col}`,
+                                description: "נבחרה מזוזה מהאוסף",
+                              });
+                            }}
+                            className="pointer-events-auto w-1/2 h-1/3 rounded-sm border border-transparent hover:border-mall-gold hover:bg-mall-gold/20 focus:outline-none focus:ring-2 focus:ring-mall-gold transition-all cursor-pointer"
+                          />
+                        </div>
+                      );
+                    })}
+                  </div>
                   {lens.visible && (
                     <div
                       className="pointer-events-none absolute rounded-full border-4 border-white shadow-2xl ring-2 ring-black/30"
