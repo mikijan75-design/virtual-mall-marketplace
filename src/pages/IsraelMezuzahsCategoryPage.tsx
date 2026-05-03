@@ -360,7 +360,7 @@ const IsraelMezuzahsCategoryPage = () => {
                       onClick={() => {
                         if (!snapshot) return;
                         setZoomOpen(false);
-                        navigate(`/product/mezuzah?col=${snapshot.col}&row=${snapshot.row}`);
+                        navigate(`/cart?col=${snapshot.col}&row=${snapshot.row}`);
                       }}
                     >
                       <Check className="h-4 w-4 ml-2" />
