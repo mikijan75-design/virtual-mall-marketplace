@@ -119,8 +119,8 @@ const IsraelMezuzahsCategoryPage = () => {
   const category = categoryIdx >= 0 ? imCategories[categoryIdx] : undefined;
   const isMezuzahs = category?.slug === "mezuzahs";
 
-  const lensSize = 320;
-  const zoom = 1.8;
+  const lensSize = 180;
+  const zoom = 2.5;
   const imgRef = useRef<HTMLImageElement>(null);
   const [lens, setLens] = useState<{ x: number; y: number; bgX: number; bgY: number; bgW: number; bgH: number; visible: boolean }>({
     x: 0, y: 0, bgX: 0, bgY: 0, bgW: 0, bgH: 0, visible: false,
