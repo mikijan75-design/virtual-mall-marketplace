@@ -1,6 +1,7 @@
 import { Link } from "react-router-dom";
 import { ShoppingCart } from "lucide-react";
 import logo from "@/assets/shop-desing-logo.png";
+import { useCart } from "@/context/CartContext";
 import {
   DropdownMenu,
   DropdownMenuContent,
@@ -9,6 +10,7 @@ import {
 } from "@/components/ui/dropdown-menu";
 
 const MallHeader = () => {
+  const { totalCount } = useCart();
   return (
     <header className="bg-mall-sign text-primary-foreground shadow-lg sticky top-0 z-50">
       <div className="container mx-auto grid grid-cols-3 items-center py-3 px-4">
@@ -44,9 +46,11 @@ const MallHeader = () => {
             className="relative px-3 py-1 rounded hover:bg-mall-gold/20 transition-colors flex items-center"
           >
             <ShoppingCart className="h-6 w-6 text-mall-gold" />
-            <span className="absolute -top-1 -right-1 min-w-[20px] h-5 px-1 rounded-full bg-mall-gold text-mall-sign text-xs font-bold flex items-center justify-center shadow">
-              1
-            </span>
+            {totalCount > 0 && (
+              <span className="absolute -top-1 -right-1 min-w-[20px] h-5 px-1 rounded-full bg-mall-gold text-mall-sign text-xs font-bold flex items-center justify-center shadow">
+                {totalCount}
+              </span>
+            )}
           </Link>
         </nav>
       </div>
