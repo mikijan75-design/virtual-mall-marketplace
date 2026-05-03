@@ -126,7 +126,7 @@ const IsraelMezuzahsCategoryPage = () => {
     x: 0, y: 0, bgX: 0, bgY: 0, bgW: 0, bgH: 0, visible: false,
   });
   const [zoomOpen, setZoomOpen] = useState(false);
-  const [snapshot, setSnapshot] = useState<{ bgX: number; bgY: number; bgW: number; bgH: number } | null>(null);
+  const [snapshot, setSnapshot] = useState<{ col: number; row: number } | null>(null);
 
   const gridCols = 30;
   const gridRows = 5;
@@ -153,21 +153,7 @@ const IsraelMezuzahsCategoryPage = () => {
   };
 
   const openZoomAtCell = (col: number, row: number) => {
-    const img = imgRef.current;
-    if (!img) return;
-    const rect = img.getBoundingClientRect();
-    const cellW = rect.width / gridCols;
-    const cellH = rect.height / gridRows;
-    const cx = cellW * (col + 0.5);
-    const cy = cellH * (row + 0.5);
-    const bgW = rect.width * zoom;
-    const bgH = rect.height * zoom;
-    setSnapshot({
-      bgW,
-      bgH,
-      bgX: -(cx * zoom - lensSize / 2),
-      bgY: -(cy * zoom - lensSize / 2),
-    });
+    setSnapshot({ col, row });
     setZoomOpen(true);
   };
 
