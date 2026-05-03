@@ -117,6 +117,7 @@ export const imCategories: IMCategory[] = [
 
 const IsraelMezuzahsCategoryPage = () => {
   const { categorySlug } = useParams<{ categorySlug: string }>();
+  const navigate = useNavigate();
   const categoryIdx = imCategories.findIndex((c) => c.slug === categorySlug);
   const category = categoryIdx >= 0 ? imCategories[categoryIdx] : undefined;
   const isMezuzahs = category?.slug === "mezuzahs";
@@ -328,9 +329,8 @@ const IsraelMezuzahsCategoryPage = () => {
                       className="mt-4 bg-mall-gold text-mall-sign hover:bg-mall-gold/90 font-heebo font-bold"
                       onClick={() => {
                         if (!snapshot) return;
-                        const idx = snapshot.row * gridCols + snapshot.col + 1;
-                        toast.success(`פריט מס׳ ${idx} נבחר בהצלחה`);
                         setZoomOpen(false);
+                        navigate(`/product/mezuzah?col=${snapshot.col}&row=${snapshot.row}`);
                       }}
                     >
                       <Check className="h-4 w-4 ml-2" />
