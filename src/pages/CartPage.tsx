@@ -1,10 +1,12 @@
-import { CreditCard, Minus, Plus } from "lucide-react";
+import { CreditCard, Minus, Plus, Trash2 } from "lucide-react";
 import type { ReactNode } from "react";
 import { useSearchParams } from "react-router-dom";
+import { useEffect, useRef } from "react";
 import BackButton from "@/components/BackButton";
 import MallHeader from "@/components/mall/MallHeader";
 import MallFooter from "@/components/mall/MallFooter";
 import PageTracker from "@/components/PageTracker";
+import { useCart, type CartItem } from "@/context/CartContext";
 import imMezuzahsCollection from "@/assets/stores/im-mezuzahs-collection.png";
 
 const mezuzahColBounds = [0, 0.0403, 0.0772, 0.1129, 0.1485, 0.1851, 0.2205, 0.2554, 0.2911, 0.3261, 0.362, 0.397, 0.4314, 0.467, 0.5026, 0.538, 0.5739, 0.6096, 0.6449, 0.6809, 0.7162, 0.7515, 0.7875, 0.8228, 0.8584, 0.8937, 0.9297, 0.9657, 1];
@@ -81,41 +83,78 @@ const PaymentButton = ({
 );
 
 const CartPage = () => {
-  const [params] = useSearchParams();
-  const colParam = params.get("col");
-  const rowParam = params.get("row");
-  const hasMezuzah = colParam !== null && rowParam !== null;
+  const { items, addItem, removeItem, updateQuantity, clearCart } = useCart();
+  const [params, setParams] = useSearchParams();
+  const seededRef = useRef(false);
 
-  let mezuzahItem: {
-    itemNumber: number;
-    bgW: number;
-    bgH: number;
-    px: number;
-    py: number;
-  } | null = null;
+  // Backwards compatibility: if a legacy ?col=&row= URL lands here, seed the cart once
+  useEffect(() => {
+    if (seededRef.current) return;
+    const colParam = params.get("col");
+    const rowParam = params.get("row");
+    if (colParam === null || rowParam === null) return;
+    seededRef.current = true;
+    const col = Math.max(0, Math.min(mezuzahCols - 1, parseInt(colParam, 10) || 0));
+    const row = Math.max(0, Math.min(mezuzahRows - 1, parseInt(rowParam, 10) || 0));
+    const itemNumber = row * mezuzahCols + col + 1;
+    addItem({
+      id: `mezuzah-${col}-${row}`,
+      type: "mezuzah",
+      name: `מזוזה מס׳ ${itemNumber}`,
+      brand: "Israel Mezuzahs",
+      unitPrice: 150,
+      shippingPerItem: 20,
+      meta: { col, row, itemNumber },
+    });
+    const next = new URLSearchParams(params);
+    next.delete("col");
+    next.delete("row");
+    setParams(next, { replace: true });
+  }, [params, addItem, setParams]);
 
-  if (hasMezuzah) {
-    const col = Math.max(0, Math.min(mezuzahCols - 1, parseInt(colParam!, 10) || 0));
-    const row = Math.max(0, Math.min(mezuzahRows - 1, parseInt(rowParam!, 10) || 0));
-    const cw = mezuzahColBounds[col + 1] - mezuzahColBounds[col];
-    const rh = mezuzahRowBounds[row + 1] - mezuzahRowBounds[row];
-    mezuzahItem = {
-      itemNumber: row * mezuzahCols + col + 1,
-      bgW: 100 / cw,
-      bgH: 100 / rh,
-      px: (mezuzahColBounds[col] / (1 - cw)) * 100,
-      py: (mezuzahRowBounds[row] / (1 - rh)) * 100,
-    };
-  }
-
-  const unitPrice = mezuzahItem ? 150 : 699;
-  const shipping = mezuzahItem ? 20 : 0;
-  const subtotal = unitPrice;
-  // Prices already include 17% VAT — show VAT as the portion contained in the subtotal
-  const vat = Math.round((subtotal * 0.17) / 1.17);
-  const total = subtotal + shipping;
   const fmt = (n: number) => `₪${n.toLocaleString("he-IL")}`;
   const fmtNeg = (n: number) => `−₪${n.toLocaleString("he-IL")}`;
+
+  const subtotal = items.reduce((s, it) => s + it.unitPrice * it.quantity, 0);
+  const totalUnits = items.reduce((s, it) => s + it.quantity, 0);
+  // Free shipping for any item beyond the first
+  const shipping = items.reduce(
+    (s, it) => s + (it.shippingPerItem ?? 0) * it.quantity,
+    0,
+  ) - (items[0]?.shippingPerItem ?? 0) * Math.max(0, totalUnits - 1);
+  const vat = Math.round((subtotal * 0.17) / 1.17);
+  const total = subtotal + shipping;
+
+  const renderThumbnail = (it: CartItem) => {
+    if (it.type === "mezuzah" && it.meta?.col !== undefined && it.meta?.row !== undefined) {
+      const col = it.meta.col;
+      const row = it.meta.row;
+      const cw = mezuzahColBounds[col + 1] - mezuzahColBounds[col];
+      const rh = mezuzahRowBounds[row + 1] - mezuzahRowBounds[row];
+      const bgW = 100 / cw;
+      const bgH = 100 / rh;
+      const px = (mezuzahColBounds[col] / (1 - cw)) * 100;
+      const py = (mezuzahRowBounds[row] / (1 - rh)) * 100;
+      return (
+        <div
+          className="h-[126px] w-full rounded-[5px] bg-[#f1f2f2]"
+          style={{
+            backgroundImage: `url(${imMezuzahsCollection})`,
+            backgroundRepeat: "no-repeat",
+            backgroundSize: `${bgW}% ${bgH}%`,
+            backgroundPosition: `${px}% ${py}%`,
+            filter: "saturate(1.6) contrast(1.15) brightness(1.05)",
+          }}
+          aria-label={it.name}
+        />
+      );
+    }
+    return (
+      <div className="flex h-[126px] items-center justify-center rounded-[5px] bg-[#f1f2f2] p-2">
+        <HeadphonesThumbnail />
+      </div>
+    );
+  };
 
   return (
     <div className="min-h-screen flex flex-col bg-white">
@@ -194,73 +233,97 @@ const CartPage = () => {
               <div className="px-3 py-[9px] text-center">מוצר</div>
             </div>
 
-            <div className="grid min-h-[154px] grid-cols-[120px_1fr] border-b border-[#2d7075] bg-white md:grid-cols-[120px_120px_120px_1fr]">
-              <div className="flex items-center justify-center border-l border-[#2d7075] px-3 text-[18px] font-black">{fmt(subtotal)}</div>
-              <div className="hidden items-center justify-center border-l border-[#2d7075] px-3 text-[18px] font-black md:flex">{fmt(unitPrice)}</div>
-              <div className="hidden items-center justify-center border-l border-[#2d7075] px-3 md:flex">
-                <div className="flex h-[34px] items-center overflow-hidden rounded-[5px] border border-[#a4aaa7] bg-white shadow-sm">
-                  <button type="button" aria-label="הפחת כמות" className="flex h-full w-8 items-center justify-center bg-[#f5f5f5]">
-                    <Minus className="h-4 w-4" />
-                  </button>
-                  <span className="flex h-full w-[38px] items-center justify-center border-x border-[#d0d0d0] text-[18px] font-bold">1</span>
-                  <button type="button" aria-label="הוסף כמות" className="flex h-full w-8 items-center justify-center bg-[#eef3f1]">
-                    <Plus className="h-4 w-4" />
-                  </button>
-                </div>
+            {items.length === 0 ? (
+              <div className="flex min-h-[154px] items-center justify-center bg-white px-3 text-[18px] font-medium text-[#666]">
+                העגלה ריקה — נסו להוסיף מוצרים מהחנויות.
               </div>
-              <div className="grid grid-cols-[1fr_126px] items-center gap-4 px-[14px] py-[14px]">
-                {mezuzahItem ? (
-                  <>
-                    <p className="text-right text-[18px] font-medium leading-[1.25]">
-                      מזוזה מס׳ {mezuzahItem.itemNumber}
-                      <br />
-                      Israel Mezuzahs
-                    </p>
-                    <div
-                      className="h-[126px] w-full rounded-[5px] bg-[#f1f2f2]"
-                      style={{
-                        backgroundImage: `url(${imMezuzahsCollection})`,
-                        backgroundRepeat: "no-repeat",
-                        backgroundSize: `${mezuzahItem.bgW}% ${mezuzahItem.bgH}%`,
-                        backgroundPosition: `${mezuzahItem.px}% ${mezuzahItem.py}%`,
-                        filter: "saturate(1.6) contrast(1.15) brightness(1.05)",
-                      }}
-                      aria-label={`מזוזה מס׳ ${mezuzahItem.itemNumber}`}
-                    />
-                  </>
-                ) : (
-                  <>
-                    <p className="text-right text-[18px] font-medium leading-[1.25]">
-                      SENSE PRO אוזניות
-                      <br />
-                      אלחוטיות - סנס פרו
-                    </p>
-                    <div className="flex h-[126px] items-center justify-center rounded-[5px] bg-[#f1f2f2] p-2">
-                      <HeadphonesThumbnail />
+            ) : (
+              items.map((it) => {
+                const lineTotal = it.unitPrice * it.quantity;
+                return (
+                  <div
+                    key={it.id}
+                    className="grid min-h-[154px] grid-cols-[120px_1fr] border-b border-[#2d7075] bg-white md:grid-cols-[120px_120px_120px_1fr]"
+                  >
+                    <div className="flex items-center justify-center border-l border-[#2d7075] px-3 text-[18px] font-black">
+                      {fmt(lineTotal)}
                     </div>
-                  </>
-                )}
-              </div>
-              <div className="col-span-2 grid grid-cols-3 border-t border-[#2d7075] text-center text-[15px] md:hidden">
-                <div className="border-l border-[#2d7075] p-2">
-                  <div className="font-black">מחיר יחידה</div>
-                  <div>{fmt(unitPrice)}</div>
-                </div>
-                <div className="border-l border-[#2d7075] p-2">
-                  <div className="font-black">כמות</div>
-                  <div>1</div>
-                </div>
-                <div className="p-2">
-                  <div className="font-black">סכום ביניים</div>
-                  <div>{fmt(subtotal)}</div>
-                </div>
-              </div>
-            </div>
+                    <div className="hidden items-center justify-center border-l border-[#2d7075] px-3 text-[18px] font-black md:flex">
+                      {fmt(it.unitPrice)}
+                    </div>
+                    <div className="hidden items-center justify-center border-l border-[#2d7075] px-3 md:flex">
+                      <div className="flex flex-col items-center gap-2">
+                        <div className="flex h-[34px] items-center overflow-hidden rounded-[5px] border border-[#a4aaa7] bg-white shadow-sm">
+                          <button
+                            type="button"
+                            aria-label="הפחת כמות"
+                            onClick={() => updateQuantity(it.id, it.quantity - 1)}
+                            className="flex h-full w-8 items-center justify-center bg-[#f5f5f5]"
+                          >
+                            <Minus className="h-4 w-4" />
+                          </button>
+                          <span className="flex h-full w-[38px] items-center justify-center border-x border-[#d0d0d0] text-[18px] font-bold">
+                            {it.quantity}
+                          </span>
+                          <button
+                            type="button"
+                            aria-label="הוסף כמות"
+                            onClick={() => updateQuantity(it.id, it.quantity + 1)}
+                            className="flex h-full w-8 items-center justify-center bg-[#eef3f1]"
+                          >
+                            <Plus className="h-4 w-4" />
+                          </button>
+                        </div>
+                        <button
+                          type="button"
+                          onClick={() => removeItem(it.id)}
+                          aria-label="מחיקת פריט"
+                          className="flex items-center gap-1 text-[13px] text-[#a8262d] hover:underline"
+                        >
+                          <Trash2 className="h-3 w-3" /> הסר
+                        </button>
+                      </div>
+                    </div>
+                    <div className="grid grid-cols-[1fr_126px] items-center gap-4 px-[14px] py-[14px]">
+                      <p className="text-right text-[18px] font-medium leading-[1.25]">
+                        {it.name}
+                        {it.brand && (
+                          <>
+                            <br />
+                            {it.brand}
+                          </>
+                        )}
+                      </p>
+                      {renderThumbnail(it)}
+                    </div>
+                    <div className="col-span-2 grid grid-cols-3 border-t border-[#2d7075] text-center text-[15px] md:hidden">
+                      <div className="border-l border-[#2d7075] p-2">
+                        <div className="font-black">מחיר יחידה</div>
+                        <div>{fmt(it.unitPrice)}</div>
+                      </div>
+                      <div className="border-l border-[#2d7075] p-2">
+                        <div className="font-black">כמות</div>
+                        <div>{it.quantity}</div>
+                      </div>
+                      <div className="p-2">
+                        <div className="font-black">סכום ביניים</div>
+                        <div>{fmt(lineTotal)}</div>
+                      </div>
+                    </div>
+                  </div>
+                );
+              })
+            )}
 
             {[
               ["סכום כולל (כולל מע״מ)", fmt(subtotal)],
               ['מתוכו מע"מ (17%)', fmtNeg(vat)],
-              ["דמי משלוח", mezuzahItem ? `${fmt(shipping)} (פריט שני – משלוח חינם)` : "דמי משלוח"],
+              [
+                "דמי משלוח",
+                totalUnits > 1
+                  ? `${fmt(shipping)} (פריט נוסף – משלוח חינם)`
+                  : fmt(shipping),
+              ],
             ].map(([label, value]) => (
               <div key={label} className="grid grid-cols-[120px_1fr] border-b border-[#2d7075] bg-white text-[18px] font-medium">
                 <div className="border-l border-[#2d7075] px-3 py-[8px] text-center font-black">{value}</div>
@@ -273,6 +336,25 @@ const CartPage = () => {
               <div className="px-3 py-[9px] text-center">סכום כולל לתשלום</div>
             </div>
           </div>
+
+          {items.length > 0 && (
+            <div className="mt-3 flex flex-wrap items-center justify-end gap-3">
+              <button
+                type="button"
+                onClick={clearCart}
+                className="flex items-center gap-1 rounded-[5px] border border-[#a8262d] px-4 py-2 text-[15px] font-bold text-[#a8262d] hover:bg-[#a8262d]/10"
+              >
+                <Trash2 className="h-4 w-4" /> רוקן עגלה
+              </button>
+              <button
+                type="button"
+                onClick={() => clearCart()}
+                className="rounded-[5px] bg-gradient-to-b from-[#126f78] to-[#075a65] px-5 py-2 text-[16px] font-black text-white shadow"
+              >
+                סיום קנייה
+              </button>
+            </div>
+          )}
 
           <section className="mt-[24px] border-t border-[#ddd8ca] pt-[14px] text-right">
             <h2 className="mx-auto mb-[14px] w-fit rounded-t-[5px] border border-b-0 border-[#ddd8ca] bg-white px-9 py-[10px] text-[18px] font-black leading-none">
