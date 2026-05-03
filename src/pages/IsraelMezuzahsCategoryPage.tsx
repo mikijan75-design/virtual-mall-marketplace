@@ -162,8 +162,23 @@ const IsraelMezuzahsCategoryPage = () => {
   };
 
   const openZoomAtCell = (col: number, row: number) => {
-    setSnapshot({ col, row });
-    setZoomOpen(true);
+    const itemNumber = row * gridCols + col + 1;
+    navigate("/sense-pro", {
+      state: {
+        mezuzah: {
+          col,
+          row,
+          itemNumber,
+          colBounds,
+          rowBounds,
+          image: imMezuzahsCollection,
+          name: `מזוזה מס׳ ${itemNumber}`,
+          brand: "Israel Mezuzahs",
+          unitPrice: 150,
+          shippingPerItem: 20,
+        },
+      },
+    });
   };
 
   if (!category) {
