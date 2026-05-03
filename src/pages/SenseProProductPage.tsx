@@ -25,12 +25,12 @@ const galleryImages = [
 ];
 
 const productSpecs = [
-  "סוללה חזקה ל-30 שעות",
+  "\n",
   "ביטול רעשים אקטיבי",
   "מתחברים גם באוזניות אלחוטיות",
 ];
 
-const shippingNotes = ["משלוח חינם 5 ימי עסקים", "אפשרות לאיסוף עצמי"];
+const shippingNotes = ["פרטים", "אפשרות לאיסוף עצמי"];
 
 const HeadphonesArtwork = ({ compact = false }: { compact?: boolean }) => (
   <svg
@@ -181,24 +181,22 @@ const SenseProProductPage = () => {
 
         <section className="order-3 mx-auto w-full max-w-[284px] lg:order-2" dir="rtl">
           <div className="text-center">
-            <h1 className="mb-[6px] whitespace-nowrap text-[27px] font-black leading-tight tracking-[-0.4px]">
-              SENSE PRO אוזניות אלחוטיות - סנס פרו
-            </h1>
+            <h1 className="mb-[6px] whitespace-nowrap text-[27px] font-black leading-tight tracking-[-0.4px]">כותרת 1</h1>
             <div className="mb-[11px] flex items-center justify-center gap-[3px] text-[14px]">
-              <span className="text-[#222]">(112)</span>
-              <span className="flex flex-row-reverse gap-[1px] text-[#e3b42f]" aria-label="דירוג 4.8 מתוך 5">
+              <span className="text-[#222]">{"\n"}</span>
+              <span className="flex flex-row-reverse gap-[1px] text-[#e3b42f]" aria-label="דירוג">
                 {Array.from({ length: 5 }).map((_, index) => (
                   <Star key={index} className="h-[15px] w-[15px] fill-current stroke-current" />
                 ))}
               </span>
-              <span className="font-black text-[#222]">4.8</span>
+              <span className="font-black text-[#222]">{"\n"}</span>
             </div>
 
-            <p className="text-[36px] font-black leading-[0.9] tracking-[-1px]">₪699</p>
+            <p className="text-[36px] font-black leading-[0.9] tracking-[-1px]">₪0</p>
             <p className="mt-[5px] text-[15px] font-medium">+ 25 ₪ דמי משלוח</p>
 
             <div className="mx-auto mt-[10px] w-fit rounded-[6px] border border-[#c6b681] bg-[#fff7dd] px-[12px] py-[6px] text-[14px] shadow-[0_1px_2px_rgba(0,0,0,0.08)]">
-              מבצע חג: 10% הנחה נוספת בקניית זוג נוסף! 🎉
+              מבצע :🎉
             </div>
 
             <div className="mt-[12px] space-y-[9px]">
