@@ -116,7 +116,6 @@ const CartPage = () => {
   const fmtNeg = (n: number) => `−₪${n.toLocaleString("he-IL")}`;
 
   const subtotal = items.reduce((s, it) => s + it.unitPrice * it.quantity, 0);
-  const totalUnits = items.reduce((s, it) => s + it.quantity, 0);
   // Mezuzah (page 3.2.5) rule: free shipping when more than one mezuzah is in the cart
   const mezuzahUnits = items
     .filter((it) => it.type === "mezuzah")
