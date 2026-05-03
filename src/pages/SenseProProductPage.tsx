@@ -1,5 +1,6 @@
 import { Heart, MessageCircle, Star } from "lucide-react";
 import type { ReactNode } from "react";
+import { Link } from "react-router-dom";
 
 const galleryImages = [
   {
@@ -203,9 +204,12 @@ const SenseProProductPage = () => {
               <button className="h-[40px] w-full rounded-[5px] bg-gradient-to-b from-[#136f78] to-[#075965] text-[15px] font-black text-white shadow-[0_1px_2px_rgba(0,0,0,0.2)]">
                 תשלום מהיר
               </button>
-              <button className="h-[39px] w-full rounded-[5px] border-2 border-[#0d5960] bg-white text-[16px] font-black text-[#115d66]">
+              <Link
+                to="/cart"
+                className="flex h-[39px] w-full items-center justify-center rounded-[5px] border-2 border-[#0d5960] bg-white text-[16px] font-black text-[#115d66]"
+              >
                 הוספה לעגלה
-              </button>
+              </Link>
               <button className="flex h-[39px] w-full items-center justify-center gap-2 rounded-[5px] border-2 border-[#0d5960] bg-white text-[16px] font-black text-[#115d66]">
                 <span>הוספה ל-WISH</span>
                 <Heart className="h-[22px] w-[22px]" />

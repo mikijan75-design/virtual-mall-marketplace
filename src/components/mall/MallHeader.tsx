@@ -1,4 +1,5 @@
 import { Link } from "react-router-dom";
+import { ShoppingCart } from "lucide-react";
 import logo from "@/assets/shop-desing-logo.png";
 import {
   DropdownMenu,
@@ -37,6 +38,16 @@ const MallHeader = () => {
             </DropdownMenuContent>
           </DropdownMenu>
           <Link to="/" className="px-3 py-1 rounded hover:bg-mall-gold/20 transition-colors">צור קשר</Link>
+          <Link
+            to="/cart"
+            aria-label="עגלה"
+            className="relative px-3 py-1 rounded hover:bg-mall-gold/20 transition-colors flex items-center"
+          >
+            <ShoppingCart className="h-6 w-6 text-mall-gold" />
+            <span className="absolute -top-1 -right-1 min-w-[20px] h-5 px-1 rounded-full bg-mall-gold text-mall-sign text-xs font-bold flex items-center justify-center shadow">
+              1
+            </span>
+          </Link>
         </nav>
       </div>
     </header>
