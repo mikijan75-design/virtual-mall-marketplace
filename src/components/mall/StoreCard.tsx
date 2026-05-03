@@ -90,6 +90,10 @@ const idOverrides: Record<string, Partial<BrandStyle & { name: string }>> = {
 const defaultStyle: BrandStyle = { bg: "linear-gradient(135deg, #f5f0e8, #ede4d8)", text: "#3a2a20", accent: "#c9a96e", font: "font-frank", image: "", subtitle: "", logo: undefined, subtitleLogo: undefined };
 
 const romanNumerals = ["I", "II", "III", "IV", "V", "VI"];
+const STORE_CARD_CLASS = "h-[174px] min-h-[174px] max-h-[174px] md:h-[214px] md:min-h-[214px] md:max-h-[214px]";
+const SIGN_BAND_CLASS = "relative z-10 flex h-[48px] min-h-[48px] max-h-[48px] items-center justify-center overflow-hidden";
+const SUBTITLE_BAND_CLASS = "flex h-[26px] min-h-[26px] max-h-[26px] items-center justify-center overflow-hidden text-center";
+const IMAGE_AREA_CLASS = "h-[90px] min-h-[90px] max-h-[90px] md:h-[130px] md:min-h-[130px] md:max-h-[130px]";
 
 interface StoreCardProps {
   store: Store;
@@ -106,12 +110,12 @@ const StoreCard = ({ store, storeIndex }: StoreCardProps) => {
   return (
     <button
       onClick={() => navigate(`/store/${store.id}`)}
-      className="group relative flex flex-col w-full cursor-pointer transition-all duration-300 hover:scale-[1.03] focus:outline-none"
+      className={`group relative flex w-full flex-col ${STORE_CARD_CLASS} cursor-pointer transition-all duration-300 hover:scale-[1.03] focus:outline-none`}
       aria-label={`כניסה לחנות ${store.name}`}
     >
       {/* Elegant outer frame */}
       <div
-        className="relative flex flex-col w-full rounded-lg overflow-hidden"
+        className="relative flex h-full w-full flex-col overflow-hidden rounded-lg"
         style={{
           border: "2px solid hsl(40,25%,72%)",
           boxShadow: "0 6px 24px rgba(0,0,0,0.12), inset 0 0 0 1px hsl(40,20%,85%)",
@@ -126,32 +130,30 @@ const StoreCard = ({ store, storeIndex }: StoreCardProps) => {
         {/* Brand sign */}
         {style.codedWordmark === "israel-mezuzahs" ? (
           <div
-            className="relative z-10 flex items-center justify-center overflow-hidden"
+            className={SIGN_BAND_CLASS}
             style={{
               background: "#8ccfd0",
               borderBottom: `2px solid ${style.accent}`,
-              minHeight: "36px",
-              maxHeight: "48px",
             }}
           >
             <IsraelMezuzahsWordmark
               className="w-full h-full"
-              preserveAspectRatio="xMidYMid slice"
+              preserveAspectRatio="none"
             />
           </div>
         ) : style.logo ? (
           <div
-            className="relative z-10 flex items-center justify-center overflow-hidden"
+            className={SIGN_BAND_CLASS}
             style={{
               background: "#ffffff",
               borderBottom: `2px solid ${style.accent}`,
             }}
           >
-            <img src={style.logo} alt={store.name} className="w-full h-full object-contain py-1 px-2" style={{ minHeight: "36px", maxHeight: "48px" }} />
+            <img src={style.logo} alt={store.name} className="h-full w-full object-contain px-2 py-1" />
           </div>
         ) : (
           <div
-            className="relative z-10 py-2.5 md:py-3 px-2 flex flex-col items-center justify-center gap-0.5"
+            className={`${SIGN_BAND_CLASS} flex-col gap-0.5 px-2`}
             style={{
               background: style.bg,
               borderBottom: `2px solid ${style.accent}`,
@@ -178,16 +180,16 @@ const StoreCard = ({ store, storeIndex }: StoreCardProps) => {
         {/* Subtitle bar */}
         {style.subtitleLogo ? (
           <div
-            className="flex items-center justify-center overflow-hidden"
+            className={SUBTITLE_BAND_CLASS}
             style={{
               background: "#ffffff",
             }}
           >
-            <img src={style.subtitleLogo} alt={store.name} className="w-full h-full object-contain px-2 py-0.5" style={{ minHeight: "24px", maxHeight: "36px" }} loading="lazy" />
+            <img src={style.subtitleLogo} alt={store.name} className="h-full w-full object-contain px-2 py-0.5" loading="lazy" />
           </div>
         ) : style.subtitle ? (
           <div
-            className="py-1 text-center"
+            className={SUBTITLE_BAND_CLASS}
             style={{
               background: "linear-gradient(180deg, rgba(0,0,0,0.65), rgba(0,0,0,0.8))",
             }}
@@ -200,11 +202,11 @@ const StoreCard = ({ store, storeIndex }: StoreCardProps) => {
 
         {/* Realistic store image */}
         {style.image ? (
-          <div className="relative overflow-hidden">
+          <div className={`relative overflow-hidden ${IMAGE_AREA_CLASS}`}>
             <img
               src={style.image}
               alt={store.name}
-              className="w-full h-[90px] md:h-[130px] object-cover transition-transform duration-700 group-hover:scale-110"
+              className="h-full w-full object-cover transition-transform duration-700 group-hover:scale-110"
               loading="lazy"
               width={512}
               height={512}
@@ -226,7 +228,7 @@ const StoreCard = ({ store, storeIndex }: StoreCardProps) => {
           </div>
         ) : (
           <div
-            className="relative min-h-[90px] md:min-h-[130px] flex items-center justify-center"
+            className={`relative flex items-center justify-center ${IMAGE_AREA_CLASS}`}
             style={{ background: "linear-gradient(180deg, hsl(40,8%,96%), hsl(40,6%,92%))" }}
           >
             <span className="text-2xl md:text-3xl">{store.logoEmoji}</span>
