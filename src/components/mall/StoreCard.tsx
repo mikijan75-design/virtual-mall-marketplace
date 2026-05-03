@@ -22,6 +22,9 @@ import juiceImg from "@/assets/stores/juice.jpg";
 import comingSoonImg from "@/assets/stores/coming-soon.png";
 import forRentImg from "@/assets/stores/for-rent.png";
 import IsraelMezuzahsWordmark from "@/components/mall/IsraelMezuzahsWordmark";
+import OliveWoodEpoxyWordmark, {
+  OLIVE_WOOD_EPOXY_WORDMARK_PARAMETERS,
+} from "@/components/mall/OliveWoodEpoxyWordmark";
 
 type BrandStyle = {
   bg: string;
@@ -32,7 +35,7 @@ type BrandStyle = {
   subtitle: string;
   logo?: string;
   subtitleLogo?: string;
-  codedWordmark?: "israel-mezuzahs";
+  codedWordmark?: "israel-mezuzahs" | "olive-wood-epoxy";
 };
 
 const brandStyles: Record<string, BrandStyle> = {
@@ -40,7 +43,15 @@ const brandStyles: Record<string, BrandStyle> = {
   "טכנולוגיה מתקדמת": { bg: "linear-gradient(135deg, #e8f0f8, #dbe6f2)", text: "#1a3a5c", accent: "#4fc3f7", font: "font-heebo", image: techImg, subtitle: "גאדג'טים מהעתיד" },
   "חנות עיצוב": { bg: "linear-gradient(135deg, #f8f0e8, #f0e6d8)", text: "#4a3520", accent: "#d4a373", font: "font-frank", image: designImg, subtitle: "סטודיו לציור" },
   "קוסמטיקה טבעית": { bg: "linear-gradient(135deg, #fdf6f0, #f8ede3)", text: "#5c4033", accent: "#c49b7c", font: "font-frank", image: cosmeticsImg, subtitle: "סודות הטבע" },
-  "גלריה לאמנות": { bg: "linear-gradient(135deg, #f5f5f5, #e8e8e8)", text: "#222222", accent: "#888888", font: "font-frank", image: galleryImg, subtitle: "אמנות עכשווית" },
+  "גלריה לאמנות": {
+    bg: "linear-gradient(135deg, #f8f7f2, #f0ede4)",
+    text: OLIVE_WOOD_EPOXY_WORDMARK_PARAMETERS.title.color,
+    accent: OLIVE_WOOD_EPOXY_WORDMARK_PARAMETERS.title.color,
+    font: "font-frank",
+    image: galleryImg,
+    subtitle: "",
+    codedWordmark: "olive-wood-epoxy",
+  },
   "ספורט ואתגר": { bg: "linear-gradient(135deg, #fef0f0, #fce4e4)", text: "#8b1a1a", accent: "#ff4444", font: "font-heebo", image: sportsImg, subtitle: "ציוד לאתגרים" },
   "ספורט עיוותי": { bg: "linear-gradient(135deg, #fff3ed, #fce8de)", text: "#6b3015", accent: "#ff6b35", font: "font-heebo", image: extremeSportsImg, subtitle: "ספורט אקסטרים" },
   "אמבטיות מתקדמות": { bg: "linear-gradient(135deg, #f0f4f8, #dce4ed)", text: "#2c3e50", accent: "#5b8fa8", font: "font-frank", image: bathroomImg, subtitle: "עיצוב מודרני" },
@@ -124,20 +135,30 @@ const StoreCard = ({ store, storeIndex }: StoreCardProps) => {
         />
 
         {/* Brand sign */}
-        {style.codedWordmark === "israel-mezuzahs" ? (
+        {style.codedWordmark ? (
           <div
             className="relative z-10 flex items-center justify-center overflow-hidden"
             style={{
-              background: "#8ccfd0",
+              background:
+                style.codedWordmark === "olive-wood-epoxy"
+                  ? OLIVE_WOOD_EPOXY_WORDMARK_PARAMETERS.canvas.background
+                  : "#8ccfd0",
               borderBottom: `2px solid ${style.accent}`,
-              minHeight: "36px",
-              maxHeight: "48px",
+              minHeight: style.codedWordmark === "olive-wood-epoxy" ? "44px" : "36px",
+              maxHeight: style.codedWordmark === "olive-wood-epoxy" ? "56px" : "48px",
             }}
           >
-            <IsraelMezuzahsWordmark
-              className="w-full h-full"
-              preserveAspectRatio="xMidYMid slice"
-            />
+            {style.codedWordmark === "olive-wood-epoxy" ? (
+              <OliveWoodEpoxyWordmark
+                className="w-full h-full"
+                preserveAspectRatio="xMidYMid slice"
+              />
+            ) : (
+              <IsraelMezuzahsWordmark
+                className="w-full h-full"
+                preserveAspectRatio="xMidYMid slice"
+              />
+            )}
           </div>
         ) : style.logo ? (
           <div
