@@ -37,7 +37,7 @@ const StorePage = () => {
             {isIsraelMezuzahs ? "Israel Mezuzahs" : store.name}
           </h1>
           <p className="text-lg opacity-90 font-heebo">
-            {isIsraelMezuzahs ? "and more..." : store.description}
+            {isIsraelMezuzahs ? "Olive Wood & Epoxy Art • אומנות בעץ זית ואפוקסי" : store.description}
           </p>
           <span className="inline-block mt-3 bg-white/20 px-4 py-1 rounded-full text-sm font-heebo">
             {store.category} • קומה {store.floor}
