@@ -157,6 +157,14 @@ const SenseProProductPage = () => {
       })()
     : initialMezuzah;
 
+  const SOURCE_W = 1515;
+  const SOURCE_H = 688;
+  const aspectFor = (col: number, row: number) => {
+    if (!initialMezuzah) return 1;
+    const cw = initialMezuzah.colBounds[col + 1] - initialMezuzah.colBounds[col];
+    const rh = initialMezuzah.rowBounds[row + 1] - initialMezuzah.rowBounds[row];
+    return (cw * SOURCE_W) / (rh * SOURCE_H);
+  };
   const cropFor = (col: number, row: number) => {
     if (!initialMezuzah) return null;
     const cw = initialMezuzah.colBounds[col + 1] - initialMezuzah.colBounds[col];
@@ -230,8 +238,12 @@ const SenseProProductPage = () => {
           {mezuzahCrop ? (
             <div className="flex h-[415px] w-full items-center justify-center rounded-[7px] bg-gradient-to-br from-[#f0f2f3] via-[#fbfbfb] to-[#ecefee] shadow-inner">
               <div
-                className="h-[50%] w-[50%] rounded-[7px] shadow-inner bg-secondary"
-                style={mezuzahCrop}
+                className="rounded-[7px] shadow-inner bg-secondary"
+                style={{
+                  ...mezuzahCrop,
+                  height: "90%",
+                  aspectRatio: `${mezuzah ? aspectFor(mezuzah.col, mezuzah.row) : 1}`,
+                }}
                 role="img"
                 aria-label={mezuzah?.name}
               />
@@ -273,6 +285,7 @@ const SenseProProductPage = () => {
                   const gridCols = initialMezuzah.colBounds.length - 1;
                   const itemNumber = cell.row * gridCols + cell.col + 1;
                   const style = cropFor(cell.col, cell.row);
+                  const ar = aspectFor(cell.col, cell.row);
                   return (
                     <button
                       key={`${cell.col}-${cell.row}`}
@@ -282,7 +295,10 @@ const SenseProProductPage = () => {
                       aria-label={`בחר מזוזה מס׳ ${itemNumber}`}
                       className="relative flex h-[63px] w-full items-center justify-center overflow-hidden rounded-[7px] border-2 border-[#cdd2d2] bg-[#f3f4f4] hover:border-[#0d5960]"
                     >
-                      <div className="h-full w-full" style={style ?? undefined} />
+                      <div
+                        className="h-full"
+                        style={{ ...(style ?? {}), aspectRatio: `${ar}` }}
+                      />
                       <span className="absolute bottom-0 right-0 rounded-tl bg-black/60 px-1 text-[10px] font-bold text-white">
                         #{itemNumber}
                       </span>
