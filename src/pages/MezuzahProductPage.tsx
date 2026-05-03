@@ -73,6 +73,8 @@ const MezuzahProductPage = () => {
                       name: `מזוזה מס׳ ${itemNumber}`,
                       unitPrice: PRICE,
                       image: imMezuzahsCollection,
+                      imageBgSize: `${bgW}% ${bgH}%`,
+                      imageBgPosition: `${px}% ${py}%`,
                     });
                     toast.success("הפריט נוסף לסל");
                     navigate("/cart");
