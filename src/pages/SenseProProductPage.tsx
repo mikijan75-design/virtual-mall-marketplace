@@ -2,6 +2,9 @@ import { Heart, MessageCircle, Star } from "lucide-react";
 import type { ReactNode } from "react";
 import { Link } from "react-router-dom";
 import BackButton from "@/components/BackButton";
+import MallHeader from "@/components/mall/MallHeader";
+import MallFooter from "@/components/mall/MallFooter";
+import PageTracker from "@/components/PageTracker";
 
 const galleryImages = [
   {
@@ -149,8 +152,11 @@ const Section = ({ title, children }: { title: string; children: ReactNode }) =>
 
 const SenseProProductPage = () => {
   return (
-    <main className="min-h-screen bg-white font-heebo text-[#101010]" dir="rtl">
+    <div className="min-h-screen flex flex-col bg-white">
+      <MallHeader />
+      <PageTracker />
       <BackButton />
+      <main className="flex-1 bg-white font-heebo text-[#101010]" dir="rtl">
       <div
         className="mx-auto grid max-w-[984px] grid-cols-1 gap-8 px-[6px] py-11 lg:grid-cols-[432px_1fr_184px] lg:gap-[56px]"
         dir="ltr"
@@ -265,7 +271,9 @@ const SenseProProductPage = () => {
           </a>
         </div>
       </div>
-    </main>
+      </main>
+      <MallFooter />
+    </div>
   );
 };
 
