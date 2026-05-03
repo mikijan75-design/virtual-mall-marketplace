@@ -13,14 +13,14 @@ import imProduct7 from "@/assets/stores/im-product-7.png";
 import imProduct8 from "@/assets/stores/im-product-8.png";
 
 const israelMezuzahsProducts = [
-  { src: imProduct1, name: "פמוטי שבת" },
-  { src: imProduct2, name: "מגשי הגשה" },
-  { src: imProduct3, name: "תחתיות לכוסות" },
-  { src: imProduct4, name: "חרוזים מעוצבים" },
-  { src: imProduct5, name: "מזוזות" },
-  { src: imProduct6, name: "תליוני חמסה ורימון" },
-  { src: imProduct7, name: "מפת ישראל" },
-  { src: imProduct8, name: "חנוכיות" },
+  { src: imProduct1, name: "פמוטי שבת", slug: "shabbat-candles" },
+  { src: imProduct2, name: "מגשי הגשה", slug: "serving-trays" },
+  { src: imProduct3, name: "תחתיות לכוסות", slug: "coasters" },
+  { src: imProduct4, name: "חרוזים מעוצבים", slug: "decorative-beads" },
+  { src: imProduct5, name: "מזוזות", slug: "mezuzahs" },
+  { src: imProduct6, name: "תליוני חמסה ורימון", slug: "hamsa-pomegranate" },
+  { src: imProduct7, name: "מפת ישראל", slug: "israel-map" },
+  { src: imProduct8, name: "חנוכיות", slug: "hanukkiahs" },
 ];
 
 const StorePage = () => {
@@ -88,12 +88,12 @@ const StorePage = () => {
                   {/* Left column - 2 products */}
                   <div className="hidden md:flex flex-col gap-4">
                     {israelMezuzahsProducts.slice(0, 2).map((p, i) => (
-                      <div key={`l-${i}`} className="bg-muted rounded-lg p-4 border border-border flex-1">
+                      <Link to={`/store/s2/category/${p.slug}`} key={`l-${i}`} className="bg-muted rounded-lg p-4 border border-border flex-1 hover:border-mall-gold transition-colors">
                         <div className="w-full aspect-square bg-secondary rounded-md mb-3 overflow-hidden">
                           <img src={p.src} alt={p.name} className="w-full h-full object-cover" loading="lazy" />
                         </div>
                         <p className="text-sm font-heebo text-foreground text-center">{p.name}</p>
-                      </div>
+                      </Link>
                     ))}
                   </div>
 
@@ -109,12 +109,12 @@ const StorePage = () => {
                   {/* Right column - 2 products */}
                   <div className="hidden md:flex flex-col gap-4">
                     {israelMezuzahsProducts.slice(2, 4).map((p, i) => (
-                      <div key={`r-${i}`} className="bg-muted rounded-lg p-4 border border-border flex-1">
+                      <Link to={`/store/s2/category/${p.slug}`} key={`r-${i}`} className="bg-muted rounded-lg p-4 border border-border flex-1 hover:border-mall-gold transition-colors">
                         <div className="w-full aspect-square bg-secondary rounded-md mb-3 overflow-hidden">
                           <img src={p.src} alt={p.name} className="w-full h-full object-cover" loading="lazy" />
                         </div>
                         <p className="text-sm font-heebo text-foreground text-center">{p.name}</p>
-                      </div>
+                      </Link>
                     ))}
                   </div>
                 </div>
@@ -122,12 +122,12 @@ const StorePage = () => {
                 {/* Bottom row - products under image */}
                 <div className="grid grid-cols-2 md:grid-cols-4 gap-4 mt-4">
                   {israelMezuzahsProducts.slice(4, 8).map((p, i) => (
-                    <div key={`b-${i}`} className="bg-muted rounded-lg p-4 border border-border">
+                    <Link to={`/store/s2/category/${p.slug}`} key={`b-${i}`} className="bg-muted rounded-lg p-4 border border-border hover:border-mall-gold transition-colors">
                       <div className="w-full aspect-square bg-secondary rounded-md mb-3 overflow-hidden">
                         <img src={p.src} alt={p.name} className="w-full h-full object-cover" loading="lazy" />
                       </div>
                       <p className="text-sm font-heebo text-foreground text-center">{p.name}</p>
-                    </div>
+                    </Link>
                   ))}
                 </div>
               </>
