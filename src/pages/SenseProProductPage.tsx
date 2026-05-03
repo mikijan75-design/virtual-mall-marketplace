@@ -1,6 +1,8 @@
-import { Heart, MessageCircle, Star, ImagePlus } from "lucide-react";
+import { Heart, MessageCircle, Star, ImagePlus, Check } from "lucide-react";
 import { useRef, useState, type ReactNode } from "react";
-import { Link } from "react-router-dom";
+import { Link, useLocation } from "react-router-dom";
+import { useCart } from "@/context/CartContext";
+import { toast } from "@/hooks/use-toast";
 import BackButton from "@/components/BackButton";
 import MallHeader from "@/components/mall/MallHeader";
 import MallFooter from "@/components/mall/MallFooter";
@@ -90,6 +92,23 @@ const Section = ({ title, children }: { title: string; children: ReactNode }) =>
 );
 
 const SenseProProductPage = () => {
+  const location = useLocation();
+  const mezuzah = (location.state as any)?.mezuzah as
+    | {
+        col: number;
+        row: number;
+        itemNumber: number;
+        colBounds: number[];
+        rowBounds: number[];
+        image: string;
+        name: string;
+        brand: string;
+        unitPrice: number;
+        shippingPerItem: number;
+      }
+    | undefined;
+  const { addItem: addToCart } = useCart();
+
   const [mainImage, setMainImage] = useState<string | null>(null);
   const [thumbs, setThumbs] = useState<(string | null)[]>([null, null, null, null]);
   const mainInputRef = useRef<HTMLInputElement>(null);
@@ -99,6 +118,37 @@ const SenseProProductPage = () => {
     const reader = new FileReader();
     reader.onload = () => cb(String(reader.result));
     reader.readAsDataURL(file);
+  };
+
+  const mezuzahCrop = mezuzah
+    ? (() => {
+        const cw = mezuzah.colBounds[mezuzah.col + 1] - mezuzah.colBounds[mezuzah.col];
+        const rh = mezuzah.rowBounds[mezuzah.row + 1] - mezuzah.rowBounds[mezuzah.row];
+        return {
+          backgroundImage: `url(${mezuzah.image})`,
+          backgroundRepeat: "no-repeat" as const,
+          backgroundSize: `${100 / cw}% ${100 / rh}%`,
+          backgroundPosition: `${(mezuzah.colBounds[mezuzah.col] / (1 - cw)) * 100}% ${(mezuzah.rowBounds[mezuzah.row] / (1 - rh)) * 100}%`,
+          filter: "saturate(1.6) contrast(1.15) brightness(1.05)",
+        };
+      })()
+    : null;
+
+  const handleAddMezuzahToCart = () => {
+    if (!mezuzah) return;
+    addToCart({
+      id: `mezuzah-${mezuzah.col}-${mezuzah.row}`,
+      type: "mezuzah",
+      name: mezuzah.name,
+      brand: mezuzah.brand,
+      unitPrice: mezuzah.unitPrice,
+      shippingPerItem: mezuzah.shippingPerItem,
+      meta: { col: mezuzah.col, row: mezuzah.row, itemNumber: mezuzah.itemNumber },
+    });
+    toast({
+      title: "נוסף לעגלה",
+      description: `${mezuzah.name} נוספה לעגלה.`,
+    });
   };
 
   return (
@@ -112,14 +162,23 @@ const SenseProProductPage = () => {
         dir="ltr"
       >
         <section className="order-1 lg:order-1" dir="rtl">
-          <button
-            type="button"
-            onClick={() => mainInputRef.current?.click()}
-            className="flex h-[415px] w-full items-center justify-center rounded-[7px] border-2 border-dashed border-[#cdd2d2] bg-gradient-to-br from-[#f0f2f3] via-[#fbfbfb] to-[#ecefee] p-6"
-            aria-label="העלה תמונת מוצר"
-          >
-            <ImagePlaceholder src={mainImage} />
-          </button>
+          {mezuzahCrop ? (
+            <div
+              className="h-[415px] w-full rounded-[7px] shadow-inner bg-secondary"
+              style={mezuzahCrop}
+              role="img"
+              aria-label={mezuzah?.name}
+            />
+          ) : (
+            <button
+              type="button"
+              onClick={() => mainInputRef.current?.click()}
+              className="flex h-[415px] w-full items-center justify-center rounded-[7px] border-2 border-dashed border-[#cdd2d2] bg-gradient-to-br from-[#f0f2f3] via-[#fbfbfb] to-[#ecefee] p-6"
+              aria-label="העלה תמונת מוצר"
+            >
+              <ImagePlaceholder src={mainImage} />
+            </button>
+          )}
           <input
             ref={mainInputRef}
             type="file"
@@ -162,9 +221,11 @@ const SenseProProductPage = () => {
 
         <section className="order-3 mx-auto w-full max-w-[284px] lg:order-2" dir="rtl">
           <div className="text-center">
-            <h1 className="mb-[6px] whitespace-nowrap text-[27px] font-black leading-tight tracking-[-0.4px]">כותרת 1</h1>
+            <h1 className="mb-[6px] whitespace-nowrap text-[27px] font-black leading-tight tracking-[-0.4px]">
+              {mezuzah?.name ?? "כותרת 1"}
+            </h1>
             <div className="mb-[11px] flex items-center justify-center gap-[3px] text-[14px]">
-              <span className="text-[#222]">{"\n"}</span>
+              <span className="text-[#222]">{mezuzah?.brand ?? "\n"}</span>
               <span className="flex flex-row-reverse gap-[1px] text-[#e3b42f]" aria-label="דירוג">
                 {Array.from({ length: 5 }).map((_, index) => (
                   <Star key={index} className="h-[15px] w-[15px] fill-current stroke-current" />
@@ -173,8 +234,12 @@ const SenseProProductPage = () => {
               <span className="font-black text-[#222]">{"\n"}</span>
             </div>
 
-            <p className="text-[36px] font-black leading-[0.9] tracking-[-1px]">₪0</p>
-            <p className="mt-[5px] text-[15px] font-medium">+ 25 ₪ דמי משלוח</p>
+            <p className="text-[36px] font-black leading-[0.9] tracking-[-1px]">
+              ₪{mezuzah?.unitPrice ?? 0}
+            </p>
+            <p className="mt-[5px] text-[15px] font-medium">
+              + {mezuzah?.shippingPerItem ?? 25} ₪ דמי משלוח
+            </p>
 
             <div className="mx-auto mt-[10px] w-fit rounded-[6px] border border-[#c6b681] bg-[#fff7dd] px-[12px] py-[6px] text-[14px] shadow-[0_1px_2px_rgba(0,0,0,0.08)]">
               מבצע :🎉
@@ -184,12 +249,23 @@ const SenseProProductPage = () => {
               <button className="h-[40px] w-full rounded-[5px] bg-gradient-to-b from-[#136f78] to-[#075965] text-[15px] font-black text-white shadow-[0_1px_2px_rgba(0,0,0,0.2)]">
                 תשלום מהיר
               </button>
-              <Link
-                to="/cart"
-                className="flex h-[39px] w-full items-center justify-center rounded-[5px] border-2 border-[#0d5960] bg-white text-[16px] font-black text-[#115d66]"
-              >
-                הוספה לעגלה
-              </Link>
+              {mezuzah ? (
+                <button
+                  type="button"
+                  onClick={handleAddMezuzahToCart}
+                  className="flex h-[39px] w-full items-center justify-center gap-2 rounded-[5px] border-2 border-[#0d5960] bg-white text-[16px] font-black text-[#115d66]"
+                >
+                  <Check className="h-4 w-4" />
+                  הוספה לעגלה
+                </button>
+              ) : (
+                <Link
+                  to="/cart"
+                  className="flex h-[39px] w-full items-center justify-center rounded-[5px] border-2 border-[#0d5960] bg-white text-[16px] font-black text-[#115d66]"
+                >
+                  הוספה לעגלה
+                </Link>
+              )}
               <button className="flex h-[39px] w-full items-center justify-center gap-2 rounded-[5px] border-2 border-[#0d5960] bg-white text-[16px] font-black text-[#115d66]">
                 <span>הוספה ל-WISH</span>
                 <Heart className="h-[22px] w-[22px]" />
