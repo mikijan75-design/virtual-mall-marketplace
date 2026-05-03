@@ -334,7 +334,7 @@ const IsraelMezuzahsCategoryPage = () => {
                       }}
                     >
                       <Check className="h-4 w-4 ml-2" />
-                      בחירה סופית
+                      הוספה לעגלה
                     </Button>
                   </DialogContent>
                 </Dialog>
