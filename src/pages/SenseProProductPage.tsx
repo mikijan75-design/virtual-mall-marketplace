@@ -1,5 +1,5 @@
-import { Heart, MessageCircle, Star } from "lucide-react";
-import type { ReactNode } from "react";
+import { Heart, MessageCircle, Star, ImagePlus } from "lucide-react";
+import { useRef, useState, type ReactNode } from "react";
 import { Link } from "react-router-dom";
 import BackButton from "@/components/BackButton";
 import MallHeader from "@/components/mall/MallHeader";
@@ -37,78 +37,17 @@ const productSpecs = [
 
 const shippingNotes = ["פרטים", "אפשרות לאיסוף עצמי"];
 
-const HeadphonesArtwork = ({ compact = false }: { compact?: boolean }) => (
-  <svg
-    viewBox="0 0 420 420"
-    role="img"
-    aria-label="אוזניות אלחוטיות SENSE PRO"
-    className="h-full w-full overflow-visible"
-  >
-    <defs>
-      <radialGradient id={compact ? "bandLightSmall" : "bandLight"} cx="34%" cy="20%" r="80%">
-        <stop offset="0" stopColor="#6d7778" />
-        <stop offset="0.42" stopColor="#3d4748" />
-        <stop offset="1" stopColor="#202829" />
-      </radialGradient>
-      <radialGradient id={compact ? "cupLightSmall" : "cupLight"} cx="36%" cy="22%" r="76%">
-        <stop offset="0" stopColor="#878b88" />
-        <stop offset="0.38" stopColor="#575b57" />
-        <stop offset="0.74" stopColor="#313532" />
-        <stop offset="1" stopColor="#151918" />
-      </radialGradient>
-      <linearGradient id={compact ? "metalSmall" : "metal"} x1="0" x2="1">
-        <stop offset="0" stopColor="#d8d9d5" />
-        <stop offset="0.42" stopColor="#616863" />
-        <stop offset="1" stopColor="#f3f4ef" />
-      </linearGradient>
-      <filter id={compact ? "shadowSmall" : "shadow"} x="-30%" y="-20%" width="160%" height="150%">
-        <feDropShadow dx="0" dy="18" stdDeviation="16" floodColor="#0d1110" floodOpacity="0.28" />
-      </filter>
-    </defs>
-
-    <g filter={`url(#${compact ? "shadowSmall" : "shadow"})`}>
-      <path
-        d="M97 251 C82 154 119 68 210 66 C301 68 337 154 323 251"
-        fill="none"
-        stroke={`url(#${compact ? "bandLightSmall" : "bandLight"})`}
-        strokeWidth="42"
-        strokeLinecap="round"
-      />
-      <path
-        d="M118 156 C139 94 183 87 210 87 C237 87 281 94 302 156"
-        fill="none"
-        stroke="#111918"
-        strokeOpacity="0.28"
-        strokeWidth="16"
-        strokeLinecap="round"
-      />
-      <path d="M102 225 L102 273" stroke={`url(#${compact ? "metalSmall" : "metal"})`} strokeWidth="17" strokeLinecap="round" />
-      <path d="M318 225 L318 273" stroke={`url(#${compact ? "metalSmall" : "metal"})`} strokeWidth="17" strokeLinecap="round" />
-      <ellipse
-        cx="123"
-        cy="293"
-        rx="68"
-        ry="89"
-        transform="rotate(-14 123 293)"
-        fill={`url(#${compact ? "cupLightSmall" : "cupLight"})`}
-      />
-      <ellipse
-        cx="285"
-        cy="293"
-        rx="70"
-        ry="92"
-        transform="rotate(18 285 293)"
-        fill={`url(#${compact ? "cupLightSmall" : "cupLight"})`}
-      />
-      <ellipse cx="126" cy="293" rx="42" ry="59" transform="rotate(-14 126 293)" fill="#171d1d" opacity="0.7" />
-      <ellipse cx="284" cy="292" rx="44" ry="61" transform="rotate(18 284 292)" fill="#4b4f4c" opacity="0.9" />
-      <path d="M240 185 C263 185 278 191 287 211" fill="none" stroke="#a8aaa4" strokeWidth="7" strokeLinecap="round" />
-      <circle cx="264" cy="186" r="8" fill="#7d817c" stroke="#d5d6d1" strokeWidth="3" />
-      <circle cx="90" cy="354" r="3" fill="#1d2423" />
-      <path d="M242 373 C272 389 316 373 338 340" fill="none" stroke="#111817" strokeWidth="5" opacity="0.16" />
-    </g>
-  </svg>
-);
+const ImagePlaceholder = ({ src, compact = false }: { src?: string | null; compact?: boolean }) => {
+  if (src) {
+    return <img src={src} alt="תמונת מוצר" className="h-full w-full object-contain" />;
+  }
+  return (
+    <div className="flex h-full w-full flex-col items-center justify-center gap-2 text-[#888]">
+      <ImagePlus className={compact ? "h-5 w-5" : "h-10 w-10"} />
+      {!compact && <span className="text-[13px] font-medium">הוסף תמונה</span>}
+    </div>
+  );
+};
 
 const ContactCard = () => (
   <aside className="rounded-[9px] border-2 border-[#0d5960] bg-[#f8fbfb] p-3 shadow-[0_1px_7px_rgba(0,0,0,0.15)]">
@@ -151,6 +90,17 @@ const Section = ({ title, children }: { title: string; children: ReactNode }) =>
 );
 
 const SenseProProductPage = () => {
+  const [mainImage, setMainImage] = useState<string | null>(null);
+  const [thumbs, setThumbs] = useState<(string | null)[]>([null, null, null, null]);
+  const mainInputRef = useRef<HTMLInputElement>(null);
+  const thumbInputRefs = useRef<(HTMLInputElement | null)[]>([]);
+
+  const readFile = (file: File, cb: (data: string) => void) => {
+    const reader = new FileReader();
+    reader.onload = () => cb(String(reader.result));
+    reader.readAsDataURL(file);
+  };
+
   return (
     <div className="min-h-screen flex flex-col bg-white">
       <MallHeader />
@@ -162,28 +112,50 @@ const SenseProProductPage = () => {
         dir="ltr"
       >
         <section className="order-1 lg:order-1" dir="rtl">
-          <div className="flex h-[415px] items-center justify-center rounded-[7px] bg-gradient-to-br from-[#f0f2f3] via-[#fbfbfb] to-[#ecefee] p-6">
-            <HeadphonesArtwork />
-          </div>
+          <button
+            type="button"
+            onClick={() => mainInputRef.current?.click()}
+            className="flex h-[415px] w-full items-center justify-center rounded-[7px] border-2 border-dashed border-[#cdd2d2] bg-gradient-to-br from-[#f0f2f3] via-[#fbfbfb] to-[#ecefee] p-6"
+            aria-label="העלה תמונת מוצר"
+          >
+            <ImagePlaceholder src={mainImage} />
+          </button>
+          <input
+            ref={mainInputRef}
+            type="file"
+            accept="image/*"
+            className="hidden"
+            onChange={(e) => {
+              const file = e.target.files?.[0];
+              if (file) readFile(file, setMainImage);
+            }}
+          />
 
           <div className="mt-[13px] grid grid-cols-4 gap-[12px]" aria-label="גלריית תמונות מוצר">
             {galleryImages.map((image, index) => (
-              <button
-                key={image.id}
-                type="button"
-                aria-label={image.label}
-                className={`relative h-[63px] overflow-hidden rounded-[7px] bg-[#f3f4f4] p-1 ${
-                  index === 0 ? "border-2 border-[#0d5960]" : "border border-transparent"
-                }`}
-                style={{ background: image.background }}
-              >
-                <HeadphonesArtwork compact />
-                {index === 1 && (
-                  <span className="absolute bottom-1 right-1 flex h-4 w-4 items-center justify-center rounded-full bg-[#c7b275] text-[10px]">
-                    🧔
-                  </span>
-                )}
-              </button>
+              <div key={image.id} className="relative">
+                <button
+                  type="button"
+                  aria-label={`הוסף תמונה ${index + 1}`}
+                  onClick={() => thumbInputRefs.current[index]?.click()}
+                  className={`relative flex h-[63px] w-full items-center justify-center overflow-hidden rounded-[7px] border-2 border-dashed border-[#cdd2d2] bg-[#f3f4f4] p-1`}
+                >
+                  <ImagePlaceholder src={thumbs[index]} compact />
+                </button>
+                <input
+                  ref={(el) => (thumbInputRefs.current[index] = el)}
+                  type="file"
+                  accept="image/*"
+                  className="hidden"
+                  onChange={(e) => {
+                    const file = e.target.files?.[0];
+                    if (file)
+                      readFile(file, (data) =>
+                        setThumbs((prev) => prev.map((t, i) => (i === index ? data : t))),
+                      );
+                  }}
+                />
+              </div>
             ))}
           </div>
         </section>
