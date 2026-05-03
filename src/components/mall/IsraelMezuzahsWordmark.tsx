@@ -5,7 +5,7 @@ export const ISRAEL_MEZUZAHS_WORDMARK_PARAMETERS = {
     width: 1110,
     height: 257,
     aspectRatio: "1110 / 257",
-    background: "#8ccfd0",
+    background: "#cdeced",
     textureOpacity: 0.42,
   },
   title: {
