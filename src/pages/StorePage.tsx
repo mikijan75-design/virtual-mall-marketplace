@@ -34,10 +34,10 @@ const StorePage = () => {
         <div className="container mx-auto text-center text-white">
           <span className="text-6xl md:text-8xl block mb-4">{store.logoEmoji}</span>
           <h1 className="text-3xl md:text-5xl font-frank font-bold mb-2">
-            {isIsraelMezuzahs ? "Rachel & Mauri" : store.name}
+            {isIsraelMezuzahs ? "Israel Mezuzahs" : store.name}
           </h1>
           <p className="text-lg opacity-90 font-heebo">
-            {isIsraelMezuzahs ? "יריד האומנים בנחלת בנימין" : store.description}
+            {isIsraelMezuzahs ? "and more..." : store.description}
           </p>
           <span className="inline-block mt-3 bg-white/20 px-4 py-1 rounded-full text-sm font-heebo">
             {store.category} • קומה {store.floor}
