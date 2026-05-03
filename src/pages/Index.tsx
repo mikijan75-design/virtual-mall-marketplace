@@ -1,5 +1,6 @@
 import { mallFloors } from "@/data/mallData";
 import MallHeader from "@/components/mall/MallHeader";
+import MallFooter from "@/components/mall/MallFooter";
 import PageTracker from "@/components/PageTracker";
 import FloorMap from "@/components/mall/FloorMap";
 import CrossSectionMallScene from "@/components/mall/CrossSectionMallScene";
@@ -31,10 +32,7 @@ const Index = () => {
         }}
       />
 
-      <footer className="bg-mall-sign text-primary-foreground py-8 text-center font-heebo">
-        <p className="text-mall-gold font-frank text-xl mb-2">הקניון הווירטואלי</p>
-        <p className="text-sm text-muted-foreground">© 2026 כל הזכויות שמורות</p>
-      </footer>
+      <MallFooter />
     </div>
   );
 };

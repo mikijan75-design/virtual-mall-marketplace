@@ -1,6 +1,7 @@
 import { useParams, Link } from "react-router-dom";
 import { useRef, useState } from "react";
 import MallHeader from "@/components/mall/MallHeader";
+import MallFooter from "@/components/mall/MallFooter";
 import PageTracker from "@/components/PageTracker";
 import imProduct1 from "@/assets/stores/im-product-1.png";
 import imProduct2 from "@/assets/stores/im-product-2.png";
@@ -157,6 +158,7 @@ const IsraelMezuzahsCategoryPage = () => {
             חזרה לחנות ←
           </Link>
         </div>
+        <MallFooter />
       </div>
     );
   }
@@ -280,6 +282,7 @@ const IsraelMezuzahsCategoryPage = () => {
           </div>
         </div>
       </div>
+      <MallFooter />
     </div>
   );
 };
