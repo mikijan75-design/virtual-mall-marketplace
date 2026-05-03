@@ -1,10 +1,13 @@
-import { Heart, MessageCircle, Star } from "lucide-react";
+import { Heart, MessageCircle, Star, Check } from "lucide-react";
 import type { ReactNode } from "react";
-import { Link } from "react-router-dom";
+import { Link, useSearchParams } from "react-router-dom";
 import BackButton from "@/components/BackButton";
 import MallHeader from "@/components/mall/MallHeader";
 import MallFooter from "@/components/mall/MallFooter";
 import PageTracker from "@/components/PageTracker";
+import imMezuzahsCollection from "@/assets/stores/im-mezuzahs-collection.png";
+import { useCart } from "@/context/CartContext";
+import { toast } from "@/hooks/use-toast";
 
 const galleryImages = [
   {
@@ -151,6 +154,15 @@ const Section = ({ title, children }: { title: string; children: ReactNode }) =>
 );
 
 const SenseProProductPage = () => {
+  const [searchParams] = useSearchParams();
+  const colParam = searchParams.get("col");
+  const rowParam = searchParams.get("row");
+  const isMezuzah = colParam !== null && rowParam !== null;
+
+  if (isMezuzah) {
+    return <MezuzahProductView col={parseInt(colParam!, 10)} row={parseInt(rowParam!, 10)} />;
+  }
+
   return (
     <div className="min-h-screen flex flex-col bg-white">
       <MallHeader />
