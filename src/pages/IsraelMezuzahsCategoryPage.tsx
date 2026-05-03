@@ -288,6 +288,7 @@ const IsraelMezuzahsCategoryPage = () => {
                             backgroundRepeat: "no-repeat",
                             backgroundSize: `${bgW}% ${bgH}%`,
                             backgroundPosition: `${px}% ${py}%`,
+                            filter: "saturate(1.6) contrast(1.15) brightness(1.05)",
                           }}
                         />
                       );
