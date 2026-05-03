@@ -1,9 +1,16 @@
 import { CreditCard, Minus, Plus } from "lucide-react";
 import type { ReactNode } from "react";
+import { useSearchParams } from "react-router-dom";
 import BackButton from "@/components/BackButton";
 import MallHeader from "@/components/mall/MallHeader";
 import MallFooter from "@/components/mall/MallFooter";
 import PageTracker from "@/components/PageTracker";
+import imMezuzahsCollection from "@/assets/stores/im-mezuzahs-collection.png";
+
+const mezuzahColBounds = [0, 0.0403, 0.0772, 0.1129, 0.1485, 0.1851, 0.2205, 0.2554, 0.2911, 0.3261, 0.362, 0.397, 0.4314, 0.467, 0.5026, 0.538, 0.5739, 0.6096, 0.6449, 0.6809, 0.7162, 0.7515, 0.7875, 0.8228, 0.8584, 0.8937, 0.9297, 0.9657, 1];
+const mezuzahRowBounds = [0, 0.2078, 0.4077, 0.6061, 0.8045, 1];
+const mezuzahCols = mezuzahColBounds.length - 1;
+const mezuzahRows = mezuzahRowBounds.length - 1;
 
 const HeadphonesThumbnail = () => (
   <svg viewBox="0 0 180 180" role="img" aria-label="אוזניות SENSE PRO" className="h-full w-full">
@@ -74,6 +81,40 @@ const PaymentButton = ({
 );
 
 const CartPage = () => {
+  const [params] = useSearchParams();
+  const colParam = params.get("col");
+  const rowParam = params.get("row");
+  const hasMezuzah = colParam !== null && rowParam !== null;
+
+  let mezuzahItem: {
+    itemNumber: number;
+    bgW: number;
+    bgH: number;
+    px: number;
+    py: number;
+  } | null = null;
+
+  if (hasMezuzah) {
+    const col = Math.max(0, Math.min(mezuzahCols - 1, parseInt(colParam!, 10) || 0));
+    const row = Math.max(0, Math.min(mezuzahRows - 1, parseInt(rowParam!, 10) || 0));
+    const cw = mezuzahColBounds[col + 1] - mezuzahColBounds[col];
+    const rh = mezuzahRowBounds[row + 1] - mezuzahRowBounds[row];
+    mezuzahItem = {
+      itemNumber: row * mezuzahCols + col + 1,
+      bgW: 100 / cw,
+      bgH: 100 / rh,
+      px: (mezuzahColBounds[col] / (1 - cw)) * 100,
+      py: (mezuzahRowBounds[row] / (1 - rh)) * 100,
+    };
+  }
+
+  const unitPrice = mezuzahItem ? 150 : 699;
+  const shipping = mezuzahItem ? 20 : 0;
+  const subtotal = unitPrice;
+  const vat = Math.round(subtotal * 0.17);
+  const total = subtotal + vat + shipping;
+  const fmt = (n: number) => `₪${n.toLocaleString("he-IL")}`;
+
   return (
     <div className="min-h-screen flex flex-col bg-white">
       <MallHeader />
@@ -152,8 +193,8 @@ const CartPage = () => {
             </div>
 
             <div className="grid min-h-[154px] grid-cols-[120px_1fr] border-b border-[#2d7075] bg-white md:grid-cols-[120px_120px_120px_1fr]">
-              <div className="flex items-center justify-center border-l border-[#2d7075] px-3 text-[18px] font-black">₪699</div>
-              <div className="hidden items-center justify-center border-l border-[#2d7075] px-3 text-[18px] font-black md:flex">₪699</div>
+              <div className="flex items-center justify-center border-l border-[#2d7075] px-3 text-[18px] font-black">{fmt(subtotal)}</div>
+              <div className="hidden items-center justify-center border-l border-[#2d7075] px-3 text-[18px] font-black md:flex">{fmt(unitPrice)}</div>
               <div className="hidden items-center justify-center border-l border-[#2d7075] px-3 md:flex">
                 <div className="flex h-[34px] items-center overflow-hidden rounded-[5px] border border-[#a4aaa7] bg-white shadow-sm">
                   <button type="button" aria-label="הפחת כמות" className="flex h-full w-8 items-center justify-center bg-[#f5f5f5]">
@@ -166,19 +207,42 @@ const CartPage = () => {
                 </div>
               </div>
               <div className="grid grid-cols-[1fr_126px] items-center gap-4 px-[14px] py-[14px]">
-                <p className="text-right text-[18px] font-medium leading-[1.25]">
-                  SENSE PRO אוזניות
-                  <br />
-                  אלחוטיות - סנס פרו
-                </p>
-                <div className="flex h-[126px] items-center justify-center rounded-[5px] bg-[#f1f2f2] p-2">
-                  <HeadphonesThumbnail />
-                </div>
+                {mezuzahItem ? (
+                  <>
+                    <p className="text-right text-[18px] font-medium leading-[1.25]">
+                      מזוזה מס׳ {mezuzahItem.itemNumber}
+                      <br />
+                      Israel Mezuzahs
+                    </p>
+                    <div
+                      className="h-[126px] w-full rounded-[5px] bg-[#f1f2f2]"
+                      style={{
+                        backgroundImage: `url(${imMezuzahsCollection})`,
+                        backgroundRepeat: "no-repeat",
+                        backgroundSize: `${mezuzahItem.bgW}% ${mezuzahItem.bgH}%`,
+                        backgroundPosition: `${mezuzahItem.px}% ${mezuzahItem.py}%`,
+                        filter: "saturate(1.6) contrast(1.15) brightness(1.05)",
+                      }}
+                      aria-label={`מזוזה מס׳ ${mezuzahItem.itemNumber}`}
+                    />
+                  </>
+                ) : (
+                  <>
+                    <p className="text-right text-[18px] font-medium leading-[1.25]">
+                      SENSE PRO אוזניות
+                      <br />
+                      אלחוטיות - סנס פרו
+                    </p>
+                    <div className="flex h-[126px] items-center justify-center rounded-[5px] bg-[#f1f2f2] p-2">
+                      <HeadphonesThumbnail />
+                    </div>
+                  </>
+                )}
               </div>
               <div className="col-span-2 grid grid-cols-3 border-t border-[#2d7075] text-center text-[15px] md:hidden">
                 <div className="border-l border-[#2d7075] p-2">
                   <div className="font-black">מחיר יחידה</div>
-                  <div>₪699</div>
+                  <div>{fmt(unitPrice)}</div>
                 </div>
                 <div className="border-l border-[#2d7075] p-2">
                   <div className="font-black">כמות</div>
@@ -186,15 +250,15 @@ const CartPage = () => {
                 </div>
                 <div className="p-2">
                   <div className="font-black">סכום ביניים</div>
-                  <div>₪699</div>
+                  <div>{fmt(subtotal)}</div>
                 </div>
               </div>
             </div>
 
             {[
-              ["סכום כולל (לפני מיסים)", "₪ 699"],
-              ['מע"מ (17%)', "₪699"],
-              ["דמי משלוח", "דמי משלוח"],
+              ["סכום כולל (לפני מיסים)", fmt(subtotal)],
+              ['מע"מ (17%)', fmt(vat)],
+              ["דמי משלוח", mezuzahItem ? `${fmt(shipping)} (פריט שני – משלוח חינם)` : "דמי משלוח"],
             ].map(([label, value]) => (
               <div key={label} className="grid grid-cols-[120px_1fr] border-b border-[#2d7075] bg-white text-[18px] font-medium">
                 <div className="border-l border-[#2d7075] px-3 py-[8px] text-center font-black">{value}</div>
@@ -203,7 +267,7 @@ const CartPage = () => {
             ))}
 
             <div className="grid grid-cols-[120px_1fr] bg-gradient-to-b from-[#136c74] to-[#07515b] text-[18px] font-black text-white">
-              <div className="border-l border-[#5d8c8f] px-3 py-[9px] text-center">₪843.08</div>
+              <div className="border-l border-[#5d8c8f] px-3 py-[9px] text-center">{fmt(total)}</div>
               <div className="px-3 py-[9px] text-center">סכום כולל לתשלום</div>
             </div>
           </div>
