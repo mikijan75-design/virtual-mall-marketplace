@@ -111,9 +111,11 @@ const CartPage = () => {
   const unitPrice = mezuzahItem ? 150 : 699;
   const shipping = mezuzahItem ? 20 : 0;
   const subtotal = unitPrice;
-  const vat = Math.round(subtotal * 0.17);
-  const total = subtotal + vat + shipping;
+  // Prices already include 17% VAT — show VAT as the portion contained in the subtotal
+  const vat = Math.round((subtotal * 0.17) / 1.17);
+  const total = subtotal + shipping;
   const fmt = (n: number) => `₪${n.toLocaleString("he-IL")}`;
+  const fmtNeg = (n: number) => `−₪${n.toLocaleString("he-IL")}`;
 
   return (
     <div className="min-h-screen flex flex-col bg-white">
@@ -256,8 +258,8 @@ const CartPage = () => {
             </div>
 
             {[
-              ["סכום כולל (לפני מיסים)", fmt(subtotal)],
-              ['מע"מ (17%)', fmt(vat)],
+              ["סכום כולל (כולל מע״מ)", fmt(subtotal)],
+              ['מתוכו מע"מ (17%)', fmtNeg(vat)],
               ["דמי משלוח", mezuzahItem ? `${fmt(shipping)} (פריט שני – משלוח חינם)` : "דמי משלוח"],
             ].map(([label, value]) => (
               <div key={label} className="grid grid-cols-[120px_1fr] border-b border-[#2d7075] bg-white text-[18px] font-medium">
