@@ -117,10 +117,6 @@ const IsraelMezuzahsCategoryPage = () => {
   const category = categoryIdx >= 0 ? imCategories[categoryIdx] : undefined;
   const isMezuzahs = category?.slug === "mezuzahs";
 
-  // Invisible grid overlay infrastructure for the mezuzahs collection image
-  const gridCols = 30;
-  const gridRows = 5;
-
   const lensSize = 180;
   const zoom = 2.5;
   const imgRef = useRef<HTMLImageElement>(null);
@@ -203,30 +199,6 @@ const IsraelMezuzahsCategoryPage = () => {
                     className="w-full h-auto block select-none"
                     draggable={false}
                   />
-                  <div
-                    className="absolute inset-0 grid"
-                    style={{
-                      gridTemplateColumns: `repeat(${gridCols}, 1fr)`,
-                      gridTemplateRows: `repeat(${gridRows}, 1fr)`,
-                    }}
-                    aria-label="רשת פריטים"
-                  >
-                    {Array.from({ length: gridCols * gridRows }).map((_, i) => {
-                      const row = Math.floor(i / gridCols) + 1;
-                      const col = (i % gridCols) + 1;
-                      const id = `${row}.${col}`;
-                      return (
-                        <button
-                          key={id}
-                          type="button"
-                          aria-label={`פריט ${id}`}
-                          title={`פריט ${id}`}
-                          onClick={() => console.log(`mezuzah cell ${id}`)}
-                          className="border border-transparent hover:border-mall-gold hover:bg-mall-gold/10 focus:outline-none focus:border-mall-gold transition-colors"
-                        />
-                      );
-                    })}
-                  </div>
                   {lens.visible && (
                     <div
                       className="pointer-events-none absolute rounded-full border-4 border-white shadow-2xl ring-2 ring-black/30"
