@@ -7,6 +7,7 @@ import { Dialog, DialogContent } from "@/components/ui/dialog";
 import { Button } from "@/components/ui/button";
 import { ChevronLeft, ChevronRight, Check } from "lucide-react";
 import { useCart } from "@/context/CartContext";
+import { toast } from "@/hooks/use-toast";
 import imProduct1 from "@/assets/stores/im-product-1.png";
 import imProduct2 from "@/assets/stores/im-product-2.png";
 import imProduct3 from "@/assets/stores/im-product-3.png";
@@ -361,7 +362,6 @@ const IsraelMezuzahsCategoryPage = () => {
                       className="mt-4 bg-mall-gold text-mall-sign hover:bg-mall-gold/90 font-heebo font-bold"
                       onClick={() => {
                         if (!snapshot) return;
-                        setZoomOpen(false);
                         const itemNumber = snapshot.row * gridCols + snapshot.col + 1;
                         addToCart({
                           id: `mezuzah-${snapshot.col}-${snapshot.row}`,
@@ -372,7 +372,10 @@ const IsraelMezuzahsCategoryPage = () => {
                           shippingPerItem: 20,
                           meta: { col: snapshot.col, row: snapshot.row, itemNumber },
                         });
-                        navigate(`/cart`);
+                        toast({
+                          title: "נוסף לעגלה",
+                          description: `מזוזה מס׳ ${itemNumber} נוספה לעגלה. ניתן להמשיך בבחירה ולעבור לעגלה דרך האייקון בבר העליון.`,
+                        });
                       }}
                     >
                       <Check className="h-4 w-4 ml-2" />
