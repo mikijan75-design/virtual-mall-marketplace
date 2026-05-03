@@ -6,6 +6,7 @@ import { TooltipProvider } from "@/components/ui/tooltip";
 import Index from "./pages/Index.tsx";
 import StorePage from "./pages/StorePage.tsx";
 import IsraelMezuzahsCategoryPage from "./pages/IsraelMezuzahsCategoryPage.tsx";
+import SenseProProductPage from "./pages/SenseProProductPage.tsx";
 import InfoPage from "./pages/InfoPage.tsx";
 import NotFound from "./pages/NotFound.tsx";
 
@@ -19,6 +20,8 @@ const App = () => (
       <BrowserRouter>
         <Routes>
           <Route path="/" element={<Index />} />
+          <Route path="/sense-pro" element={<SenseProProductPage />} />
+          <Route path="/product/sense-pro" element={<SenseProProductPage />} />
           <Route path="/store/:storeId" element={<StorePage />} />
           <Route path="/store/s2/category/:categorySlug" element={<IsraelMezuzahsCategoryPage />} />
           <Route path="/info" element={<InfoPage />} />

@@ -1,5 +1,11 @@
 import { Link } from "react-router-dom";
 import logo from "@/assets/shop-desing-logo.png";
+import {
+  DropdownMenu,
+  DropdownMenuContent,
+  DropdownMenuItem,
+  DropdownMenuTrigger,
+} from "@/components/ui/dropdown-menu";
 
 const MallHeader = () => {
   return (
@@ -20,6 +26,16 @@ const MallHeader = () => {
           <Link to="/" className="px-3 py-1 rounded hover:bg-mall-gold/20 transition-colors">חנויות</Link>
           <Link to="/" className="px-3 py-1 rounded hover:bg-mall-gold/20 transition-colors">מבצעים</Link>
           <Link to="/" className="px-3 py-1 rounded hover:bg-mall-gold/20 transition-colors">בלוג</Link>
+          <DropdownMenu>
+            <DropdownMenuTrigger className="px-3 py-1 rounded hover:bg-mall-gold/20 transition-colors outline-none">
+              דפים
+            </DropdownMenuTrigger>
+            <DropdownMenuContent align="end" className="bg-mall-sign text-primary-foreground border-mall-gold/40">
+              <DropdownMenuItem asChild>
+                <Link to="/sense-pro">דף מוצר - Sense Pro</Link>
+              </DropdownMenuItem>
+            </DropdownMenuContent>
+          </DropdownMenu>
           <Link to="/" className="px-3 py-1 rounded hover:bg-mall-gold/20 transition-colors">צור קשר</Link>
         </nav>
       </div>
