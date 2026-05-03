@@ -270,19 +270,27 @@ const IsraelMezuzahsCategoryPage = () => {
                 </div>
                 <Dialog open={zoomOpen} onOpenChange={setZoomOpen}>
                   <DialogContent className="max-w-md p-6 flex flex-col items-center">
-                    {snapshot && (
-                      <div
-                        className="rounded-lg shadow-inner bg-secondary"
-                        style={{
-                          width: 240,
-                          height: 480,
-                          backgroundImage: `url(${imMezuzahsCollection})`,
-                          backgroundRepeat: "no-repeat",
-                          backgroundSize: `${gridCols * 100}% ${gridRows * 100}%`,
-                          backgroundPosition: `${(snapshot.col / (gridCols - 1)) * 100}% ${(snapshot.row / (gridRows - 1)) * 100}%`,
-                        }}
-                      />
-                    )}
+                    {snapshot && (() => {
+                      const cw = colBounds[snapshot.col + 1] - colBounds[snapshot.col];
+                      const rh = rowBounds[snapshot.row + 1] - rowBounds[snapshot.row];
+                      const bgW = 100 / cw;
+                      const bgH = 100 / rh;
+                      const px = (colBounds[snapshot.col] / (1 - cw)) * 100;
+                      const py = (rowBounds[snapshot.row] / (1 - rh)) * 100;
+                      return (
+                        <div
+                          className="rounded-lg shadow-inner bg-secondary"
+                          style={{
+                            width: 240,
+                            height: 480,
+                            backgroundImage: `url(${imMezuzahsCollection})`,
+                            backgroundRepeat: "no-repeat",
+                            backgroundSize: `${bgW}% ${bgH}%`,
+                            backgroundPosition: `${px}% ${py}%`,
+                          }}
+                        />
+                      );
+                    })()}
                     <p className="text-center font-heebo text-foreground mt-3">תקריב הפריט הנבחר</p>
                   </DialogContent>
                 </Dialog>
