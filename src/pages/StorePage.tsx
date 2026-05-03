@@ -2,6 +2,25 @@ import { useParams, Link } from "react-router-dom";
 import { mallFloors } from "@/data/mallData";
 import MallHeader from "@/components/mall/MallHeader";
 import israelMezuzahsAbout from "@/assets/stores/israel-mezuzahs-about.png";
+import imProduct1 from "@/assets/stores/im-product-1.png";
+import imProduct2 from "@/assets/stores/im-product-2.png";
+import imProduct3 from "@/assets/stores/im-product-3.png";
+import imProduct4 from "@/assets/stores/im-product-4.png";
+import imProduct5 from "@/assets/stores/im-product-5.png";
+import imProduct6 from "@/assets/stores/im-product-6.png";
+import imProduct7 from "@/assets/stores/im-product-7.png";
+import imProduct8 from "@/assets/stores/im-product-8.png";
+
+const israelMezuzahsProducts = [
+  { src: imProduct1, name: "פמוטי שבת" },
+  { src: imProduct2, name: "מגשי הגשה" },
+  { src: imProduct3, name: "תחתיות לכוסות" },
+  { src: imProduct4, name: "חרוזים מעוצבים" },
+  { src: imProduct5, name: "מזוזות" },
+  { src: imProduct6, name: "תליוני חמסה ורימון" },
+  { src: imProduct7, name: "מפת ישראל" },
+  { src: imProduct8, name: "חנוכיות" },
+];
 
 const StorePage = () => {
   const { storeId } = useParams<{ storeId: string }>();
@@ -55,13 +74,12 @@ const StorePage = () => {
                 <div className="grid grid-cols-1 md:grid-cols-4 gap-4 items-stretch">
                   {/* Left column - 2 products */}
                   <div className="hidden md:flex flex-col gap-4">
-                    {[1, 2].map((i) => (
+                    {israelMezuzahsProducts.slice(0, 2).map((p, i) => (
                       <div key={`l-${i}`} className="bg-muted rounded-lg p-4 border border-border flex-1">
-                        <div className="w-full aspect-square bg-secondary rounded-md mb-3 flex items-center justify-center text-3xl">
-                          {store.logoEmoji}
+                        <div className="w-full aspect-square bg-secondary rounded-md mb-3 overflow-hidden">
+                          <img src={p.src} alt={p.name} className="w-full h-full object-cover" loading="lazy" />
                         </div>
-                        <div className="h-3 bg-border rounded w-3/4 mx-auto mb-2" />
-                        <div className="h-3 bg-mall-gold/30 rounded w-1/2 mx-auto" />
+                        <p className="text-sm font-heebo text-foreground text-center">{p.name}</p>
                       </div>
                     ))}
                   </div>
@@ -77,13 +95,12 @@ const StorePage = () => {
 
                   {/* Right column - 2 products */}
                   <div className="hidden md:flex flex-col gap-4">
-                    {[3, 4].map((i) => (
+                    {israelMezuzahsProducts.slice(2, 4).map((p, i) => (
                       <div key={`r-${i}`} className="bg-muted rounded-lg p-4 border border-border flex-1">
-                        <div className="w-full aspect-square bg-secondary rounded-md mb-3 flex items-center justify-center text-3xl">
-                          {store.logoEmoji}
+                        <div className="w-full aspect-square bg-secondary rounded-md mb-3 overflow-hidden">
+                          <img src={p.src} alt={p.name} className="w-full h-full object-cover" loading="lazy" />
                         </div>
-                        <div className="h-3 bg-border rounded w-3/4 mx-auto mb-2" />
-                        <div className="h-3 bg-mall-gold/30 rounded w-1/2 mx-auto" />
+                        <p className="text-sm font-heebo text-foreground text-center">{p.name}</p>
                       </div>
                     ))}
                   </div>
@@ -91,13 +108,12 @@ const StorePage = () => {
 
                 {/* Bottom row - products under image */}
                 <div className="grid grid-cols-2 md:grid-cols-4 gap-4 mt-4">
-                  {[5, 6, 7, 8].map((i) => (
+                  {israelMezuzahsProducts.slice(4, 8).map((p, i) => (
                     <div key={`b-${i}`} className="bg-muted rounded-lg p-4 border border-border">
-                      <div className="w-full aspect-square bg-secondary rounded-md mb-3 flex items-center justify-center text-3xl">
-                        {store.logoEmoji}
+                      <div className="w-full aspect-square bg-secondary rounded-md mb-3 overflow-hidden">
+                        <img src={p.src} alt={p.name} className="w-full h-full object-cover" loading="lazy" />
                       </div>
-                      <div className="h-3 bg-border rounded w-3/4 mx-auto mb-2" />
-                      <div className="h-3 bg-mall-gold/30 rounded w-1/2 mx-auto" />
+                      <p className="text-sm font-heebo text-foreground text-center">{p.name}</p>
                     </div>
                   ))}
                 </div>
