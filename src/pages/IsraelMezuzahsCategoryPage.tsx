@@ -206,11 +206,12 @@ const IsraelMezuzahsCategoryPage = () => {
                 <p className="text-muted-foreground font-heebo leading-relaxed max-w-3xl mx-auto mb-6">
                   {category.description}
                 </p>
-                <div
-                  className="relative inline-block w-full overflow-hidden rounded-lg shadow-md cursor-crosshair"
-                  onMouseMove={handleMove}
-                  onMouseLeave={() => setLens((l) => ({ ...l, visible: false }))}
-                >
+                <div className="flex flex-col md:flex-row-reverse gap-6 items-start">
+                  <div
+                    className="relative flex-1 overflow-hidden rounded-lg shadow-md cursor-crosshair"
+                    onMouseMove={handleMove}
+                    onMouseLeave={() => setLens((l) => ({ ...l, visible: false }))}
+                  >
                   <img
                     ref={imgRef}
                     src={imMezuzahsCollection}
@@ -271,6 +272,35 @@ const IsraelMezuzahsCategoryPage = () => {
                       </div>
                     </>
                   )}
+                  </div>
+                  <aside className="w-full md:w-64 bg-card border border-border rounded-xl p-5 shadow-lg text-right">
+                    <h3 className="text-xl font-frank font-bold text-foreground mb-4 border-b border-border pb-2">
+                      פרטי המוצר
+                    </h3>
+                    <table className="w-full font-heebo text-sm">
+                      <tbody className="divide-y divide-border">
+                        <tr>
+                          <td className="py-2 text-muted-foreground">מחיר לפריט</td>
+                          <td className="py-2 font-bold text-mall-gold text-left">₪150</td>
+                        </tr>
+                        <tr>
+                          <td className="py-2 text-muted-foreground">כולל מע״מ</td>
+                          <td className="py-2 font-bold text-foreground text-left">כן</td>
+                        </tr>
+                        <tr>
+                          <td className="py-2 text-muted-foreground">משלוח לפריט</td>
+                          <td className="py-2 font-bold text-foreground text-left">₪20</td>
+                        </tr>
+                        <tr>
+                          <td className="py-2 text-muted-foreground">פריט שני</td>
+                          <td className="py-2 font-bold text-mall-gold text-left">משלוח חינם</td>
+                        </tr>
+                      </tbody>
+                    </table>
+                    <p className="text-xs text-muted-foreground font-heebo mt-4 leading-relaxed">
+                      הנתונים תקפים לכל הפריטים בדף זה.
+                    </p>
+                  </aside>
                 </div>
                 <Dialog open={zoomOpen} onOpenChange={setZoomOpen}>
                   <DialogContent className="max-w-md p-6 flex flex-col items-center">
