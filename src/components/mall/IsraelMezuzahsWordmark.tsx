@@ -87,6 +87,8 @@ const IsraelMezuzahsWordmark = ({ className, style, ...svgProps }: IsraelMezuzah
           letterSpacing: params.title.letterSpacing,
         } as CSSProperties}
         fill={params.title.color}
+        lengthAdjust="spacingAndGlyphs"
+        textLength="1074"
         x={params.title.x}
         y={params.title.baselineY}
       >
@@ -104,6 +106,8 @@ const IsraelMezuzahsWordmark = ({ className, style, ...svgProps }: IsraelMezuzah
         stroke={params.subtitle.stroke}
         strokeLinejoin="round"
         strokeWidth={params.subtitle.strokeWidth}
+        lengthAdjust="spacingAndGlyphs"
+        textLength="368"
         transform={`rotate(${params.subtitle.rotate} ${params.subtitle.x} ${params.subtitle.baselineY})`}
         x={params.subtitle.x}
         y={params.subtitle.baselineY}
