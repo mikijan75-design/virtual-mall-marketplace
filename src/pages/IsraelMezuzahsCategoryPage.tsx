@@ -4,6 +4,9 @@ import MallHeader from "@/components/mall/MallHeader";
 import MallFooter from "@/components/mall/MallFooter";
 import PageTracker from "@/components/PageTracker";
 import { Dialog, DialogContent } from "@/components/ui/dialog";
+import { Button } from "@/components/ui/button";
+import { ChevronLeft, ChevronRight, Check } from "lucide-react";
+import { toast } from "sonner";
 import imProduct1 from "@/assets/stores/im-product-1.png";
 import imProduct2 from "@/assets/stores/im-product-2.png";
 import imProduct3 from "@/assets/stores/im-product-3.png";
@@ -279,21 +282,61 @@ const IsraelMezuzahsCategoryPage = () => {
                       const px = (colBounds[snapshot.col] / (1 - cw)) * 100;
                       const py = (rowBounds[snapshot.row] / (1 - rh)) * 100;
                       return (
-                        <div
-                          className="rounded-lg shadow-inner bg-secondary"
-                          style={{
-                            width: 240,
-                            height: 480,
-                            backgroundImage: `url(${imMezuzahsCollection})`,
-                            backgroundRepeat: "no-repeat",
-                            backgroundSize: `${bgW}% ${bgH}%`,
-                            backgroundPosition: `${px}% ${py}%`,
-                            filter: "saturate(1.6) contrast(1.15) brightness(1.05)",
-                          }}
-                        />
+                        <div className="flex items-center gap-3">
+                          <Button
+                            size="icon"
+                            variant="outline"
+                            onClick={() => {
+                              const total = gridCols * gridRows;
+                              const idx = snapshot.row * gridCols + snapshot.col;
+                              const next = (idx - 1 + total) % total;
+                              setSnapshot({ col: next % gridCols, row: Math.floor(next / gridCols) });
+                            }}
+                            aria-label="הפריט הקודם"
+                          >
+                            <ChevronRight className="h-5 w-5" />
+                          </Button>
+                          <div
+                            className="rounded-lg shadow-inner bg-secondary"
+                            style={{
+                              width: 200,
+                              height: 400,
+                              backgroundImage: `url(${imMezuzahsCollection})`,
+                              backgroundRepeat: "no-repeat",
+                              backgroundSize: `${bgW}% ${bgH}%`,
+                              backgroundPosition: `${px}% ${py}%`,
+                              filter: "saturate(1.6) contrast(1.15) brightness(1.05)",
+                            }}
+                          />
+                          <Button
+                            size="icon"
+                            variant="outline"
+                            onClick={() => {
+                              const total = gridCols * gridRows;
+                              const idx = snapshot.row * gridCols + snapshot.col;
+                              const next = (idx + 1) % total;
+                              setSnapshot({ col: next % gridCols, row: Math.floor(next / gridCols) });
+                            }}
+                            aria-label="הפריט הבא"
+                          >
+                            <ChevronLeft className="h-5 w-5" />
+                          </Button>
+                        </div>
                       );
                     })()}
                     <p className="text-center font-heebo text-foreground mt-3">תקריב הפריט הנבחר</p>
+                    <Button
+                      className="mt-4 bg-mall-gold text-mall-sign hover:bg-mall-gold/90 font-heebo font-bold"
+                      onClick={() => {
+                        if (!snapshot) return;
+                        const idx = snapshot.row * gridCols + snapshot.col + 1;
+                        toast.success(`פריט מס׳ ${idx} נבחר בהצלחה`);
+                        setZoomOpen(false);
+                      }}
+                    >
+                      <Check className="h-4 w-4 ml-2" />
+                      בחירה סופית
+                    </Button>
                   </DialogContent>
                 </Dialog>
               </div>
