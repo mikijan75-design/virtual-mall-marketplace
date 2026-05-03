@@ -589,16 +589,14 @@ const CrossSectionMallScene = ({ floors }: CrossSectionMallSceneProps) => {
 
         <div className="relative z-20 h-[86px] bg-[#ece2d1] shadow-[0_8px_18px_rgba(75,55,35,0.18)] md:h-[122px]">
           <div
-            className="absolute -left-[3%] -right-[3%] -top-[70%] h-[178%] overflow-hidden rounded-b-[50%] border-[4px] border-[#b8944d]"
+            className="absolute -left-[3%] -right-[3%] -top-[70%] h-[178%] overflow-hidden rounded-b-[50%]"
             style={{
               backgroundImage: `url(${ceilingFresco})`,
               backgroundSize: "cover",
               backgroundPosition: "center 42%",
-              boxShadow: "inset 0 -18px 34px rgba(90,60,25,0.2), inset 0 0 0 8px rgba(246,224,166,0.18), 0 3px 9px rgba(0,0,0,0.18)",
             }}
           />
           <DownlightRow className="bottom-4" />
-          <div className="absolute bottom-0 h-3 w-full bg-gradient-to-b from-[#d9c17a] via-[#9f7d36] to-[#d9c17a]" />
         </div>
 
         <GlassElevatorTower side="left" />
