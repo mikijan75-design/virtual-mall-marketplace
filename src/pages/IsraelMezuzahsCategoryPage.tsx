@@ -253,6 +253,7 @@ const IsraelMezuzahsCategoryPage = () => {
                         backgroundRepeat: "no-repeat",
                         backgroundSize: `${lens.bgW}px ${lens.bgH}px`,
                         backgroundPosition: `${lens.bgX}px ${lens.bgY}px`,
+                        filter: "saturate(1.6) contrast(1.15) brightness(1.05)",
                       }}
                     />
                       <div
@@ -287,6 +288,7 @@ const IsraelMezuzahsCategoryPage = () => {
                             backgroundRepeat: "no-repeat",
                             backgroundSize: `${bgW}% ${bgH}%`,
                             backgroundPosition: `${px}% ${py}%`,
+                            filter: "saturate(1.6) contrast(1.15) brightness(1.05)",
                           }}
                         />
                       );
