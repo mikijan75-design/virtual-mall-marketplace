@@ -116,12 +116,15 @@ const CartPage = () => {
   const fmtNeg = (n: number) => `−₪${n.toLocaleString("he-IL")}`;
 
   const subtotal = items.reduce((s, it) => s + it.unitPrice * it.quantity, 0);
-  const totalUnits = items.reduce((s, it) => s + it.quantity, 0);
-  // Free shipping for any item beyond the first
-  const shipping = items.reduce(
-    (s, it) => s + (it.shippingPerItem ?? 0) * it.quantity,
-    0,
-  ) - (items[0]?.shippingPerItem ?? 0) * Math.max(0, totalUnits - 1);
+  // Mezuzah (page 3.2.5) rule: free shipping when more than one mezuzah is in the cart
+  const mezuzahUnits = items
+    .filter((it) => it.type === "mezuzah")
+    .reduce((s, it) => s + it.quantity, 0);
+  const mezuzahFreeShipping = mezuzahUnits > 1;
+  const shipping = items.reduce((s, it) => {
+    if (it.type === "mezuzah" && mezuzahFreeShipping) return s;
+    return s + (it.shippingPerItem ?? 0) * it.quantity;
+  }, 0);
   const vat = Math.round((subtotal * 0.17) / 1.17);
   const total = subtotal + shipping;
 
@@ -320,8 +323,8 @@ const CartPage = () => {
               ['מתוכו מע"מ (17%)', fmtNeg(vat)],
               [
                 "דמי משלוח",
-                totalUnits > 1
-                  ? `${fmt(shipping)} (פריט נוסף – משלוח חינם)`
+                mezuzahFreeShipping
+                  ? `${fmt(shipping)} (מזוזות – משלוח חינם מעל פריט אחד)`
                   : fmt(shipping),
               ],
             ].map(([label, value]) => (
