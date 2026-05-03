@@ -3,6 +3,7 @@ import { useRef, useState } from "react";
 import MallHeader from "@/components/mall/MallHeader";
 import MallFooter from "@/components/mall/MallFooter";
 import PageTracker from "@/components/PageTracker";
+import { Dialog, DialogContent } from "@/components/ui/dialog";
 import imProduct1 from "@/assets/stores/im-product-1.png";
 import imProduct2 from "@/assets/stores/im-product-2.png";
 import imProduct3 from "@/assets/stores/im-product-3.png";
@@ -118,12 +119,14 @@ const IsraelMezuzahsCategoryPage = () => {
   const category = categoryIdx >= 0 ? imCategories[categoryIdx] : undefined;
   const isMezuzahs = category?.slug === "mezuzahs";
 
-  const lensSize = 180;
-  const zoom = 2.5;
+  const lensSize = 320;
+  const zoom = 1.8;
   const imgRef = useRef<HTMLImageElement>(null);
   const [lens, setLens] = useState<{ x: number; y: number; bgX: number; bgY: number; bgW: number; bgH: number; visible: boolean }>({
     x: 0, y: 0, bgX: 0, bgY: 0, bgW: 0, bgH: 0, visible: false,
   });
+  const [zoomOpen, setZoomOpen] = useState(false);
+  const [snapshot, setSnapshot] = useState<{ bgX: number; bgY: number; bgW: number; bgH: number } | null>(null);
 
   const handleMove = (e: React.MouseEvent<HTMLDivElement>) => {
     const img = imgRef.current;
@@ -144,6 +147,12 @@ const IsraelMezuzahsCategoryPage = () => {
       bgY: -(y * zoom - lensSize / 2),
       visible: true,
     });
+  };
+
+  const handleClick = () => {
+    if (!lens.visible) return;
+    setSnapshot({ bgX: lens.bgX, bgY: lens.bgY, bgW: lens.bgW, bgH: lens.bgH });
+    setZoomOpen(true);
   };
 
   if (!category) {
@@ -193,6 +202,7 @@ const IsraelMezuzahsCategoryPage = () => {
                   className="relative inline-block w-full overflow-hidden rounded-lg shadow-md cursor-crosshair"
                   onMouseMove={handleMove}
                   onMouseLeave={() => setLens((l) => ({ ...l, visible: false }))}
+                  onClick={handleClick}
                 >
                   <img
                     ref={imgRef}
@@ -202,6 +212,7 @@ const IsraelMezuzahsCategoryPage = () => {
                     draggable={false}
                   />
                   {lens.visible && (
+                    <>
                     <div
                       className="pointer-events-none absolute rounded-full border-4 border-white shadow-2xl ring-2 ring-black/30"
                       style={{
@@ -215,8 +226,35 @@ const IsraelMezuzahsCategoryPage = () => {
                         backgroundPosition: `${lens.bgX}px ${lens.bgY}px`,
                       }}
                     />
+                      <div
+                        className="pointer-events-none absolute bg-mall-sign text-mall-gold text-sm font-heebo font-bold px-3 py-1 rounded-full shadow-lg border border-mall-gold/60 whitespace-nowrap"
+                        style={{
+                          left: lens.x,
+                          top: lens.y + lensSize / 2 + 10,
+                          transform: "translateX(-50%)",
+                        }}
+                      >
+                        לחץ לבחירה
+                      </div>
+                    </>
                   )}
                 </div>
+                <Dialog open={zoomOpen} onOpenChange={setZoomOpen}>
+                  <DialogContent className="max-w-2xl p-4">
+                    {snapshot && (
+                      <div
+                        className="w-full aspect-square rounded-lg shadow-inner"
+                        style={{
+                          backgroundImage: `url(${imMezuzahsCollection})`,
+                          backgroundRepeat: "no-repeat",
+                          backgroundSize: `${snapshot.bgW * 1.6}px ${snapshot.bgH * 1.6}px`,
+                          backgroundPosition: `${snapshot.bgX * 1.6 - 100}px ${snapshot.bgY * 1.6 - 100}px`,
+                        }}
+                      />
+                    )}
+                    <p className="text-center font-heebo text-foreground mt-3">תקריב הפריט הנבחר</p>
+                  </DialogContent>
+                </Dialog>
               </div>
             ) : (
               <>
