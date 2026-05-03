@@ -112,13 +112,13 @@ const StoreCard = ({ store, storeIndex }: StoreCardProps) => {
         {/* Brand sign */}
         {style.logo ? (
           <div
-            className="relative z-10 flex items-center justify-center overflow-hidden"
+            className="relative z-10 flex items-center justify-center overflow-hidden h-[140px] md:h-[185px]"
             style={{
               background: "#ffffff",
               borderBottom: `2px solid ${style.accent}`,
             }}
           >
-            <img src={style.logo} alt={store.name} className="w-full h-auto object-cover block" />
+            <img src={style.logo} alt={store.name} className="w-full h-full object-cover block" />
           </div>
         ) : (
           <div
