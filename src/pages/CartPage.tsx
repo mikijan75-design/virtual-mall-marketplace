@@ -324,8 +324,8 @@ const CartPage = () => {
               ['מתוכו מע"מ (17%)', fmtNeg(vat)],
               [
                 "דמי משלוח",
-                totalUnits > 1
-                  ? `${fmt(shipping)} (פריט נוסף – משלוח חינם)`
+                mezuzahFreeShipping
+                  ? `${fmt(shipping)} (מזוזות – משלוח חינם מעל פריט אחד)`
                   : fmt(shipping),
               ],
             ].map(([label, value]) => (
