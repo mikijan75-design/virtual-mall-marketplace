@@ -1,12 +1,14 @@
 import { CreditCard, Minus, Plus, Trash2 } from "lucide-react";
 import type { ReactNode } from "react";
 import { useSearchParams } from "react-router-dom";
-import { useEffect, useRef } from "react";
+import { useEffect, useRef, useState } from "react";
 import BackButton from "@/components/BackButton";
 import MallHeader from "@/components/mall/MallHeader";
 import MallFooter from "@/components/mall/MallFooter";
 import PageTracker from "@/components/PageTracker";
 import { useCart, type CartItem } from "@/context/CartContext";
+import { Dialog, DialogContent, DialogHeader, DialogTitle, DialogDescription } from "@/components/ui/dialog";
+import { useToast } from "@/hooks/use-toast";
 import imMezuzahsCollection from "@/assets/stores/im-mezuzahs-collection.png";
 
 const mezuzahColBounds = [0, 0.0403, 0.0772, 0.1129, 0.1485, 0.1851, 0.2205, 0.2554, 0.2911, 0.3261, 0.362, 0.397, 0.4314, 0.467, 0.5026, 0.538, 0.5739, 0.6096, 0.6449, 0.6809, 0.7162, 0.7515, 0.7875, 0.8228, 0.8584, 0.8937, 0.9297, 0.9657, 1];
@@ -86,6 +88,14 @@ const CartPage = () => {
   const { items, addItem, removeItem, updateQuantity, clearCart } = useCart();
   const [params, setParams] = useSearchParams();
   const seededRef = useRef(false);
+  const [paymentOpen, setPaymentOpen] = useState(false);
+  const { toast } = useToast();
+
+  const handlePay = (method: string) => {
+    setPaymentOpen(false);
+    toast({ title: "התשלום בוצע", description: `שולם בהצלחה באמצעות ${method}.` });
+    clearCart();
+  };
 
   // Backwards compatibility: if a legacy ?col=&row= URL lands here, seed the cart once
   useEffect(() => {
@@ -351,10 +361,10 @@ const CartPage = () => {
               </button>
               <button
                 type="button"
-                onClick={() => clearCart()}
+                onClick={() => setPaymentOpen(true)}
                 className="rounded-[5px] bg-gradient-to-b from-[#126f78] to-[#075a65] px-5 py-2 text-[16px] font-black text-white shadow"
               >
-                סיום קנייה
+                תשלום
               </button>
             </div>
           )}
