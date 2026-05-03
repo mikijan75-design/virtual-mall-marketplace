@@ -128,6 +128,9 @@ const IsraelMezuzahsCategoryPage = () => {
   const [zoomOpen, setZoomOpen] = useState(false);
   const [snapshot, setSnapshot] = useState<{ bgX: number; bgY: number; bgW: number; bgH: number } | null>(null);
 
+  const gridCols = 30;
+  const gridRows = 5;
+
   const handleMove = (e: React.MouseEvent<HTMLDivElement>) => {
     const img = imgRef.current;
     if (!img) return;
@@ -149,9 +152,22 @@ const IsraelMezuzahsCategoryPage = () => {
     });
   };
 
-  const handleClick = () => {
-    if (!lens.visible) return;
-    setSnapshot({ bgX: lens.bgX, bgY: lens.bgY, bgW: lens.bgW, bgH: lens.bgH });
+  const openZoomAtCell = (col: number, row: number) => {
+    const img = imgRef.current;
+    if (!img) return;
+    const rect = img.getBoundingClientRect();
+    const cellW = rect.width / gridCols;
+    const cellH = rect.height / gridRows;
+    const cx = cellW * (col + 0.5);
+    const cy = cellH * (row + 0.5);
+    const bgW = rect.width * zoom;
+    const bgH = rect.height * zoom;
+    setSnapshot({
+      bgW,
+      bgH,
+      bgX: -(cx * zoom - lensSize / 2),
+      bgY: -(cy * zoom - lensSize / 2),
+    });
     setZoomOpen(true);
   };
 
@@ -202,7 +218,6 @@ const IsraelMezuzahsCategoryPage = () => {
                   className="relative inline-block w-full overflow-hidden rounded-lg shadow-md cursor-crosshair"
                   onMouseMove={handleMove}
                   onMouseLeave={() => setLens((l) => ({ ...l, visible: false }))}
-                  onClick={handleClick}
                 >
                   <img
                     ref={imgRef}
@@ -211,10 +226,34 @@ const IsraelMezuzahsCategoryPage = () => {
                     className="w-full h-auto block select-none"
                     draggable={false}
                   />
+                  <div
+                    className="absolute inset-0 grid"
+                    style={{
+                      gridTemplateColumns: `repeat(${gridCols}, 1fr)`,
+                      gridTemplateRows: `repeat(${gridRows}, 1fr)`,
+                    }}
+                  >
+                    {Array.from({ length: gridCols * gridRows }).map((_, i) => {
+                      const col = i % gridCols;
+                      const row = Math.floor(i / gridCols);
+                      return (
+                        <button
+                          key={i}
+                          type="button"
+                          aria-label={`פריט ${i + 1}`}
+                          onClick={(e) => {
+                            e.stopPropagation();
+                            openZoomAtCell(col, row);
+                          }}
+                          className="border border-mall-gold/30 hover:border-mall-gold hover:bg-mall-gold/20 transition-colors cursor-pointer"
+                        />
+                      );
+                    })}
+                  </div>
                   {lens.visible && (
                     <>
                     <div
-                      className="pointer-events-none absolute rounded-full border-4 border-white shadow-2xl ring-2 ring-black/30"
+                      className="pointer-events-none absolute rounded-full border-4 border-white shadow-2xl ring-2 ring-black/30 z-10"
                       style={{
                         width: lensSize,
                         height: lensSize,
