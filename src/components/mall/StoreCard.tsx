@@ -95,7 +95,11 @@ const idOverrides: Record<string, Partial<BrandStyle & { name: string }>> = {
     image: israelMezuzahsImg,
   },
   s4: {
+    name: "אבנר עובד",
+    accent: "#b3925a",
+    subtitle: "אמן ציור ישראלי",
     image: floor3Shop4Img,
+    codedScene: "avner-ovad-storefront" as any,
   },
 };
 
