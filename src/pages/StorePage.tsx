@@ -25,6 +25,11 @@ import imIsraelMapCategory from "@/assets/stores/im-israel-map-category.webp";
 import imMezuzahsCategory from "@/assets/stores/im-mezuzahs-category.webp";
 import imShabbatCandlesCategory from "@/assets/stores/im-shabbat-candles-category.webp";
 import avnerPortraitImg from "@/assets/avner-ovad-portrait.png";
+import avnerPainting1 from "@/assets/avner-paintings/p1.png";
+import avnerPainting2 from "@/assets/avner-paintings/p2.png";
+import avnerPainting3 from "@/assets/avner-paintings/p3.png";
+import avnerPainting4 from "@/assets/avner-paintings/p4.png";
+import avnerPainting5 from "@/assets/avner-paintings/p5.png";
 import type { Store } from "@/data/mallData";
 
 const avnerHighlights = [
@@ -63,8 +68,16 @@ const AvnerPortraitCard = () => (
   </figure>
 );
 
-const GalleryFrame = ({ className = "" }: { className?: string }) => (
-  <div className={`relative ${className}`} aria-hidden="true">
+const GalleryFrame = ({
+  className = "",
+  src,
+  alt,
+}: {
+  className?: string;
+  src?: string;
+  alt?: string;
+}) => (
+  <div className={`relative ${className}`}>
     {/* Track-light bar */}
     <div className="absolute left-1/2 -top-3 h-[6px] w-[78%] -translate-x-1/2 rounded-[2px] bg-gradient-to-b from-[#3a2f24] to-[#1a1410] shadow-[0_2px_4px_rgba(0,0,0,0.4)]" />
     {/* Lamp glow downward onto frame */}
@@ -73,12 +86,28 @@ const GalleryFrame = ({ className = "" }: { className?: string }) => (
     <div className="absolute left-1/2 -top-[10px] h-[10px] w-[3px] -translate-x-1/2 bg-[#2a2018]" />
     {/* Frame */}
     <div className="aspect-square w-full rounded-[3px] border-[3px] border-[#2a1f17] bg-white shadow-[0_8px_16px_rgba(0,0,0,0.25),inset_0_0_0_1px_#a8956f]">
-      <div className="h-full w-full bg-gradient-to-br from-white to-[#f4f0e6]" />
+      {src ? (
+        <a href={src} target="_blank" rel="noopener noreferrer" className="block h-full w-full">
+          <img src={src} alt={alt ?? ""} className="h-full w-full object-cover" loading="lazy" />
+        </a>
+      ) : (
+        <div className="h-full w-full bg-gradient-to-br from-white to-[#f4f0e6]" aria-hidden="true" />
+      )}
     </div>
   </div>
 );
 
-const galleryFrameKeys = Array.from({ length: 20 }, (_, i) => `gf-${i}`);
+const avnerPaintings = [
+  { src: avnerPainting1, alt: "ציור של אבנר עובד - דיוקן עם מיקרופון" },
+  { src: avnerPainting2, alt: "ציור של אבנר עובד - The Boxer" },
+  { src: avnerPainting3, alt: "ציור של אבנר עובד - בית כנסת" },
+  { src: avnerPainting4, alt: "ציור של אבנר עובד - אם וילד בחדר" },
+  { src: avnerPainting5, alt: "ציור של אבנר עובד - אגרטלי פרחים" },
+];
+const galleryFrameItems = Array.from({ length: 20 }, (_, i) => ({
+  key: `gf-${i}`,
+  ...avnerPaintings[i % avnerPaintings.length],
+}));
 
 const AvnerOvadStoreView = ({ store }: { store: Store }) => (
   <div className="min-h-screen bg-background font-heebo text-[#2f241d]">
@@ -91,9 +120,9 @@ const AvnerOvadStoreView = ({ store }: { store: Store }) => (
         {/* Top section: 5x4 frames on the left, article on the right */}
         <div className="relative flex items-start justify-between gap-6" dir="ltr">
           {/* Left grid: 5 rows of 4 frames */}
-          <div className="hidden md:grid grid-cols-4 gap-4 pt-6 flex-1" aria-hidden="true">
-            {galleryFrameKeys.slice(0, 20).map((k) => (
-              <GalleryFrame key={k} className="w-full max-w-[110px] mx-auto" />
+          <div className="hidden md:grid grid-cols-4 gap-4 pt-6 flex-1">
+            {galleryFrameItems.map((it) => (
+              <GalleryFrame key={it.key} className="w-full max-w-[110px] mx-auto" src={it.src} alt={it.alt} />
             ))}
           </div>
 
