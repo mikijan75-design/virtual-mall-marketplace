@@ -4,7 +4,7 @@ import MallHeader from "@/components/mall/MallHeader";
 import MallFooter from "@/components/mall/MallFooter";
 import PageTracker from "@/components/PageTracker";
 import BackButton from "@/components/BackButton";
-import { BookOpen, Heart, MapPin, Palette, Phone, Settings, Smartphone } from "lucide-react";
+import { BookOpen, Heart, Palette, Settings } from "lucide-react";
 import israelMezuzahsAbout from "@/assets/stores/israel-mezuzahs-about.png";
 import imBeadLogo from "@/assets/stores/im-bead-logo.png";
 import imProduct1 from "@/assets/stores/im-product-1.png";
@@ -207,14 +207,6 @@ const AvnerOvadStoreView = ({ store }: { store: Store }) => (
               פגשתי את אבנר ביריד אמנים בנחלת בנימין, שם הוא מציג את עבודותיו. התרשמתי מהאדם אשר אחראי לתרומה גדולה לחברה! עדיפות ליצור קשר ותיאום מראש אם מעוניינים לראות את הגלרייה בעיניים.
             </blockquote>
 
-            <div className="grid gap-4 rounded-2xl bg-white/40 p-5 text-base font-bold sm:grid-cols-1">
-              <div className="flex items-center justify-end gap-3 text-right">
-                <span>
-                  The work is displayed at artist fairs such as Nahalat Binyamin, it is preferable to contact us to arrange arrival.
-                </span>
-                <MapPin className="h-7 w-7 text-[#a4824d]" aria-hidden="true" />
-              </div>
-            </div>
           </div>
 
           <aside className="space-y-6 text-left md:pt-8 order-1 md:order-2" dir="ltr">
