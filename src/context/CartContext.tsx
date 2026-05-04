@@ -8,6 +8,7 @@ export type CartItem = {
   unitPrice: number;
   quantity: number;
   shippingPerItem?: number;
+  image?: string;
   meta?: { col?: number; row?: number; itemNumber?: number };
 };
 
