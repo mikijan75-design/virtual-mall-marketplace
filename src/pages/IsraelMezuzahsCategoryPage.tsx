@@ -1,13 +1,8 @@
 import { useParams, Link, useNavigate } from "react-router-dom";
-import { useRef, useState } from "react";
 import MallHeader from "@/components/mall/MallHeader";
 import MallFooter from "@/components/mall/MallFooter";
 import PageTracker from "@/components/PageTracker";
-import { Dialog, DialogContent } from "@/components/ui/dialog";
-import { Button } from "@/components/ui/button";
-import { ChevronLeft, ChevronRight, Check } from "lucide-react";
-import { useCart } from "@/context/CartContext";
-import { toast } from "@/hooks/use-toast";
+import { Search } from "lucide-react";
 import imProduct1 from "@/assets/stores/im-product-1.png";
 import imProduct2 from "@/assets/stores/im-product-2.png";
 import imProduct3 from "@/assets/stores/im-product-3.png";
@@ -16,7 +11,7 @@ import imProduct5 from "@/assets/stores/im-product-5.png";
 import imProduct6 from "@/assets/stores/im-product-6.png";
 import imProduct7 from "@/assets/stores/im-product-7.png";
 import imProduct8 from "@/assets/stores/im-product-8.png";
-import imMezuzahsCollection from "@/assets/stores/im-mezuzahs-collection.png";
+import { israelMezuzahProducts } from "@/data/israelMezuzahProducts";
 
 export interface IMCategory {
   slug: string;
