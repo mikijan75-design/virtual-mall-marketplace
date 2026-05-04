@@ -107,8 +107,11 @@ const AvnerOvadStoreView = ({ store }: { store: Store }) => (
           <div className="absolute inset-x-0 bottom-0 h-8 border-y border-[#d3c2a5]/50 bg-[repeating-linear-gradient(45deg,rgba(166,133,78,0.12)_0_2px,transparent_2px_10px)]" />
         </div>
 
-        <header className="relative z-10 grid gap-6 bg-[#183247] px-6 py-8 text-center text-white md:grid-cols-[1fr_330px] md:px-10 md:text-left">
-          <div className="flex flex-col items-center justify-center md:items-start">
+        <header className="relative z-10 grid gap-6 bg-[#183247] px-6 py-8 text-center text-white md:grid-cols-[330px_1fr] md:px-10 md:text-left">
+          <div className="md:row-span-2 flex items-center justify-center order-1">
+            <AvnerPortraitCard />
+          </div>
+          <div className="flex flex-col items-center justify-center md:items-start order-2">
             <p className="font-frank text-[clamp(3rem,8vw,5.5rem)] font-black leading-none tracking-[-0.05em] text-[#e6d6b9] drop-shadow-[0_3px_0_rgba(0,0,0,0.22)]">
               אבנר עובד
             </p>
@@ -121,9 +124,6 @@ const AvnerOvadStoreView = ({ store }: { store: Store }) => (
             <span className="inline-block mt-4 bg-white/15 px-4 py-1 rounded-full text-sm font-heebo">
               {store.category} • קומה {store.floor}
             </span>
-          </div>
-          <div className="md:row-span-2 flex items-center justify-center">
-            <AvnerPortraitCard />
           </div>
         </header>
 
