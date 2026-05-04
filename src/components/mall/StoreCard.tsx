@@ -122,6 +122,7 @@ const StoreCard = ({ store, storeIndex }: StoreCardProps) => {
   const override = idOverrides[store.id];
   const style = override ? { ...baseStyle, ...override } : baseStyle;
   const displayName = override?.name ?? store.name;
+  const isAvnerOvad = store.id === "s4";
 
   return (
     <button
@@ -132,16 +133,22 @@ const StoreCard = ({ store, storeIndex }: StoreCardProps) => {
       {/* Elegant outer frame */}
       <div
         className="relative flex h-full w-full flex-col overflow-hidden rounded-lg"
-        style={{
-          border: "2px solid hsl(40,25%,72%)",
-          boxShadow: "0 6px 24px rgba(0,0,0,0.12), inset 0 0 0 1px hsl(40,20%,85%)",
-        }}
+        style={
+          isAvnerOvad
+            ? { boxShadow: "0 6px 24px rgba(0,0,0,0.12)" }
+            : {
+                border: "2px solid hsl(40,25%,72%)",
+                boxShadow: "0 6px 24px rgba(0,0,0,0.12), inset 0 0 0 1px hsl(40,20%,85%)",
+              }
+        }
       >
         {/* Top gold trim */}
-        <div
-          className="h-[3px]"
-          style={{ background: "linear-gradient(90deg, hsl(40,15%,65%), hsl(43,45%,70%), hsl(40,15%,65%))" }}
-        />
+        {!isAvnerOvad && (
+          <div
+            className="h-[3px]"
+            style={{ background: "linear-gradient(90deg, hsl(40,15%,65%), hsl(43,45%,70%), hsl(40,15%,65%))" }}
+          />
+        )}
 
         {style.codedScene === "israel-mezuzahs-storefront" ? (
           <div
@@ -294,10 +301,12 @@ const StoreCard = ({ store, storeIndex }: StoreCardProps) => {
         )}
 
         {/* Bottom gold trim */}
-        <div
-          className="h-[3px]"
-          style={{ background: "linear-gradient(90deg, hsl(40,15%,65%), hsl(43,45%,70%), hsl(40,15%,65%))" }}
-        />
+        {!isAvnerOvad && (
+          <div
+            className="h-[3px]"
+            style={{ background: "linear-gradient(90deg, hsl(40,15%,65%), hsl(43,45%,70%), hsl(40,15%,65%))" }}
+          />
+        )}
 
         {/* Roman numeral badge */}
         {storeIndex !== undefined && (
