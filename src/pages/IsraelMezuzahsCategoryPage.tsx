@@ -13,6 +13,7 @@ import imProduct7 from "@/assets/stores/im-product-7.png";
 import imProduct8 from "@/assets/stores/im-product-8.png";
 import { israelMezuzahProducts } from "@/data/israelMezuzahProducts";
 import { israelMapProducts } from "@/data/israelMapProducts";
+import { pamotProducts } from "@/data/pamotProducts";
 
 export interface IMCategory {
   slug: string;
@@ -120,13 +121,24 @@ const IsraelMezuzahsCategoryPage = () => {
   const category = categoryIdx >= 0 ? imCategories[categoryIdx] : undefined;
   const isMezuzahs = category?.slug === "mezuzahs";
   const isIsraelMap = category?.slug === "israel-map";
-  const productGrid = isMezuzahs ? israelMezuzahProducts : isIsraelMap ? israelMapProducts : null;
+  const isShabbatCandles = category?.slug === "shabbat-candles";
+  const productGrid = isMezuzahs
+    ? israelMezuzahProducts
+    : isIsraelMap
+    ? israelMapProducts
+    : isShabbatCandles
+    ? pamotProducts
+    : null;
 
   const openProduct = (productId: string) => {
     if (!productGrid) return;
     const p = productGrid.find((x) => x.id === productId);
     if (!p) return;
-    const collectionKey = isIsraelMap ? "israel-map" : "mezuzahs";
+    const collectionKey = isIsraelMap
+      ? "israel-map"
+      : isShabbatCandles
+      ? "shabbat-candles"
+      : "mezuzahs";
     navigate("/sense-pro", {
       state: {
         mezuzah: {
@@ -183,11 +195,17 @@ const IsraelMezuzahsCategoryPage = () => {
               <div dir="rtl">
                 <div className="text-center mb-6">
                   <h2 className="text-3xl md:text-4xl font-frank font-bold text-foreground mb-2">
-                    {isIsraelMap ? "קולקציית מזוזות בצורת ארץ ישראל" : "קולקציית מזוזות 20 ס״מ"}
+                    {isIsraelMap
+                      ? "קולקציית מזוזות בצורת ארץ ישראל"
+                      : isShabbatCandles
+                      ? "קולקציית פמוטים"
+                      : "קולקציית מזוזות 20 ס״מ"}
                   </h2>
                   <p className="text-muted-foreground font-heebo leading-relaxed max-w-3xl mx-auto">
                     {isIsraelMap
                       ? "בתי מזוזה בצורת מפת ארץ ישראל מעץ זית ואפוקסי – הפריט שבתמונה הוא הפריט המדויק שתקבלו. לחצו על הזכוכית המגדלת כדי לפתוח את המוצר."
+                      : isShabbatCandles
+                      ? "פמוטי שבת מעץ זית ואפוקסי בעבודת יד – הפריט שבתמונה הוא הפריט המדויק שתקבלו. לחצו על הזכוכית המגדלת כדי לפתוח את המוצר."
                       : "בית מזוזה 20 ס״מ (לקלף 17 ס״מ) מעץ זית ואפוקסי ייחודי – הפריט שבתמונה הוא הפריט המדויק שתקבלו. לחצו על הזכוכית המגדלת על מזוזה כדי לפתוח אותה בעמוד המוצר."}
                   </p>
                 </div>
