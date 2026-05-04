@@ -209,10 +209,6 @@ const AvnerOvadStoreView = ({ store }: { store: Store }) => (
 
             <div className="grid gap-4 rounded-2xl bg-white/40 p-5 text-base font-bold sm:grid-cols-1">
               <div className="flex items-center justify-end gap-3 text-right">
-                <span className="whitespace-pre-line">{"\n"}</span>
-                <Smartphone className="h-7 w-7 text-[#a4824d]" aria-hidden="true" />
-              </div>
-              <div className="flex items-center justify-end gap-3 text-right">
                 <span>
                   The work is displayed at artist fairs such as Nahalat Binyamin, it is preferable to contact us to arrange arrival.
                 </span>
@@ -233,10 +229,6 @@ const AvnerOvadStoreView = ({ store }: { store: Store }) => (
             <div className="rounded-2xl border border-[#c8ae7c]/70 bg-white/35 p-5 text-lg leading-snug shadow-sm">
               <p className="font-bold">The work is displayed at artist fairs such as Nahalat Binyamin, it is preferable to contact us to arrange arrival.</p>
               <p className="mt-2 text-[#4d3a2d]">leave us a massage </p>
-              <div className="mt-5 border-l-2 border-[#b3925a] pl-4">
-                <p className="font-black whitespace-pre-line">{"\n"}</p>
-                <p className="whitespace-pre-line">{"\n"}</p>
-              </div>
             </div>
 
             <div className="rounded-2xl bg-[#efe4d1]/80 p-5 text-right" dir="rtl">
