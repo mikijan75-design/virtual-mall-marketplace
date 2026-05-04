@@ -8,6 +8,7 @@ import MallHeader from "@/components/mall/MallHeader";
 import MallFooter from "@/components/mall/MallFooter";
 import PageTracker from "@/components/PageTracker";
 import { israelMezuzahProducts } from "@/data/israelMezuzahProducts";
+import { israelMapProducts } from "@/data/israelMapProducts";
 
 const galleryImages = [
   {
@@ -116,6 +117,7 @@ const SenseProProductPage = () => {
         col?: number;
         row?: number;
         productId?: string;
+        collection?: "mezuzahs" | "israel-map";
         itemNumber: number;
         colBounds?: number[];
         rowBounds?: number[];
@@ -139,15 +141,18 @@ const SenseProProductPage = () => {
     reader.readAsDataURL(file);
   };
 
+  const productCollection =
+    initialMezuzah?.collection === "israel-map" ? israelMapProducts : israelMezuzahProducts;
+
   // Selected product (by id) for the new product-based mezuzah flow
   const initialIndex = initialMezuzah?.productId
-    ? Math.max(0, israelMezuzahProducts.findIndex((p) => p.id === initialMezuzah.productId))
+    ? Math.max(0, productCollection.findIndex((p) => p.id === initialMezuzah.productId))
     : 0;
   const [selectedProductIndex, setSelectedProductIndex] = useState<number>(initialIndex);
   const [thumbsStart, setThumbsStart] = useState(0);
 
   const selectedProduct = initialMezuzah?.productId
-    ? israelMezuzahProducts[selectedProductIndex] ?? israelMezuzahProducts[0]
+    ? productCollection[selectedProductIndex] ?? productCollection[0]
     : null;
 
   const mezuzah = initialMezuzah
@@ -165,7 +170,7 @@ const SenseProProductPage = () => {
 
   // Other products to show as thumbnails (excluding the currently selected one)
   const otherProducts = selectedProduct
-    ? israelMezuzahProducts.filter((_, i) => i !== selectedProductIndex)
+    ? productCollection.filter((_, i) => i !== selectedProductIndex)
     : [];
   const visibleThumbProducts = otherProducts.slice(thumbsStart, thumbsStart + 4);
   const stepThumbs = (dir: 1 | -1) => {
@@ -247,7 +252,7 @@ const SenseProProductPage = () => {
               </button>
               <div className="grid flex-1 grid-cols-4 gap-[10px]">
                 {visibleThumbProducts.map((p) => {
-                  const idx = israelMezuzahProducts.findIndex((x) => x.id === p.id);
+                  const idx = productCollection.findIndex((x) => x.id === p.id);
                   return (
                     <button
                       key={p.id}
