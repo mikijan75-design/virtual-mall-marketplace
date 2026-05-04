@@ -9,6 +9,7 @@ import IsraelMezuzahsCategoryPage from "./pages/IsraelMezuzahsCategoryPage.tsx";
 import SenseProProductPage from "./pages/SenseProProductPage.tsx";
 import CartPage from "./pages/CartPage.tsx";
 import InfoPage from "./pages/InfoPage.tsx";
+import AvnerOvadPage from "./pages/AvnerOvadPage.tsx";
 import NotFound from "./pages/NotFound.tsx";
 import { CartProvider } from "./context/CartContext";
 
@@ -29,6 +30,7 @@ const App = () => (
           <Route path="/store/:storeId" element={<StorePage />} />
           <Route path="/store/s2/category/:categorySlug" element={<IsraelMezuzahsCategoryPage />} />
           <Route path="/info" element={<InfoPage />} />
+          <Route path="/avner-ovad" element={<AvnerOvadPage />} />
           <Route path="*" element={<NotFound />} />
         </Routes>
       </CartProvider>
