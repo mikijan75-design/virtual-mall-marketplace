@@ -35,6 +35,11 @@ import avnerPainting7 from "@/assets/avner-paintings/p7.png";
 import avnerPainting8 from "@/assets/avner-paintings/p8.png";
 import avnerPainting9 from "@/assets/avner-paintings/p9.png";
 import avnerPainting10 from "@/assets/avner-paintings/p10.png";
+import avnerPainting11 from "@/assets/avner-paintings/p11.png";
+import avnerPainting12 from "@/assets/avner-paintings/p12.png";
+import avnerPainting13 from "@/assets/avner-paintings/p13.png";
+import avnerPainting14 from "@/assets/avner-paintings/p14.png";
+import avnerPainting15 from "@/assets/avner-paintings/p15.png";
 import type { Store } from "@/data/mallData";
 
 const avnerHighlights = [
@@ -113,6 +118,11 @@ const avnerPaintings = [
   { src: avnerPainting8, alt: "ציור של אבנר עובד - דיוקן Amy" },
   { src: avnerPainting9, alt: "ציור של אבנר עובד - דמויות וחוף" },
   { src: avnerPainting10, alt: "ציור של אבנר עובד - דיוקן עם מצנפת" },
+  { src: avnerPainting11, alt: "ציור של אבנר עובד - מגדל השעון ביפו" },
+  { src: avnerPainting12, alt: "ציור של אבנר עובד - נוף חוף עם ילדים" },
+  { src: avnerPainting13, alt: "ציור של אבנר עובד - כפר על הרים" },
+  { src: avnerPainting14, alt: "ציור של אבנר עובד - זוג על שפת הים" },
+  { src: avnerPainting15, alt: "ציור של אבנר עובד - ילד עם בלון" },
 ];
 const galleryFrameItems = Array.from({ length: 20 }, (_, i) => ({
   key: `gf-${i}`,
