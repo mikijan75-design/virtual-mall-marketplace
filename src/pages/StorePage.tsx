@@ -50,8 +50,8 @@ const AvnerDivider = () => (
 );
 
 const AvnerPortraitCard = () => (
-  <figure className="relative mx-auto w-full max-w-[280px] rotate-[-3deg] rounded-sm bg-white p-3 shadow-[0_18px_28px_rgba(58,43,28,0.35)]">
-    <div className="aspect-[4/5] overflow-hidden bg-[#e9edf2]">
+  <figure className="relative mx-auto w-full max-w-[280px] rotate-[-3deg]">
+    <div className="aspect-[4/5] overflow-hidden bg-[#e9edf2] shadow-[0_18px_28px_rgba(58,43,28,0.35)]">
       <img
         src={avnerPortraitImg}
         alt="דיוקן של אבנר עובד"
