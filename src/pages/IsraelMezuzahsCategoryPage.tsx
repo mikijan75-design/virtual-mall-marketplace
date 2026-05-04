@@ -12,6 +12,7 @@ import imProduct6 from "@/assets/stores/im-product-6.png";
 import imProduct7 from "@/assets/stores/im-product-7.png";
 import imProduct8 from "@/assets/stores/im-product-8.png";
 import { israelMezuzahProducts } from "@/data/israelMezuzahProducts";
+import { israelMapProducts } from "@/data/israelMapProducts";
 
 export interface IMCategory {
   slug: string;
@@ -118,15 +119,20 @@ const IsraelMezuzahsCategoryPage = () => {
   const categoryIdx = imCategories.findIndex((c) => c.slug === categorySlug);
   const category = categoryIdx >= 0 ? imCategories[categoryIdx] : undefined;
   const isMezuzahs = category?.slug === "mezuzahs";
+  const isIsraelMap = category?.slug === "israel-map";
+  const productGrid = isMezuzahs ? israelMezuzahProducts : isIsraelMap ? israelMapProducts : null;
 
   const openProduct = (productId: string) => {
-    const p = israelMezuzahProducts.find((x) => x.id === productId);
+    if (!productGrid) return;
+    const p = productGrid.find((x) => x.id === productId);
     if (!p) return;
+    const collectionKey = isIsraelMap ? "israel-map" : "mezuzahs";
     navigate("/sense-pro", {
       state: {
         mezuzah: {
           productId: p.id,
-          itemNumber: israelMezuzahProducts.findIndex((x) => x.id === p.id) + 1,
+          collection: collectionKey,
+          itemNumber: productGrid.findIndex((x) => x.id === p.id) + 1,
           image: p.image,
           name: p.name,
           brand: "Israel Mezuzahs",
@@ -173,19 +179,20 @@ const IsraelMezuzahsCategoryPage = () => {
       <div className="container mx-auto py-12 px-4">
         <div className="max-w-6xl mx-auto">
           <div className="bg-card border border-border rounded-xl p-6 md:p-8 shadow-lg">
-            {isMezuzahs ? (
+            {productGrid ? (
               <div dir="rtl">
                 <div className="text-center mb-6">
                   <h2 className="text-3xl md:text-4xl font-frank font-bold text-foreground mb-2">
-                    קולקציית מזוזות 20 ס״מ
+                    {isIsraelMap ? "קולקציית מזוזות בצורת ארץ ישראל" : "קולקציית מזוזות 20 ס״מ"}
                   </h2>
                   <p className="text-muted-foreground font-heebo leading-relaxed max-w-3xl mx-auto">
-                    בית מזוזה 20 ס״מ (לקלף 17 ס״מ) מעץ זית ואפוקסי ייחודי – הפריט שבתמונה הוא הפריט המדויק שתקבלו.
-                    לחצו על הזכוכית המגדלת על מזוזה כדי לפתוח אותה בעמוד המוצר.
+                    {isIsraelMap
+                      ? "בתי מזוזה בצורת מפת ארץ ישראל מעץ זית ואפוקסי – הפריט שבתמונה הוא הפריט המדויק שתקבלו. לחצו על הזכוכית המגדלת כדי לפתוח את המוצר."
+                      : "בית מזוזה 20 ס״מ (לקלף 17 ס״מ) מעץ זית ואפוקסי ייחודי – הפריט שבתמונה הוא הפריט המדויק שתקבלו. לחצו על הזכוכית המגדלת על מזוזה כדי לפתוח אותה בעמוד המוצר."}
                   </p>
                 </div>
                 <div className="grid grid-cols-2 sm:grid-cols-3 md:grid-cols-4 gap-4">
-                  {israelMezuzahProducts.map((p) => (
+                  {productGrid.map((p) => (
                     <div
                       key={p.id}
                       className="group relative bg-muted rounded-lg p-3 border border-border flex flex-col"
