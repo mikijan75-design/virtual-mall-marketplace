@@ -58,20 +58,7 @@ const AvnerOvadStorefrontScene = ({ className, preserveAspectRatio = "xMidYMid s
     </text>
 
     {/* Divider */}
-    <line x1="120" y1="170" x2="280" y2="170" stroke="#5b8fa8" strokeWidth="1.5" />
-
-    {/* Subtitle kept */}
-    <text
-      x="200"
-      y="200"
-      textAnchor="middle"
-      fill="#2c3e50"
-      fontFamily="'Heebo', sans-serif"
-      fontWeight="600"
-      fontSize="18"
-    >
-      אמן ציור ישראלי
-    </text>
+    <line x1="140" y1="180" x2="260" y2="180" stroke="#5b8fa8" strokeWidth="1.5" />
   </svg>
 );
 
