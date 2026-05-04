@@ -160,7 +160,7 @@ const StoreCard = ({ store, storeIndex }: StoreCardProps) => {
           <div
             className="relative flex-1 overflow-hidden"
             style={{
-              background: "#f8f1e5",
+              background: "#183247",
               borderBottom: `2px solid ${style.accent}`,
             }}
           >
