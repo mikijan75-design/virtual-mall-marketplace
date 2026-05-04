@@ -107,11 +107,11 @@ const AvnerOvadStoreView = ({ store }: { store: Store }) => (
             </section>
 
             {avnerHighlights.map(({ icon: Icon, body }) => (
-              <section key={body} className="grid grid-cols-[1fr_auto] items-start gap-5">
-                <p className="text-[clamp(1.05rem,1.8vw,1.35rem)] font-bold leading-[1.45]">{body}</p>
+              <section key={body} className="grid grid-cols-[auto_1fr] items-start gap-5">
                 <span className="grid h-14 w-14 shrink-0 place-items-center rounded-full bg-[#b3925a]/20 text-[#a4824d]">
                   <Icon className="h-8 w-8" strokeWidth={2.4} aria-hidden="true" />
                 </span>
+                <p className="text-[clamp(1.05rem,1.8vw,1.35rem)] font-bold leading-[1.45]">{body}</p>
               </section>
             ))}
 
