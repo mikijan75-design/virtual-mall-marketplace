@@ -24,6 +24,7 @@ import forRentImg from "@/assets/stores/for-rent.png";
 import IsraelMezuzahsWordmark from "@/components/mall/IsraelMezuzahsWordmark";
 import OliveWoodEpoxyWordmark from "@/components/mall/OliveWoodEpoxyWordmark";
 import IsraelMezuzahsStorefrontScene from "@/components/mall/IsraelMezuzahsStorefrontScene";
+import AvnerOvadStorefrontScene from "@/components/mall/AvnerOvadStorefrontScene";
 import israelMezuzahsImg from "@/assets/stores/israel-mezuzahs.png";
 import floor3Shop4Img from "@/assets/stores/floor3-shop4.png";
 
@@ -39,6 +40,7 @@ type BrandStyle = {
   codedWordmark?: "israel-mezuzahs";
   codedSubtitle?: "olive-wood-epoxy";
   codedScene?: "israel-mezuzahs-storefront";
+  // extended at usage site
 };
 
 const brandStyles: Record<string, BrandStyle> = {
@@ -93,7 +95,11 @@ const idOverrides: Record<string, Partial<BrandStyle & { name: string }>> = {
     image: israelMezuzahsImg,
   },
   s4: {
+    name: "אבנר עובד",
+    accent: "#b3925a",
+    subtitle: "אמן ציור ישראלי",
     image: floor3Shop4Img,
+    codedScene: "avner-ovad-storefront" as any,
   },
 };
 
@@ -147,6 +153,22 @@ const StoreCard = ({ store, storeIndex }: StoreCardProps) => {
           >
             <IsraelMezuzahsStorefrontScene className="w-full h-full" preserveAspectRatio="xMidYMid slice" />
             {/* Glass reflection overlay */}
+            <div
+              className="absolute inset-0 pointer-events-none"
+              style={{
+                background: "linear-gradient(155deg, rgba(255,255,255,0.18) 0%, transparent 35%, transparent 60%, rgba(255,255,255,0.06) 100%)",
+              }}
+            />
+          </div>
+        ) : (style.codedScene as string) === "avner-ovad-storefront" ? (
+          <div
+            className="relative flex-1 overflow-hidden"
+            style={{
+              background: "#f8f1e5",
+              borderBottom: `2px solid ${style.accent}`,
+            }}
+          >
+            <AvnerOvadStorefrontScene className="w-full h-full" preserveAspectRatio="xMidYMid slice" />
             <div
               className="absolute inset-0 pointer-events-none"
               style={{
