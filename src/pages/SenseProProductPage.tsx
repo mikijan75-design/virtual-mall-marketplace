@@ -241,7 +241,7 @@ const SenseProProductPage = () => {
                 className="rounded-[7px] shadow-inner bg-secondary"
                 style={{
                   ...mezuzahCrop,
-                  height: "90%",
+                  height: "54%",
                   aspectRatio: `${mezuzah ? aspectFor(mezuzah.col, mezuzah.row) : 1}`,
                 }}
                 role="img"
