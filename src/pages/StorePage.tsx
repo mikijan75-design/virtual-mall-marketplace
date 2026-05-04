@@ -24,6 +24,150 @@ import imServingTraysCategory from "@/assets/stores/im-serving-trays-category.we
 import imIsraelMapCategory from "@/assets/stores/im-israel-map-category.webp";
 import imMezuzahsCategory from "@/assets/stores/im-mezuzahs-category.webp";
 import imShabbatCandlesCategory from "@/assets/stores/im-shabbat-candles-category.webp";
+import floor3Shop4Img from "@/assets/stores/floor3-shop4.png";
+import type { Store } from "@/data/mallData";
+
+const avnerHighlights = [
+  {
+    icon: Palette,
+    body:
+      "אבנר הוא איש אשכולות אמיתי, המשלב רקע אקדמי כמהנדס אזרחי מהטכניון עם תשוקה עמוקה לציור ולכתיבה. הוא פנסיונר, וכל יצירה שלו קורנת תשוקה.",
+  },
+  {
+    icon: BookOpen,
+    body:
+      "הגלריה שלו מציגה מגוון רחב ועשיר של נושאים והיבטים. מנופים ישראליים ועד לרגעים אישיים, הציור הרב מבטיח שכל אחד ימצא חיבור אישי.",
+  },
+  {
+    icon: Settings,
+    body:
+      "מדובר ביצירות מקוריות, עבודת יד אישית של אבנר. מתנה מושלמת ליקירכם ותזכורת ויזואלית לחוזק יצירתו ותרומתו של הפועל הישראלי.",
+  },
+];
+
+const AvnerDivider = () => (
+  <div className="mx-auto my-5 h-px w-28 bg-gradient-to-r from-transparent via-[#b3925a] to-transparent" />
+);
+
+const AvnerOvadStoreView = ({ store }: { store: Store }) => (
+  <div className="min-h-screen bg-background font-heebo text-[#2f241d]">
+    <MallHeader />
+    <PageTracker storeId={store.id} />
+    <BackButton />
+
+    <main className="px-4 py-8">
+      <article className="relative mx-auto max-w-[980px] overflow-hidden rounded-[2rem] border border-[#d4c4a7] bg-[#f8f1e5] shadow-[0_24px_70px_rgba(66,44,20,0.16)]">
+        <div className="pointer-events-none absolute inset-0 overflow-hidden" aria-hidden="true">
+          <div className="absolute inset-0 bg-[radial-gradient(circle_at_18%_12%,rgba(181,143,83,0.12),transparent_26%),radial-gradient(circle_at_82%_84%,rgba(181,143,83,0.11),transparent_28%),linear-gradient(135deg,rgba(255,255,255,0.72),rgba(245,236,220,0.54))]" />
+          <div className="absolute inset-x-0 top-0 h-8 border-y border-[#d3c2a5]/50 bg-[repeating-linear-gradient(45deg,rgba(166,133,78,0.12)_0_2px,transparent_2px_10px)]" />
+          <div className="absolute inset-x-0 bottom-0 h-8 border-y border-[#d3c2a5]/50 bg-[repeating-linear-gradient(45deg,rgba(166,133,78,0.12)_0_2px,transparent_2px_10px)]" />
+        </div>
+
+        <header className="relative z-10 grid gap-6 bg-[#183247] px-6 py-8 text-center text-white md:grid-cols-[330px_1fr] md:px-10 md:text-right">
+          <div className="md:row-span-2 flex items-center justify-center">
+            <figure className="relative mx-auto w-full max-w-[280px] rotate-[-3deg] rounded-sm bg-white p-3 shadow-[0_18px_28px_rgba(58,43,28,0.35)]">
+              <img
+                src={floor3Shop4Img}
+                alt="אבנר עובד - אמן ציור ישראלי"
+                className="block w-full h-auto object-cover"
+                loading="lazy"
+              />
+            </figure>
+          </div>
+
+          <div className="flex flex-col items-center justify-center md:items-end">
+            <p className="font-frank text-[clamp(3rem,8vw,5.5rem)] font-black leading-none tracking-[-0.05em] text-[#e6d6b9] drop-shadow-[0_3px_0_rgba(0,0,0,0.22)]">
+              אבנר עובד
+            </p>
+            <h1 className="mt-1 font-frank text-[clamp(2.3rem,5vw,4rem)] font-black uppercase tracking-[0.04em] text-[#d9c393]">
+              Avner Ovad
+            </h1>
+            <p className="mt-3 max-w-[520px] text-[clamp(1.15rem,2.3vw,1.55rem)] font-bold leading-tight text-white/95">
+              אמן ציור ישראלי, סופר, ומהנדס אזרחי (טכניון)
+            </p>
+            <span className="inline-block mt-4 bg-white/15 px-4 py-1 rounded-full text-sm font-heebo">
+              {store.category} • קומה {store.floor}
+            </span>
+          </div>
+        </header>
+
+        <section className="relative z-10 grid gap-8 px-6 py-8 md:grid-cols-[0.9fr_1.1fr] md:px-10" dir="rtl">
+          <aside className="space-y-6 text-left md:pt-8" dir="ltr">
+            <div className="flex items-center gap-4">
+              <Heart className="h-9 w-9 fill-[#b3925a] text-[#b3925a]" aria-hidden="true" />
+              <h2 className="text-2xl font-black uppercase leading-tight tracking-wide text-[#30241d]">
+                Meet Avner: an Israeli artist with heart.
+              </h2>
+            </div>
+            <AvnerDivider />
+
+            <div className="rounded-2xl border border-[#c8ae7c]/70 bg-white/35 p-5 text-lg leading-snug shadow-sm">
+              <p className="font-bold">For artwork viewing and personal inquiries:</p>
+              <p className="mt-2 text-[#4d3a2d]">personartist.com</p>
+              <div className="mt-5 border-l-2 border-[#b3925a] pl-4">
+                <p className="font-black">To View Works:</p>
+                <p>Contact Ron [Number]</p>
+              </div>
+            </div>
+
+            <div className="rounded-2xl bg-[#efe4d1]/80 p-5 text-right" dir="rtl">
+              <p className="text-xl font-black">בתיאום לצפייה והשארת הודעה</p>
+              <p className="mt-2 text-lg">ניתן לראות את העבודות ולהציג אותן לקהל.</p>
+            </div>
+          </aside>
+
+          <div className="space-y-6 text-right">
+            <section>
+              <h2 className="text-[clamp(1.6rem,3vw,2.25rem)] font-black leading-tight">
+                אבנר - אמן ישראלי עם לב פועם.
+              </h2>
+              <AvnerDivider />
+            </section>
+
+            {avnerHighlights.map(({ icon: Icon, body }) => (
+              <section key={body} className="grid grid-cols-[1fr_auto] items-start gap-5">
+                <p className="text-[clamp(1.05rem,1.8vw,1.35rem)] font-bold leading-[1.45]">{body}</p>
+                <span className="grid h-14 w-14 shrink-0 place-items-center rounded-full bg-[#b3925a]/20 text-[#a4824d]">
+                  <Icon className="h-8 w-8" strokeWidth={2.4} aria-hidden="true" />
+                </span>
+              </section>
+            ))}
+
+            <blockquote className="relative rounded-2xl border-2 border-[#b3925a] bg-[#f6eddc]/80 p-5 text-[clamp(1rem,1.8vw,1.25rem)] font-bold leading-snug shadow-sm">
+              פגשתי את אבנר ביריד אמנים בנחלת בנימין, שם הוא מציג את עבודותיו. התרגשתי שיש בעבודות בעל הרגשה ותרומה לחברה!
+            </blockquote>
+
+            <div className="grid gap-4 rounded-2xl bg-white/40 p-5 text-base font-bold sm:grid-cols-2">
+              <div className="flex items-center justify-end gap-3">
+                <span>To View Works: [Phone Number]</span>
+                <Smartphone className="h-7 w-7 text-[#a4824d]" aria-hidden="true" />
+              </div>
+              <div className="flex items-center justify-end gap-3">
+                <span>נחלת בנימין, יריד האמנים</span>
+                <MapPin className="h-7 w-7 text-[#a4824d]" aria-hidden="true" />
+              </div>
+              <div className="flex items-center justify-end gap-3 sm:col-span-2">
+                <span>תיאום לצפייה בעבודות:</span>
+                <Phone className="h-7 w-7 text-[#a4824d]" aria-hidden="true" />
+              </div>
+            </div>
+          </div>
+        </section>
+      </article>
+
+      <div className="text-center mt-8">
+        <Link
+          to="/"
+          className="inline-block bg-mall-sign text-mall-gold font-heebo font-bold px-6 py-3 rounded-lg hover:bg-mall-gold hover:text-mall-sign transition-colors shadow-md"
+        >
+          ← חזרה לקניון
+        </Link>
+      </div>
+    </main>
+
+    <MallFooter />
+  </div>
+);
 
 const israelMezuzahsProducts = [
   { src: imShabbatCandlesCategory, name: "פמוטי שבת", slug: "shabbat-candles" },
