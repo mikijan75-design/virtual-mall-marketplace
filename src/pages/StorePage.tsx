@@ -15,12 +15,13 @@ import imProduct7 from "@/assets/stores/im-product-7.png";
 import imProduct8 from "@/assets/stores/im-product-8.png";
 import imCategoriesDisplay from "@/assets/stores/im-categories-display.png";
 import imClocksCategory from "@/assets/stores/im-clocks-category.webp";
+import imVasesCategory from "@/assets/stores/im-vases-category.webp";
 
 const israelMezuzahsProducts = [
   { src: imProduct1, name: "פמוטי שבת", slug: "shabbat-candles" },
   { src: imProduct2, name: "מגשי הגשה", slug: "serving-trays" },
   { src: imClocksCategory, name: "שעונים", slug: "coasters" },
-  { src: imProduct4, name: "חרוזים מעוצבים", slug: "decorative-beads" },
+  { src: imVasesCategory, name: "אגרטלים", slug: "decorative-beads" },
   { src: imProduct5, name: "מזוזות", slug: "mezuzahs" },
   { src: imProduct6, name: "תליוני חמסה ורימון", slug: "hamsa-pomegranate" },
   { src: imProduct7, name: "מפת ישראל", slug: "israel-map" },
