@@ -21,7 +21,7 @@ import bakeryImg from "@/assets/stores/bakery.jpg";
 import juiceImg from "@/assets/stores/juice.jpg";
 import comingSoonImg from "@/assets/stores/coming-soon.png";
 import forRentImg from "@/assets/stores/for-rent.png";
-import israelMezuzahsWordmark from "@/assets/israel-mezuzahs-wordmark.png";
+import IsraelMezuzahsWordmark from "./IsraelMezuzahsWordmark";
 import OliveWoodEpoxyWordmark from "@/components/mall/OliveWoodEpoxyWordmark";
 import israelMezuzahsImg from "@/assets/stores/israel-mezuzahs.png";
 
@@ -137,15 +137,11 @@ const StoreCard = ({ store, storeIndex }: StoreCardProps) => {
           <div
             className={SIGN_BAND_CLASS}
             style={{
-              background: "#f3e9d6",
+              background: "#cdeced",
               borderBottom: `2px solid ${style.accent}`,
             }}
           >
-            <img
-              src={israelMezuzahsWordmark}
-              alt={store.name}
-              className="h-full w-full object-cover"
-            />
+            <IsraelMezuzahsWordmark className="h-full w-full" />
           </div>
         ) : style.logo ? (
           <div
