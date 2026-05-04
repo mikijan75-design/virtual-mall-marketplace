@@ -86,18 +86,40 @@ const AvnerOvadStoreView = ({ store }: { store: Store }) => (
     <PageTracker storeId={store.id} />
     <BackButton />
 
-    <main className="px-4 py-4">
-      <div className="relative mx-auto max-w-[1400px] grid gap-4 md:grid-cols-[110px_1fr_110px] items-start">
-        {/* Left column: 7 frames */}
-        <div className="hidden md:flex flex-col gap-5 pt-4">
-          {galleryFrameKeys.slice(0, 7).map((k) => (
-            <GalleryFrame key={k} className="w-full" />
-          ))}
+    <main className="px-4 py-8">
+      <div className="relative mx-auto max-w-[1400px]">
+        {/* Gallery wall - 20 framed canvases surrounding the article */}
+        <div
+          className="pointer-events-none absolute inset-0 hidden md:block"
+          aria-hidden="true"
+        >
+          {/* Top row: 7 frames */}
+          <div className="absolute inset-x-6 top-8 grid grid-cols-7 gap-4">
+            {galleryFrameKeys.slice(0, 7).map((k) => (
+              <GalleryFrame key={k} className="w-full max-w-[120px] mx-auto" />
+            ))}
+          </div>
+          {/* Bottom row: 7 frames */}
+          <div className="absolute inset-x-6 bottom-8 grid grid-cols-7 gap-4">
+            {galleryFrameKeys.slice(7, 14).map((k) => (
+              <GalleryFrame key={k} className="w-full max-w-[120px] mx-auto" />
+            ))}
+          </div>
+          {/* Left column: 3 frames */}
+          <div className="absolute left-2 top-1/2 -translate-y-1/2 flex flex-col gap-6">
+            {galleryFrameKeys.slice(14, 17).map((k) => (
+              <GalleryFrame key={k} className="w-[100px]" />
+            ))}
+          </div>
+          {/* Right column: 3 frames */}
+          <div className="absolute right-2 top-1/2 -translate-y-1/2 flex flex-col gap-6">
+            {galleryFrameKeys.slice(17, 20).map((k) => (
+              <GalleryFrame key={k} className="w-[100px]" />
+            ))}
+          </div>
         </div>
 
-        {/* Center: article + bottom row */}
-        <div className="flex flex-col items-center gap-6">
-          <article className="relative z-10 w-full max-w-[432px] overflow-hidden rounded-[2rem] border border-[#d4c4a7] bg-[#f8f1e5] shadow-[0_24px_70px_rgba(66,44,20,0.16)] text-[60%] origin-top scale-y-[0.4]">
+        <article className="relative z-10 mx-auto max-w-[980px] overflow-hidden rounded-[2rem] border border-[#d4c4a7] bg-[#f8f1e5] shadow-[0_24px_70px_rgba(66,44,20,0.16)]">
         <div className="pointer-events-none absolute inset-0 overflow-hidden" aria-hidden="true">
           <div className="absolute inset-0 bg-[radial-gradient(circle_at_18%_12%,rgba(181,143,83,0.12),transparent_26%),radial-gradient(circle_at_82%_84%,rgba(181,143,83,0.11),transparent_28%),linear-gradient(135deg,rgba(255,255,255,0.72),rgba(245,236,220,0.54))]" />
           <div className="absolute inset-x-0 top-0 h-8 border-y border-[#d3c2a5]/50 bg-[repeating-linear-gradient(45deg,rgba(166,133,78,0.12)_0_2px,transparent_2px_10px)]" />
@@ -186,22 +208,7 @@ const AvnerOvadStoreView = ({ store }: { store: Store }) => (
             </div>
           </aside>
         </section>
-          </article>
-
-          {/* Bottom row: 6 frames */}
-          <div className="hidden md:grid grid-cols-6 gap-3 w-full max-w-[432px]">
-            {galleryFrameKeys.slice(14, 20).map((k) => (
-              <GalleryFrame key={k} className="w-full" />
-            ))}
-          </div>
-        </div>
-
-        {/* Right column: 7 frames */}
-        <div className="hidden md:flex flex-col gap-5 pt-4">
-          {galleryFrameKeys.slice(7, 14).map((k) => (
-            <GalleryFrame key={k} className="w-full" />
-          ))}
-        </div>
+        </article>
       </div>
 
       <div className="text-center mt-8">
