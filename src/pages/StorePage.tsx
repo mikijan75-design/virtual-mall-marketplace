@@ -90,36 +90,36 @@ const AvnerOvadStoreView = ({ store }: { store: Store }) => (
       <div className="relative mx-auto max-w-[1400px]">
         {/* Gallery wall - 20 framed canvases surrounding the article */}
         <div
-          className="pointer-events-none absolute inset-0 hidden md:block"
+          className="pointer-events-none absolute inset-0 hidden md:block z-0"
           aria-hidden="true"
         >
           {/* Top row: 7 frames */}
-          <div className="absolute inset-x-6 top-8 grid grid-cols-7 gap-4">
+          <div className="absolute inset-x-4 top-4 grid grid-cols-7 gap-3">
             {galleryFrameKeys.slice(0, 7).map((k) => (
-              <GalleryFrame key={k} className="w-full max-w-[120px] mx-auto" />
+              <GalleryFrame key={k} className="w-full max-w-[110px] mx-auto" />
             ))}
           </div>
           {/* Bottom row: 7 frames */}
-          <div className="absolute inset-x-6 bottom-8 grid grid-cols-7 gap-4">
+          <div className="absolute inset-x-4 bottom-4 grid grid-cols-7 gap-3">
             {galleryFrameKeys.slice(7, 14).map((k) => (
-              <GalleryFrame key={k} className="w-full max-w-[120px] mx-auto" />
+              <GalleryFrame key={k} className="w-full max-w-[110px] mx-auto" />
             ))}
           </div>
           {/* Left column: 3 frames */}
-          <div className="absolute left-2 top-1/2 -translate-y-1/2 flex flex-col gap-6">
+          <div className="absolute left-1 top-1/2 -translate-y-1/2 flex flex-col gap-8">
             {galleryFrameKeys.slice(14, 17).map((k) => (
-              <GalleryFrame key={k} className="w-[100px]" />
+              <GalleryFrame key={k} className="w-[110px]" />
             ))}
           </div>
           {/* Right column: 3 frames */}
-          <div className="absolute right-2 top-1/2 -translate-y-1/2 flex flex-col gap-6">
+          <div className="absolute right-1 top-1/2 -translate-y-1/2 flex flex-col gap-8">
             {galleryFrameKeys.slice(17, 20).map((k) => (
-              <GalleryFrame key={k} className="w-[100px]" />
+              <GalleryFrame key={k} className="w-[110px]" />
             ))}
           </div>
         </div>
 
-        <article className="relative z-10 mx-auto max-w-[980px] overflow-hidden rounded-[2rem] border border-[#d4c4a7] bg-[#f8f1e5] shadow-[0_24px_70px_rgba(66,44,20,0.16)]">
+        <article className="relative z-10 mx-auto max-w-[760px] mt-[170px] mb-[170px] md:mx-[140px] overflow-hidden rounded-[2rem] border border-[#d4c4a7] bg-[#f8f1e5] shadow-[0_24px_70px_rgba(66,44,20,0.16)]">
         <div className="pointer-events-none absolute inset-0 overflow-hidden" aria-hidden="true">
           <div className="absolute inset-0 bg-[radial-gradient(circle_at_18%_12%,rgba(181,143,83,0.12),transparent_26%),radial-gradient(circle_at_82%_84%,rgba(181,143,83,0.11),transparent_28%),linear-gradient(135deg,rgba(255,255,255,0.72),rgba(245,236,220,0.54))]" />
           <div className="absolute inset-x-0 top-0 h-8 border-y border-[#d3c2a5]/50 bg-[repeating-linear-gradient(45deg,rgba(166,133,78,0.12)_0_2px,transparent_2px_10px)]" />
