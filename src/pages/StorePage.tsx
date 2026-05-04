@@ -40,6 +40,11 @@ import avnerPainting12 from "@/assets/avner-paintings/p12.png";
 import avnerPainting13 from "@/assets/avner-paintings/p13.png";
 import avnerPainting14 from "@/assets/avner-paintings/p14.png";
 import avnerPainting15 from "@/assets/avner-paintings/p15.png";
+import avnerPainting16 from "@/assets/avner-paintings/p16.png";
+import avnerPainting17 from "@/assets/avner-paintings/p17.png";
+import avnerPainting18 from "@/assets/avner-paintings/p18.png";
+import avnerPainting19 from "@/assets/avner-paintings/p19.png";
+import avnerPainting20 from "@/assets/avner-paintings/p20.png";
 import type { Store } from "@/data/mallData";
 
 const avnerHighlights = [
@@ -123,6 +128,11 @@ const avnerPaintings = [
   { src: avnerPainting13, alt: "ציור של אבנר עובד - כפר על הרים" },
   { src: avnerPainting14, alt: "ציור של אבנר עובד - זוג על שפת הים" },
   { src: avnerPainting15, alt: "ציור של אבנר עובד - ילד עם בלון" },
+  { src: avnerPainting16, alt: "ציור של אבנר עובד - דיוקן זקן עם כובע" },
+  { src: avnerPainting17, alt: "ציור של אבנר עובד - עגורים מעל הרים" },
+  { src: avnerPainting18, alt: "ציור של אבנר עובד - דמויות בכפר" },
+  { src: avnerPainting19, alt: "ציור של אבנר עובד - רקדנית פלמנקו" },
+  { src: avnerPainting20, alt: "ציור של אבנר עובד - אישה בשמלה אדומה" },
 ];
 const galleryFrameItems = Array.from({ length: 20 }, (_, i) => ({
   key: `gf-${i}`,
