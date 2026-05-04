@@ -24,6 +24,7 @@ import imServingTraysCategory from "@/assets/stores/im-serving-trays-category.we
 import imIsraelMapCategory from "@/assets/stores/im-israel-map-category.webp";
 import imMezuzahsCategory from "@/assets/stores/im-mezuzahs-category.webp";
 import imShabbatCandlesCategory from "@/assets/stores/im-shabbat-candles-category.webp";
+import avnerPortraitImg from "@/assets/avner-ovad-portrait.png";
 import type { Store } from "@/data/mallData";
 
 const avnerHighlights = [
@@ -50,22 +51,15 @@ const AvnerDivider = () => (
 
 const AvnerPortraitCard = () => (
   <figure className="relative mx-auto w-full max-w-[280px] rotate-[-3deg] rounded-sm bg-white p-3 shadow-[0_18px_28px_rgba(58,43,28,0.35)]">
-    <div className="aspect-[4/5] overflow-hidden bg-gradient-to-b from-[#f8fafc] via-[#e9edf2] to-[#dde3eb]">
-      <div className="flex h-full flex-col items-center justify-end px-8 pt-8">
-        <div className="relative mb-[-4px] h-32 w-32 rounded-full bg-[#dfc5ad] shadow-inner">
-          <div className="absolute -top-2 left-1/2 h-14 w-28 -translate-x-1/2 rounded-t-full bg-[#d9d7d2]" />
-          <div className="absolute left-6 top-14 h-6 w-6 rounded-full border-[3px] border-[#1f252a]" />
-          <div className="absolute right-6 top-14 h-6 w-6 rounded-full border-[3px] border-[#1f252a]" />
-          <div className="absolute left-[50%] top-[66px] h-[3px] w-8 -translate-x-1/2 bg-[#1f252a]" />
-          <div className="absolute bottom-8 left-1/2 h-3 w-10 -translate-x-1/2 rounded-b-full border-b-2 border-[#7d4637]" />
-        </div>
-        <div className="relative w-full rounded-t-[42px] bg-[#263d5a] px-8 pb-16 pt-12">
-          <div className="mx-auto h-24 w-20 rounded-b-[28px] rounded-t-sm bg-[#d9e7f4]" />
-          <span className="absolute right-12 top-12 h-4 w-6 rounded-sm border border-white/70 bg-white" />
-        </div>
-      </div>
+    <div className="aspect-[4/5] overflow-hidden bg-[#e9edf2]">
+      <img
+        src={avnerPortraitImg}
+        alt="דיוקן של אבנר עובד"
+        className="h-full w-full object-cover"
+        loading="lazy"
+      />
     </div>
-    <figcaption className="sr-only">איור דיוקן מקודד של אבנר עובד בחליפה כחולה ומשקפיים.</figcaption>
+    <figcaption className="sr-only">דיוקן של אבנר עובד בחליפה כחולה ומשקפיים.</figcaption>
   </figure>
 );
 
