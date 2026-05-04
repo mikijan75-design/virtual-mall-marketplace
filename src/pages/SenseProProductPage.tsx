@@ -14,6 +14,7 @@ import { hanukkiotProducts } from "@/data/hanukkiotProducts";
 import { krashimProducts } from "@/data/krashimProducts";
 import { rimonimProducts } from "@/data/rimonimProducts";
 import { agartelimProducts } from "@/data/agartelimProducts";
+import { sheonimProducts } from "@/data/sheonimProducts";
 
 const galleryImages = [
   {
@@ -122,7 +123,7 @@ const SenseProProductPage = () => {
         col?: number;
         row?: number;
         productId?: string;
-        collection?: "mezuzahs" | "israel-map" | "shabbat-candles" | "hanukkiahs" | "serving-trays" | "hamsa-pomegranate" | "decorative-beads";
+        collection?: "mezuzahs" | "israel-map" | "shabbat-candles" | "hanukkiahs" | "serving-trays" | "hamsa-pomegranate" | "decorative-beads" | "coasters";
         itemNumber: number;
         colBounds?: number[];
         rowBounds?: number[];
@@ -159,6 +160,8 @@ const SenseProProductPage = () => {
       ? rimonimProducts
       : initialMezuzah?.collection === "decorative-beads"
       ? agartelimProducts
+      : initialMezuzah?.collection === "coasters"
+      ? sheonimProducts
       : israelMezuzahProducts;
 
   // Selected product (by id) for the new product-based mezuzah flow
