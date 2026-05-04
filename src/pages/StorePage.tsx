@@ -444,7 +444,13 @@ const BeggarsStoreView = ({ store }: { store: Store }) => (
                         key={i}
                         className="group flex flex-col items-center rounded-md border border-[#c9a96e]/40 bg-[#f5e6c8]/95 p-2 text-center text-[#3a2a18] shadow-md transition-transform hover:-translate-y-1"
                       >
-                        <div className="grid h-14 w-full place-items-center text-3xl">{p.emoji}</div>
+                        <div className="grid h-20 w-full place-items-center overflow-hidden rounded-sm bg-[#0d2236]/10">
+                          {p.image ? (
+                            <img src={p.image} alt={p.name} className="h-full w-full object-cover" />
+                          ) : (
+                            <span className="text-3xl">{p.emoji}</span>
+                          )}
+                        </div>
                         <p className="mt-1 text-[11px] font-black leading-tight">{p.name}</p>
                         <p className="text-[9px] text-[#6b4f2e] leading-tight">{p.desc}</p>
                       </div>
@@ -480,7 +486,13 @@ const BeggarsStoreView = ({ store }: { store: Store }) => (
                       key={i}
                       className="flex flex-col items-center rounded-lg bg-[#0d2236]/90 p-3 text-center text-[#f5e6c8] shadow-md ring-1 ring-[#c9a96e]/60"
                     >
-                      <div className="text-3xl">{p.emoji}</div>
+                      <div className="h-20 w-full overflow-hidden rounded-md bg-[#f5e6c8]/10">
+                        {p.image ? (
+                          <img src={p.image} alt={p.name} className="h-full w-full object-cover" />
+                        ) : (
+                          <span className="grid h-full w-full place-items-center text-3xl">{p.emoji}</span>
+                        )}
+                      </div>
                       <p className="mt-1 text-xs font-black leading-tight">{p.name}</p>
                       <p className="text-[10px] text-[#c9a96e] leading-tight">{p.desc}</p>
                     </div>
@@ -517,7 +529,13 @@ const BeggarsStoreView = ({ store }: { store: Store }) => (
                         key={i}
                         className="group flex flex-col items-center rounded-md border border-[#c9a96e]/40 bg-[#f5e6c8]/95 p-2 text-center text-[#3a2a18] shadow-md transition-transform hover:-translate-y-1"
                       >
-                        <div className="grid h-14 w-full place-items-center text-3xl">{p.emoji}</div>
+                        <div className="grid h-20 w-full place-items-center overflow-hidden rounded-sm bg-[#0d2236]/10">
+                          {p.image ? (
+                            <img src={p.image} alt={p.name} className="h-full w-full object-cover" />
+                          ) : (
+                            <span className="text-3xl">{p.emoji}</span>
+                          )}
+                        </div>
                         <p className="mt-1 text-[11px] font-black leading-tight">{p.name}</p>
                         <p className="text-[9px] text-[#6b4f2e] leading-tight">{p.desc}</p>
                       </div>
