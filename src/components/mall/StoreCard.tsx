@@ -301,10 +301,12 @@ const StoreCard = ({ store, storeIndex }: StoreCardProps) => {
         )}
 
         {/* Bottom gold trim */}
-        <div
-          className="h-[3px]"
-          style={{ background: "linear-gradient(90deg, hsl(40,15%,65%), hsl(43,45%,70%), hsl(40,15%,65%))" }}
-        />
+        {!isAvnerOvad && (
+          <div
+            className="h-[3px]"
+            style={{ background: "linear-gradient(90deg, hsl(40,15%,65%), hsl(43,45%,70%), hsl(40,15%,65%))" }}
+          />
+        )}
 
         {/* Roman numeral badge */}
         {storeIndex !== undefined && (
