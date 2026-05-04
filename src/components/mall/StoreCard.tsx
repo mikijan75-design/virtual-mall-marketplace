@@ -133,8 +133,24 @@ const StoreCard = ({ store, storeIndex }: StoreCardProps) => {
           style={{ background: "linear-gradient(90deg, hsl(40,15%,65%), hsl(43,45%,70%), hsl(40,15%,65%))" }}
         />
 
-        {/* Brand sign */}
-        {style.codedWordmark === "israel-mezuzahs" ? (
+        {style.codedScene === "israel-mezuzahs-storefront" ? (
+          <div
+            className="relative flex-1 overflow-hidden"
+            style={{
+              background: "#f7f0e4",
+              borderBottom: `2px solid ${style.accent}`,
+            }}
+          >
+            <IsraelMezuzahsStorefrontScene className="w-full h-full" preserveAspectRatio="xMidYMid slice" />
+            {/* Glass reflection overlay */}
+            <div
+              className="absolute inset-0 pointer-events-none"
+              style={{
+                background: "linear-gradient(155deg, rgba(255,255,255,0.18) 0%, transparent 35%, transparent 60%, rgba(255,255,255,0.06) 100%)",
+              }}
+            />
+          </div>
+        ) : style.codedWordmark === "israel-mezuzahs" ? (
           <div
             className={SIGN_BAND_CLASS}
             style={{
