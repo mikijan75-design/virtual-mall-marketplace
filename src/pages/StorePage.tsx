@@ -16,6 +16,7 @@ import imProduct8 from "@/assets/stores/im-product-8.png";
 import imCategoriesDisplay from "@/assets/stores/im-categories-display.png";
 import imClocksCategory from "@/assets/stores/im-clocks-category.webp";
 import imVasesCategory from "@/assets/stores/im-vases-category.webp";
+import imHanukkiahsCategory from "@/assets/stores/im-hanukkiahs-category.webp";
 
 const israelMezuzahsProducts = [
   { src: imProduct1, name: "פמוטי שבת", slug: "shabbat-candles" },
@@ -25,7 +26,7 @@ const israelMezuzahsProducts = [
   { src: imProduct5, name: "מזוזות", slug: "mezuzahs" },
   { src: imProduct6, name: "תליוני חמסה ורימון", slug: "hamsa-pomegranate" },
   { src: imProduct7, name: "מפת ישראל", slug: "israel-map" },
-  { src: imProduct8, name: "חנוכיות", slug: "hanukkiahs" },
+  { src: imHanukkiahsCategory, name: "חנוכיות", slug: "hanukkiahs" },
 ];
 
 const StorePage = () => {
