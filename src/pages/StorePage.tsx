@@ -96,7 +96,7 @@ const GalleryFrame = ({
     {/* Track-light bar */}
     <div className="absolute left-1/2 -top-3 h-[6px] w-[78%] -translate-x-1/2 rounded-[2px] bg-gradient-to-b from-[#3a2f24] to-[#1a1410] shadow-[0_2px_4px_rgba(0,0,0,0.4)]" />
     {/* Lamp glow downward onto frame */}
-    <div className="pointer-events-none absolute left-1/2 -top-2 h-12 w-[88%] -translate-x-1/2 rounded-b-[40%] bg-[radial-gradient(ellipse_at_top,rgba(255,225,160,0.55),rgba(255,225,160,0.18)_40%,transparent_75%)] blur-[2px]" />
+    <div className="pointer-events-none absolute left-1/2 -top-3 h-16 w-[95%] -translate-x-1/2 rounded-b-[40%] bg-[radial-gradient(ellipse_at_top,rgba(255,255,255,0.95),rgba(255,255,255,0.55)_40%,transparent_80%)] blur-[2px]" />
     {/* Mounting stem */}
     <div className="absolute left-1/2 -top-[10px] h-[10px] w-[3px] -translate-x-1/2 bg-[#2a2018]" />
     {/* Frame */}
