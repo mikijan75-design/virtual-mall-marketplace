@@ -171,7 +171,7 @@ const StoreCard = ({ store, storeIndex }: StoreCardProps) => {
           <div
             className="relative flex-1 overflow-hidden"
             style={{
-              background: "#183247",
+              background: "linear-gradient(135deg, #f0f4f8, #dce4ed)",
               borderBottom: `2px solid ${style.accent}`,
             }}
           >
