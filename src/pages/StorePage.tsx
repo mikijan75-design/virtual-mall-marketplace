@@ -30,6 +30,11 @@ import avnerPainting2 from "@/assets/avner-paintings/p2.png";
 import avnerPainting3 from "@/assets/avner-paintings/p3.png";
 import avnerPainting4 from "@/assets/avner-paintings/p4.png";
 import avnerPainting5 from "@/assets/avner-paintings/p5.png";
+import avnerPainting6 from "@/assets/avner-paintings/p6.png";
+import avnerPainting7 from "@/assets/avner-paintings/p7.png";
+import avnerPainting8 from "@/assets/avner-paintings/p8.png";
+import avnerPainting9 from "@/assets/avner-paintings/p9.png";
+import avnerPainting10 from "@/assets/avner-paintings/p10.png";
 import type { Store } from "@/data/mallData";
 
 const avnerHighlights = [
@@ -103,6 +108,11 @@ const avnerPaintings = [
   { src: avnerPainting3, alt: "ציור של אבנר עובד - בית כנסת" },
   { src: avnerPainting4, alt: "ציור של אבנר עובד - אם וילד בחדר" },
   { src: avnerPainting5, alt: "ציור של אבנר עובד - אגרטלי פרחים" },
+  { src: avnerPainting6, alt: "ציור של אבנר עובד - דמות בבית קפה" },
+  { src: avnerPainting7, alt: "ציור של אבנר עובד - נוף עם עננים" },
+  { src: avnerPainting8, alt: "ציור של אבנר עובד - דיוקן Amy" },
+  { src: avnerPainting9, alt: "ציור של אבנר עובד - דמויות וחוף" },
+  { src: avnerPainting10, alt: "ציור של אבנר עובד - דיוקן עם מצנפת" },
 ];
 const galleryFrameItems = Array.from({ length: 20 }, (_, i) => ({
   key: `gf-${i}`,
