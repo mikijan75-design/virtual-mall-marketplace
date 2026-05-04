@@ -21,13 +21,14 @@ import imHanukkiahsCategory from "@/assets/stores/im-hanukkiahs-category.webp";
 import imHamsaCategory from "@/assets/stores/im-hamsa-pomegranate-category.webp";
 import imServingTraysCategory from "@/assets/stores/im-serving-trays-category.webp";
 import imIsraelMapCategory from "@/assets/stores/im-israel-map-category.webp";
+import imMezuzahsCategory from "@/assets/stores/im-mezuzahs-category.webp";
 
 const israelMezuzahsProducts = [
   { src: imProduct1, name: "פמוטי שבת", slug: "shabbat-candles" },
   { src: imServingTraysCategory, name: "מגשי הגשה", slug: "serving-trays" },
   { src: imClocksCategory, name: "שעונים", slug: "coasters" },
   { src: imVasesCategory, name: "אגרטלים", slug: "decorative-beads" },
-  { src: imProduct5, name: "מזוזות", slug: "mezuzahs" },
+  { src: imMezuzahsCategory, name: "מזוזות", slug: "mezuzahs" },
   { src: imHamsaCategory, name: "תליוני חמסה ורימון", slug: "hamsa-pomegranate" },
   { src: imIsraelMapCategory, name: "מפת ישראל", slug: "israel-map" },
   { src: imHanukkiahsCategory, name: "חנוכיות", slug: "hanukkiahs" },
