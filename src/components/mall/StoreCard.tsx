@@ -103,7 +103,7 @@ const idOverrides: Record<string, Partial<BrandStyle & { name: string }>> = {
     codedScene: "avner-ovad-storefront" as any,
   },
   s16: {
-    name: "Upcycled Israeli Treasures",
+    name: "BEGGARS",
     bg: "linear-gradient(135deg, #1f3a5c, #14253d)",
     text: "#f5e6c8",
     accent: "#c9a96e",
