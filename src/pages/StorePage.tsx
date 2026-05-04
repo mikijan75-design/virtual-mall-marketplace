@@ -207,14 +207,6 @@ const AvnerOvadStoreView = ({ store }: { store: Store }) => (
               פגשתי את אבנר ביריד אמנים בנחלת בנימין, שם הוא מציג את עבודותיו. התרשמתי מהאדם אשר אחראי לתרומה גדולה לחברה! עדיפות ליצור קשר ותיאום מראש אם מעוניינים לראות את הגלרייה בעיניים.
             </blockquote>
 
-            <div className="grid gap-4 rounded-2xl bg-white/40 p-5 text-base font-bold sm:grid-cols-1">
-              <div className="flex items-center justify-end gap-3 text-right">
-                <span>
-                  The work is displayed at artist fairs such as Nahalat Binyamin, it is preferable to contact us to arrange arrival.
-                </span>
-                <MapPin className="h-7 w-7 text-[#a4824d]" aria-hidden="true" />
-              </div>
-            </div>
           </div>
 
           <aside className="space-y-6 text-left md:pt-8 order-1 md:order-2" dir="ltr">
