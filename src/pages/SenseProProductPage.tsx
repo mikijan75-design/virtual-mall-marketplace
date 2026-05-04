@@ -9,6 +9,7 @@ import MallFooter from "@/components/mall/MallFooter";
 import PageTracker from "@/components/PageTracker";
 import { israelMezuzahProducts } from "@/data/israelMezuzahProducts";
 import { israelMapProducts } from "@/data/israelMapProducts";
+import { pamotProducts } from "@/data/pamotProducts";
 
 const galleryImages = [
   {
@@ -117,7 +118,7 @@ const SenseProProductPage = () => {
         col?: number;
         row?: number;
         productId?: string;
-        collection?: "mezuzahs" | "israel-map";
+        collection?: "mezuzahs" | "israel-map" | "shabbat-candles";
         itemNumber: number;
         colBounds?: number[];
         rowBounds?: number[];
@@ -142,7 +143,11 @@ const SenseProProductPage = () => {
   };
 
   const productCollection =
-    initialMezuzah?.collection === "israel-map" ? israelMapProducts : israelMezuzahProducts;
+    initialMezuzah?.collection === "israel-map"
+      ? israelMapProducts
+      : initialMezuzah?.collection === "shabbat-candles"
+      ? pamotProducts
+      : israelMezuzahProducts;
 
   // Selected product (by id) for the new product-based mezuzah flow
   const initialIndex = initialMezuzah?.productId
