@@ -97,7 +97,7 @@ const AvnerOvadStoreView = ({ store }: { store: Store }) => (
 
         {/* Center: article + bottom row */}
         <div className="flex flex-col items-center gap-6">
-          <article className="relative z-10 w-full max-w-[432px] overflow-hidden rounded-[2rem] border border-[#d4c4a7] bg-[#f8f1e5] shadow-[0_24px_70px_rgba(66,44,20,0.16)] text-[60%]">
+          <article className="relative z-10 w-full max-w-[173px] overflow-hidden rounded-[2rem] border border-[#d4c4a7] bg-[#f8f1e5] shadow-[0_24px_70px_rgba(66,44,20,0.16)] text-[60%]">
         <div className="pointer-events-none absolute inset-0 overflow-hidden" aria-hidden="true">
           <div className="absolute inset-0 bg-[radial-gradient(circle_at_18%_12%,rgba(181,143,83,0.12),transparent_26%),radial-gradient(circle_at_82%_84%,rgba(181,143,83,0.11),transparent_28%),linear-gradient(135deg,rgba(255,255,255,0.72),rgba(245,236,220,0.54))]" />
           <div className="absolute inset-x-0 top-0 h-8 border-y border-[#d3c2a5]/50 bg-[repeating-linear-gradient(45deg,rgba(166,133,78,0.12)_0_2px,transparent_2px_10px)]" />
@@ -189,7 +189,7 @@ const AvnerOvadStoreView = ({ store }: { store: Store }) => (
           </article>
 
           {/* Bottom row: 6 frames */}
-          <div className="hidden md:grid grid-cols-6 gap-3 w-full max-w-[432px]">
+          <div className="hidden md:grid grid-cols-6 gap-2 w-full max-w-[173px]">
             {galleryFrameKeys.slice(14, 20).map((k) => (
               <GalleryFrame key={k} className="w-full" />
             ))}
