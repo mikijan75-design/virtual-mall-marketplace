@@ -1,6 +1,5 @@
-import { Link, useLocation } from "react-router-dom";
-import { useEffect, useRef, useState, type ReactNode } from "react";
-import { toast } from "@/hooks/use-toast";
+import { Link } from "react-router-dom";
+import { type ReactNode } from "react";
 import MallHeader from "@/components/mall/MallHeader";
 import MallFooter from "@/components/mall/MallFooter";
 import PageTracker from "@/components/PageTracker";
@@ -341,35 +340,6 @@ const CycleDiagram = () => (
 );
 
 const InfoPage = () => {
-  const location = useLocation();
-  const incoming = (location.state as any) || {};
-  const contactRef = useRef<HTMLDivElement>(null);
-  const [form, setForm] = useState({
-    name: "",
-    phone: "",
-    email: "",
-    message: incoming.product ? `מתעניין/ת ביצירה: ${incoming.product}` : "",
-  });
-
-  useEffect(() => {
-    if (incoming.contact && contactRef.current) {
-      contactRef.current.scrollIntoView({ behavior: "smooth", block: "start" });
-    }
-  }, [incoming.contact]);
-
-  const handleSubmit = (e: React.FormEvent) => {
-    e.preventDefault();
-    if (!form.name || !form.phone) {
-      toast({ title: "חסרים פרטים", description: "נא למלא שם וטלפון" });
-      return;
-    }
-    toast({
-      title: "תודה! קיבלנו את הפנייה",
-      description: `${form.name}, נחזור אליך בהקדם.`,
-    });
-    setForm({ name: "", phone: "", email: "", message: "" });
-  };
-
   return (
     <div className="min-h-screen flex flex-col bg-[#fffdfb] p-0 font-heebo text-[#3b2618]" dir="rtl">
       <MallHeader />
