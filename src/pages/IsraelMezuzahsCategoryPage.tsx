@@ -18,6 +18,7 @@ import { hanukkiotProducts } from "@/data/hanukkiotProducts";
 import { krashimProducts } from "@/data/krashimProducts";
 import { rimonimProducts } from "@/data/rimonimProducts";
 import { agartelimProducts } from "@/data/agartelimProducts";
+import { sheonimProducts } from "@/data/sheonimProducts";
 
 export interface IMCategory {
   slug: string;
@@ -52,9 +53,9 @@ export const imCategories: IMCategory[] = [
   },
   {
     slug: "coasters",
-    name: "תחתיות לכוסות",
+    name: "שעונים",
     hero: imProduct3,
-    description: "תחתיות עץ זית עם אפוקסי – מתנה מושלמת לכל בית.",
+    description: "שעוני קיר ושולחן מעץ זית ואפוקסי בעבודת יד – הפריט שבתמונה הוא הפריט המדויק שתקבלו.",
     items: [
       { name: "סט 4 תחתיות", img: imProduct3, description: "סט בסיסי בגוונים אחידים." },
       { name: "סט 6 תחתיות", img: imProduct3, description: "סט עשיר במגוון צבעים." },
@@ -130,6 +131,7 @@ const IsraelMezuzahsCategoryPage = () => {
   const isKrashim = category?.slug === "serving-trays";
   const isRimonim = category?.slug === "hamsa-pomegranate";
   const isAgartelim = category?.slug === "decorative-beads";
+  const isSheonim = category?.slug === "coasters";
   const productGrid = isMezuzahs
     ? israelMezuzahProducts
     : isIsraelMap
@@ -144,6 +146,8 @@ const IsraelMezuzahsCategoryPage = () => {
     ? rimonimProducts
     : isAgartelim
     ? agartelimProducts
+    : isSheonim
+    ? sheonimProducts
     : null;
 
   const openProduct = (productId: string) => {
@@ -162,6 +166,8 @@ const IsraelMezuzahsCategoryPage = () => {
       ? "hamsa-pomegranate"
       : isAgartelim
       ? "decorative-beads"
+      : isSheonim
+      ? "coasters"
       : "mezuzahs";
     navigate("/sense-pro", {
       state: {
@@ -231,6 +237,8 @@ const IsraelMezuzahsCategoryPage = () => {
                       ? "קולקציית רימונים"
                       : isAgartelim
                       ? "קולקציית אגרטלים"
+                      : isSheonim
+                      ? "קולקציית שעונים"
                       : "קולקציית מזוזות 20 ס״מ"}
                   </h2>
                   <p className="text-muted-foreground font-heebo leading-relaxed max-w-3xl mx-auto">
@@ -246,6 +254,8 @@ const IsraelMezuzahsCategoryPage = () => {
                       ? "רימונים מעוצבים מעץ זית ואפוקסי – הפריט שבתמונה הוא הפריט המדויק שתקבלו. לחצו על הזכוכית המגדלת כדי לפתוח את המוצר."
                       : isAgartelim
                       ? "אגרטלים מעץ זית ואפוקסי בעבודת יד – הפריט שבתמונה הוא הפריט המדויק שתקבלו. לחצו על הזכוכית המגדלת כדי לפתוח את המוצר."
+                      : isSheonim
+                      ? "שעוני קיר ושולחן מעץ זית ואפוקסי בעבודת יד – הפריט שבתמונה הוא הפריט המדויק שתקבלו. לחצו על הזכוכית המגדלת כדי לפתוח את המוצר."
                       : "בית מזוזה 20 ס״מ (לקלף 17 ס״מ) מעץ זית ואפוקסי ייחודי – הפריט שבתמונה הוא הפריט המדויק שתקבלו. לחצו על הזכוכית המגדלת על מזוזה כדי לפתוח אותה בעמוד המוצר."}
                   </p>
                 </div>
