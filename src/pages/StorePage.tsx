@@ -47,6 +47,13 @@ import avnerPainting18 from "@/assets/avner-paintings/p18.png";
 import avnerPainting19 from "@/assets/avner-paintings/p19.png";
 import avnerPainting20 from "@/assets/avner-paintings/p20.png";
 import beggarsHero from "@/assets/stores/floor1-shop4.png";
+import beggarsTattoo from "@/assets/stores/beggars-tattoo.png";
+import beggarsDoritos from "@/assets/stores/beggars-doritos.png";
+import beggarsScandic from "@/assets/stores/beggars-scandic.png";
+import beggarsGirls from "@/assets/stores/beggars-girls.png";
+import beggarsDots from "@/assets/stores/beggars-dots.png";
+import beggarsDelft from "@/assets/stores/beggars-delft.png";
+import beggarsBamba from "@/assets/stores/beggars-bamba.png";
 import type { Store } from "@/data/mallData";
 
 const avnerHighlights = [
@@ -363,18 +370,18 @@ const israelMezuzahsProducts = [
 ];
 
 const beggarsProducts = [
-  { name: "תיק טורקי", desc: "מאריזת חטיף ממוחזרת", emoji: "👜" },
-  { name: "ארנק קראנץ'", desc: "תיק יד עבודת יד", emoji: "👛" },
-  { name: "תיק במבה", desc: "אריזת אוסם ממוחזרת", emoji: "🎒" },
-  { name: "תיק שוקו", desc: "סדרת שוקולד מילקי", emoji: "🛍️" },
-  { name: "פאוץ' ביסלי", desc: "אביזר אישי קומפקטי", emoji: "👝" },
-  { name: "תיק קוקילידס", desc: "צבעוני וחגיגי", emoji: "👜" },
+  { name: "קלאץ' Tattoo", desc: "מגזין קעקועים ממוחזר", emoji: "👜", image: beggarsTattoo },
+  { name: "ארנק דוריטוס חריף", desc: "אריזת חטיף ירוקה", emoji: "👛", image: beggarsDoritos },
+  { name: "תיק SCANDIC", desc: "כרזת בר ויניל", emoji: "🛍️", image: beggarsScandic },
+  { name: "תיק ילדות וברווז", desc: "איור ויניל וינטג'", emoji: "🎒", image: beggarsGirls },
+  { name: "פאוץ' נקודות", desc: "זוג ארנקים מנוקדים", emoji: "👝", image: beggarsDots },
+  { name: "קלאץ' דלפט הולנדי", desc: "טחנות רוח כחולות", emoji: "👜", image: beggarsDelft },
 ];
 
 const beggarsCounter = [
-  { name: "ראנר אריזות", desc: "ריצוף שולחן יוקרתי", emoji: "🪑" },
-  { name: "כרית קלאסיק", desc: "אריזות נוסטלגיות", emoji: "🛋️" },
-  { name: "תליון קיר", desc: "דקור ממוחזר", emoji: "🖼️" },
+  { name: "פאוץ' במבוז'", desc: "אריזת חטיף ספורט", emoji: "🛋️", image: beggarsBamba },
+  { name: "קלאץ' Tattoo", desc: "פריט אספנים", emoji: "🖼️", image: beggarsTattoo },
+  { name: "תיק SCANDIC", desc: "מהדורה מוגבלת", emoji: "🪑", image: beggarsScandic },
 ];
 
 const BeggarsStoreView = ({ store }: { store: Store }) => (
@@ -437,7 +444,13 @@ const BeggarsStoreView = ({ store }: { store: Store }) => (
                         key={i}
                         className="group flex flex-col items-center rounded-md border border-[#c9a96e]/40 bg-[#f5e6c8]/95 p-2 text-center text-[#3a2a18] shadow-md transition-transform hover:-translate-y-1"
                       >
-                        <div className="grid h-14 w-full place-items-center text-3xl">{p.emoji}</div>
+                        <div className="grid h-20 w-full place-items-center overflow-hidden rounded-sm bg-[#0d2236]/10">
+                          {p.image ? (
+                            <img src={p.image} alt={p.name} className="h-full w-full object-cover" />
+                          ) : (
+                            <span className="text-3xl">{p.emoji}</span>
+                          )}
+                        </div>
                         <p className="mt-1 text-[11px] font-black leading-tight">{p.name}</p>
                         <p className="text-[9px] text-[#6b4f2e] leading-tight">{p.desc}</p>
                       </div>
@@ -473,7 +486,13 @@ const BeggarsStoreView = ({ store }: { store: Store }) => (
                       key={i}
                       className="flex flex-col items-center rounded-lg bg-[#0d2236]/90 p-3 text-center text-[#f5e6c8] shadow-md ring-1 ring-[#c9a96e]/60"
                     >
-                      <div className="text-3xl">{p.emoji}</div>
+                      <div className="h-20 w-full overflow-hidden rounded-md bg-[#f5e6c8]/10">
+                        {p.image ? (
+                          <img src={p.image} alt={p.name} className="h-full w-full object-cover" />
+                        ) : (
+                          <span className="grid h-full w-full place-items-center text-3xl">{p.emoji}</span>
+                        )}
+                      </div>
                       <p className="mt-1 text-xs font-black leading-tight">{p.name}</p>
                       <p className="text-[10px] text-[#c9a96e] leading-tight">{p.desc}</p>
                     </div>
@@ -510,7 +529,13 @@ const BeggarsStoreView = ({ store }: { store: Store }) => (
                         key={i}
                         className="group flex flex-col items-center rounded-md border border-[#c9a96e]/40 bg-[#f5e6c8]/95 p-2 text-center text-[#3a2a18] shadow-md transition-transform hover:-translate-y-1"
                       >
-                        <div className="grid h-14 w-full place-items-center text-3xl">{p.emoji}</div>
+                        <div className="grid h-20 w-full place-items-center overflow-hidden rounded-sm bg-[#0d2236]/10">
+                          {p.image ? (
+                            <img src={p.image} alt={p.name} className="h-full w-full object-cover" />
+                          ) : (
+                            <span className="text-3xl">{p.emoji}</span>
+                          )}
+                        </div>
                         <p className="mt-1 text-[11px] font-black leading-tight">{p.name}</p>
                         <p className="text-[9px] text-[#6b4f2e] leading-tight">{p.desc}</p>
                       </div>
