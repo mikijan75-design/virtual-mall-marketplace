@@ -99,7 +99,7 @@ const AvnerOvadStoreView = ({ store }: { store: Store }) => (
 
           <article
             className="relative z-10 overflow-hidden rounded-[2rem] border border-[#d4c4a7] bg-[#f8f1e5] shadow-[0_24px_70px_rgba(66,44,20,0.16)] shrink-0"
-            style={{ zoom: 0.4, width: "980px" }}
+            style={{ zoom: 0.48, width: "980px" }}
           >
         <div className="pointer-events-none absolute inset-0 overflow-hidden" aria-hidden="true">
           <div className="absolute inset-0 bg-[radial-gradient(circle_at_18%_12%,rgba(181,143,83,0.12),transparent_26%),radial-gradient(circle_at_82%_84%,rgba(181,143,83,0.11),transparent_28%),linear-gradient(135deg,rgba(255,255,255,0.72),rgba(245,236,220,0.54))]" />
