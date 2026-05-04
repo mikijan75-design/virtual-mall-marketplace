@@ -25,6 +25,7 @@ import IsraelMezuzahsWordmark from "@/components/mall/IsraelMezuzahsWordmark";
 import OliveWoodEpoxyWordmark from "@/components/mall/OliveWoodEpoxyWordmark";
 import IsraelMezuzahsStorefrontScene from "@/components/mall/IsraelMezuzahsStorefrontScene";
 import israelMezuzahsImg from "@/assets/stores/israel-mezuzahs.png";
+import floor3Shop4Img from "@/assets/stores/floor3-shop4.png";
 
 type BrandStyle = {
   bg: string;
@@ -90,6 +91,9 @@ const idOverrides: Record<string, Partial<BrandStyle & { name: string }>> = {
     subtitle: "מזוזות ועוד",
     codedScene: "israel-mezuzahs-storefront",
     image: israelMezuzahsImg,
+  },
+  s4: {
+    image: floor3Shop4Img,
   },
 };
 
