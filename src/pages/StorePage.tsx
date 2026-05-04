@@ -4,7 +4,7 @@ import MallHeader from "@/components/mall/MallHeader";
 import MallFooter from "@/components/mall/MallFooter";
 import PageTracker from "@/components/PageTracker";
 import BackButton from "@/components/BackButton";
-import { BookOpen, Heart, MapPin, Palette, Phone, Settings, Smartphone } from "lucide-react";
+import { BookOpen, Heart, Palette, Settings } from "lucide-react";
 import israelMezuzahsAbout from "@/assets/stores/israel-mezuzahs-about.png";
 import imBeadLogo from "@/assets/stores/im-bead-logo.png";
 import imProduct1 from "@/assets/stores/im-product-1.png";
