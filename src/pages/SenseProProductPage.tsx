@@ -7,6 +7,7 @@ import BackButton from "@/components/BackButton";
 import MallHeader from "@/components/mall/MallHeader";
 import MallFooter from "@/components/mall/MallFooter";
 import PageTracker from "@/components/PageTracker";
+import { israelMezuzahProducts } from "@/data/israelMezuzahProducts";
 
 const galleryImages = [
   {
