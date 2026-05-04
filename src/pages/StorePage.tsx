@@ -50,13 +50,11 @@ import type { Store } from "@/data/mallData";
 const avnerHighlights = [
   {
     icon: Palette,
-    body:
-      "אבנר הוא איש אשכולות אמיתי, המשלב רקע אקדמי כמהנדס אזרחי מהטכניון עם תשוקה עמוקה לציור ולכתיבה. הוא פנסיונר, וכל יצירה שלו קורנת תשוקה.",
+    body: "אבנר הוא איש אשכולות אמיתי, המשלב רקע אקדמי כמהנדס אזרחי מהטכניון עם תשוקה עמוקה לציור ולכתיבה. הוא פנסיונר, וכל יצירה שלו קורנת תשוקה.",
   },
   {
     icon: BookOpen,
-    body:
-      "הגלריה שלו מציגה מגוון רחב ועשיר של נושאים והיבטים. מנופים ישראליים ועד לרגעים אישיים, הציור הרב מבטיח שכל אחד ימצא חיבור אישי.",
+    body: "הגלריה שלו מציגה מגוון רחב ועשיר של נושאים והיבטים. מנופים ישראליים ועד לרגעים אישיים, הציור הרב תחמי מבטיח שכל אחד ימצא חיבור אישי ועיניין רב בעבודתו ורפרוף בגלרייה יוצר סקרנות והנאה גדולה.",
   },
   {
     icon: Settings,
@@ -205,22 +203,24 @@ const AvnerOvadStoreView = ({ store }: { store: Store }) => (
               </section>
             ))}
 
-            <blockquote className="relative rounded-2xl border-2 border-[#b3925a] bg-[#f6eddc]/80 p-5 text-[clamp(1rem,1.8vw,1.25rem)] font-bold leading-snug shadow-sm">
-              פגשתי את אבנר ביריד אמנים בנחלת בנימין, שם הוא מציג את עבודותיו. התרגשתי שיש בעבודות בעל הרגשה ותרומה לחברה!
+            <blockquote className="relative rounded-2xl border-2 border-[#b3925a] bg-[#f6eddc]/80 p-5 text-[clamp(1rem,1.8vw,1.25rem)] font-bold leading-snug shadow-sm whitespace-pre-line">
+              פגשתי את אבנר ביריד אמנים בנחלת בנימין, שם הוא מציג את עבודותיו. התרשמתי מהאדם אשר אחראי לתרומה גדולה לחברה! עדיפות ליצור קשר ותיאום מראש אם מעוניינים לראות את הגלרייה בעיניים.
             </blockquote>
 
-            <div className="grid gap-4 rounded-2xl bg-white/40 p-5 text-base font-bold sm:grid-cols-2">
-              <div className="flex items-center justify-end gap-3">
-                <span>To View Works: [Phone Number]</span>
+            <div className="grid gap-4 rounded-2xl bg-white/40 p-5 text-base font-bold sm:grid-cols-1">
+              <div className="flex items-center justify-end gap-3 text-right">
+                <span className="whitespace-pre-line">
+                  To View Works: contact us{"\n"}
+                  נחלת בנימין, יריד האמנים{"\n"}
+                  תיאום לצפייה בעבודות השאירו לנו הודעה  ונחזור אליכם
+                </span>
                 <Smartphone className="h-7 w-7 text-[#a4824d]" aria-hidden="true" />
               </div>
-              <div className="flex items-center justify-end gap-3">
-                <span>נחלת בנימין, יריד האמנים</span>
+              <div className="flex items-center justify-end gap-3 text-right">
+                <span>
+                  The work is displayed at artist fairs such as Nahalat Binyamin, it is preferable to contact us to arrange arrival.
+                </span>
                 <MapPin className="h-7 w-7 text-[#a4824d]" aria-hidden="true" />
-              </div>
-              <div className="flex items-center justify-end gap-3 sm:col-span-2">
-                <span>תיאום לצפייה בעבודות:</span>
-                <Phone className="h-7 w-7 text-[#a4824d]" aria-hidden="true" />
               </div>
             </div>
           </div>
@@ -235,16 +235,16 @@ const AvnerOvadStoreView = ({ store }: { store: Store }) => (
             <AvnerDivider />
 
             <div className="rounded-2xl border border-[#c8ae7c]/70 bg-white/35 p-5 text-lg leading-snug shadow-sm">
-              <p className="font-bold">For artwork viewing and personal inquiries:</p>
-              <p className="mt-2 text-[#4d3a2d]">personartist.com</p>
+              <p className="font-bold">For artwork viewing and information:</p>
+              <p className="mt-2 text-[#4d3a2d]">leave us a massage </p>
               <div className="mt-5 border-l-2 border-[#b3925a] pl-4">
-                <p className="font-black">To View Works:</p>
-                <p>Contact Ron [Number]</p>
+                <p className="font-black whitespace-pre-line">{"\n"}</p>
+                <p className="whitespace-pre-line">{"\n"}</p>
               </div>
             </div>
 
             <div className="rounded-2xl bg-[#efe4d1]/80 p-5 text-right" dir="rtl">
-              <p className="text-xl font-black">בתיאום לצפייה והשארת הודעה</p>
+              <p className="text-xl font-black">לקבלת מידע רחב השאירו הודעה</p>
               <p className="mt-2 text-lg">ניתן לראות את העבודות ולהציג אותן לקהל.</p>
             </div>
           </aside>
