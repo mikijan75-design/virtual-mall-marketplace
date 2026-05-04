@@ -1,6 +1,5 @@
-import { Link, useLocation } from "react-router-dom";
-import { useEffect, useRef, useState, type ReactNode } from "react";
-import { toast } from "@/hooks/use-toast";
+import { Link } from "react-router-dom";
+import { type ReactNode } from "react";
 import MallHeader from "@/components/mall/MallHeader";
 import MallFooter from "@/components/mall/MallFooter";
 import PageTracker from "@/components/PageTracker";
@@ -341,35 +340,6 @@ const CycleDiagram = () => (
 );
 
 const InfoPage = () => {
-  const location = useLocation();
-  const incoming = (location.state as any) || {};
-  const contactRef = useRef<HTMLDivElement>(null);
-  const [form, setForm] = useState({
-    name: "",
-    phone: "",
-    email: "",
-    message: incoming.product ? `מתעניין/ת ביצירה: ${incoming.product}` : "",
-  });
-
-  useEffect(() => {
-    if (incoming.contact && contactRef.current) {
-      contactRef.current.scrollIntoView({ behavior: "smooth", block: "start" });
-    }
-  }, [incoming.contact]);
-
-  const handleSubmit = (e: React.FormEvent) => {
-    e.preventDefault();
-    if (!form.name || !form.phone) {
-      toast({ title: "חסרים פרטים", description: "נא למלא שם וטלפון" });
-      return;
-    }
-    toast({
-      title: "תודה! קיבלנו את הפנייה",
-      description: `${form.name}, נחזור אליך בהקדם.`,
-    });
-    setForm({ name: "", phone: "", email: "", message: "" });
-  };
-
   return (
     <div className="min-h-screen flex flex-col bg-[#fffdfb] p-0 font-heebo text-[#3b2618]" dir="rtl">
       <MallHeader />
@@ -431,70 +401,6 @@ const InfoPage = () => {
         </div>
 
         {/* צור קשר — בעיצוב קו Sense Pro */}
-        <div ref={contactRef} className="relative z-10 mt-14 grid gap-8 lg:grid-cols-[1fr_1fr]" dir="rtl">
-          <div className="text-right">
-            <h2 className="rounded-full bg-[#fbecd8] inline-block px-5 py-1 text-[clamp(1.5rem,3vw,2.2rem)] font-black leading-none text-[#3b2618] shadow-[inset_0_-8px_0_rgba(246,171,82,0.16)]">
-              צור קשר
-            </h2>
-            <p className="mt-4 text-[clamp(1rem,1.7vw,1.25rem)] font-bold leading-[1.5] text-[#2b241f]">
-              השאירו פרטים — נחזור אליכם בהקדם עם מידע נוסף, תיאום צפייה והצעת מחיר.
-            </p>
-            {incoming.image && (
-              <div className="mt-5 inline-flex items-center gap-3 rounded-xl border-2 border-[#0d5960] bg-white p-3 shadow-md">
-                <img src={incoming.image} alt={incoming.product ?? ""} className="h-20 w-20 rounded object-cover" />
-                <div className="text-right">
-                  <p className="text-xs text-[#666]">מוצר נבחר</p>
-                  <p className="text-sm font-black text-[#0d5960]">{incoming.product}</p>
-                </div>
-              </div>
-            )}
-          </div>
-
-          <aside className="rounded-[12px] border-2 border-[#0d5960] bg-[#f8fbfb] p-5 shadow-[0_2px_12px_rgba(0,0,0,0.18)]">
-            <h3 className="mb-3 text-center text-[24px] font-black leading-[1.15] text-[#111]">
-              רוצה שנחזור אליך?
-              <br />
-              השאר/י פרטים
-            </h3>
-            <form className="space-y-[10px]" aria-label="טופס השארת פרטים" onSubmit={handleSubmit}>
-              <input
-                aria-label="שם מלא"
-                placeholder="שם מלא"
-                value={form.name}
-                onChange={(e) => setForm({ ...form, name: e.target.value })}
-                className="h-[36px] w-full rounded-[6px] border border-[#a9a9a9] bg-white px-3 text-right text-[14px] outline-none placeholder:text-[#161616]"
-              />
-              <input
-                aria-label="טלפון חובה"
-                placeholder="טלפון (חובה)"
-                value={form.phone}
-                onChange={(e) => setForm({ ...form, phone: e.target.value })}
-                className="h-[36px] w-full rounded-[6px] border border-[#a9a9a9] bg-white px-3 text-right text-[14px] outline-none placeholder:text-[#161616]"
-              />
-              <input
-                aria-label="אימייל"
-                type="email"
-                placeholder="אימייל (אופציונלי)"
-                value={form.email}
-                onChange={(e) => setForm({ ...form, email: e.target.value })}
-                className="h-[36px] w-full rounded-[6px] border border-[#a9a9a9] bg-white px-3 text-right text-[14px] outline-none placeholder:text-[#161616]"
-              />
-              <textarea
-                aria-label="הודעה"
-                placeholder="הודעה (אופציונלי)"
-                value={form.message}
-                onChange={(e) => setForm({ ...form, message: e.target.value })}
-                className="h-[88px] w-full resize-none rounded-[6px] border border-[#a9a9a9] bg-white px-3 py-2 text-right text-[14px] outline-none placeholder:text-[#161616]"
-              />
-              <button
-                type="submit"
-                className="h-[44px] w-full rounded-[6px] bg-gradient-to-b from-[#126d76] to-[#065965] text-[16px] font-black text-white shadow-[inset_0_1px_0_rgba(255,255,255,0.25)] hover:opacity-95"
-              >
-                שלח פנייה
-              </button>
-            </form>
-          </aside>
-        </div>
       </main>
       <MallFooter />
     </div>

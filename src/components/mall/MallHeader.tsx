@@ -43,7 +43,7 @@ const MallHeader = () => {
               </DropdownMenuItem>
             </DropdownMenuContent>
           </DropdownMenu>
-          <Link to="/" className="px-3 py-1 rounded hover:bg-mall-gold/20 transition-colors">צור קשר</Link>
+          <Link to="/contact" className="px-3 py-1 rounded hover:bg-mall-gold/20 transition-colors">צור קשר</Link>
           <Link
             to="/cart"
             aria-label="עגלה"

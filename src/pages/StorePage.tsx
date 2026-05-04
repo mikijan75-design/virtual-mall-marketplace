@@ -322,7 +322,7 @@ const AvnerOvadStoreView = ({ store }: { store: Store }) => {
             <button
               type="button"
               onClick={() => {
-                navigate("/info", {
+                navigate("/contact", {
                   state: { product: current.alt, image: current.src, contact: true },
                 });
               }}
@@ -333,7 +333,7 @@ const AvnerOvadStoreView = ({ store }: { store: Store }) => {
             <button
               type="button"
               onClick={() => {
-                navigate("/info", {
+                navigate("/contact", {
                   state: { product: current.alt, image: current.src, contact: true },
                 });
               }}
