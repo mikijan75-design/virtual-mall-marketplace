@@ -104,10 +104,7 @@ const avnerPaintings = [
   { src: avnerPainting4, alt: "ציור של אבנר עובד - אם וילד בחדר" },
   { src: avnerPainting5, alt: "ציור של אבנר עובד - אגרטלי פרחים" },
 ];
-const galleryFrameItems = Array.from({ length: 20 }, (_, i) => ({
-  key: `gf-${i}`,
-  ...avnerPaintings[i % avnerPaintings.length],
-}));
+const galleryFrameItems = avnerPaintings.map((p, i) => ({ key: `gf-${i}`, ...p }));
 
 const AvnerOvadStoreView = ({ store }: { store: Store }) => (
   <div className="min-h-screen bg-background font-heebo text-[#2f241d]">
