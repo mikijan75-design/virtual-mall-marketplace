@@ -23,6 +23,7 @@ import imServingTraysCategory from "@/assets/stores/im-serving-trays-category.we
 import imIsraelMapCategory from "@/assets/stores/im-israel-map-category.webp";
 import imMezuzahsCategory from "@/assets/stores/im-mezuzahs-category.webp";
 import imShabbatCandlesCategory from "@/assets/stores/im-shabbat-candles-category.webp";
+import IsraelMezuzahsStorefrontScene from "@/components/mall/IsraelMezuzahsStorefrontScene";
 
 const israelMezuzahsProducts = [
   { src: imShabbatCandlesCategory, name: "פמוטי שבת", slug: "shabbat-candles" },
@@ -98,6 +99,12 @@ const StorePage = () => {
           <div className="bg-card border border-border rounded-xl p-8 shadow-lg text-center">
             {isIsraelMezuzahs ? (
               <>
+                <div className="mb-8 overflow-hidden rounded-xl border border-mall-gold/35 bg-[#f7efe3] shadow-lg">
+                  <div className="aspect-[2.05/1] w-full">
+                    <IsraelMezuzahsStorefrontScene />
+                  </div>
+                </div>
+
                 {/* Image in center with products on sides */}
                 <div className="grid grid-cols-1 md:grid-cols-4 gap-4 items-stretch">
                   {/* Left column - 2 products */}

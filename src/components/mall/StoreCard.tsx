@@ -23,6 +23,7 @@ import comingSoonImg from "@/assets/stores/coming-soon.png";
 import forRentImg from "@/assets/stores/for-rent.png";
 import IsraelMezuzahsWordmark from "@/components/mall/IsraelMezuzahsWordmark";
 import OliveWoodEpoxyWordmark from "@/components/mall/OliveWoodEpoxyWordmark";
+import IsraelMezuzahsStorefrontScene from "@/components/mall/IsraelMezuzahsStorefrontScene";
 import israelMezuzahsImg from "@/assets/stores/israel-mezuzahs.png";
 
 type BrandStyle = {
@@ -36,6 +37,7 @@ type BrandStyle = {
   subtitleLogo?: string;
   codedWordmark?: "israel-mezuzahs";
   codedSubtitle?: "olive-wood-epoxy";
+  codedImage?: "israel-mezuzahs-storefront";
 };
 
 const brandStyles: Record<string, BrandStyle> = {
@@ -88,6 +90,7 @@ const idOverrides: Record<string, Partial<BrandStyle & { name: string }>> = {
     subtitle: "מזוזות ועוד",
     codedWordmark: "israel-mezuzahs",
     codedSubtitle: "olive-wood-epoxy",
+    codedImage: "israel-mezuzahs-storefront",
     image: israelMezuzahsImg,
   },
 };
@@ -216,7 +219,23 @@ const StoreCard = ({ store, storeIndex }: StoreCardProps) => {
         ) : null}
 
         {/* Realistic store image */}
-        {style.image ? (
+        {style.codedImage === "israel-mezuzahs-storefront" ? (
+          <div className={`relative overflow-hidden ${IMAGE_AREA_CLASS}`}>
+            <IsraelMezuzahsStorefrontScene className="h-full w-full transition-transform duration-700 group-hover:scale-110" />
+            <div
+              className="pointer-events-none absolute inset-0"
+              style={{
+                background: "linear-gradient(155deg, rgba(255,255,255,0.20) 0%, transparent 38%, transparent 66%, rgba(255,255,255,0.08) 100%)",
+              }}
+            />
+            <div
+              className="pointer-events-none absolute inset-0 opacity-0 transition-opacity duration-500 group-hover:opacity-100"
+              style={{
+                background: "radial-gradient(ellipse at center, rgba(255,231,181,0.18) 0%, transparent 72%)",
+              }}
+            />
+          </div>
+        ) : style.image ? (
           <div className={`relative overflow-hidden ${IMAGE_AREA_CLASS}`}>
             <img
               src={style.image}
