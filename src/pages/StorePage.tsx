@@ -59,6 +59,7 @@ const StorePage = () => {
     <div className="min-h-screen bg-background">
       <MallHeader />
       <PageTracker storeId={store.id} />
+      <BackButton />
 
       {/* Store banner */}
       <div className={`bg-gradient-to-r ${store.signColor} py-8 md:py-12`}>
