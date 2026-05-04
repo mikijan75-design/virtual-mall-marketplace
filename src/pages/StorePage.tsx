@@ -209,11 +209,7 @@ const AvnerOvadStoreView = ({ store }: { store: Store }) => (
 
             <div className="grid gap-4 rounded-2xl bg-white/40 p-5 text-base font-bold sm:grid-cols-1">
               <div className="flex items-center justify-end gap-3 text-right">
-                <span className="whitespace-pre-line">
-                  To View Works: contact us{"\n"}
-                  נחלת בנימין, יריד האמנים{"\n"}
-                  תיאום לצפייה בעבודות השאירו לנו הודעה  ונחזור אליכם
-                </span>
+                <span className="whitespace-pre-line">{"\n"}</span>
                 <Smartphone className="h-7 w-7 text-[#a4824d]" aria-hidden="true" />
               </div>
               <div className="flex items-center justify-end gap-3 text-right">
