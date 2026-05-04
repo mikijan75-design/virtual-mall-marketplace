@@ -235,7 +235,7 @@ const AvnerOvadStoreView = ({ store }: { store: Store }) => (
             <AvnerDivider />
 
             <div className="rounded-2xl border border-[#c8ae7c]/70 bg-white/35 p-5 text-lg leading-snug shadow-sm">
-              <p className="font-bold">The work is displayed at artist fairs such as Nahalat Binyamin, it is preferable to contact us to arrange arrival.</p>
+              <p className="font-bold whitespace-pre-line">{"\n"}</p>
               <p className="mt-2 text-[#4d3a2d]">leave us a massage </p>
               <div className="mt-5 border-l-2 border-[#b3925a] pl-4">
                 <p className="font-black whitespace-pre-line">{"\n"}</p>
