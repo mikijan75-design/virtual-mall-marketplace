@@ -10,6 +10,10 @@ import PageTracker from "@/components/PageTracker";
 import { israelMezuzahProducts } from "@/data/israelMezuzahProducts";
 import { israelMapProducts } from "@/data/israelMapProducts";
 import { pamotProducts } from "@/data/pamotProducts";
+import { hanukkiotProducts } from "@/data/hanukkiotProducts";
+import { krashimProducts } from "@/data/krashimProducts";
+import { rimonimProducts } from "@/data/rimonimProducts";
+import { agartelimProducts } from "@/data/agartelimProducts";
 
 const galleryImages = [
   {
@@ -118,7 +122,7 @@ const SenseProProductPage = () => {
         col?: number;
         row?: number;
         productId?: string;
-        collection?: "mezuzahs" | "israel-map" | "shabbat-candles";
+        collection?: "mezuzahs" | "israel-map" | "shabbat-candles" | "hanukkiahs" | "serving-trays" | "hamsa-pomegranate" | "decorative-beads";
         itemNumber: number;
         colBounds?: number[];
         rowBounds?: number[];
@@ -147,6 +151,14 @@ const SenseProProductPage = () => {
       ? israelMapProducts
       : initialMezuzah?.collection === "shabbat-candles"
       ? pamotProducts
+      : initialMezuzah?.collection === "hanukkiahs"
+      ? hanukkiotProducts
+      : initialMezuzah?.collection === "serving-trays"
+      ? krashimProducts
+      : initialMezuzah?.collection === "hamsa-pomegranate"
+      ? rimonimProducts
+      : initialMezuzah?.collection === "decorative-beads"
+      ? agartelimProducts
       : israelMezuzahProducts;
 
   // Selected product (by id) for the new product-based mezuzah flow

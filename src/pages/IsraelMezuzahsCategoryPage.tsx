@@ -14,6 +14,10 @@ import imProduct8 from "@/assets/stores/im-product-8.png";
 import { israelMezuzahProducts } from "@/data/israelMezuzahProducts";
 import { israelMapProducts } from "@/data/israelMapProducts";
 import { pamotProducts } from "@/data/pamotProducts";
+import { hanukkiotProducts } from "@/data/hanukkiotProducts";
+import { krashimProducts } from "@/data/krashimProducts";
+import { rimonimProducts } from "@/data/rimonimProducts";
+import { agartelimProducts } from "@/data/agartelimProducts";
 
 export interface IMCategory {
   slug: string;
@@ -37,9 +41,9 @@ export const imCategories: IMCategory[] = [
   },
   {
     slug: "serving-trays",
-    name: "מגשי הגשה",
+    name: "קרשים להגשה",
     hero: imProduct2,
-    description: "מגשי הגשה ייחודיים מעץ זית עם שיבוצי אפוקסי בגוונים מרהיבים.",
+    description: "קרשים להגשה מעץ זית ואפוקסי בעבודת יד – הפריט שבתמונה הוא הפריט המדויק שתקבלו.",
     items: [
       { name: "מגש עגול", img: imProduct2, description: "מגש עגול לאירוח יומיומי." },
       { name: "מגש מלבני גדול", img: imProduct2, description: "מגש מלבני לארוחות שבת וחג." },
@@ -59,9 +63,9 @@ export const imCategories: IMCategory[] = [
   },
   {
     slug: "decorative-beads",
-    name: "חרוזים מעוצבים",
+    name: "אגרטלים",
     hero: imProduct4,
-    description: "חרוזים בעבודת יד משילוב עץ זית ואפוקסי – לאקססוריז ותכשיטים.",
+    description: "אגרטלים מעץ זית ואפוקסי בעבודת יד – שילוב ייחודי של עץ זית טבעי עם אפוקסי צבעוני.",
     items: [
       { name: "מחרוזת קלאסית", img: imProduct4, description: "מחרוזת בגווני טבע." },
       { name: "צמיד תואם", img: imProduct4, description: "צמיד מחרוזים בגוון תואם." },
@@ -81,9 +85,9 @@ export const imCategories: IMCategory[] = [
   },
   {
     slug: "hamsa-pomegranate",
-    name: "תליוני חמסה ורימון",
+    name: "רימונים",
     hero: imProduct6,
-    description: "תליונים מסורתיים לקיר – חמסות ורימונים בעיצוב מיוחד.",
+    description: "רימונים מעוצבים מעץ זית ואפוקסי – לשפע ולברכה.",
     items: [
       { name: "תליון חמסה", img: imProduct6, description: "חמסה לברכה ולשמירה." },
       { name: "תליון רימון", img: imProduct6, description: "רימון לשפע ולברכה." },
@@ -122,12 +126,24 @@ const IsraelMezuzahsCategoryPage = () => {
   const isMezuzahs = category?.slug === "mezuzahs";
   const isIsraelMap = category?.slug === "israel-map";
   const isShabbatCandles = category?.slug === "shabbat-candles";
+  const isHanukkiot = category?.slug === "hanukkiahs";
+  const isKrashim = category?.slug === "serving-trays";
+  const isRimonim = category?.slug === "hamsa-pomegranate";
+  const isAgartelim = category?.slug === "decorative-beads";
   const productGrid = isMezuzahs
     ? israelMezuzahProducts
     : isIsraelMap
     ? israelMapProducts
     : isShabbatCandles
     ? pamotProducts
+    : isHanukkiot
+    ? hanukkiotProducts
+    : isKrashim
+    ? krashimProducts
+    : isRimonim
+    ? rimonimProducts
+    : isAgartelim
+    ? agartelimProducts
     : null;
 
   const openProduct = (productId: string) => {
@@ -138,6 +154,14 @@ const IsraelMezuzahsCategoryPage = () => {
       ? "israel-map"
       : isShabbatCandles
       ? "shabbat-candles"
+      : isHanukkiot
+      ? "hanukkiahs"
+      : isKrashim
+      ? "serving-trays"
+      : isRimonim
+      ? "hamsa-pomegranate"
+      : isAgartelim
+      ? "decorative-beads"
       : "mezuzahs";
     navigate("/sense-pro", {
       state: {
@@ -199,6 +223,14 @@ const IsraelMezuzahsCategoryPage = () => {
                       ? "קולקציית מזוזות בצורת ארץ ישראל"
                       : isShabbatCandles
                       ? "קולקציית פמוטים"
+                      : isHanukkiot
+                      ? "קולקציית חנוכיות"
+                      : isKrashim
+                      ? "קולקציית קרשים להגשה"
+                      : isRimonim
+                      ? "קולקציית רימונים"
+                      : isAgartelim
+                      ? "קולקציית אגרטלים"
                       : "קולקציית מזוזות 20 ס״מ"}
                   </h2>
                   <p className="text-muted-foreground font-heebo leading-relaxed max-w-3xl mx-auto">
@@ -206,6 +238,14 @@ const IsraelMezuzahsCategoryPage = () => {
                       ? "בתי מזוזה בצורת מפת ארץ ישראל מעץ זית ואפוקסי – הפריט שבתמונה הוא הפריט המדויק שתקבלו. לחצו על הזכוכית המגדלת כדי לפתוח את המוצר."
                       : isShabbatCandles
                       ? "פמוטי שבת מעץ זית ואפוקסי בעבודת יד – הפריט שבתמונה הוא הפריט המדויק שתקבלו. לחצו על הזכוכית המגדלת כדי לפתוח את המוצר."
+                      : isHanukkiot
+                      ? "חנוכיות מעץ זית ואפוקסי בעבודת יד – הפריט שבתמונה הוא הפריט המדויק שתקבלו. לחצו על הזכוכית המגדלת כדי לפתוח את המוצר."
+                      : isKrashim
+                      ? "קרשים להגשה מעץ זית ואפוקסי בעבודת יד – הפריט שבתמונה הוא הפריט המדויק שתקבלו. לחצו על הזכוכית המגדלת כדי לפתוח את המוצר."
+                      : isRimonim
+                      ? "רימונים מעוצבים מעץ זית ואפוקסי – הפריט שבתמונה הוא הפריט המדויק שתקבלו. לחצו על הזכוכית המגדלת כדי לפתוח את המוצר."
+                      : isAgartelim
+                      ? "אגרטלים מעץ זית ואפוקסי בעבודת יד – הפריט שבתמונה הוא הפריט המדויק שתקבלו. לחצו על הזכוכית המגדלת כדי לפתוח את המוצר."
                       : "בית מזוזה 20 ס״מ (לקלף 17 ס״מ) מעץ זית ואפוקסי ייחודי – הפריט שבתמונה הוא הפריט המדויק שתקבלו. לחצו על הזכוכית המגדלת על מזוזה כדי לפתוח אותה בעמוד המוצר."}
                   </p>
                 </div>
