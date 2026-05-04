@@ -184,7 +184,7 @@ const SenseProProductPage = () => {
       brand: mezuzah.brand,
       unitPrice: mezuzah.unitPrice,
       shippingPerItem: mezuzah.shippingPerItem,
-      meta: { itemNumber: mezuzah.itemNumber, productId: mezuzah.productId },
+      meta: { itemNumber: mezuzah.itemNumber },
     });
     toast({
       title: "נוסף לעגלה",
@@ -203,17 +203,13 @@ const SenseProProductPage = () => {
         dir="ltr"
       >
         <section className="order-1 lg:order-1" dir="rtl">
-          {mezuzahCrop ? (
-            <div className="flex h-[415px] w-full items-center justify-center rounded-[7px] bg-gradient-to-br from-[#f0f2f3] via-[#fbfbfb] to-[#ecefee] shadow-inner">
-              <div
-                className="rounded-[7px] shadow-inner bg-secondary"
-                style={{
-                  ...mezuzahCrop,
-                  height: "54%",
-                  aspectRatio: `${mezuzah ? aspectFor(mezuzah.col, mezuzah.row) : 1}`,
-                }}
-                role="img"
-                aria-label={mezuzah?.name}
+          {mezuzah ? (
+            <div className="flex h-[415px] w-full items-center justify-center rounded-[7px] bg-gradient-to-br from-[#f0f2f3] via-[#fbfbfb] to-[#ecefee] shadow-inner p-4">
+              <img
+                src={mezuzah.image}
+                alt={mezuzah.name}
+                className="max-h-full max-w-full object-contain rounded-[7px]"
+                style={{ height: "60%" }}
               />
             </div>
           ) : (
@@ -237,7 +233,7 @@ const SenseProProductPage = () => {
             }}
           />
 
-          {initialMezuzah ? (
+          {initialMezuzah && selectedProduct ? (
             <div className="mt-[13px] flex items-center gap-2" aria-label="בחירת מזוזה נוספת">
               <button
                 type="button"
@@ -249,31 +245,27 @@ const SenseProProductPage = () => {
                 <ChevronRight className="h-5 w-5" />
               </button>
               <div className="grid flex-1 grid-cols-4 gap-[10px]">
-                {visibleThumbs.map((cell) => {
-                  const gridCols = initialMezuzah.colBounds.length - 1;
-                  const itemNumber = cell.row * gridCols + cell.col + 1;
-                  const style = cropFor(cell.col, cell.row);
-                  const ar = aspectFor(cell.col, cell.row);
+                {visibleThumbProducts.map((p) => {
+                  const idx = israelMezuzahProducts.findIndex((x) => x.id === p.id);
                   return (
                     <button
-                      key={`${cell.col}-${cell.row}`}
+                      key={p.id}
                       type="button"
-                      onClick={() => setSelectedCell(cell)}
-                      title={`מזוזה מס׳ ${itemNumber}`}
-                      aria-label={`בחר מזוזה מס׳ ${itemNumber}`}
-                      className="relative flex h-[63px] w-full items-center justify-center overflow-hidden rounded-[7px] border-2 border-[#cdd2d2] bg-[#f3f4f4] hover:border-[#0d5960]"
+                      onClick={() => setSelectedProductIndex(idx)}
+                      title={p.name}
+                      aria-label={`בחר ${p.name}`}
+                      className="relative flex h-[63px] w-full items-center justify-center overflow-hidden rounded-[7px] border-2 border-[#cdd2d2] bg-white hover:border-[#0d5960]"
                     >
-                      <div
-                        className="h-full"
-                        style={{ ...(style ?? {}), aspectRatio: `${ar}` }}
+                      <img
+                        src={p.image}
+                        alt={p.name}
+                        loading="lazy"
+                        className="max-h-full max-w-full object-contain"
                       />
-                      <span className="absolute bottom-0 right-0 rounded-tl bg-black/60 px-1 text-[10px] font-bold text-white">
-                        #{itemNumber}
-                      </span>
                     </button>
                   );
                 })}
-                {Array.from({ length: Math.max(0, 4 - visibleThumbs.length) }).map((_, i) => (
+                {Array.from({ length: Math.max(0, 4 - visibleThumbProducts.length) }).map((_, i) => (
                   <div key={`pad-${i}`} className="h-[63px] w-full rounded-[7px] border-2 border-dashed border-[#cdd2d2] bg-[#f3f4f4]" />
                 ))}
               </div>
@@ -282,7 +274,7 @@ const SenseProProductPage = () => {
                 onClick={() => stepThumbs(1)}
                 aria-label="הבא"
                 className="flex h-[63px] w-7 items-center justify-center rounded-[6px] border border-[#0d5960] bg-white text-[#0d5960] disabled:opacity-40"
-                disabled={thumbsStart + 4 >= allCells.length}
+                disabled={thumbsStart + 4 >= otherProducts.length}
               >
                 <ChevronLeft className="h-5 w-5" />
               </button>
