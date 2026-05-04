@@ -115,62 +115,24 @@ export const imCategories: IMCategory[] = [
 const IsraelMezuzahsCategoryPage = () => {
   const { categorySlug } = useParams<{ categorySlug: string }>();
   const navigate = useNavigate();
-  const { addItem: addToCart } = useCart();
   const categoryIdx = imCategories.findIndex((c) => c.slug === categorySlug);
   const category = categoryIdx >= 0 ? imCategories[categoryIdx] : undefined;
   const isMezuzahs = category?.slug === "mezuzahs";
 
-  const lensSize = 180;
-  const zoom = 2.5;
-  const imgRef = useRef<HTMLImageElement>(null);
-  const [lens, setLens] = useState<{ x: number; y: number; bgX: number; bgY: number; bgW: number; bgH: number; visible: boolean }>({
-    x: 0, y: 0, bgX: 0, bgY: 0, bgW: 0, bgH: 0, visible: false,
-  });
-  const [zoomOpen, setZoomOpen] = useState(false);
-  const [snapshot, setSnapshot] = useState<{ col: number; row: number } | null>(null);
-
-  // Boundaries detected from the source image (white-gap midpoints, normalized 0..1)
-  const colBounds = [0, 0.0403, 0.0772, 0.1129, 0.1485, 0.1851, 0.2205, 0.2554, 0.2911, 0.3261, 0.362, 0.397, 0.4314, 0.467, 0.5026, 0.538, 0.5739, 0.6096, 0.6449, 0.6809, 0.7162, 0.7515, 0.7875, 0.8228, 0.8584, 0.8937, 0.9297, 0.9657, 1];
-  const rowBounds = [0, 0.2078, 0.4077, 0.6061, 0.8045, 1];
-  const gridCols = colBounds.length - 1;
-  const gridRows = rowBounds.length - 1;
-
-  const handleMove = (e: React.MouseEvent<HTMLDivElement>) => {
-    const img = imgRef.current;
-    if (!img) return;
-    const rect = img.getBoundingClientRect();
-    const x = e.clientX - rect.left;
-    const y = e.clientY - rect.top;
-    if (x < 0 || y < 0 || x > rect.width || y > rect.height) {
-      setLens((l) => ({ ...l, visible: false }));
-      return;
-    }
-    setLens({
-      x,
-      y,
-      bgW: rect.width * zoom,
-      bgH: rect.height * zoom,
-      bgX: -(x * zoom - lensSize / 2),
-      bgY: -(y * zoom - lensSize / 2),
-      visible: true,
-    });
-  };
-
-  const openZoomAtCell = (col: number, row: number) => {
-    const itemNumber = row * gridCols + col + 1;
+  const openProduct = (productId: string) => {
+    const p = israelMezuzahProducts.find((x) => x.id === productId);
+    if (!p) return;
     navigate("/sense-pro", {
       state: {
         mezuzah: {
-          col,
-          row,
-          itemNumber,
-          colBounds,
-          rowBounds,
-          image: imMezuzahsCollection,
-          name: `מזוזה מס׳ ${itemNumber}`,
+          productId: p.id,
+          itemNumber: israelMezuzahProducts.findIndex((x) => x.id === p.id) + 1,
+          image: p.image,
+          name: p.name,
           brand: "Israel Mezuzahs",
-          unitPrice: 150,
+          unitPrice: p.price,
           shippingPerItem: 20,
+          sourceUrl: p.url,
         },
       },
     });
@@ -209,191 +171,56 @@ const IsraelMezuzahsCategoryPage = () => {
       </div>
 
       <div className="container mx-auto py-12 px-4">
-        <div className="max-w-5xl mx-auto">
+        <div className="max-w-6xl mx-auto">
           <div className="bg-card border border-border rounded-xl p-6 md:p-8 shadow-lg">
             {isMezuzahs ? (
-              <div className="text-center">
-                <h2 className="text-3xl md:text-4xl font-frank font-bold text-foreground mb-2">
-                  על {category.name}
-                </h2>
-                <p className="text-muted-foreground font-heebo leading-relaxed max-w-3xl mx-auto mb-6">
-                  {category.description}
-                </p>
-                <div className="flex flex-col md:flex-row-reverse gap-6 items-start">
-                  <div
-                    className="relative flex-1 overflow-hidden rounded-lg shadow-md cursor-crosshair"
-                    onMouseMove={handleMove}
-                    onMouseLeave={() => setLens((l) => ({ ...l, visible: false }))}
-                  >
-                  <img
-                    ref={imgRef}
-                    src={imMezuzahsCollection}
-                    alt={category.name}
-                    className="w-full h-auto block select-none"
-                    draggable={false}
-                  />
-                  <div
-                    className="absolute inset-0"
-                  >
-                    {Array.from({ length: gridCols * gridRows }).map((_, i) => {
-                      const col = i % gridCols;
-                      const row = Math.floor(i / gridCols);
-                      const left = colBounds[col] * 100;
-                      const right = (1 - colBounds[col + 1]) * 100;
-                      const top = rowBounds[row] * 100;
-                      const bottom = (1 - rowBounds[row + 1]) * 100;
-                      return (
-                        <button
-                          key={i}
-                          type="button"
-                          aria-label={`פריט ${i + 1}`}
-                          onClick={(e) => {
-                            e.stopPropagation();
-                            openZoomAtCell(col, row);
-                          }}
-                          className="absolute border border-mall-gold/30 hover:border-mall-gold hover:bg-mall-gold/20 transition-colors cursor-pointer"
-                          style={{ left: `${left}%`, right: `${right}%`, top: `${top}%`, bottom: `${bottom}%` }}
-                        />
-                      );
-                    })}
-                  </div>
-                  {lens.visible && (
-                    <>
-                    <div
-                      className="pointer-events-none absolute rounded-full border-4 border-white shadow-2xl ring-2 ring-black/30 z-10"
-                      style={{
-                        width: lensSize,
-                        height: lensSize,
-                        left: lens.x - lensSize / 2,
-                        top: lens.y - lensSize / 2,
-                        backgroundImage: `url(${imMezuzahsCollection})`,
-                        backgroundRepeat: "no-repeat",
-                        backgroundSize: `${lens.bgW}px ${lens.bgH}px`,
-                        backgroundPosition: `${lens.bgX}px ${lens.bgY}px`,
-                        filter: "saturate(1.6) contrast(1.15) brightness(1.05)",
-                      }}
-                    />
-                      <div
-                        className="pointer-events-none absolute bg-mall-sign text-mall-gold text-sm font-heebo font-bold px-3 py-1 rounded-full shadow-lg border border-mall-gold/60 whitespace-nowrap"
-                        style={{
-                          left: lens.x,
-                          top: lens.y + lensSize / 2 + 10,
-                          transform: "translateX(-50%)",
-                        }}
-                      >
-                        לחץ לבחירה
-                      </div>
-                    </>
-                  )}
-                  </div>
-                  <aside className="w-full md:w-64 bg-card border border-border rounded-xl p-5 shadow-lg text-right">
-                    <h3 className="text-xl font-frank font-bold text-foreground mb-4 border-b border-border pb-2">
-                      פרטי המוצר
-                    </h3>
-                    <table className="w-full font-heebo text-sm">
-                      <tbody className="divide-y divide-border">
-                        <tr>
-                          <td className="py-2 text-muted-foreground">מחיר לפריט</td>
-                          <td className="py-2 font-bold text-mall-gold text-left">₪150</td>
-                        </tr>
-                        <tr>
-                          <td className="py-2 text-muted-foreground">כולל מע״מ</td>
-                          <td className="py-2 font-bold text-foreground text-left">כן</td>
-                        </tr>
-                        <tr>
-                          <td className="py-2 text-muted-foreground">משלוח לפריט</td>
-                          <td className="py-2 font-bold text-foreground text-left">₪20</td>
-                        </tr>
-                        <tr>
-                          <td className="py-2 text-muted-foreground">פריט שני</td>
-                          <td className="py-2 font-bold text-mall-gold text-left">משלוח חינם</td>
-                        </tr>
-                      </tbody>
-                    </table>
-                    <p className="text-xs text-muted-foreground font-heebo mt-4 leading-relaxed">
-                      הנתונים תקפים לכל הפריטים בדף זה.
-                    </p>
-                  </aside>
+              <div dir="rtl">
+                <div className="text-center mb-6">
+                  <h2 className="text-3xl md:text-4xl font-frank font-bold text-foreground mb-2">
+                    קולקציית מזוזות 20 ס״מ
+                  </h2>
+                  <p className="text-muted-foreground font-heebo leading-relaxed max-w-3xl mx-auto">
+                    בית מזוזה 20 ס״מ (לקלף 17 ס״מ) מעץ זית ואפוקסי ייחודי – הפריט שבתמונה הוא הפריט המדויק שתקבלו.
+                    לחצו על הזכוכית המגדלת על מזוזה כדי לפתוח אותה בעמוד המוצר.
+                  </p>
                 </div>
-                <Dialog open={zoomOpen} onOpenChange={setZoomOpen}>
-                  <DialogContent className="max-w-md p-6 flex flex-col items-center">
-                    {snapshot && (() => {
-                      const cw = colBounds[snapshot.col + 1] - colBounds[snapshot.col];
-                      const rh = rowBounds[snapshot.row + 1] - rowBounds[snapshot.row];
-                      const bgW = 100 / cw;
-                      const bgH = 100 / rh;
-                      const px = (colBounds[snapshot.col] / (1 - cw)) * 100;
-                      const py = (rowBounds[snapshot.row] / (1 - rh)) * 100;
-                      return (
-                        <div className="flex items-center gap-3">
-                          <Button
-                            size="icon"
-                            variant="outline"
-                            onClick={() => {
-                              const total = gridCols * gridRows;
-                              const idx = snapshot.row * gridCols + snapshot.col;
-                              const next = (idx - 1 + total) % total;
-                              setSnapshot({ col: next % gridCols, row: Math.floor(next / gridCols) });
-                            }}
-                            aria-label="הפריט הקודם"
-                          >
-                            <ChevronRight className="h-5 w-5" />
-                          </Button>
-                          <div
-                            className="rounded-lg shadow-inner bg-secondary"
-                            style={{
-                              width: 200,
-                              height: 400,
-                              backgroundImage: `url(${imMezuzahsCollection})`,
-                              backgroundRepeat: "no-repeat",
-                              backgroundSize: `${bgW}% ${bgH}%`,
-                              backgroundPosition: `${px}% ${py}%`,
-                              filter: "saturate(1.6) contrast(1.15) brightness(1.05)",
-                            }}
-                          />
-                          <Button
-                            size="icon"
-                            variant="outline"
-                            onClick={() => {
-                              const total = gridCols * gridRows;
-                              const idx = snapshot.row * gridCols + snapshot.col;
-                              const next = (idx + 1) % total;
-                              setSnapshot({ col: next % gridCols, row: Math.floor(next / gridCols) });
-                            }}
-                            aria-label="הפריט הבא"
-                          >
-                            <ChevronLeft className="h-5 w-5" />
-                          </Button>
-                        </div>
-                      );
-                    })()}
-                    <p className="text-center font-heebo text-foreground mt-3">תקריב הפריט הנבחר</p>
-                    <Button
-                      className="mt-4 bg-mall-gold text-mall-sign hover:bg-mall-gold/90 font-heebo font-bold"
-                      onClick={() => {
-                        if (!snapshot) return;
-                        const itemNumber = snapshot.row * gridCols + snapshot.col + 1;
-                        addToCart({
-                          id: `mezuzah-${snapshot.col}-${snapshot.row}`,
-                          type: "mezuzah",
-                          name: `מזוזה מס׳ ${itemNumber}`,
-                          brand: "Israel Mezuzahs",
-                          unitPrice: 150,
-                          shippingPerItem: 20,
-                          meta: { col: snapshot.col, row: snapshot.row, itemNumber },
-                        });
-                        toast({
-                          title: "נוסף לעגלה",
-                          description: `מזוזה מס׳ ${itemNumber} נוספה לעגלה. ניתן להמשיך בבחירה ולעבור לעגלה דרך האייקון בבר העליון.`,
-                        });
-                        setZoomOpen(false);
-                      }}
+                <div className="grid grid-cols-2 sm:grid-cols-3 md:grid-cols-4 gap-4">
+                  {israelMezuzahProducts.map((p) => (
+                    <div
+                      key={p.id}
+                      className="group relative bg-muted rounded-lg p-3 border border-border flex flex-col"
                     >
-                      <Check className="h-4 w-4 ml-2" />
-                      הוספה לעגלה
-                    </Button>
-                  </DialogContent>
-                </Dialog>
+                      <button
+                        type="button"
+                        onClick={() => openProduct(p.id)}
+                        className="absolute top-2 left-2 z-10 flex h-8 w-8 items-center justify-center rounded-full bg-mall-sign text-mall-gold border border-mall-gold/60 shadow-md hover:scale-110 transition-transform"
+                        aria-label={`פתח את ${p.name}`}
+                        title="פתח בעמוד המוצר"
+                      >
+                        <Search className="h-4 w-4" />
+                      </button>
+                      <button
+                        type="button"
+                        onClick={() => openProduct(p.id)}
+                        className="w-full aspect-square bg-white rounded-md mb-3 overflow-hidden border border-border"
+                      >
+                        <img
+                          src={p.image}
+                          alt={p.name}
+                          loading="lazy"
+                          className="w-full h-full object-contain group-hover:scale-105 transition-transform"
+                        />
+                      </button>
+                      <p className="text-sm font-heebo font-bold text-foreground text-right mb-1 line-clamp-2 min-h-[2.5rem]">
+                        {p.name}
+                      </p>
+                      <p className="text-mall-gold font-heebo font-bold text-right">₪{p.price}</p>
+                      <p className="text-xs text-muted-foreground font-heebo text-right mt-1">
+                        הפריט המוצג הוא הפריט שתקבלו
+                      </p>
+                    </div>
+                  ))}
+                </div>
               </div>
             ) : (
               <>
