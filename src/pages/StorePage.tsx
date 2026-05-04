@@ -235,16 +235,16 @@ const AvnerOvadStoreView = ({ store }: { store: Store }) => (
             <AvnerDivider />
 
             <div className="rounded-2xl border border-[#c8ae7c]/70 bg-white/35 p-5 text-lg leading-snug shadow-sm">
-              <p className="font-bold">For artwork viewing and personal inquiries:</p>
-              <p className="mt-2 text-[#4d3a2d]">personartist.com</p>
+              <p className="font-bold">For artwork viewing and information:</p>
+              <p className="mt-2 text-[#4d3a2d]">leave us a massage </p>
               <div className="mt-5 border-l-2 border-[#b3925a] pl-4">
-                <p className="font-black">To View Works:</p>
-                <p>Contact Ron [Number]</p>
+                <p className="font-black whitespace-pre-line">{"\n"}</p>
+                <p className="whitespace-pre-line">{"\n"}</p>
               </div>
             </div>
 
             <div className="rounded-2xl bg-[#efe4d1]/80 p-5 text-right" dir="rtl">
-              <p className="text-xl font-black">בתיאום לצפייה והשארת הודעה</p>
+              <p className="text-xl font-black">לקבלת מידע רחב השאירו הודעה</p>
               <p className="mt-2 text-lg">ניתן לראות את העבודות ולהציג אותן לקהל.</p>
             </div>
           </aside>
