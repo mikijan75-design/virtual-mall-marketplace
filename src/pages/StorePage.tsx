@@ -1,10 +1,11 @@
-import { useParams, Link } from "react-router-dom";
+import { useParams, Link, useNavigate } from "react-router-dom";
 import { mallFloors } from "@/data/mallData";
 import MallHeader from "@/components/mall/MallHeader";
 import MallFooter from "@/components/mall/MallFooter";
 import PageTracker from "@/components/PageTracker";
 import BackButton from "@/components/BackButton";
-import { BookOpen, Heart, Palette, Settings } from "lucide-react";
+import { BookOpen, ChevronLeft, ChevronRight, Heart, Info, Palette, Settings, X } from "lucide-react";
+import { useState } from "react";
 import israelMezuzahsAbout from "@/assets/stores/israel-mezuzahs-about.png";
 import imBeadLogo from "@/assets/stores/im-bead-logo.png";
 import imProduct1 from "@/assets/stores/im-product-1.png";
@@ -85,10 +86,12 @@ const GalleryFrame = ({
   className = "",
   src,
   alt,
+  onOpen,
 }: {
   className?: string;
   src?: string;
   alt?: string;
+  onOpen?: () => void;
 }) => (
   <div className={`relative ${className}`}>
     {/* Track-light bar */}
@@ -100,9 +103,14 @@ const GalleryFrame = ({
     {/* Frame */}
     <div className="aspect-square w-full rounded-[3px] border-[3px] border-[#2a1f17] bg-white shadow-[0_8px_16px_rgba(0,0,0,0.25),inset_0_0_0_1px_#a8956f]">
       {src ? (
-        <a href={src} target="_blank" rel="noopener noreferrer" className="block h-full w-full">
+        <button
+          type="button"
+          onClick={onOpen}
+          className="block h-full w-full"
+          aria-label={alt ?? "פתח תמונה"}
+        >
           <img src={src} alt={alt ?? ""} className="h-full w-full object-cover" loading="lazy" />
-        </a>
+        </button>
       ) : (
         <div className="h-full w-full bg-gradient-to-br from-white to-[#f4f0e6]" aria-hidden="true" />
       )}
@@ -138,7 +146,19 @@ const galleryFrameItems = Array.from({ length: 20 }, (_, i) => ({
   alt: avnerPaintings[i]?.alt,
 }));
 
-const AvnerOvadStoreView = ({ store }: { store: Store }) => (
+const AvnerOvadStoreView = ({ store }: { store: Store }) => {
+  const navigate = useNavigate();
+  const [lightboxIndex, setLightboxIndex] = useState<number | null>(null);
+  const validPaintings = avnerPaintings;
+  const openAt = (i: number) => setLightboxIndex(i);
+  const close = () => setLightboxIndex(null);
+  const prev = () =>
+    setLightboxIndex((i) => (i === null ? i : (i - 1 + validPaintings.length) % validPaintings.length));
+  const next = () =>
+    setLightboxIndex((i) => (i === null ? i : (i + 1) % validPaintings.length));
+  const current = lightboxIndex !== null ? validPaintings[lightboxIndex] : null;
+
+  return (
   <div className="min-h-screen bg-background font-heebo text-[#2f241d]">
     <MallHeader />
     <PageTracker storeId={store.id} />
@@ -150,8 +170,14 @@ const AvnerOvadStoreView = ({ store }: { store: Store }) => (
         <div className="relative flex items-start justify-between gap-6" dir="ltr">
           {/* Left grid: 5 rows of 4 frames */}
           <div className="hidden md:grid grid-cols-4 gap-4 pt-6 flex-1">
-            {galleryFrameItems.map((it) => (
-              <GalleryFrame key={it.key} className="w-full max-w-[110px] mx-auto" src={it.src} alt={it.alt} />
+            {galleryFrameItems.map((it, i) => (
+              <GalleryFrame
+                key={it.key}
+                className="w-full max-w-[110px] mx-auto"
+                src={it.src}
+                alt={it.alt}
+                onOpen={() => it.src && openAt(i)}
+              />
             ))}
           </div>
 
@@ -244,8 +270,85 @@ const AvnerOvadStoreView = ({ store }: { store: Store }) => (
     </main>
 
     <MallFooter />
+
+    {current && (
+      <div
+        className="fixed inset-0 z-[100] flex items-center justify-center bg-black/85 p-4"
+        role="dialog"
+        aria-modal="true"
+        onClick={close}
+      >
+        <button
+          type="button"
+          onClick={(e) => { e.stopPropagation(); close(); }}
+          aria-label="סגור"
+          className="absolute top-4 right-4 grid h-11 w-11 place-items-center rounded-full bg-white/10 text-white hover:bg-white/20"
+        >
+          <X className="h-6 w-6" />
+        </button>
+
+        <button
+          type="button"
+          onClick={(e) => { e.stopPropagation(); prev(); }}
+          aria-label="הקודם"
+          className="absolute left-3 md:left-8 top-1/2 -translate-y-1/2 grid h-12 w-12 place-items-center rounded-full bg-white/15 text-white hover:bg-white/30"
+        >
+          <ChevronLeft className="h-7 w-7" />
+        </button>
+        <button
+          type="button"
+          onClick={(e) => { e.stopPropagation(); next(); }}
+          aria-label="הבא"
+          className="absolute right-3 md:right-8 top-1/2 -translate-y-1/2 grid h-12 w-12 place-items-center rounded-full bg-white/15 text-white hover:bg-white/30"
+        >
+          <ChevronRight className="h-7 w-7" />
+        </button>
+
+        <div
+          className="flex max-h-[92vh] w-full max-w-[900px] flex-col items-center gap-4"
+          onClick={(e) => e.stopPropagation()}
+        >
+          <div className="flex max-h-[68vh] items-center justify-center overflow-hidden rounded-xl border-2 border-[#b3925a] bg-white p-3 shadow-2xl">
+            <img
+              src={current.src}
+              alt={current.alt}
+              className="max-h-[64vh] w-auto object-contain"
+            />
+          </div>
+          <p className="text-center text-sm md:text-base text-white/90 font-heebo" dir="rtl">
+            {current.alt} · {(lightboxIndex ?? 0) + 1} / {validPaintings.length}
+          </p>
+          <div className="flex w-full max-w-[520px] flex-col gap-3 sm:flex-row" dir="rtl">
+            <button
+              type="button"
+              onClick={() => {
+                navigate("/info", {
+                  state: { product: current.alt, image: current.src, contact: true },
+                });
+              }}
+              className="flex-1 rounded-lg bg-gradient-to-b from-[#c9a35e] to-[#a4824d] px-5 py-3 text-base font-black text-white shadow-lg hover:opacity-95"
+            >
+              בחירת המוצר
+            </button>
+            <button
+              type="button"
+              onClick={() => {
+                navigate("/info", {
+                  state: { product: current.alt, image: current.src, contact: true },
+                });
+              }}
+              className="flex flex-1 items-center justify-center gap-2 rounded-lg border-2 border-[#b3925a] bg-white px-5 py-3 text-sm md:text-base font-black text-[#5a4326] hover:bg-[#f6eddc]"
+            >
+              <Info className="h-5 w-5" />
+              לקבלת מידע והצעת מחיר אנא השאירו הודעה
+            </button>
+          </div>
+        </div>
+      </div>
+    )}
   </div>
-);
+  );
+};
 
 const israelMezuzahsProducts = [
   { src: imShabbatCandlesCategory, name: "פמוטי שבת", slug: "shabbat-candles" },
