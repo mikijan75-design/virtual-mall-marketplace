@@ -46,6 +46,7 @@ import avnerPainting17 from "@/assets/avner-paintings/p17.png";
 import avnerPainting18 from "@/assets/avner-paintings/p18.png";
 import avnerPainting19 from "@/assets/avner-paintings/p19.png";
 import avnerPainting20 from "@/assets/avner-paintings/p20.png";
+import beggarsHero from "@/assets/stores/floor1-shop4.png";
 import type { Store } from "@/data/mallData";
 
 const avnerHighlights = [
@@ -361,6 +362,195 @@ const israelMezuzahsProducts = [
   { src: imHanukkiahsCategory, name: "חנוכיות", slug: "hanukkiahs" },
 ];
 
+const beggarsProducts = [
+  { name: "תיק טורקי", desc: "מאריזת חטיף ממוחזרת", emoji: "👜" },
+  { name: "ארנק קראנץ'", desc: "תיק יד עבודת יד", emoji: "👛" },
+  { name: "תיק במבה", desc: "אריזת אוסם ממוחזרת", emoji: "🎒" },
+  { name: "תיק שוקו", desc: "סדרת שוקולד מילקי", emoji: "🛍️" },
+  { name: "פאוץ' ביסלי", desc: "אביזר אישי קומפקטי", emoji: "👝" },
+  { name: "תיק קוקילידס", desc: "צבעוני וחגיגי", emoji: "👜" },
+];
+
+const beggarsCounter = [
+  { name: "ראנר אריזות", desc: "ריצוף שולחן יוקרתי", emoji: "🪑" },
+  { name: "כרית קלאסיק", desc: "אריזות נוסטלגיות", emoji: "🛋️" },
+  { name: "תליון קיר", desc: "דקור ממוחזר", emoji: "🖼️" },
+];
+
+const BeggarsStoreView = ({ store }: { store: Store }) => (
+  <div className="min-h-screen bg-[#0d2236] font-heebo text-[#f5e6c8]">
+    <MallHeader />
+    <PageTracker storeId={store.id} />
+    <BackButton />
+
+    {/* Hero / window */}
+    <div className="relative overflow-hidden border-b-4 border-[#c9a96e]">
+      <img src={beggarsHero} alt="חלון הראווה של BEGGARS" className="mx-auto block max-h-[420px] w-auto object-contain" />
+      <div className="absolute inset-0 bg-gradient-to-t from-[#0d2236] via-transparent to-transparent" />
+      <div className="absolute bottom-4 left-1/2 -translate-x-1/2 text-center">
+        <h1 className="font-frank text-4xl md:text-6xl font-black tracking-[0.25em] text-[#f5e6c8] drop-shadow-[0_3px_8px_rgba(0,0,0,0.7)]">BEGGARS</h1>
+        <p className="mt-1 text-sm md:text-base font-heebo text-[#c9a96e]">Upcycled Israeli Treasures · אוצרות ישראליים ממוחזרים</p>
+      </div>
+    </div>
+
+    <main className="px-4 py-10">
+      <div className="mx-auto max-w-6xl">
+        {/* About */}
+        <section className="mb-10 rounded-2xl border border-[#c9a96e]/40 bg-[#13314c]/60 p-6 text-center shadow-lg">
+          <h2 className="font-frank text-2xl md:text-3xl font-black text-[#f5e6c8]">אומנות מהמטבח הישראלי</h2>
+          <p className="mt-3 mx-auto max-w-3xl text-base md:text-lg leading-relaxed text-[#e7d6b5]">
+            BEGGARS הופכים אריזות חטיפים ישראליים אהובים לתיקים, ארנקים ופריטי דקורציה ייחודיים בעבודת יד —
+            כל פריט נושא איתו פיסה של נוסטלגיה ושל קיימות.
+          </p>
+        </section>
+
+        {/* Realistic store perspective: 2 shelf rows on each side + central counter */}
+        <section
+          className="relative rounded-3xl border-2 border-[#c9a96e]/50 p-6 md:p-10 shadow-[0_30px_60px_rgba(0,0,0,0.5)]"
+          style={{
+            background:
+              "radial-gradient(ellipse at top, #1f4666 0%, #122a40 55%, #0a1a2a 100%)",
+          }}
+        >
+          {/* Ceiling lights */}
+          <div className="pointer-events-none absolute inset-x-0 top-0 flex justify-around px-10">
+            {[0, 1, 2, 3].map((i) => (
+              <div key={i} className="relative -mt-1">
+                <div className="h-2 w-10 rounded-b-full bg-[#2a2018]" />
+                <div className="mx-auto h-24 w-32 rounded-b-[60%] bg-[radial-gradient(ellipse_at_top,rgba(255,238,200,0.45),transparent_70%)]" />
+              </div>
+            ))}
+          </div>
+
+          {/* 3-column store layout: left shelves | central counter | right shelves */}
+          <div className="grid grid-cols-1 md:grid-cols-[1fr_1.1fr_1fr] gap-6 md:gap-8" dir="rtl">
+            {/* LEFT SHELVES */}
+            <div
+              className="space-y-6"
+              style={{ transform: "perspective(900px) rotateY(8deg)", transformOrigin: "right center" }}
+            >
+              {[0, 1].map((row) => (
+                <div key={`L-${row}`} className="relative">
+                  <div className="grid grid-cols-3 gap-2">
+                    {beggarsProducts.slice(row * 3, row * 3 + 3).map((p, i) => (
+                      <div
+                        key={i}
+                        className="group flex flex-col items-center rounded-md border border-[#c9a96e]/40 bg-[#f5e6c8]/95 p-2 text-center text-[#3a2a18] shadow-md transition-transform hover:-translate-y-1"
+                      >
+                        <div className="grid h-14 w-full place-items-center text-3xl">{p.emoji}</div>
+                        <p className="mt-1 text-[11px] font-black leading-tight">{p.name}</p>
+                        <p className="text-[9px] text-[#6b4f2e] leading-tight">{p.desc}</p>
+                      </div>
+                    ))}
+                  </div>
+                  {/* Wooden shelf plank */}
+                  <div
+                    className="mt-1 h-3 w-full rounded-sm shadow-[0_6px_10px_rgba(0,0,0,0.55)]"
+                    style={{ background: "linear-gradient(180deg,#7a5a36,#3e2a17)" }}
+                  />
+                </div>
+              ))}
+            </div>
+
+            {/* CENTRAL COUNTER */}
+            <div className="relative flex flex-col items-center">
+              {/* Hanging sign */}
+              <div className="mb-4 rounded-lg border-2 border-[#c9a96e] bg-[#0d2236] px-5 py-2 shadow-[0_6px_18px_rgba(0,0,0,0.5)]">
+                <p className="font-frank text-lg font-black tracking-[0.25em] text-[#c9a96e]">דלפק התצוגה</p>
+              </div>
+
+              {/* Counter top with featured products */}
+              <div
+                className="relative w-full rounded-t-xl border border-[#c9a96e]/60 p-4 shadow-inner"
+                style={{
+                  background:
+                    "linear-gradient(180deg,#d8b97a 0%,#a07c44 60%,#6c4d23 100%)",
+                }}
+              >
+                <div className="grid grid-cols-3 gap-3">
+                  {beggarsCounter.map((p, i) => (
+                    <div
+                      key={i}
+                      className="flex flex-col items-center rounded-lg bg-[#0d2236]/90 p-3 text-center text-[#f5e6c8] shadow-md ring-1 ring-[#c9a96e]/60"
+                    >
+                      <div className="text-3xl">{p.emoji}</div>
+                      <p className="mt-1 text-xs font-black leading-tight">{p.name}</p>
+                      <p className="text-[10px] text-[#c9a96e] leading-tight">{p.desc}</p>
+                    </div>
+                  ))}
+                </div>
+              </div>
+              {/* Counter front (gives depth) */}
+              <div
+                className="h-20 w-full rounded-b-xl border-x border-b border-[#3a2a18]"
+                style={{
+                  background:
+                    "linear-gradient(180deg,#5a3f22 0%,#3a2615 100%)",
+                  boxShadow: "inset 0 8px 18px rgba(0,0,0,0.4)",
+                }}
+              >
+                <div className="mx-auto mt-6 h-1 w-2/3 rounded-full bg-[#c9a96e]/40" />
+              </div>
+              {/* Plaque */}
+              <div className="mt-3 rounded-md border border-[#c9a96e] bg-[#c9a96e]/15 px-4 py-1 text-xs text-[#c9a96e]">
+                Featured · מוצרי השבוע
+              </div>
+            </div>
+
+            {/* RIGHT SHELVES */}
+            <div
+              className="space-y-6"
+              style={{ transform: "perspective(900px) rotateY(-8deg)", transformOrigin: "left center" }}
+            >
+              {[0, 1].map((row) => (
+                <div key={`R-${row}`} className="relative">
+                  <div className="grid grid-cols-3 gap-2">
+                    {beggarsProducts.slice().reverse().slice(row * 3, row * 3 + 3).map((p, i) => (
+                      <div
+                        key={i}
+                        className="group flex flex-col items-center rounded-md border border-[#c9a96e]/40 bg-[#f5e6c8]/95 p-2 text-center text-[#3a2a18] shadow-md transition-transform hover:-translate-y-1"
+                      >
+                        <div className="grid h-14 w-full place-items-center text-3xl">{p.emoji}</div>
+                        <p className="mt-1 text-[11px] font-black leading-tight">{p.name}</p>
+                        <p className="text-[9px] text-[#6b4f2e] leading-tight">{p.desc}</p>
+                      </div>
+                    ))}
+                  </div>
+                  <div
+                    className="mt-1 h-3 w-full rounded-sm shadow-[0_6px_10px_rgba(0,0,0,0.55)]"
+                    style={{ background: "linear-gradient(180deg,#7a5a36,#3e2a17)" }}
+                  />
+                </div>
+              ))}
+            </div>
+          </div>
+
+          {/* Floor */}
+          <div
+            className="mt-8 h-4 w-full rounded-sm"
+            style={{
+              background:
+                "linear-gradient(180deg,#1a3550 0%,#0a1827 100%)",
+              boxShadow: "inset 0 4px 8px rgba(0,0,0,0.6)",
+            }}
+          />
+        </section>
+
+        <div className="mt-8 text-center">
+          <Link
+            to="/"
+            className="inline-block rounded-lg bg-[#c9a96e] px-6 py-3 font-heebo font-bold text-[#0d2236] shadow-md hover:bg-[#e0c187]"
+          >
+            ← חזרה לקניון
+          </Link>
+        </div>
+      </div>
+    </main>
+
+    <MallFooter />
+  </div>
+);
+
 const StorePage = () => {
   const { storeId } = useParams<{ storeId: string }>();
   
@@ -384,9 +574,13 @@ const StorePage = () => {
 
   const isIsraelMezuzahs = store.id === "s2";
   const isAvnerOvad = store.id === "s4";
+  const isBeggars = store.id === "s16";
 
   if (isAvnerOvad) {
     return <AvnerOvadStoreView store={store} />;
+  }
+  if (isBeggars) {
+    return <BeggarsStoreView store={store} />;
   }
 
   return (
