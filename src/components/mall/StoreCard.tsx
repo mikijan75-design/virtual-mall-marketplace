@@ -23,6 +23,7 @@ import comingSoonImg from "@/assets/stores/coming-soon.png";
 import forRentImg from "@/assets/stores/for-rent.png";
 import IsraelMezuzahsWordmark from "@/components/mall/IsraelMezuzahsWordmark";
 import OliveWoodEpoxyWordmark from "@/components/mall/OliveWoodEpoxyWordmark";
+import IsraelMezuzahsStorefrontScene from "@/components/mall/IsraelMezuzahsStorefrontScene";
 import israelMezuzahsImg from "@/assets/stores/israel-mezuzahs.png";
 
 type BrandStyle = {
@@ -36,6 +37,7 @@ type BrandStyle = {
   subtitleLogo?: string;
   codedWordmark?: "israel-mezuzahs";
   codedSubtitle?: "olive-wood-epoxy";
+  codedScene?: "israel-mezuzahs-storefront";
 };
 
 const brandStyles: Record<string, BrandStyle> = {
@@ -86,8 +88,7 @@ const idOverrides: Record<string, Partial<BrandStyle & { name: string }>> = {
     name: "Israel Mezuzahs",
     accent: "#10252b",
     subtitle: "מזוזות ועוד",
-    codedWordmark: "israel-mezuzahs",
-    codedSubtitle: "olive-wood-epoxy",
+    codedScene: "israel-mezuzahs-storefront",
     image: israelMezuzahsImg,
   },
 };
