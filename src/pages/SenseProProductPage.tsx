@@ -1,6 +1,6 @@
 import { Heart, MessageCircle, Star, ImagePlus, Check, ChevronLeft, ChevronRight } from "lucide-react";
 import { useRef, useState, type ReactNode } from "react";
-import { Link, useLocation } from "react-router-dom";
+import { Link, useLocation, useNavigate } from "react-router-dom";
 import { useCart } from "@/context/CartContext";
 import { toast } from "@/hooks/use-toast";
 import BackButton from "@/components/BackButton";
@@ -118,6 +118,7 @@ const Section = ({ title, children }: { title: string; children: ReactNode }) =>
 
 const SenseProProductPage = () => {
   const location = useLocation();
+  const navigate = useNavigate();
   const initialMezuzah = (location.state as any)?.mezuzah as
     | {
         col?: number;
@@ -216,6 +217,8 @@ const SenseProProductPage = () => {
       title: "נוסף לעגלה",
       description: `${mezuzah.name} נוספה לעגלה.`,
     });
+    if (window.history.length > 1) navigate(-1);
+    else navigate("/");
   };
 
   return (
