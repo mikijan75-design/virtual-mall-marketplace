@@ -88,12 +88,12 @@ const AvnerOvadStoreView = ({ store }: { store: Store }) => (
 
     <main className="px-4 pt-2 pb-8">
       <div className="mx-auto max-w-[1400px]">
-        {/* Top section: scaled article centered, with side frames */}
-        <div className="relative flex items-start justify-center gap-4">
-          {/* Left column: 6 frames */}
-          <div className="hidden md:flex flex-col gap-4 pt-6 shrink-0" aria-hidden="true">
-            {galleryFrameKeys.slice(0, 6).map((k) => (
-              <GalleryFrame key={k} className="w-[90px]" />
+        {/* Top section: 5x4 frames on the left, article on the right */}
+        <div className="relative flex items-start justify-between gap-6" dir="ltr">
+          {/* Left grid: 5 rows of 4 frames */}
+          <div className="hidden md:grid grid-cols-4 gap-4 pt-6 flex-1" aria-hidden="true">
+            {galleryFrameKeys.slice(0, 20).map((k) => (
+              <GalleryFrame key={k} className="w-full max-w-[110px] mx-auto" />
             ))}
           </div>
 
@@ -190,20 +190,6 @@ const AvnerOvadStoreView = ({ store }: { store: Store }) => (
           </aside>
         </section>
         </article>
-
-          {/* Right column: 6 frames */}
-          <div className="hidden md:flex flex-col gap-4 pt-6 shrink-0" aria-hidden="true">
-            {galleryFrameKeys.slice(6, 12).map((k) => (
-              <GalleryFrame key={k} className="w-[90px]" />
-            ))}
-          </div>
-        </div>
-
-        {/* Bottom row: 8 frames below the article */}
-        <div className="mt-8 hidden md:grid grid-cols-8 gap-4 px-6" aria-hidden="true">
-          {galleryFrameKeys.slice(12, 20).map((k) => (
-            <GalleryFrame key={k} className="w-full max-w-[110px] mx-auto" />
-          ))}
         </div>
       </div>
 
