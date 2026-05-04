@@ -21,7 +21,7 @@ import bakeryImg from "@/assets/stores/bakery.jpg";
 import juiceImg from "@/assets/stores/juice.jpg";
 import comingSoonImg from "@/assets/stores/coming-soon.png";
 import forRentImg from "@/assets/stores/for-rent.png";
-import IsraelMezuzahsWordmark from "./IsraelMezuzahsWordmark";
+import IsraelMezuzahsWordmark from "@/components/mall/IsraelMezuzahsWordmark";
 import OliveWoodEpoxyWordmark from "@/components/mall/OliveWoodEpoxyWordmark";
 import israelMezuzahsImg from "@/assets/stores/israel-mezuzahs.png";
 
@@ -141,7 +141,10 @@ const StoreCard = ({ store, storeIndex }: StoreCardProps) => {
               borderBottom: `2px solid ${style.accent}`,
             }}
           >
-            <IsraelMezuzahsWordmark className="h-full w-full" />
+            <IsraelMezuzahsWordmark
+              className="w-full h-full"
+              preserveAspectRatio="none"
+            />
           </div>
         ) : style.logo ? (
           <div

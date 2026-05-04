@@ -5,7 +5,7 @@ import MallFooter from "@/components/mall/MallFooter";
 import PageTracker from "@/components/PageTracker";
 import BackButton from "@/components/BackButton";
 import israelMezuzahsAbout from "@/assets/stores/israel-mezuzahs-about.png";
-import imBeadLogo from "@/assets/israel-mezuzahs-wordmark.png";
+import imBeadLogo from "@/assets/stores/im-bead-logo.png";
 import imProduct1 from "@/assets/stores/im-product-1.png";
 import imProduct2 from "@/assets/stores/im-product-2.png";
 import imProduct3 from "@/assets/stores/im-product-3.png";
