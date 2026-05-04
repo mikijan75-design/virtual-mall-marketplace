@@ -113,11 +113,12 @@ const SenseProProductPage = () => {
   const location = useLocation();
   const initialMezuzah = (location.state as any)?.mezuzah as
     | {
-        col: number;
-        row: number;
+        col?: number;
+        row?: number;
+        productId?: string;
         itemNumber: number;
-        colBounds: number[];
-        rowBounds: number[];
+        colBounds?: number[];
+        rowBounds?: number[];
         image: string;
         name: string;
         brand: string;
@@ -138,86 +139,52 @@ const SenseProProductPage = () => {
     reader.readAsDataURL(file);
   };
 
-  // Selected cell (col,row) for mezuzah view; allows changing via thumbs / arrows
-  const [selectedCell, setSelectedCell] = useState<{ col: number; row: number } | null>(
-    initialMezuzah ? { col: initialMezuzah.col, row: initialMezuzah.row } : null,
-  );
+  // Selected product (by id) for the new product-based mezuzah flow
+  const initialIndex = initialMezuzah?.productId
+    ? Math.max(0, israelMezuzahProducts.findIndex((p) => p.id === initialMezuzah.productId))
+    : 0;
+  const [selectedProductIndex, setSelectedProductIndex] = useState<number>(initialIndex);
   const [thumbsStart, setThumbsStart] = useState(0);
 
-  const mezuzah = initialMezuzah && selectedCell
-    ? (() => {
-        const gridCols = initialMezuzah.colBounds.length - 1;
-        const itemNumber = selectedCell.row * gridCols + selectedCell.col + 1;
-        return {
-          ...initialMezuzah,
-          col: selectedCell.col,
-          row: selectedCell.row,
-          itemNumber,
-          name: `מזוזה מס׳ ${itemNumber}`,
-        };
-      })()
-    : initialMezuzah;
-
-  const SOURCE_W = 1515;
-  const SOURCE_H = 688;
-  const aspectFor = (col: number, row: number) => {
-    if (!initialMezuzah) return 1;
-    const cw = initialMezuzah.colBounds[col + 1] - initialMezuzah.colBounds[col];
-    const rh = initialMezuzah.rowBounds[row + 1] - initialMezuzah.rowBounds[row];
-    return (cw * SOURCE_W) / (rh * SOURCE_H);
-  };
-  const cropFor = (col: number, row: number) => {
-    if (!initialMezuzah) return null;
-    const cw = initialMezuzah.colBounds[col + 1] - initialMezuzah.colBounds[col];
-    const rh = initialMezuzah.rowBounds[row + 1] - initialMezuzah.rowBounds[row];
-    return {
-      backgroundImage: `url(${initialMezuzah.image})`,
-      backgroundRepeat: "no-repeat" as const,
-      backgroundSize: `${100 / cw}% ${100 / rh}%`,
-      backgroundPosition: `${(initialMezuzah.colBounds[col] / (1 - cw)) * 100}% ${(initialMezuzah.rowBounds[row] / (1 - rh)) * 100}%`,
-      filter: "saturate(1.6) contrast(1.15) brightness(1.05)",
-    };
-  };
-
-  const mezuzahCrop = mezuzah
-    ? (() => {
-        return cropFor(mezuzah.col, mezuzah.row);
-      })()
+  const selectedProduct = initialMezuzah?.productId
+    ? israelMezuzahProducts[selectedProductIndex] ?? israelMezuzahProducts[0]
     : null;
 
-  // Build list of all available mezuzah cells (excluding currently selected)
-  const allCells = initialMezuzah
-    ? (() => {
-        const gridCols = initialMezuzah.colBounds.length - 1;
-        const gridRows = initialMezuzah.rowBounds.length - 1;
-        const cells: { col: number; row: number }[] = [];
-        for (let r = 0; r < gridRows; r++) {
-          for (let c = 0; c < gridCols; c++) {
-            if (selectedCell && c === selectedCell.col && r === selectedCell.row) continue;
-            cells.push({ col: c, row: r });
-          }
+  const mezuzah = initialMezuzah
+    ? selectedProduct
+      ? {
+          ...initialMezuzah,
+          itemNumber: selectedProductIndex + 1,
+          image: selectedProduct.image,
+          name: selectedProduct.name,
+          unitPrice: selectedProduct.price,
+          productId: selectedProduct.id,
         }
-        return cells;
-      })()
-    : [];
+      : initialMezuzah
+    : undefined;
 
-  const visibleThumbs = allCells.slice(thumbsStart, thumbsStart + 4);
+  // Other products to show as thumbnails (excluding the currently selected one)
+  const otherProducts = selectedProduct
+    ? israelMezuzahProducts.filter((_, i) => i !== selectedProductIndex)
+    : [];
+  const visibleThumbProducts = otherProducts.slice(thumbsStart, thumbsStart + 4);
   const stepThumbs = (dir: 1 | -1) => {
-    if (allCells.length === 0) return;
-    const max = Math.max(0, allCells.length - 4);
+    if (otherProducts.length === 0) return;
+    const max = Math.max(0, otherProducts.length - 4);
     setThumbsStart((s) => Math.min(max, Math.max(0, s + dir * 4)));
   };
 
   const handleAddMezuzahToCart = () => {
     if (!mezuzah) return;
+    const id = mezuzah.productId ?? `mezuzah-${mezuzah.itemNumber}`;
     addToCart({
-      id: `mezuzah-${mezuzah.col}-${mezuzah.row}`,
+      id: `mezuzah-${id}`,
       type: "mezuzah",
       name: mezuzah.name,
       brand: mezuzah.brand,
       unitPrice: mezuzah.unitPrice,
       shippingPerItem: mezuzah.shippingPerItem,
-      meta: { col: mezuzah.col, row: mezuzah.row, itemNumber: mezuzah.itemNumber },
+      meta: { itemNumber: mezuzah.itemNumber, productId: mezuzah.productId },
     });
     toast({
       title: "נוסף לעגלה",
