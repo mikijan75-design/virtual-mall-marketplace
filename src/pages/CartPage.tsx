@@ -142,6 +142,17 @@ const CartPage = () => {
   const total = subtotal + shipping;
 
   const renderThumbnail = (it: CartItem) => {
+    if (it.type === "mezuzah" && it.image) {
+      return (
+        <div className="flex h-[126px] items-center justify-center rounded-[5px] bg-[#f1f2f2] p-2">
+          <img
+            src={it.image}
+            alt={it.name}
+            className="max-h-full max-w-full object-contain"
+          />
+        </div>
+      );
+    }
     if (it.type === "mezuzah" && it.meta?.col !== undefined && it.meta?.row !== undefined) {
       const col = it.meta.col;
       const row = it.meta.row;

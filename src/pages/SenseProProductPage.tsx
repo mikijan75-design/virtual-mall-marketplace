@@ -184,6 +184,7 @@ const SenseProProductPage = () => {
       brand: mezuzah.brand,
       unitPrice: mezuzah.unitPrice,
       shippingPerItem: mezuzah.shippingPerItem,
+      image: mezuzah.image,
       meta: { itemNumber: mezuzah.itemNumber },
     });
     toast({
