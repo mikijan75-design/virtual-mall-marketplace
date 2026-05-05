@@ -34,10 +34,10 @@ const artworks: Record<number, { src: string; alt: string }> = {
 const GalleryWallSection = () => {
   return (
     <section className="text-left text-[#2f2f2d]" dir="ltr">
-      <div className="overflow-hidden rounded-[2rem] border border-[#bbb8af] bg-[#c7c7c3] shadow-2xl">
+      <div className="flex overflow-hidden rounded-[2rem] border border-[#bbb8af] bg-[#c7c7c3] shadow-2xl">
         <div
           aria-label="Sampled gallery wall design with twenty white square frames"
-          className="relative aspect-[4/3] min-h-[360px] overflow-hidden bg-[#c7c7c3]"
+          className="relative aspect-[4/3] min-h-[360px] flex-1 overflow-hidden bg-[#c7c7c3]"
         >
           <div className="absolute inset-0 bg-[radial-gradient(circle_at_48%_35%,rgba(255,255,255,0.42),transparent_45%),linear-gradient(90deg,rgba(80,80,75,0.24)_1px,transparent_1px),linear-gradient(180deg,rgba(255,255,255,0.24),rgba(120,120,115,0.08))] bg-[length:auto,20%_100%,auto]" />
           <div className="absolute inset-x-0 bottom-0 h-[16%] border-t border-[#9e968a]/70 bg-[linear-gradient(180deg,#d8d0c4,#c8bfb2)]">
@@ -65,6 +65,11 @@ const GalleryWallSection = () => {
             ))}
           </div>
         </div>
+        <aside
+          aria-label="Gallery wall side panel"
+          className="relative shrink-0 border-l border-[#9e968a]/60 bg-[linear-gradient(180deg,#cfcfcb,#bdbdb8)]"
+          style={{ width: "30%" }}
+        />
       </div>
     </section>
   );
