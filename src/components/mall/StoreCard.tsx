@@ -29,6 +29,7 @@ import israelMezuzahsImg from "@/assets/stores/israel-mezuzahs.png";
 import floor3Shop4Img from "@/assets/stores/floor3-shop4.png";
 import floor1Shop4Img from "@/assets/stores/floor1-shop4.png";
 import floor1Shop6Img from "@/assets/stores/floor1-shop6.png";
+import danielGlassArtLogo from "@/assets/stores/daniel-glass-art-logo.jpg";
 
 type BrandStyle = {
   bg: string;
@@ -120,6 +121,7 @@ const idOverrides: Record<string, Partial<BrandStyle & { name: string }>> = {
     font: "font-frank",
     image: floor1Shop6Img,
     subtitle: "אמנות ויטראז' בעבודת יד",
+    logo: danielGlassArtLogo,
   },
 };
 
