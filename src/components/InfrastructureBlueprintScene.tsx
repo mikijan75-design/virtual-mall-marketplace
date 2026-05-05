@@ -29,26 +29,38 @@ import n9 from "@/assets/beggars-new/n9.png";
 import n10 from "@/assets/beggars-new/n10.png";
 import n11 from "@/assets/beggars-new/n11.png";
 
+import { useEffect, useRef, useState } from "react";
+
 type FeaturedProduct = {
-  rowIdx: number;
-  colIdx: number;
+  id: string;
   src: string;
   alt: string;
+  x: number; // center x in SVG units
+  y: number; // bottom y in SVG units
+  scale: number; // 1 = base size
 };
 
 // Available BEGGARS products randomly scattered across the 3×5 shelf grid (remaining cells stay empty)
 const productPool = [n1, n2, n3, n4, n5, n6, n7, n8, n9, n10, n11];
 // Pre-shuffled cell indices (0..14) — first N positions get products, rest stay empty
 const cellOrder = [7, 2, 11, 14, 4, 9, 0, 13, 6, 3, 10, 1, 12, 5, 8];
-const featuredProducts: FeaturedProduct[] = productPool.map((src, i) => {
+const initialProducts: FeaturedProduct[] = productPool.map((src, i) => {
   const cell = cellOrder[i];
+  const rowIdx = Math.floor(cell / 5);
+  const colIdx = cell % 5;
   return {
-    rowIdx: Math.floor(cell / 5),
-    colIdx: cell % 5,
+    id: `p-${i}`,
     src,
     alt: `BEGGARS product ${i + 1}`,
+    x: cellCenters[colIdx],
+    y: shelfRows[rowIdx],
+    scale: 1,
   };
 });
+
+const STORAGE_KEY = "beggars-product-layout-v1";
+const BASE_W = 110;
+const BASE_H = 100;
 
 // 3 equal-height rows across the cabinet (70→440, step ≈123.33)
 const shelfRows = [193, 317, 440];
