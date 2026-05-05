@@ -229,8 +229,8 @@ const InfrastructureBlueprintScene = () => {
           {columns.map((x) => (
             <path key={x} className="drawn-line" d={`M${x} 70v370M${x + 8} 76v358`} />
           ))}
-          <path className="drawn-line" d="M184 470h664v80H184z" />
-          <path className="drawn-line" d="M208 484h616v52H208z" />
+          <path d="M184 470h664v80H184z" />
+          <path d="M208 484h616v52H208z" />
         </g>
 
         <g className="blueprint-detail">
