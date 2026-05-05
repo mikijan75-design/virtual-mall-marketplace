@@ -1,5 +1,5 @@
 import { useEffect, useState, type CSSProperties } from "react";
-import { Download, Eye, Gift, Pencil, Phone, Target, Trash2, X, type LucideIcon } from "lucide-react";
+import { Eye, Gift, Phone, Target, X, type LucideIcon } from "lucide-react";
 import danielGlassArtLogo from "@/assets/stores/daniel-glass-art-logo.jpg";
 import floor1Shop6Img from "@/assets/stores/floor1-shop6.png";
 import hamsaJerusalemBlue from "@/assets/stores/hamsa-jerusalem-blue.png";
@@ -160,23 +160,6 @@ const DanielGlassartProfileDesign = () => {
   return (
     <section className="relative mx-auto w-full overflow-hidden rounded-[20px] bg-[#fbfbfb] p-[clamp(0.75rem,1.6vw,1.5rem)] shadow-[0_18px_50px_rgba(15,23,42,0.16)]" dir="rtl">
     <div style={{ zoom: 0.6 }}>
-      <div className="mb-3 flex items-center justify-between gap-2">
-        <div className="flex items-center gap-2">
-          <button type="button" onClick={() => setEditing((e) => !e)} className={`inline-flex items-center gap-1.5 rounded-full px-3 py-1.5 text-xs font-bold shadow ${editing ? "bg-rose-600 text-white" : "bg-slate-900 text-white hover:bg-slate-700"}`}>
-            {editing ? <><Trash2 className="h-3.5 w-3.5" /> סיום עריכה</> : <><Pencil className="h-3.5 w-3.5" /> עריכה</>}
-          </button>
-          {editing && (
-            <button type="button" onClick={resetAll} className="inline-flex items-center gap-1 rounded-full bg-slate-200 px-2.5 py-1 text-[10px] font-bold text-slate-700 hover:bg-slate-300">
-              איפוס
-            </button>
-          )}
-          <button type="button" onClick={exportEdits} className="inline-flex items-center gap-1 rounded-full bg-emerald-600 px-2.5 py-1 text-[10px] font-bold text-white hover:bg-emerald-700">
-            <Download className="h-3 w-3" /> ייצוא
-          </button>
-        </div>
-        {editing && <span className="text-[10px] text-rose-600 font-bold">השינויים נשמרים אוטומטית</span>}
-      </div>
-
       <div className="grid gap-5">
         <header className="text-right">
           <p {...editProps(headerTag, setHeaderTag)} className={`text-[10px] font-black uppercase tracking-[0.35em] text-[#6b7280] ${editing ? "focus:outline focus:outline-2 focus:outline-sky-400 rounded px-0.5" : ""}`}>
