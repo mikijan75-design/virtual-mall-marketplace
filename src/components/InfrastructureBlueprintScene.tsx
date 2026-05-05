@@ -156,7 +156,7 @@ const InfrastructureBlueprintScene = () => {
   return (
     <figure className="relative mx-auto w-full max-w-6xl overflow-hidden rounded-[2rem] border border-white/20 bg-[#052b56] shadow-2xl shadow-slate-950/30">
       <svg
-        className="h-auto w-full text-white"
+        className="h-auto w-full text-[#7a4a22]"
         viewBox="0 0 1024 576"
         role="img"
         aria-labelledby="infrastructure-blueprint-title infrastructure-blueprint-desc"
@@ -245,6 +245,9 @@ const InfrastructureBlueprintScene = () => {
 
         <rect width="1024" height="576" fill="url(#blueprintGlow)" />
         <rect width="1024" height="576" fill="url(#blueprintGrid)" />
+        {/* Cream background panels for cabinet and counter */}
+        <rect x="75" y="70" width="872" height="370" fill="#efe8d8" />
+        <rect x="184" y="470" width="664" height="80" fill="#efe8d8" />
         <path d="M57 58h910v392H57z" className="blueprint-perspective" />
         <path d="M75 70h872v370H75z" className="blueprint-perspective" />
         <path d="M57 58 75 70M967 58 947 70M57 450l18-10M967 450l-20-10" className="blueprint-perspective" />
