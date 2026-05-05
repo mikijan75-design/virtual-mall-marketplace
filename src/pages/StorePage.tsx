@@ -12,6 +12,7 @@ import beggarsWireframe from "@/assets/stores/beggars-wireframe.png";
 import danielGlassArtLogo from "@/assets/stores/daniel-glass-art-logo.jpg";
 import floor1Shop6Img from "@/assets/stores/floor1-shop6.png";
 import InfrastructureBlueprintScene from "@/components/InfrastructureBlueprintScene";
+import GalleryWallSection from "@/components/mall/GalleryWallSection";
 import imProduct1 from "@/assets/stores/im-product-1.png";
 import imProduct2 from "@/assets/stores/im-product-2.png";
 import imProduct3 from "@/assets/stores/im-product-3.png";
@@ -531,6 +532,8 @@ const StorePage = () => {
                   />
                 </div>
               </>
+            ) : store.id === "s18" ? (
+              <GalleryWallSection />
             ) : (
               <>
                 <h2 className="text-2xl font-frank font-bold text-foreground mb-4">
