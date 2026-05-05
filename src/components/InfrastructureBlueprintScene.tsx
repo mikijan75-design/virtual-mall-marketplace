@@ -53,27 +53,32 @@ const counterPanels = [317, 450, 582, 715];
 const cellCenters = [162, 336, 511, 685, 859];
 const blueprintItems: BlueprintItem[] = [];
 
-const STORAGE_KEY = "beggars-product-layout-v2";
+const STORAGE_KEY = "beggars-product-layout-v3";
 const BASE_W = 110;
 const BASE_H = 100;
 
-// Available BEGGARS products randomly scattered across the 3×5 shelf grid (remaining cells stay empty)
-const productPool = [n1, n2, n3, n4, n5, n6, n7, n8, n9, n10, n11, n12, n13];
-// Pre-shuffled cell indices (0..14) — first N positions get products, rest stay empty
-const cellOrder = [7, 2, 11, 14, 4, 9, 0, 13, 6, 3, 10, 1, 12, 5, 8];
-const initialProducts: FeaturedProduct[] = productPool.map((src, i) => {
-  const cell = cellOrder[i];
-  const rowIdx = Math.floor(cell / 5);
-  const colIdx = cell % 5;
-  return {
-    id: `p-${i}`,
-    src,
-    alt: `BEGGARS product ${i + 1}`,
-    x: cellCenters[colIdx],
-    y: shelfRows[rowIdx],
-    scale: 1,
-  };
-});
+// Source-of-truth layout (curated manually)
+const productSrcById: Record<string, string> = {
+  "p-0": n1, "p-1": n2, "p-2": n3, "p-3": n4, "p-4": n5,
+  "p-5": n6, "p-6": n7, "p-7": n8, "p-8": n9, "p-9": n10,
+  "p-10": n11, "p-11": n12, "p-12": n13,
+};
+const curatedLayout: Omit<FeaturedProduct, "src">[] = [
+  { id: "p-0",  alt: "BEGGARS product 1",  x: 345.2127990722656, y: 450.69451904296875, scale: 1.3 },
+  { id: "p-1",  alt: "BEGGARS product 2",  x: 511,               y: 193,                scale: 1 },
+  { id: "p-2",  alt: "BEGGARS product 3",  x: 689.4391174316406, y: 468.7197265625,     scale: 1.35 },
+  { id: "p-3",  alt: "BEGGARS product 4",  x: 859,               y: 440,                scale: 1 },
+  { id: "p-4",  alt: "BEGGARS product 5",  x: 868.20703125,      y: 191.0193328857422,  scale: 1.5 },
+  { id: "p-5",  alt: "BEGGARS product 6",  x: 859,               y: 317,                scale: 1 },
+  { id: "p-6",  alt: "BEGGARS product 7",  x: 154.3713836669922, y: 192.00965881347656, scale: 1 },
+  { id: "p-9",  alt: "BEGGARS product 10", x: 685,               y: 193,                scale: 1 },
+  { id: "p-10", alt: "BEGGARS product 11", x: 162,               y: 440,                scale: 1 },
+  { id: "p-12", alt: "BEGGARS product 13", x: 343.23211669921875, y: 316.2089538574219, scale: 1.15 },
+];
+const initialProducts: FeaturedProduct[] = curatedLayout.map((p) => ({
+  ...p,
+  src: productSrcById[p.id],
+}));
 
 const lineProps = {
   stroke: "currentColor",
