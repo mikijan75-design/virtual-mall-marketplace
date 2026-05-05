@@ -46,14 +46,7 @@ type FeaturedProduct = {
 };
 
 // 15 unique BEGGARS products (one per shelf cell), randomly arranged across the 3×5 grid
-const productPool = [p1, p2, p3, p4, p5, p6, p7, p8, p9, p10, p11, p12, p13, p14, p15, p16, p17, p18, p19, p20];
-const randomOrder = [11, 5, 13, 2, 3, 14, 9, 17, 6, 10, 1, 15, 4, 20, 7];
-const featuredProducts: FeaturedProduct[] = randomOrder.map((id, i) => ({
-  rowIdx: Math.floor(i / 5),
-  colIdx: i % 5,
-  src: productPool[id - 1],
-  alt: `BEGGARS product ${id}`,
-}));
+const featuredProducts: FeaturedProduct[] = [];
 
 // 3 equal-height rows across the cabinet (70→440, step ≈123.33)
 const shelfRows = [193, 317, 440];
