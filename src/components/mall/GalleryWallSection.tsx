@@ -69,7 +69,7 @@ const GalleryWallSection = () => {
         <aside
           aria-label="Gallery wall side panel"
           className="relative shrink-0 overflow-y-auto border-l border-[#9e968a]/60 bg-[linear-gradient(180deg,#cfcfcb,#bdbdb8)] p-2"
-          style={{ width: "30%" }}
+          style={{ width: "50%" }}
         >
           <DanielGlassartProfileDesign />
         </aside>
