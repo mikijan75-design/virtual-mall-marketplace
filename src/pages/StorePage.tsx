@@ -389,6 +389,56 @@ const StorePage = () => {
     return <AvnerOvadStoreView store={store} />;
   }
 
+  if (store.id === "s16") {
+    return (
+      <div className="min-h-screen bg-background">
+        <MallHeader />
+        <PageTracker storeId={store.id} />
+        <BackButton />
+        <main className="px-4 py-8">
+          <div className="mx-auto max-w-[1200px]">
+            <h1 className="mb-6 text-center font-frank text-3xl font-black tracking-wide text-foreground">
+              BEGGARS
+            </h1>
+            <div className="rounded-2xl bg-[#f0f0f0] p-4 shadow-md">
+              <svg
+                viewBox="0 0 800 400"
+                xmlns="http://www.w3.org/2000/svg"
+                className="w-full h-auto"
+                role="img"
+                aria-label="תשתית מדפים ודלפק - BEGGARS"
+              >
+                {/* תשתית מדפים צפים - קווים מקבילים */}
+                <g stroke="#ccc" strokeWidth="1" fill="none">
+                  <line x1="50" y1="80" x2="750" y2="80" />
+                  <line x1="50" y1="140" x2="750" y2="140" />
+                  <line x1="50" y1="200" x2="750" y2="200" />
+                  <line x1="50" y1="260" x2="750" y2="260" />
+                </g>
+                {/* דלפק קדמי */}
+                <g stroke="#999" strokeWidth="2" fill="rgba(255,255,255,0.5)">
+                  <rect x="200" y="300" width="400" height="80" rx="5" />
+                  <line x1="200" y1="315" x2="600" y2="315" strokeDasharray="4" />
+                </g>
+                {/* מסך על הדלפק */}
+                <rect x="350" y="270" width="100" height="60" rx="2" fill="#fff" stroke="#ccc" />
+              </svg>
+            </div>
+          </div>
+          <div className="text-center mt-8">
+            <Link
+              to="/"
+              className="inline-block bg-mall-sign text-mall-gold font-heebo font-bold px-6 py-3 rounded-lg hover:bg-mall-gold hover:text-mall-sign transition-colors shadow-md"
+            >
+              ← חזרה לקניון
+            </Link>
+          </div>
+        </main>
+        <MallFooter />
+      </div>
+    );
+  }
+
   return (
     <div className="min-h-screen bg-background">
       <MallHeader />
