@@ -510,39 +510,42 @@ const InfrastructureBlueprintScene = () => {
           ))}
         </g>
 
-        {featuredProducts.map((product) => {
-          const shelfY = shelfRows[product.rowIdx];
-          const cx = cellCenters[product.colIdx];
-          const imgW = 110;
-          const imgH = 100;
-          // Cell bounds (between partitions) to clip any overflowing artwork
-          const cellEdges = [75, ...columns.map((c) => c + 8), 947];
-          const cellLeft = cellEdges[product.colIdx];
-          const cellRight = cellEdges[product.colIdx + 1];
-          const cellTop = product.rowIdx === 0 ? 70 : shelfRows[product.rowIdx - 1];
-          const cellBottom = shelfY - 4;
-          const clipId = `cell-clip-${product.rowIdx}-${product.colIdx}`;
+        {products.map((product) => {
+          const w = BASE_W * product.scale;
+          const h = BASE_H * product.scale;
+          const isSelected = selectedId === product.id;
           return (
-            <g key={`featured-${product.rowIdx}-${product.colIdx}`}>
-              <clipPath id={clipId}>
-                <rect
-                  x={cellLeft + 2}
-                  y={cellTop + 2}
-                  width={cellRight - cellLeft - 4}
-                  height={cellBottom - cellTop - 2}
-                />
-              </clipPath>
+            <g
+              key={product.id}
+              onPointerDown={(e) => handlePointerDown(e, product.id)}
+              onPointerMove={handlePointerMove}
+              onPointerUp={handlePointerUp}
+              onPointerCancel={handlePointerUp}
+              style={{ cursor: dragRef.current?.id === product.id ? "grabbing" : "grab", touchAction: "none" }}
+            >
               <image
                 href={product.src}
-                x={cx - imgW / 2}
-                y={shelfY - imgH}
-                width={imgW}
-                height={imgH}
+                x={product.x - w / 2}
+                y={product.y - h}
+                width={w}
+                height={h}
                 preserveAspectRatio="xMidYMax meet"
-                clipPath={`url(#${clipId})`}
               >
                 <title>{product.alt}</title>
               </image>
+              {isSelected && (
+                <rect
+                  x={product.x - w / 2}
+                  y={product.y - h}
+                  width={w}
+                  height={h}
+                  fill="none"
+                  stroke="#ff8a00"
+                  strokeWidth={1.5}
+                  strokeDasharray="4 3"
+                  pointerEvents="none"
+                />
+              )}
             </g>
           );
         })}
