@@ -41,6 +41,9 @@ const MallHeader = () => {
               <DropdownMenuItem asChild>
                 <Link to="/sense-pro">דף מוצר - Sense Pro</Link>
               </DropdownMenuItem>
+              <DropdownMenuItem asChild>
+                <Link to="/infrastructure-blueprint">שרטוט תשתית חי</Link>
+              </DropdownMenuItem>
             </DropdownMenuContent>
           </DropdownMenu>
           <Link to="/contact" className="px-3 py-1 rounded hover:bg-mall-gold/20 transition-colors">צור קשר</Link>
