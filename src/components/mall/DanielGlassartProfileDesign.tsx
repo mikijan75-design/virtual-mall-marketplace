@@ -1,4 +1,4 @@
-import { useState, type CSSProperties } from "react";
+import { useEffect, useState, type CSSProperties } from "react";
 import { Eye, Gift, Pencil, Phone, Target, Trash2, X, type LucideIcon } from "lucide-react";
 import danielGlassArtLogo from "@/assets/stores/daniel-glass-art-logo.jpg";
 import floor1Shop6Img from "@/assets/stores/floor1-shop6.png";
@@ -8,18 +8,50 @@ import lampBlueMosaic from "@/assets/stores/lamp-blue-mosaic.png";
 
 type TimelineItem = {
   id: string;
-  icon: LucideIcon;
+  iconKey: IconKey;
   title: string;
   body: string;
 };
 
+type IconKey = "eye" | "target" | "gift" | "phone";
+const iconMap: Record<IconKey, LucideIcon> = { eye: Eye, target: Target, gift: Gift, phone: Phone };
+
 const initialTimeline: TimelineItem[] = [
-  { id: "t1", icon: Eye, title: "היכרות: דניאל שפגשתי בנחלת בנימין", body: "פגשתי את דניאל בדוכן שלו, בין הצבעים, האור והאנשים. השיחה איתו חיברה בין עבודת יד מוקפדת, אנושיות חמה ואופי ישראלי שמזמין להתקרב." },
-  { id: "t2", icon: Target, title: "הסיפור: מארגנטינה לישראל דרך העולם", body: "המסע של דניאל מתחיל במפגש בין תרבויות: מארגנטינה, דרך שנים של למידה ותנועה, ועד לדוכן ישראלי חי שבו כל יצירה מקבלת שפה מקומית וצבע אישי." },
-  { id: "t3", icon: Target, title: "היצירה: מורכבות, צבע וסיפור חיים", body: "הויטראז' שלו משלב קווי מתאר כהים, חלקי זכוכית צבעוניים ושכבות אור. כל עבודה נראית כמו פסיפס חי שמחבר בין זיכרון, מקום, מסורת ותנועה." },
-  { id: "t4", icon: Gift, title: "ההמלצה: המתנה המושלמת שאין שני לה", body: "פריטים שמרגישים אישיים, צבעוניים וחד פעמיים. מתנה לחג, לבית, לחברים או לאוספים שאוהבים עבודת יד עם נוכחות, עומק וסיפור מאחורי כל פרט." },
-  { id: "t5", icon: Phone, title: "יצירת קשר: בתיאום מראש", body: "לסיורים, הזמנות מיוחדות ושאלות על עבודות זמינות, מומלץ ליצור קשר מראש ולתאם את הפריט או הדגם המתאים." },
+  { id: "t1", iconKey: "eye", title: "היכרות: דניאל שפגשתי בנחלת בנימין", body: "פגשתי את דניאל בדוכן שלו, בין הצבעים, האור והאנשים. השיחה איתו חיברה בין עבודת יד מוקפדת, אנושיות חמה ואופי ישראלי שמזמין להתקרב." },
+  { id: "t2", iconKey: "target", title: "הסיפור: מארגנטינה לישראל דרך העולם", body: "המסע של דניאל מתחיל במפגש בין תרבויות: מארגנטינה, דרך שנים של למידה ותנועה, ועד לדוכן ישראלי חי שבו כל יצירה מקבלת שפה מקומית וצבע אישי." },
+  { id: "t3", iconKey: "target", title: "היצירה: מורכבות, צבע וסיפור חיים", body: "הויטראז' שלו משלב קווי מתאר כהים, חלקי זכוכית צבעוניים ושכבות אור. כל עבודה נראית כמו פסיפס חי שמחבר בין זיכרון, מקום, מסורת ותנועה." },
+  { id: "t4", iconKey: "gift", title: "ההמלצה: המתנה המושלמת שאין שני לה", body: "פריטים שמרגישים אישיים, צבעוניים וחד פעמיים. מתנה לחג, לבית, לחברים או לאוספים שאוהבים עבודת יד עם נוכחות, עומק וסיפור מאחורי כל פרט." },
+  { id: "t5", iconKey: "phone", title: "יצירת קשר: בתיאום מראש", body: "לסיורים, הזמנות מיוחדות ושאלות על עבודות זמינות, מומלץ ליצור קשר מראש ולתאם את הפריט או הדגם המתאים." },
 ];
+
+const STORAGE_KEY = "daniel-glassart-profile-v1";
+type PersistedState = {
+  items: TimelineItem[];
+  headerTag: string;
+  headerTitleHe: string;
+  headerTitleEn: string;
+  blocks: Record<BlockId, boolean>;
+};
+type BlockId = "portrait" | "logo" | "stained" | "hamsaBlue" | "hamsaOrange" | "shop";
+const defaultBlocks: Record<BlockId, boolean> = { portrait: true, logo: true, stained: true, hamsaBlue: true, hamsaOrange: true, shop: true };
+
+const loadState = (): PersistedState => {
+  if (typeof window === "undefined") return { items: initialTimeline, headerTag: "Sampled design code", headerTitleHe: "אומן ויטראז' - ", headerTitleEn: "DANIEL GLASSART", blocks: defaultBlocks };
+  try {
+    const raw = localStorage.getItem(STORAGE_KEY);
+    if (!raw) throw new Error("none");
+    const parsed = JSON.parse(raw) as PersistedState;
+    return {
+      items: parsed.items?.map((i) => ({ ...i, iconKey: (i.iconKey ?? "target") as IconKey })) ?? initialTimeline,
+      headerTag: parsed.headerTag ?? "Sampled design code",
+      headerTitleHe: parsed.headerTitleHe ?? "אומן ויטראז' - ",
+      headerTitleEn: parsed.headerTitleEn ?? "DANIEL GLASSART",
+      blocks: { ...defaultBlocks, ...(parsed.blocks ?? {}) },
+    };
+  } catch {
+    return { items: initialTimeline, headerTag: "Sampled design code", headerTitleHe: "אומן ויטראז' - ", headerTitleEn: "DANIEL GLASSART", blocks: defaultBlocks };
+  }
+};
 
 const sampledColors = ["#0e5a97","#1f9db4","#e4a821","#d7682d","#102b48","#6d2f67","#f2f4e8"];
 
@@ -65,8 +97,6 @@ const PortraitSample = () => (
   </div>
 );
 
-type BlockId = "portrait" | "logo" | "stained" | "hamsaBlue" | "hamsaOrange" | "shop";
-
 const EditableBlock = ({ editing, onDelete, children, style }: { editing: boolean; onDelete: () => void; children: React.ReactNode; style?: CSSProperties }) => (
   <div className={`relative ${editing ? "outline outline-2 outline-dashed outline-rose-400/70 rounded-md" : ""}`} style={style}>
     {editing && (
@@ -79,14 +109,28 @@ const EditableBlock = ({ editing, onDelete, children, style }: { editing: boolea
 );
 
 const DanielGlassartProfileDesign = () => {
+  const initial = loadState();
   const [editing, setEditing] = useState(false);
-  const [items, setItems] = useState<TimelineItem[]>(initialTimeline);
-  const [headerTag, setHeaderTag] = useState("Sampled design code");
-  const [headerTitleHe, setHeaderTitleHe] = useState("אומן ויטראז' - ");
-  const [headerTitleEn, setHeaderTitleEn] = useState("DANIEL GLASSART");
-  const [blocks, setBlocks] = useState<Record<BlockId, boolean>>({
-    portrait: true, logo: true, stained: true, hamsaBlue: true, hamsaOrange: true, shop: true,
-  });
+  const [items, setItems] = useState<TimelineItem[]>(initial.items);
+  const [headerTag, setHeaderTag] = useState(initial.headerTag);
+  const [headerTitleHe, setHeaderTitleHe] = useState(initial.headerTitleHe);
+  const [headerTitleEn, setHeaderTitleEn] = useState(initial.headerTitleEn);
+  const [blocks, setBlocks] = useState<Record<BlockId, boolean>>(initial.blocks);
+
+  useEffect(() => {
+    try {
+      localStorage.setItem(STORAGE_KEY, JSON.stringify({ items, headerTag, headerTitleHe, headerTitleEn, blocks }));
+    } catch { /* ignore */ }
+  }, [items, headerTag, headerTitleHe, headerTitleEn, blocks]);
+
+  const resetAll = () => {
+    try { localStorage.removeItem(STORAGE_KEY); } catch { /* ignore */ }
+    setItems(initialTimeline);
+    setHeaderTag("Sampled design code");
+    setHeaderTitleHe("אומן ויטראז' - ");
+    setHeaderTitleEn("DANIEL GLASSART");
+    setBlocks(defaultBlocks);
+  };
 
   const hideBlock = (id: BlockId) => setBlocks((b) => ({ ...b, [id]: false }));
   const removeItem = (id: string) => setItems((arr) => arr.filter((i) => i.id !== id));
@@ -105,10 +149,17 @@ const DanielGlassartProfileDesign = () => {
   return (
     <section className="relative mx-auto w-full overflow-hidden rounded-[20px] bg-[#fbfbfb] p-[clamp(0.75rem,1.6vw,1.5rem)] shadow-[0_18px_50px_rgba(15,23,42,0.16)]" dir="rtl">
       <div className="mb-3 flex items-center justify-between gap-2">
-        <button type="button" onClick={() => setEditing((e) => !e)} className={`inline-flex items-center gap-1.5 rounded-full px-3 py-1.5 text-xs font-bold shadow ${editing ? "bg-rose-600 text-white" : "bg-slate-900 text-white hover:bg-slate-700"}`}>
-          {editing ? <><Trash2 className="h-3.5 w-3.5" /> סיום עריכה</> : <><Pencil className="h-3.5 w-3.5" /> עריכה</>}
-        </button>
-        {editing && <span className="text-[10px] text-rose-600 font-bold">לחץ על × כדי למחוק • לחץ על טקסט כדי לערוך</span>}
+        <div className="flex items-center gap-2">
+          <button type="button" onClick={() => setEditing((e) => !e)} className={`inline-flex items-center gap-1.5 rounded-full px-3 py-1.5 text-xs font-bold shadow ${editing ? "bg-rose-600 text-white" : "bg-slate-900 text-white hover:bg-slate-700"}`}>
+            {editing ? <><Trash2 className="h-3.5 w-3.5" /> סיום עריכה</> : <><Pencil className="h-3.5 w-3.5" /> עריכה</>}
+          </button>
+          {editing && (
+            <button type="button" onClick={resetAll} className="inline-flex items-center gap-1 rounded-full bg-slate-200 px-2.5 py-1 text-[10px] font-bold text-slate-700 hover:bg-slate-300">
+              איפוס
+            </button>
+          )}
+        </div>
+        {editing && <span className="text-[10px] text-rose-600 font-bold">השינויים נשמרים אוטומטית</span>}
       </div>
 
       <div className="grid gap-5">
@@ -163,7 +214,7 @@ const DanielGlassartProfileDesign = () => {
 
         <div className="space-y-1">
           {items.map((item, index) => {
-            const Icon = item.icon;
+            const Icon = iconMap[item.iconKey] ?? Target;
             const isLast = index === items.length - 1;
             return (
               <EditableBlock key={item.id} editing={editing} onDelete={() => removeItem(item.id)}>
