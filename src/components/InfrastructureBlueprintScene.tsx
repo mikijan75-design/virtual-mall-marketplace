@@ -323,6 +323,18 @@ const InfrastructureBlueprintScene = () => {
             <rect x="75" y={y - 4} width="872" height="1" fill="#fff" opacity="0.4" />
           </g>
         ))}
+        {/* LED light strip under each shelf top, illuminating products below */}
+        {[70, ...shelfRows.slice(0, -1)].map((topY) => (
+          <g key={`led-${topY}`}>
+            {/* Glow cone falling down onto products */}
+            <rect x="78" y={topY + 4} width="866" height="60" fill="url(#ledGlow)" pointerEvents="none" />
+            {/* LED strip housing */}
+            <rect x="78" y={topY + 1} width="866" height="3" fill="#e8e4d6" />
+            {/* Bright LED line */}
+            <rect x="80" y={topY + 2} width="862" height="1.4" fill="#ffffff" opacity="0.95" />
+            <rect x="80" y={topY + 2} width="862" height="0.6" fill="#fffbe0" />
+          </g>
+        ))}
         {/* Wood vertical partitions with rounded shading */}
         {columns.map((x) => (
           <g key={`partition-${x}`}>
