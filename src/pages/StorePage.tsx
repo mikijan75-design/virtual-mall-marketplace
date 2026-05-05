@@ -531,6 +531,8 @@ const StorePage = () => {
                   />
                 </div>
               </>
+            ) : store.id === "s18" ? (
+              <GalleryWallSection />
             ) : (
               <>
                 <h2 className="text-2xl font-frank font-bold text-foreground mb-4">
