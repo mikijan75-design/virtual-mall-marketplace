@@ -159,7 +159,7 @@ const DanielGlassartProfileDesign = () => {
 
   return (
     <section className="relative mx-auto w-full overflow-hidden rounded-[20px] bg-[#fbfbfb] p-[clamp(0.75rem,1.6vw,1.5rem)] shadow-[0_18px_50px_rgba(15,23,42,0.16)]" dir="rtl">
-    <div style={{ transform: "scale(0.6)", transformOrigin: "top right", width: "166.6667%" }}>
+    <div style={{ zoom: 0.6 }}>
       <div className="mb-3 flex items-center justify-between gap-2">
         <div className="flex items-center gap-2">
           <button type="button" onClick={() => setEditing((e) => !e)} className={`inline-flex items-center gap-1.5 rounded-full px-3 py-1.5 text-xs font-bold shadow ${editing ? "bg-rose-600 text-white" : "bg-slate-900 text-white hover:bg-slate-700"}`}>
