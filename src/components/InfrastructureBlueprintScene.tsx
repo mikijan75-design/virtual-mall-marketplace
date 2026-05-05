@@ -246,9 +246,52 @@ const InfrastructureBlueprintScene = () => {
             <stop offset="100%" stopColor="#c9c0aa" />
           </linearGradient>
           <linearGradient id="ledGlow" x1="0" y1="0" x2="0" y2="1">
-            <stop offset="0%" stopColor="#fff8d0" stopOpacity="0.85" />
-            <stop offset="60%" stopColor="#fff1a8" stopOpacity="0.35" />
-            <stop offset="100%" stopColor="#fff1a8" stopOpacity="0" />
+            <stop offset="0%" stopColor="#ffffff" stopOpacity="1" />
+            <stop offset="40%" stopColor="#ffffff" stopOpacity="0.6" />
+            <stop offset="100%" stopColor="#ffffff" stopOpacity="0" />
+          </linearGradient>
+          {/* Decor gradients */}
+          <linearGradient id="vaseBody" x1="0" y1="0" x2="0" y2="1">
+            <stop offset="0%" stopColor="#e8e2d2" />
+            <stop offset="50%" stopColor="#cdbfa0" />
+            <stop offset="100%" stopColor="#8a7654" />
+          </linearGradient>
+          <radialGradient id="petalRed" cx="50%" cy="50%" r="50%">
+            <stop offset="0%" stopColor="#ff9a9a" />
+            <stop offset="100%" stopColor="#c83a3a" />
+          </radialGradient>
+          <radialGradient id="petalYellow" cx="50%" cy="50%" r="50%">
+            <stop offset="0%" stopColor="#fff2a8" />
+            <stop offset="100%" stopColor="#e8a83a" />
+          </radialGradient>
+          <radialGradient id="petalPink" cx="50%" cy="50%" r="50%">
+            <stop offset="0%" stopColor="#ffd2e6" />
+            <stop offset="100%" stopColor="#d8588f" />
+          </radialGradient>
+          <linearGradient id="bookA" x1="0" y1="0" x2="0" y2="1">
+            <stop offset="0%" stopColor="#7a3a2a" />
+            <stop offset="100%" stopColor="#4d2418" />
+          </linearGradient>
+          <linearGradient id="bookB" x1="0" y1="0" x2="0" y2="1">
+            <stop offset="0%" stopColor="#2a4d6e" />
+            <stop offset="100%" stopColor="#173049" />
+          </linearGradient>
+          <linearGradient id="bookC" x1="0" y1="0" x2="0" y2="1">
+            <stop offset="0%" stopColor="#3e6b3a" />
+            <stop offset="100%" stopColor="#1f3d1f" />
+          </linearGradient>
+          <linearGradient id="lanternMetal" x1="0" y1="0" x2="0" y2="1">
+            <stop offset="0%" stopColor="#5a4632" />
+            <stop offset="100%" stopColor="#2c2014" />
+          </linearGradient>
+          <radialGradient id="lanternFlame" cx="50%" cy="55%" r="55%">
+            <stop offset="0%" stopColor="#fff6c4" />
+            <stop offset="55%" stopColor="#ffb84a" />
+            <stop offset="100%" stopColor="#ffb84a" stopOpacity="0" />
+          </radialGradient>
+          <linearGradient id="potClay" x1="0" y1="0" x2="0" y2="1">
+            <stop offset="0%" stopColor="#c47a52" />
+            <stop offset="100%" stopColor="#7a4226" />
           </linearGradient>
           <pattern id="woodGrain" width="120" height="60" patternUnits="userSpaceOnUse">
             <rect width="120" height="60" fill="url(#woodLight)" />
