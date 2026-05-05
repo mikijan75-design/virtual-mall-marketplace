@@ -31,33 +31,32 @@ type FeaturedProduct = {
   alt: string;
 };
 
-// 6 unique products placed randomly across the 5×6 shelf grid (no duplicates, one per cell)
+// 6 unique products placed randomly across the 3×5 shelf grid (no duplicates, one per cell)
 const featuredProducts: FeaturedProduct[] = [
   { rowIdx: 0, colIdx: 1, src: beggarsP1, alt: "BEGGARS product 1" },
-  { rowIdx: 1, colIdx: 4, src: beggarsP2, alt: "BEGGARS product 2" },
-  { rowIdx: 2, colIdx: 0, src: beggarsP3, alt: "BEGGARS product 3" },
-  { rowIdx: 2, colIdx: 3, src: beggarsP4, alt: "BEGGARS product 4" },
-  { rowIdx: 3, colIdx: 5, src: beggarsP5, alt: "BEGGARS product 5" },
-  { rowIdx: 4, colIdx: 2, src: beggarsP6, alt: "BEGGARS product 6" },
+  { rowIdx: 0, colIdx: 4, src: beggarsP2, alt: "BEGGARS product 2" },
+  { rowIdx: 1, colIdx: 0, src: beggarsP3, alt: "BEGGARS product 3" },
+  { rowIdx: 1, colIdx: 3, src: beggarsP4, alt: "BEGGARS product 4" },
+  { rowIdx: 2, colIdx: 2, src: beggarsP5, alt: "BEGGARS product 5" },
+  { rowIdx: 2, colIdx: 4, src: beggarsP6, alt: "BEGGARS product 6" },
 ];
 
-const shelfRows = [135, 190, 245, 300, 375];
-// Symmetric vertical dividers: equal 169px gap on both left (75→244) and right (778→947) edges
-const columns = [244, 377, 511, 644, 778];
+// 3 equal-height rows across the cabinet (70→440, step ≈123.33)
+const shelfRows = [193, 317, 440];
+// 4 vertical partitions making 5 equal-width cells across 75→947 (step ≈174.4)
+const columns = [249, 424, 598, 773];
 // Symmetric inner counter dividers (counter spans 184→848, center 516)
 const counterPanels = [317, 450, 582, 715];
 
-// Cell centers symmetric around the shelf center (511)
-const cellCenters = [160, 311, 444, 578, 711, 862];
+// Cell centers for 5 equal columns
+const cellCenters = [162, 336, 511, 685, 859];
 const rowItemTypes: BlueprintItemType[][] = [
-  ["laptop", "monitor", "document", "monitor", "box", "globe"],
-  ["router", "phone", "router", "router", "document", "tablet"],
-  ["globe", "tablet", "printer", "tablet", "globe", "laptop"],
-  ["laptop", "phone", "phone", "document", "printer", "phone"],
-  ["tablet", "laptop", "monitor", "globe", "router", "printer"],
+  ["laptop", "monitor", "document", "monitor", "box"],
+  ["router", "phone", "router", "tablet", "document"],
+  ["globe", "tablet", "printer", "globe", "laptop"],
 ];
 const blueprintItems: BlueprintItem[] = rowItemTypes.flatMap((row, rowIdx) => {
-  const shelfY = [135, 190, 245, 300, 375][rowIdx];
+  const shelfY = shelfRows[rowIdx];
   return row
     .map((type, colIdx) => {
       if (
@@ -312,7 +311,7 @@ const InfrastructureBlueprintScene = () => {
         {/* Subtle inner shadow on cream back */}
         <rect x="75" y="70" width="872" height="14" fill="url(#shelfShadow)" />
         {/* Horizontal shelf planks (3D look) */}
-        {[135, 190, 245, 300, 375].map((y) => (
+        {shelfRows.map((y) => (
           <g key={`plank-${y}`}>
             <rect x="75" y={y - 4} width="872" height="8" fill="url(#shelfPlank)" />
             <rect x="75" y={y + 4} width="872" height="3" fill="#000" opacity="0.25" />
@@ -328,11 +327,8 @@ const InfrastructureBlueprintScene = () => {
           </g>
         ))}
         {/* Per-cell subtle inner shading for depth */}
-        {[70, 135, 190, 245, 300, 375].slice(0, 5).map((topY, rIdx) => {
-          const rowTops = [70, 135, 190, 245, 300];
-          const rowBots = [135, 190, 245, 300, 375];
-          const top = rowTops[rIdx];
-          const bot = rowBots[rIdx];
+        {shelfRows.map((bot, rIdx) => {
+          const top = rIdx === 0 ? 70 : shelfRows[rIdx - 1];
           const cellEdges = [75, ...columns.map((c) => c + 8), 947];
           return cellEdges.slice(0, -1).map((left, i) => {
             const right = cellEdges[i + 1];
@@ -379,10 +375,10 @@ const InfrastructureBlueprintScene = () => {
         </g>
 
         {featuredProducts.map((product) => {
-          const shelfY = [135, 190, 245, 300, 375][product.rowIdx];
+          const shelfY = shelfRows[product.rowIdx];
           const cx = cellCenters[product.colIdx];
-          const imgW = 70;
-          const imgH = 52;
+          const imgW = 110;
+          const imgH = 100;
           return (
             <image
               key={`featured-${product.rowIdx}-${product.colIdx}`}
