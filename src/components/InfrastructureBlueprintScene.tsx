@@ -17,26 +17,17 @@ type BlueprintItem = {
   scale?: number;
 };
 
-import p1 from "@/assets/beggars/p1.png";
-import p2 from "@/assets/beggars/p2.png";
-import p3 from "@/assets/beggars/p3.png";
-import p4 from "@/assets/beggars/p4.png";
-import p5 from "@/assets/beggars/p5.png";
-import p6 from "@/assets/beggars/p6.png";
-import p7 from "@/assets/beggars/p7.png";
-import p8 from "@/assets/beggars/p8.png";
-import p9 from "@/assets/beggars/p9.png";
-import p10 from "@/assets/beggars/p10.png";
-import p11 from "@/assets/beggars/p11.png";
-import p12 from "@/assets/beggars/p12.png";
-import p13 from "@/assets/beggars/p13.png";
-import p14 from "@/assets/beggars/p14.png";
-import p15 from "@/assets/beggars/p15.png";
-import p16 from "@/assets/beggars/p16.png";
-import p17 from "@/assets/beggars/p17.png";
-import p18 from "@/assets/beggars/p18.png";
-import p19 from "@/assets/beggars/p19.png";
-import p20 from "@/assets/beggars/p20.png";
+import n1 from "@/assets/beggars-new/n1.png";
+import n2 from "@/assets/beggars-new/n2.png";
+import n3 from "@/assets/beggars-new/n3.png";
+import n4 from "@/assets/beggars-new/n4.png";
+import n5 from "@/assets/beggars-new/n5.png";
+import n6 from "@/assets/beggars-new/n6.png";
+import n7 from "@/assets/beggars-new/n7.png";
+import n8 from "@/assets/beggars-new/n8.png";
+import n9 from "@/assets/beggars-new/n9.png";
+import n10 from "@/assets/beggars-new/n10.png";
+import n11 from "@/assets/beggars-new/n11.png";
 
 type FeaturedProduct = {
   rowIdx: number;
@@ -45,8 +36,19 @@ type FeaturedProduct = {
   alt: string;
 };
 
-// 15 unique BEGGARS products (one per shelf cell), randomly arranged across the 3×5 grid
-const featuredProducts: FeaturedProduct[] = [];
+// Available BEGGARS products randomly scattered across the 3×5 shelf grid (remaining cells stay empty)
+const productPool = [n1, n2, n3, n4, n5, n6, n7, n8, n9, n10, n11];
+// Pre-shuffled cell indices (0..14) — first N positions get products, rest stay empty
+const cellOrder = [7, 2, 11, 14, 4, 9, 0, 13, 6, 3, 10, 1, 12, 5, 8];
+const featuredProducts: FeaturedProduct[] = productPool.map((src, i) => {
+  const cell = cellOrder[i];
+  return {
+    rowIdx: Math.floor(cell / 5),
+    colIdx: cell % 5,
+    src,
+    alt: `BEGGARS product ${i + 1}`,
+  };
+});
 
 // 3 equal-height rows across the cabinet (70→440, step ≈123.33)
 const shelfRows = [193, 317, 440];
