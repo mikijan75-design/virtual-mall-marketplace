@@ -397,32 +397,157 @@ const StorePage = () => {
         <PageTracker storeId={store.id} />
         <BackButton />
         <main className="px-4 py-8">
-          <div className="mx-auto max-w-[1200px]">
-            <h1 className="mb-6 text-center font-frank text-3xl font-black tracking-wide text-foreground">
+          <div className="mx-auto max-w-[1280px]">
+            <h1 className="mb-6 text-center font-frank text-4xl font-black tracking-[0.25em] text-foreground">
               BEGGARS
             </h1>
-            <div className="rounded-2xl bg-[#f0f0f0] p-4 shadow-md">
+            <div
+              className="relative overflow-hidden rounded-2xl p-6 shadow-2xl"
+              style={{
+                background:
+                  "repeating-conic-gradient(#3a3a3a 0deg 90deg, #2e2e2e 90deg 180deg) 0 0/22px 22px",
+              }}
+            >
               <svg
-                viewBox="0 0 800 400"
+                viewBox="0 0 1400 760"
                 xmlns="http://www.w3.org/2000/svg"
                 className="w-full h-auto"
                 role="img"
                 aria-label="תשתית מדפים ודלפק - BEGGARS"
               >
-                {/* תשתית מדפים צפים - קווים מקבילים */}
-                <g stroke="#ccc" strokeWidth="1" fill="none">
-                  <line x1="50" y1="80" x2="750" y2="80" />
-                  <line x1="50" y1="140" x2="750" y2="140" />
-                  <line x1="50" y1="200" x2="750" y2="200" />
-                  <line x1="50" y1="260" x2="750" y2="260" />
+                <defs>
+                  <linearGradient id="lineGlow" x1="0" y1="0" x2="0" y2="1">
+                    <stop offset="0%" stopColor="#ffffff" stopOpacity="0.95" />
+                    <stop offset="100%" stopColor="#e8e0c8" stopOpacity="0.85" />
+                  </linearGradient>
+                  <filter id="softGlow" x="-20%" y="-20%" width="140%" height="140%">
+                    <feGaussianBlur stdDeviation="0.6" result="b" />
+                    <feMerge>
+                      <feMergeNode in="b" />
+                      <feMergeNode in="SourceGraphic" />
+                    </feMerge>
+                  </filter>
+                </defs>
+
+                <g
+                  stroke="url(#lineGlow)"
+                  fill="none"
+                  strokeWidth="1.4"
+                  strokeLinecap="round"
+                  strokeLinejoin="round"
+                  filter="url(#softGlow)"
+                >
+                  {/* מבנה ארון רקע - מסגרת חיצונית עם פרספקטיבה */}
+                  {/* קיר אחורי */}
+                  <rect x="80" y="60" width="1240" height="520" />
+                  {/* תקרה בפרספקטיבה */}
+                  <path d="M80 60 L130 30 L1370 30 L1320 60 Z" />
+                  {/* קו עליון של התקרה האחורית */}
+                  <line x1="130" y1="30" x2="1370" y2="30" />
+                  {/* קצה ימני בפרספקטיבה */}
+                  <line x1="1320" y1="60" x2="1370" y2="30" />
+                  <line x1="1320" y1="580" x2="1370" y2="550" />
+                  <line x1="1370" y1="30" x2="1370" y2="550" />
+
+                  {/* מחיצות אנכיות - 5 עמודות */}
+                  {[330, 580, 830, 1080].map((x) => (
+                    <g key={`col-${x}`}>
+                      <line x1={x} y1="60" x2={x} y2="580" />
+                      {/* עומק פרספקטיבה */}
+                      <line x1={x} y1="60" x2={x + 20} y2="45" strokeOpacity="0.55" />
+                    </g>
+                  ))}
+
+                  {/* מדפים אופקיים - 4 שורות */}
+                  {[180, 280, 380, 480].map((y) => (
+                    <g key={`shelf-${y}`}>
+                      <line x1="80" y1={y} x2="1320" y2={y} />
+                      {/* קו עומק עדין */}
+                      <line x1="80" y1={y - 4} x2="1320" y2={y - 4} strokeOpacity="0.35" />
+                    </g>
+                  ))}
+
+                  {/* פריטים על המדפים - מטריצה של מלבנים מינימליסטיים */}
+                  {Array.from({ length: 4 }).map((_, row) =>
+                    Array.from({ length: 5 }).map((_, col) => {
+                      const cellX = 80 + col * 250;
+                      const cellY = 80 + row * 100;
+                      const items = 3;
+                      return (
+                        <g key={`cell-${row}-${col}`}>
+                          {Array.from({ length: items }).map((_, i) => {
+                            const w = 38 + ((row + col + i) % 3) * 12;
+                            const h = 55 + ((col + i) % 3) * 10;
+                            const ix = cellX + 30 + i * 70;
+                            const iy = cellY + (90 - h);
+                            return (
+                              <g key={`it-${row}-${col}-${i}`}>
+                                <rect x={ix} y={iy} width={w} height={h} rx="2" />
+                                {/* פרט פנימי - מסך/לייבל */}
+                                <rect
+                                  x={ix + 4}
+                                  y={iy + 4}
+                                  width={w - 8}
+                                  height={h - 14}
+                                  strokeOpacity="0.55"
+                                />
+                              </g>
+                            );
+                          })}
+                        </g>
+                      );
+                    })
+                  )}
+
+                  {/* דלפק קדמי - מבנה תלת-ממדי */}
+                  {/* גוף עליון של הדלפק */}
+                  <path d="M260 600 L1140 600 L1140 720 L260 720 Z" />
+                  {/* פאה ימנית בפרספקטיבה */}
+                  <path d="M1140 600 L1190 580 L1190 700 L1140 720 Z" />
+                  {/* פאה שמאלית */}
+                  <path d="M260 600 L210 580 L210 700 L260 720 Z" />
+                  {/* משטח עליון של הדלפק */}
+                  <path d="M210 580 L1190 580 L1140 600 L260 600 Z" />
+                  {/* קו תצוגה פנימי מקווקו */}
+                  <line
+                    x1="280"
+                    y1="630"
+                    x2="1120"
+                    y2="630"
+                    strokeDasharray="6 6"
+                    strokeOpacity="0.65"
+                  />
+                  {/* בסיס הדלפק */}
+                  <line x1="260" y1="720" x2="1140" y2="720" strokeWidth="1.8" />
+                  <line x1="210" y1="700" x2="260" y2="720" />
+                  <line x1="1140" y1="720" x2="1190" y2="700" />
+
+                  {/* פריטים מוצגים על משטח הדלפק */}
+                  {[0, 1, 2, 3, 4, 5].map((i) => {
+                    const x = 290 + i * 140;
+                    return (
+                      <g key={`top-${i}`}>
+                        <rect x={x} y={540} width={70} height={50} rx="2" />
+                        <rect x={x + 6} y={546} width={58} height={32} strokeOpacity="0.55" />
+                      </g>
+                    );
+                  })}
+                  {/* פריטים בויטרינה הפנימית של הדלפק */}
+                  {[0, 1, 2, 3, 4, 5].map((i) => {
+                    const x = 295 + i * 140;
+                    return (
+                      <rect
+                        key={`win-${i}`}
+                        x={x}
+                        y={645}
+                        width={60}
+                        height={55}
+                        rx="2"
+                        strokeOpacity="0.7"
+                      />
+                    );
+                  })}
                 </g>
-                {/* דלפק קדמי */}
-                <g stroke="#999" strokeWidth="2" fill="rgba(255,255,255,0.5)">
-                  <rect x="200" y="300" width="400" height="80" rx="5" />
-                  <line x1="200" y1="315" x2="600" y2="315" strokeDasharray="4" />
-                </g>
-                {/* מסך על הדלפק */}
-                <rect x="350" y="270" width="100" height="60" rx="2" fill="#fff" stroke="#ccc" />
               </svg>
             </div>
           </div>
