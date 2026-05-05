@@ -183,6 +183,55 @@ const InfrastructureBlueprintScene = () => {
             <stop offset="60%" stopColor="#063868" />
             <stop offset="100%" stopColor="#031f44" />
           </radialGradient>
+          {/* Realistic wood gradients */}
+          <linearGradient id="woodFrame" x1="0" y1="0" x2="0" y2="1">
+            <stop offset="0%" stopColor="#c89a68" />
+            <stop offset="50%" stopColor="#a87642" />
+            <stop offset="100%" stopColor="#7a4a22" />
+          </linearGradient>
+          <linearGradient id="woodLight" x1="0" y1="0" x2="0" y2="1">
+            <stop offset="0%" stopColor="#f0d4a8" />
+            <stop offset="50%" stopColor="#e3bf8a" />
+            <stop offset="100%" stopColor="#c89a6a" />
+          </linearGradient>
+          <linearGradient id="woodPartition" x1="0" y1="0" x2="1" y2="0">
+            <stop offset="0%" stopColor="#8c5a30" />
+            <stop offset="35%" stopColor="#d4a878" />
+            <stop offset="65%" stopColor="#d4a878" />
+            <stop offset="100%" stopColor="#8c5a30" />
+          </linearGradient>
+          <linearGradient id="creamBack" x1="0" y1="0" x2="0" y2="1">
+            <stop offset="0%" stopColor="#fdfaf0" />
+            <stop offset="100%" stopColor="#f0e6d0" />
+          </linearGradient>
+          <linearGradient id="shelfPlank" x1="0" y1="0" x2="0" y2="1">
+            <stop offset="0%" stopColor="#e8c79a" />
+            <stop offset="50%" stopColor="#b8895a" />
+            <stop offset="100%" stopColor="#7a4a22" />
+          </linearGradient>
+          <linearGradient id="shelfShadow" x1="0" y1="0" x2="0" y2="1">
+            <stop offset="0%" stopColor="#000" stopOpacity="0.35" />
+            <stop offset="100%" stopColor="#000" stopOpacity="0" />
+          </linearGradient>
+          <linearGradient id="cellShade" x1="0" y1="0" x2="0" y2="1">
+            <stop offset="0%" stopColor="#000" stopOpacity="0.18" />
+            <stop offset="40%" stopColor="#000" stopOpacity="0" />
+            <stop offset="100%" stopColor="#000" stopOpacity="0.08" />
+          </linearGradient>
+          <linearGradient id="counterTop" x1="0" y1="0" x2="0" y2="1">
+            <stop offset="0%" stopColor="#fafafa" />
+            <stop offset="100%" stopColor="#dcd6c8" />
+          </linearGradient>
+          <linearGradient id="counterFront" x1="0" y1="0" x2="0" y2="1">
+            <stop offset="0%" stopColor="#f5f1e6" />
+            <stop offset="100%" stopColor="#c9c0aa" />
+          </linearGradient>
+          <pattern id="woodGrain" width="120" height="60" patternUnits="userSpaceOnUse">
+            <rect width="120" height="60" fill="url(#woodLight)" />
+            <path d="M0 12 Q30 8 60 14 T120 12" fill="none" stroke="#a87642" strokeOpacity="0.18" strokeWidth="0.6" />
+            <path d="M0 28 Q40 24 80 30 T120 28" fill="none" stroke="#8c5a30" strokeOpacity="0.14" strokeWidth="0.5" />
+            <path d="M0 44 Q35 40 70 46 T120 44" fill="none" stroke="#a87642" strokeOpacity="0.16" strokeWidth="0.6" />
+          </pattern>
           <pattern id="blueprintGrid" width="32" height="32" patternUnits="userSpaceOnUse">
             <path d="M32 0H0v32" fill="none" stroke="#9ad4ff" strokeOpacity="0.08" strokeWidth="1" />
           </pattern>
@@ -254,38 +303,73 @@ const InfrastructureBlueprintScene = () => {
         </defs>
 
         <rect width="1024" height="576" fill="#ffffff" />
-        {/* Light wood fill inside the outer frame */}
-        <rect x="57" y="58" width="910" height="392" fill="#e8c79a" />
-        {/* Cream background panels for cabinet and counter (lighter) */}
-        <rect x="75" y="70" width="872" height="370" fill="#fbf7ec" />
-        <rect x="184" y="470" width="664" height="80" fill="#fbf7ec" />
-        {/* Light wood fill between the vertical column partitions */}
-        {columns.map((x) => (
-          <rect key={`partition-${x}`} x={x} y={70} width={8} height={370} fill="#e8c79a" />
+        {/* Floor shadow under cabinet */}
+        <ellipse cx="512" cy="558" rx="430" ry="10" fill="#000" opacity="0.18" />
+        {/* Wood frame body with grain pattern */}
+        <rect x="57" y="58" width="910" height="392" fill="url(#woodGrain)" />
+        {/* Inner cream backing panel (the back wall of the cabinet) */}
+        <rect x="75" y="70" width="872" height="370" fill="url(#creamBack)" />
+        {/* Subtle inner shadow on cream back */}
+        <rect x="75" y="70" width="872" height="14" fill="url(#shelfShadow)" />
+        {/* Horizontal shelf planks (3D look) */}
+        {[135, 190, 245, 300, 375].map((y) => (
+          <g key={`plank-${y}`}>
+            <rect x="75" y={y - 4} width="872" height="8" fill="url(#shelfPlank)" />
+            <rect x="75" y={y + 4} width="872" height="3" fill="#000" opacity="0.25" />
+            <rect x="75" y={y - 4} width="872" height="1" fill="#fff" opacity="0.4" />
+          </g>
         ))}
-        {/* Wood-colored outer frame around the cabinet */}
-        <rect x="57" y="58" width="910" height="392" fill="none" stroke="#b8895a" strokeWidth="6" />
-        {/* Thin dark outline on the outer frame edges */}
-        <rect x="57" y="58" width="910" height="392" fill="none" stroke="#0a0a0a" strokeWidth="0.5" vectorEffect="non-scaling-stroke" />
+        {/* Wood vertical partitions with rounded shading */}
+        {columns.map((x) => (
+          <g key={`partition-${x}`}>
+            <rect x={x} y={70} width={8} height={370} fill="url(#woodPartition)" />
+            <rect x={x} y={70} width={1} height={370} fill="#fff" opacity="0.25" />
+            <rect x={x + 7} y={70} width={1} height={370} fill="#000" opacity="0.3" />
+          </g>
+        ))}
+        {/* Per-cell subtle inner shading for depth */}
+        {[70, 135, 190, 245, 300, 375].slice(0, 5).map((topY, rIdx) => {
+          const rowTops = [70, 135, 190, 245, 300];
+          const rowBots = [135, 190, 245, 300, 375];
+          const top = rowTops[rIdx];
+          const bot = rowBots[rIdx];
+          const cellEdges = [75, ...columns.map((c) => c + 8), 947];
+          return cellEdges.slice(0, -1).map((left, i) => {
+            const right = cellEdges[i + 1];
+            return (
+              <rect
+                key={`cell-${rIdx}-${i}`}
+                x={left}
+                y={top}
+                width={right - left}
+                height={bot - top}
+                fill="url(#cellShade)"
+                pointerEvents="none"
+              />
+            );
+          });
+        })}
+        {/* Outer wood frame highlights and edges */}
+        <rect x="57" y="58" width="910" height="392" fill="none" stroke="url(#woodFrame)" strokeWidth="6" />
+        <rect x="60" y="61" width="904" height="386" fill="none" stroke="#fff" strokeOpacity="0.25" strokeWidth="1" />
+        <rect x="57" y="58" width="910" height="392" fill="none" stroke="#3a1f08" strokeWidth="0.6" vectorEffect="non-scaling-stroke" />
+        {/* Counter: top, front, base shadow */}
+        <rect x="180" y="464" width="672" height="14" fill="url(#counterTop)" />
+        <rect x="180" y="464" width="672" height="2" fill="#fff" opacity="0.6" />
+        <rect x="184" y="478" width="664" height="72" fill="url(#counterFront)" />
+        <rect x="184" y="478" width="664" height="72" fill="none" stroke="#8a8270" strokeWidth="0.6" vectorEffect="non-scaling-stroke" />
+        {/* Counter panel divisions with subtle shadow lines */}
+        {counterPanels.map((x) => (
+          <g key={`cpanel-${x}`}>
+            <line x1={x} y1={478} x2={x} y2={550} stroke="#8a8270" strokeWidth="0.6" vectorEffect="non-scaling-stroke" />
+            <line x1={x + 1} y1={478} x2={x + 1} y2={550} stroke="#fff" strokeOpacity="0.5" strokeWidth="0.4" vectorEffect="non-scaling-stroke" />
+          </g>
+        ))}
+        {/* Counter ground shadow */}
+        <rect x="184" y="548" width="664" height="6" fill="#000" opacity="0.18" />
 
         <g className="blueprint-main">
-          <path className="drawn-line" d="M56 58h912l-6 7H62z" />
           <path className="drawn-line" d="M75 70v370M947 70v370M75 440h872" />
-          <path className="drawn-line" d="M75 135h872M75 190h872M75 245h872M75 300h872M75 375h872" />
-          {columns.map((x) => (
-            <path key={x} className="drawn-line" d={`M${x} 70v370M${x + 8} 76v358`} />
-          ))}
-          <path d="M184 470h664v80H184z" />
-          <path d="M208 484h616v52H208z" />
-        </g>
-
-        <g className="blueprint-detail">
-          {counterPanels.map((x) => (
-            <path key={x} d={`M${x} 470v80`} />
-          ))}
-          {columns.map((x) => (
-            <path key={`cap-${x}`} d={`M${x - 5} 70l12-12 12 12`} />
-          ))}
         </g>
 
         <g {...lineProps}>
