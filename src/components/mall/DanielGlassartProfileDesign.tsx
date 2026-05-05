@@ -1,5 +1,5 @@
 import { useEffect, useState, type CSSProperties } from "react";
-import { Eye, Gift, Pencil, Phone, Target, Trash2, X, type LucideIcon } from "lucide-react";
+import { Download, Eye, Gift, Pencil, Phone, Target, Trash2, X, type LucideIcon } from "lucide-react";
 import danielGlassArtLogo from "@/assets/stores/daniel-glass-art-logo.jpg";
 import floor1Shop6Img from "@/assets/stores/floor1-shop6.png";
 import hamsaJerusalemBlue from "@/assets/stores/hamsa-jerusalem-blue.png";
@@ -136,6 +136,17 @@ const DanielGlassartProfileDesign = () => {
   const removeItem = (id: string) => setItems((arr) => arr.filter((i) => i.id !== id));
   const updateItem = (id: string, patch: Partial<TimelineItem>) => setItems((arr) => arr.map((i) => (i.id === id ? { ...i, ...patch } : i)));
 
+  const exportEdits = () => {
+    const data = JSON.stringify({ items, headerTag, headerTitleHe, headerTitleEn, blocks }, null, 2);
+    const blob = new Blob([data], { type: "application/json" });
+    const url = URL.createObjectURL(blob);
+    const a = document.createElement("a");
+    a.href = url;
+    a.download = "daniel-glassart-edits.json";
+    a.click();
+    URL.revokeObjectURL(url);
+  };
+
   const editProps = (value: string, onChange: (v: string) => void): React.HTMLAttributes<HTMLElement> =>
     editing
       ? {
@@ -158,6 +169,9 @@ const DanielGlassartProfileDesign = () => {
               איפוס
             </button>
           )}
+          <button type="button" onClick={exportEdits} className="inline-flex items-center gap-1 rounded-full bg-emerald-600 px-2.5 py-1 text-[10px] font-bold text-white hover:bg-emerald-700">
+            <Download className="h-3 w-3" /> ייצוא
+          </button>
         </div>
         {editing && <span className="text-[10px] text-rose-600 font-bold">השינויים נשמרים אוטומטית</span>}
       </div>
