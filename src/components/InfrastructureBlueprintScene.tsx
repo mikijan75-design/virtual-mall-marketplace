@@ -743,7 +743,7 @@ const InfrastructureBlueprintScene = () => {
               cx={product.x + w * 0.32}
               cy={product.y - h * 0.5}
               rx={w * 0.085}
-              ry={h * 0.13}
+              ry={h * 0.5}
               fill="#000"
               opacity="0.35"
               style={{ filter: "blur(3px)" }}
