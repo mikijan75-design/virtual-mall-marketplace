@@ -336,6 +336,19 @@ const InfrastructureBlueprintScene = () => {
 
   return (
     <figure className="relative mx-auto w-full max-w-6xl overflow-hidden rounded-[2rem] border border-[#7a4a22] bg-white shadow-2xl shadow-slate-950/30">
+      <div className="absolute right-3 top-3 z-10 flex gap-2">
+        <button
+          type="button"
+          onClick={() => setDeleteMode((v) => !v)}
+          className={`rounded-full border px-3 py-1 text-xs font-medium shadow-md transition ${
+            deleteMode
+              ? "border-red-700 bg-red-600 text-white"
+              : "border-[#7a4a22] bg-white text-[#7a4a22] hover:bg-[#f5ead8]"
+          }`}
+        >
+          {deleteMode ? "סיים מחיקה" : "מצב מחיקה"}
+        </button>
+      </div>
       <svg
         className="h-auto w-full text-[#0a0a0a]"
         viewBox="0 0 1024 576"
