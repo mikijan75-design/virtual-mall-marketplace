@@ -28,6 +28,7 @@ import AvnerOvadStorefrontScene from "@/components/mall/AvnerOvadStorefrontScene
 import israelMezuzahsImg from "@/assets/stores/israel-mezuzahs.png";
 import floor3Shop4Img from "@/assets/stores/floor3-shop4.png";
 import floor1Shop4Img from "@/assets/stores/floor1-shop4.png";
+import floor1Shop6Img from "@/assets/stores/floor1-shop6.png";
 
 type BrandStyle = {
   bg: string;
@@ -110,6 +111,15 @@ const idOverrides: Record<string, Partial<BrandStyle & { name: string }>> = {
     font: "font-frank",
     image: floor1Shop4Img,
     subtitle: "אוצרות ישראליים ממוחזרים",
+  },
+  s18: {
+    name: "דוכן ויטראז'",
+    bg: "linear-gradient(135deg, #1e4a8a, #0f2d5c)",
+    text: "#f5f5f5",
+    accent: "#c9a96e",
+    font: "font-frank",
+    image: floor1Shop6Img,
+    subtitle: "אמנות ויטראז' בעבודת יד",
   },
 };
 
