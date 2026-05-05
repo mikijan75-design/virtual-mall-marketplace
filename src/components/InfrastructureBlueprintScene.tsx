@@ -17,12 +17,26 @@ type BlueprintItem = {
   scale?: number;
 };
 
-import beggarsP1 from "@/assets/beggars/p1.png";
-import beggarsP2 from "@/assets/beggars/p2.png";
-import beggarsP3 from "@/assets/beggars/p3.png";
-import beggarsP4 from "@/assets/beggars/p4.png";
-import beggarsP5 from "@/assets/beggars/p5.png";
-import beggarsP6 from "@/assets/beggars/p6.png";
+import p1 from "@/assets/beggars/p1.png";
+import p2 from "@/assets/beggars/p2.png";
+import p3 from "@/assets/beggars/p3.png";
+import p4 from "@/assets/beggars/p4.png";
+import p5 from "@/assets/beggars/p5.png";
+import p6 from "@/assets/beggars/p6.png";
+import p7 from "@/assets/beggars/p7.png";
+import p8 from "@/assets/beggars/p8.png";
+import p9 from "@/assets/beggars/p9.png";
+import p10 from "@/assets/beggars/p10.png";
+import p11 from "@/assets/beggars/p11.png";
+import p12 from "@/assets/beggars/p12.png";
+import p13 from "@/assets/beggars/p13.png";
+import p14 from "@/assets/beggars/p14.png";
+import p15 from "@/assets/beggars/p15.png";
+import p16 from "@/assets/beggars/p16.png";
+import p17 from "@/assets/beggars/p17.png";
+import p18 from "@/assets/beggars/p18.png";
+import p19 from "@/assets/beggars/p19.png";
+import p20 from "@/assets/beggars/p20.png";
 
 type FeaturedProduct = {
   rowIdx: number;
@@ -31,15 +45,15 @@ type FeaturedProduct = {
   alt: string;
 };
 
-// 6 unique products placed randomly across the 3×5 shelf grid (no duplicates, one per cell)
-const featuredProducts: FeaturedProduct[] = [
-  { rowIdx: 0, colIdx: 1, src: beggarsP1, alt: "BEGGARS product 1" },
-  { rowIdx: 0, colIdx: 4, src: beggarsP2, alt: "BEGGARS product 2" },
-  { rowIdx: 1, colIdx: 0, src: beggarsP3, alt: "BEGGARS product 3" },
-  { rowIdx: 1, colIdx: 3, src: beggarsP4, alt: "BEGGARS product 4" },
-  { rowIdx: 2, colIdx: 2, src: beggarsP5, alt: "BEGGARS product 5" },
-  { rowIdx: 2, colIdx: 4, src: beggarsP6, alt: "BEGGARS product 6" },
-];
+// 15 unique BEGGARS products (one per shelf cell), randomly arranged across the 3×5 grid
+const productPool = [p1, p2, p3, p4, p5, p6, p7, p8, p9, p10, p11, p12, p13, p14, p15, p16, p17, p18, p19, p20];
+const randomOrder = [11, 5, 13, 2, 3, 14, 9, 17, 6, 10, 1, 15, 4, 20, 7];
+const featuredProducts: FeaturedProduct[] = randomOrder.map((id, i) => ({
+  rowIdx: Math.floor(i / 5),
+  colIdx: i % 5,
+  src: productPool[id - 1],
+  alt: `BEGGARS product ${id}`,
+}));
 
 // 3 equal-height rows across the cabinet (70→440, step ≈123.33)
 const shelfRows = [193, 317, 440];
@@ -50,31 +64,7 @@ const counterPanels = [317, 450, 582, 715];
 
 // Cell centers for 5 equal columns
 const cellCenters = [162, 336, 511, 685, 859];
-const rowItemTypes: BlueprintItemType[][] = [
-  ["laptop", "monitor", "document", "monitor", "box"],
-  ["router", "phone", "router", "tablet", "document"],
-  ["globe", "tablet", "printer", "globe", "laptop"],
-];
-const blueprintItems: BlueprintItem[] = rowItemTypes.flatMap((row, rowIdx) => {
-  const shelfY = shelfRows[rowIdx];
-  return row
-    .map((type, colIdx) => {
-      if (
-        featuredProducts.some(
-          (p) => p.rowIdx === rowIdx && p.colIdx === colIdx,
-        )
-      ) {
-        return null;
-      }
-      return {
-        type,
-        x: cellCenters[colIdx],
-        y: shelfY - 22,
-        scale: 0.78,
-      } as BlueprintItem;
-    })
-    .filter((item): item is BlueprintItem => item !== null);
-});
+const blueprintItems: BlueprintItem[] = [];
 
 const lineProps = {
   stroke: "currentColor",
