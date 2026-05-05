@@ -470,8 +470,8 @@ const StorePage = () => {
 
       {/* Store content placeholder */}
       <div className="container mx-auto py-12 px-4">
-        <div className="max-w-4xl mx-auto">
-          <div className="bg-card border border-border rounded-xl p-8 shadow-lg text-center">
+        <div className={`${store.id === "s18" ? "max-w-[1400px]" : "max-w-4xl"} mx-auto`}>
+          <div className={`bg-card border border-border rounded-xl ${store.id === "s18" ? "p-2" : "p-8"} shadow-lg text-center`}>
             {isIsraelMezuzahs ? (
               <>
                 {/* Image in center with products on sides */}
