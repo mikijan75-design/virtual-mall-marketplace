@@ -313,6 +313,19 @@ const InfrastructureBlueprintScene = () => {
     }
     return initialProducts;
   });
+  const [deleteMode, setDeleteMode] = useState(false);
+
+  const handleDelete = (id: string) => {
+    setProducts((prev) => {
+      const next = prev.filter((p) => p.id !== id);
+      try {
+        window.localStorage.setItem(STORAGE_KEY, JSON.stringify(next));
+      } catch {
+        /* ignore */
+      }
+      return next;
+    });
+  };
   // Decorative fillers placed in shelf cells without products
   const decorCells: { cell: number; type: "vase" | "books" | "lantern" | "plant" }[] = [
     { cell: 1, type: "vase" },
@@ -323,6 +336,19 @@ const InfrastructureBlueprintScene = () => {
 
   return (
     <figure className="relative mx-auto w-full max-w-6xl overflow-hidden rounded-[2rem] border border-[#7a4a22] bg-white shadow-2xl shadow-slate-950/30">
+      <div className="absolute right-3 top-3 z-10 flex gap-2">
+        <button
+          type="button"
+          onClick={() => setDeleteMode((v) => !v)}
+          className={`rounded-full border px-3 py-1 text-xs font-medium shadow-md transition ${
+            deleteMode
+              ? "border-red-700 bg-red-600 text-white"
+              : "border-[#7a4a22] bg-white text-[#7a4a22] hover:bg-[#f5ead8]"
+          }`}
+        >
+          {deleteMode ? "סיים מחיקה" : "מצב מחיקה"}
+        </button>
+      </div>
       <svg
         className="h-auto w-full text-[#0a0a0a]"
         viewBox="0 0 1024 576"
@@ -607,17 +633,41 @@ const InfrastructureBlueprintScene = () => {
           const w = BASE_W * product.scale;
           const h = BASE_H * product.scale;
           return (
-            <image
-              key={product.id}
-              href={product.src}
-              x={product.x - w / 2}
-              y={product.y - h}
-              width={w}
-              height={h}
-              preserveAspectRatio="xMidYMax meet"
-            >
-              <title>{product.alt}</title>
-            </image>
+            <g key={product.id}>
+              <image
+                href={product.src}
+                x={product.x - w / 2}
+                y={product.y - h}
+                width={w}
+                height={h}
+                preserveAspectRatio="xMidYMax meet"
+                style={deleteMode ? { cursor: "pointer", opacity: 0.85 } : undefined}
+                onClick={deleteMode ? () => handleDelete(product.id) : undefined}
+              >
+                <title>{deleteMode ? "לחץ למחיקה" : product.alt}</title>
+              </image>
+              {deleteMode && (
+                <g
+                  style={{ cursor: "pointer" }}
+                  onClick={() => handleDelete(product.id)}
+                >
+                  <circle
+                    cx={product.x + w / 2 - 8}
+                    cy={product.y - h + 8}
+                    r="9"
+                    fill="#dc2626"
+                    stroke="#fff"
+                    strokeWidth="1.5"
+                  />
+                  <path
+                    d={`M ${product.x + w / 2 - 12} ${product.y - h + 4} L ${product.x + w / 2 - 4} ${product.y - h + 12} M ${product.x + w / 2 - 4} ${product.y - h + 4} L ${product.x + w / 2 - 12} ${product.y - h + 12}`}
+                    stroke="#fff"
+                    strokeWidth="2"
+                    strokeLinecap="round"
+                  />
+                </g>
+              )}
+            </g>
           );
         })}
 
