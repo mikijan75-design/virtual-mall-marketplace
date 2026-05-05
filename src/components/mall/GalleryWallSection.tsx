@@ -1,4 +1,7 @@
+import hamsaStainedGlass from "@/assets/stores/hamsa-stained-glass.png";
+
 const frameCount = 20;
+const artworkIndex = 6;
 
 const GalleryWallSection = () => {
   return (
@@ -21,7 +24,15 @@ const GalleryWallSection = () => {
                 key={index}
               >
                 <div className="absolute inset-0 border border-[#bfc0bc] bg-[linear-gradient(135deg,#fbfbf8_0_9%,#d5d5d0_9%_14%,#f4f4f1_14%_86%,#c5c5c1_86%_91%,#ededeb_91%)]" />
-                <div className="relative h-full w-full border border-[#d5d5d0] bg-[linear-gradient(145deg,#fbfbf9,#ececea)] shadow-inner" />
+                <div className="relative h-full w-full overflow-hidden border border-[#d5d5d0] bg-[linear-gradient(145deg,#fbfbf9,#ececea)] shadow-inner">
+                  {index === artworkIndex && (
+                    <img
+                      src={hamsaStainedGlass}
+                      alt="Hamsa stained glass artwork"
+                      className="h-full w-full object-contain"
+                    />
+                  )}
+                </div>
               </div>
             ))}
           </div>
