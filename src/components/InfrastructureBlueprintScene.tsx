@@ -28,8 +28,10 @@ import n8 from "@/assets/beggars-new/n8.png";
 import n9 from "@/assets/beggars-new/n9.png";
 import n10 from "@/assets/beggars-new/n10.png";
 import n11 from "@/assets/beggars-new/n11.png";
+import n12 from "@/assets/beggars-new/n12.png";
+import n13 from "@/assets/beggars-new/n13.png";
 
-import { useState } from "react";
+import { useRef, useState } from "react";
 
 type FeaturedProduct = {
   id: string;
@@ -51,12 +53,12 @@ const counterPanels = [317, 450, 582, 715];
 const cellCenters = [162, 336, 511, 685, 859];
 const blueprintItems: BlueprintItem[] = [];
 
-const STORAGE_KEY = "beggars-product-layout-v1";
+const STORAGE_KEY = "beggars-product-layout-v2";
 const BASE_W = 110;
 const BASE_H = 100;
 
 // Available BEGGARS products randomly scattered across the 3×5 shelf grid (remaining cells stay empty)
-const productPool = [n1, n2, n3, n4, n5, n6, n7, n8, n9, n10, n11];
+const productPool = [n1, n2, n3, n4, n5, n6, n7, n8, n9, n10, n11, n12, n13];
 // Pre-shuffled cell indices (0..14) — first N positions get products, rest stay empty
 const cellOrder = [7, 2, 11, 14, 4, 9, 0, 13, 6, 3, 10, 1, 12, 5, 8];
 const initialProducts: FeaturedProduct[] = productPool.map((src, i) => {
@@ -314,15 +316,69 @@ const InfrastructureBlueprintScene = () => {
     return initialProducts;
   });
   const [deleteMode, setDeleteMode] = useState(false);
+  const [editMode, setEditMode] = useState(false);
+  const [selectedId, setSelectedId] = useState<string | null>(null);
+  const svgRef = useRef<SVGSVGElement | null>(null);
+  const dragRef = useRef<{ id: string; offX: number; offY: number } | null>(null);
+
+  const persist = (next: FeaturedProduct[]) => {
+    try {
+      window.localStorage.setItem(STORAGE_KEY, JSON.stringify(next));
+    } catch {
+      /* ignore */
+    }
+  };
+
+  const toSvgPoint = (clientX: number, clientY: number) => {
+    const svg = svgRef.current;
+    if (!svg) return { x: 0, y: 0 };
+    const pt = svg.createSVGPoint();
+    pt.x = clientX;
+    pt.y = clientY;
+    const ctm = svg.getScreenCTM();
+    if (!ctm) return { x: 0, y: 0 };
+    const sp = pt.matrixTransform(ctm.inverse());
+    return { x: sp.x, y: sp.y };
+  };
+
+  const onPointerDownItem = (e: React.PointerEvent, p: FeaturedProduct) => {
+    if (!editMode) return;
+    e.stopPropagation();
+    setSelectedId(p.id);
+    const { x, y } = toSvgPoint(e.clientX, e.clientY);
+    dragRef.current = { id: p.id, offX: x - p.x, offY: y - p.y };
+    (e.target as Element).setPointerCapture?.(e.pointerId);
+  };
+
+  const onPointerMove = (e: React.PointerEvent) => {
+    if (!editMode || !dragRef.current) return;
+    const { id, offX, offY } = dragRef.current;
+    const { x, y } = toSvgPoint(e.clientX, e.clientY);
+    setProducts((prev) => prev.map((p) => (p.id === id ? { ...p, x: x - offX, y: y - offY } : p)));
+  };
+
+  const onPointerUp = () => {
+    if (dragRef.current) {
+      dragRef.current = null;
+      setProducts((prev) => {
+        persist(prev);
+        return prev;
+      });
+    }
+  };
+
+  const updateScale = (id: string, scale: number) => {
+    setProducts((prev) => {
+      const next = prev.map((p) => (p.id === id ? { ...p, scale } : p));
+      persist(next);
+      return next;
+    });
+  };
 
   const handleDelete = (id: string) => {
     setProducts((prev) => {
       const next = prev.filter((p) => p.id !== id);
-      try {
-        window.localStorage.setItem(STORAGE_KEY, JSON.stringify(next));
-      } catch {
-        /* ignore */
-      }
+      persist(next);
       return next;
     });
   };
@@ -335,11 +391,29 @@ const InfrastructureBlueprintScene = () => {
   ];
 
   return (
-    <figure className="relative mx-auto w-full max-w-6xl overflow-hidden rounded-[2rem] border border-[#7a4a22] bg-white shadow-2xl shadow-slate-950/30">
+    <figure className="relative mx-auto w-full max-w-6xl rounded-[2rem] border border-[#7a4a22] bg-white shadow-2xl shadow-slate-950/30">
       <div className="absolute right-3 top-3 z-10 flex gap-2">
         <button
           type="button"
-          onClick={() => setDeleteMode((v) => !v)}
+          onClick={() => {
+            setEditMode((v) => !v);
+            setSelectedId(null);
+            if (!editMode) setDeleteMode(false);
+          }}
+          className={`rounded-full border px-3 py-1 text-xs font-medium shadow-md transition ${
+            editMode
+              ? "border-emerald-700 bg-emerald-600 text-white"
+              : "border-[#7a4a22] bg-white text-[#7a4a22] hover:bg-[#f5ead8]"
+          }`}
+        >
+          {editMode ? "סיים עריכה" : "מצב עריכה"}
+        </button>
+        <button
+          type="button"
+          onClick={() => {
+            setDeleteMode((v) => !v);
+            if (!deleteMode) setEditMode(false);
+          }}
           className={`rounded-full border px-3 py-1 text-xs font-medium shadow-md transition ${
             deleteMode
               ? "border-red-700 bg-red-600 text-white"
@@ -349,9 +423,40 @@ const InfrastructureBlueprintScene = () => {
           {deleteMode ? "סיים מחיקה" : "מצב מחיקה"}
         </button>
       </div>
+      {editMode && selectedId && (() => {
+        const sel = products.find((p) => p.id === selectedId);
+        if (!sel) return null;
+        return (
+          <div className="absolute bottom-3 left-1/2 z-10 flex -translate-x-1/2 items-center gap-3 rounded-full border border-[#7a4a22] bg-white/95 px-4 py-2 text-xs shadow-md">
+            <span className="font-medium text-[#7a4a22]">גודל</span>
+            <input
+              type="range"
+              min={0.3}
+              max={3}
+              step={0.05}
+              value={sel.scale}
+              onChange={(e) => updateScale(sel.id, parseFloat(e.target.value))}
+              className="w-48"
+            />
+            <span className="tabular-nums text-[#7a4a22]">{sel.scale.toFixed(2)}×</span>
+            <button
+              type="button"
+              onClick={() => setSelectedId(null)}
+              className="rounded-full border border-[#7a4a22] px-2 py-0.5 text-[#7a4a22] hover:bg-[#f5ead8]"
+            >
+              סגור
+            </button>
+          </div>
+        );
+      })()}
       <svg
-        className="h-auto w-full text-[#0a0a0a]"
+        ref={svgRef}
+        className="h-auto w-full text-[#0a0a0a] [overflow:visible]"
         viewBox="0 0 1024 576"
+        onPointerMove={onPointerMove}
+        onPointerUp={onPointerUp}
+        onPointerLeave={onPointerUp}
+        onClick={() => editMode && setSelectedId(null)}
         role="img"
         aria-labelledby="infrastructure-blueprint-title infrastructure-blueprint-desc"
         xmlns="http://www.w3.org/2000/svg"
@@ -632,8 +737,19 @@ const InfrastructureBlueprintScene = () => {
         {products.map((product) => {
           const w = BASE_W * product.scale;
           const h = BASE_H * product.scale;
+          const isSelected = editMode && selectedId === product.id;
           return (
-            <g key={product.id}>
+            <g
+              key={product.id}
+              onPointerDown={(e) => onPointerDownItem(e, product)}
+              onClick={(e) => {
+                if (editMode) {
+                  e.stopPropagation();
+                  setSelectedId(product.id);
+                }
+              }}
+              style={editMode ? { cursor: "move" } : undefined}
+            >
               <image
                 href={product.src}
                 x={product.x - w / 2}
@@ -641,11 +757,30 @@ const InfrastructureBlueprintScene = () => {
                 width={w}
                 height={h}
                 preserveAspectRatio="xMidYMax meet"
-                style={deleteMode ? { cursor: "pointer", opacity: 0.85 } : undefined}
+                style={
+                  deleteMode
+                    ? { cursor: "pointer", opacity: 0.85 }
+                    : editMode
+                    ? { cursor: "move" }
+                    : undefined
+                }
                 onClick={deleteMode ? () => handleDelete(product.id) : undefined}
               >
                 <title>{deleteMode ? "לחץ למחיקה" : product.alt}</title>
               </image>
+              {isSelected && (
+                <rect
+                  x={product.x - w / 2 - 3}
+                  y={product.y - h - 3}
+                  width={w + 6}
+                  height={h + 6}
+                  fill="none"
+                  stroke="#10b981"
+                  strokeDasharray="4 3"
+                  strokeWidth="1.4"
+                  pointerEvents="none"
+                />
+              )}
               {deleteMode && (
                 <g
                   style={{ cursor: "pointer" }}
