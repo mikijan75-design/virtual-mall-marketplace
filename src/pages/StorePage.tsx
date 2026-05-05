@@ -403,16 +403,24 @@ const StorePage = () => {
             </h1>
             <div
               className="relative overflow-hidden rounded-2xl p-6 shadow-2xl"
-              style={{
-                background:
-                  "repeating-conic-gradient(#3a3a3a 0deg 90deg, #2e2e2e 90deg 180deg) 0 0/22px 22px",
-              }}
+              style={{ background: "#f7e7c4" }}
             >
-              <img
-                src={beggarsWireframe}
-                alt="תשתית הקווים של חנות BEGGARS - מדפים, פריטים ודלפק"
-                className="block w-full h-auto select-none"
-                draggable={false}
+              <div
+                role="img"
+                aria-label="תשתית הקווים של חנות BEGGARS - מדפים, פריטים ודלפק"
+                className="block w-full"
+                style={{
+                  aspectRatio: "1456 / 816",
+                  backgroundColor: "#7a4a23",
+                  WebkitMaskImage: `url(${beggarsWireframe})`,
+                  maskImage: `url(${beggarsWireframe})`,
+                  WebkitMaskRepeat: "no-repeat",
+                  maskRepeat: "no-repeat",
+                  WebkitMaskSize: "contain",
+                  maskSize: "contain",
+                  WebkitMaskPosition: "center",
+                  maskPosition: "center",
+                }}
               />
             </div>
           </div>
