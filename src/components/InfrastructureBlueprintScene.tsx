@@ -312,7 +312,7 @@ const InfrastructureBlueprintScene = () => {
         if (saved) {
           const parsed = JSON.parse(saved) as FeaturedProduct[];
           // Re-attach src from current bundled assets by index
-          return parsed.map((p, i) => ({ ...p, src: initialProducts[i]?.src ?? p.src }));
+          return parsed.map((p) => ({ ...p, src: productSrcById[p.id] ?? p.src }));
         }
       } catch {
         /* ignore */
