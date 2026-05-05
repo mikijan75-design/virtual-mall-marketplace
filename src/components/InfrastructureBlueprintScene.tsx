@@ -750,6 +750,16 @@ const InfrastructureBlueprintScene = () => {
               }}
               style={editMode ? { cursor: "move" } : undefined}
             >
+              <ellipse
+                cx={product.x + w * 0.18}
+                cy={product.y - 1}
+                rx={w * 0.42}
+                ry={Math.max(3, h * 0.07)}
+                fill="#000"
+                opacity="0.32"
+                style={{ filter: "blur(2.5px)" }}
+                pointerEvents="none"
+              />
               <image
                 href={product.src}
                 x={product.x - w / 2}
