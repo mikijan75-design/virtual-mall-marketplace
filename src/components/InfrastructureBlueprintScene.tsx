@@ -18,10 +18,13 @@ type BlueprintItem = {
 };
 
 const shelfRows = [135, 190, 245, 300, 375];
-const columns = [56, 206, 346, 486, 636, 778];
-const counterPanels = [168, 308, 448, 588, 728];
+// Symmetric vertical dividers: equal 169px gap on both left (75→244) and right (778→947) edges
+const columns = [244, 377, 511, 644, 778];
+// Symmetric inner counter dividers (counter spans 184→848, center 516)
+const counterPanels = [317, 450, 582, 715];
 
-const cellCenters = [135, 280, 420, 565, 711, 866];
+// Cell centers symmetric around the shelf center (511)
+const cellCenters = [160, 311, 444, 578, 711, 862];
 const rowItemTypes: BlueprintItemType[][] = [
   ["laptop", "monitor", "document", "monitor", "box", "globe"],
   ["router", "phone", "router", "router", "document", "tablet"],
