@@ -9,6 +9,7 @@ import { useState } from "react";
 import israelMezuzahsAbout from "@/assets/stores/israel-mezuzahs-about.png";
 import imBeadLogo from "@/assets/stores/im-bead-logo.png";
 import beggarsWireframe from "@/assets/stores/beggars-wireframe.png";
+import danielGlassArtLogo from "@/assets/stores/daniel-glass-art-logo.jpg";
 import InfrastructureBlueprintScene from "@/components/InfrastructureBlueprintScene";
 import imProduct1 from "@/assets/stores/im-product-1.png";
 import imProduct2 from "@/assets/stores/im-product-2.png";
