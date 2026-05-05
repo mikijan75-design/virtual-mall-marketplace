@@ -381,18 +381,35 @@ const InfrastructureBlueprintScene = () => {
           const cx = cellCenters[product.colIdx];
           const imgW = 110;
           const imgH = 100;
+          // Cell bounds (between partitions) to clip any overflowing artwork
+          const cellEdges = [75, ...columns.map((c) => c + 8), 947];
+          const cellLeft = cellEdges[product.colIdx];
+          const cellRight = cellEdges[product.colIdx + 1];
+          const cellTop = product.rowIdx === 0 ? 70 : shelfRows[product.rowIdx - 1];
+          const cellBottom = shelfY - 4;
+          const clipId = `cell-clip-${product.rowIdx}-${product.colIdx}`;
           return (
-            <image
-              key={`featured-${product.rowIdx}-${product.colIdx}`}
-              href={product.src}
-              x={cx - imgW / 2}
-              y={shelfY - imgH}
-              width={imgW}
-              height={imgH}
-              preserveAspectRatio="xMidYMax meet"
-            >
-              <title>{product.alt}</title>
-            </image>
+            <g key={`featured-${product.rowIdx}-${product.colIdx}`}>
+              <clipPath id={clipId}>
+                <rect
+                  x={cellLeft + 2}
+                  y={cellTop + 2}
+                  width={cellRight - cellLeft - 4}
+                  height={cellBottom - cellTop - 2}
+                />
+              </clipPath>
+              <image
+                href={product.src}
+                x={cx - imgW / 2}
+                y={shelfY - imgH}
+                width={imgW}
+                height={imgH}
+                preserveAspectRatio="xMidYMax meet"
+                clipPath={`url(#${clipId})`}
+              >
+                <title>{product.alt}</title>
+              </image>
+            </g>
           );
         })}
 
