@@ -1,7 +1,19 @@
 import hamsaStainedGlass from "@/assets/stores/hamsa-stained-glass.png";
+import hummingbirdBlue from "@/assets/stores/hummingbird-blue.png";
+import hummingbirdGreen from "@/assets/stores/hummingbird-green.png";
+import hamsaAmber from "@/assets/stores/hamsa-amber.png";
+import hamsaJerusalem from "@/assets/stores/hamsa-jerusalem.png";
+import crossRed from "@/assets/stores/cross-red.png";
 
 const frameCount = 20;
-const artworkIndex = 6;
+const artworks: Record<number, { src: string; alt: string }> = {
+  2: { src: hummingbirdBlue, alt: "Blue hummingbird stained glass" },
+  6: { src: hamsaStainedGlass, alt: "Hamsa stained glass artwork" },
+  9: { src: hummingbirdGreen, alt: "Green hummingbird stained glass" },
+  12: { src: hamsaAmber, alt: "Amber hamsa stained glass" },
+  15: { src: hamsaJerusalem, alt: "Jerusalem hamsa stained glass" },
+  18: { src: crossRed, alt: "Red cross stained glass" },
+};
 
 const GalleryWallSection = () => {
   return (
@@ -25,10 +37,10 @@ const GalleryWallSection = () => {
               >
                 <div className="absolute inset-0 border border-[#bfc0bc] bg-[linear-gradient(135deg,#fbfbf8_0_9%,#d5d5d0_9%_14%,#f4f4f1_14%_86%,#c5c5c1_86%_91%,#ededeb_91%)]" />
                 <div className="relative h-full w-full overflow-hidden border border-[#d5d5d0] bg-[linear-gradient(145deg,#fbfbf9,#ececea)] shadow-inner">
-                  {index === artworkIndex && (
+                  {artworks[index] && (
                     <img
-                      src={hamsaStainedGlass}
-                      alt="Hamsa stained glass artwork"
+                      src={artworks[index].src}
+                      alt={artworks[index].alt}
                       className="h-full w-full object-contain"
                     />
                   )}
