@@ -250,6 +250,8 @@ const InfrastructureBlueprintScene = () => {
         <rect x="184" y="470" width="664" height="80" fill="#efe8d8" />
         {/* Wood-colored outer frame around the cabinet */}
         <rect x="57" y="58" width="910" height="392" fill="none" stroke="#b8895a" strokeWidth="6" />
+        {/* Thin dark outline on the outer frame edges */}
+        <rect x="57" y="58" width="910" height="392" fill="none" stroke="#0a0a0a" strokeWidth="0.5" vectorEffect="non-scaling-stroke" />
 
         <g className="blueprint-main">
           <path className="drawn-line" d="M56 58h912l-6 7H62z" />
