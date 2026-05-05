@@ -9,6 +9,7 @@ import { useState } from "react";
 import israelMezuzahsAbout from "@/assets/stores/israel-mezuzahs-about.png";
 import imBeadLogo from "@/assets/stores/im-bead-logo.png";
 import beggarsWireframe from "@/assets/stores/beggars-wireframe.png";
+import InfrastructureBlueprintScene from "@/components/InfrastructureBlueprintScene";
 import imProduct1 from "@/assets/stores/im-product-1.png";
 import imProduct2 from "@/assets/stores/im-product-2.png";
 import imProduct3 from "@/assets/stores/im-product-3.png";
@@ -401,28 +402,7 @@ const StorePage = () => {
             <h1 className="mb-6 text-center font-frank text-4xl font-black tracking-[0.25em] text-foreground">
               BEGGARS
             </h1>
-            <div
-              className="relative overflow-hidden rounded-2xl p-6 shadow-2xl"
-              style={{ background: "#f7e7c4" }}
-            >
-              <div
-                role="img"
-                aria-label="תשתית הקווים של חנות BEGGARS - מדפים, פריטים ודלפק"
-                className="block w-full"
-                style={{
-                  aspectRatio: "1456 / 816",
-                  backgroundColor: "#7a4a23",
-                  WebkitMaskImage: `url(${beggarsWireframe})`,
-                  maskImage: `url(${beggarsWireframe})`,
-                  WebkitMaskRepeat: "no-repeat",
-                  maskRepeat: "no-repeat",
-                  WebkitMaskSize: "contain",
-                  maskSize: "contain",
-                  WebkitMaskPosition: "center",
-                  maskPosition: "center",
-                }}
-              />
-            </div>
+            <InfrastructureBlueprintScene />
           </div>
           <div className="text-center mt-8">
             <Link
