@@ -4,14 +4,30 @@ import hummingbirdGreen from "@/assets/stores/hummingbird-green.png";
 import hamsaAmber from "@/assets/stores/hamsa-amber.png";
 import hamsaJerusalem from "@/assets/stores/hamsa-jerusalem.png";
 import crossRed from "@/assets/stores/cross-red.png";
+import starBlueCircle from "@/assets/stores/star-blue-circle.png";
+import starOfDavid from "@/assets/stores/star-of-david.png";
+import butterflyRainbow from "@/assets/stores/butterfly-rainbow.png";
+import hamsaJerusalemBlue from "@/assets/stores/hamsa-jerusalem-blue.png";
+import hamsaBlueGems from "@/assets/stores/hamsa-blue-gems.png";
+import lampBlueMosaic from "@/assets/stores/lamp-blue-mosaic.png";
+import hamsaJerusalemTeal from "@/assets/stores/hamsa-jerusalem-teal.png";
+import hamsaJerusalemOrange from "@/assets/stores/hamsa-jerusalem-orange.png";
 
 const frameCount = 20;
 const artworks: Record<number, { src: string; alt: string }> = {
+  0: { src: starBlueCircle, alt: "Blue star circle stained glass" },
+  1: { src: starOfDavid, alt: "Star of David stained glass" },
   2: { src: hummingbirdBlue, alt: "Blue hummingbird stained glass" },
+  3: { src: butterflyRainbow, alt: "Rainbow butterfly stained glass" },
+  4: { src: hamsaJerusalemBlue, alt: "Blue Jerusalem hamsa stained glass" },
   6: { src: hamsaStainedGlass, alt: "Hamsa stained glass artwork" },
+  7: { src: hamsaBlueGems, alt: "Blue hamsa with gems stained glass" },
   9: { src: hummingbirdGreen, alt: "Green hummingbird stained glass" },
+  10: { src: lampBlueMosaic, alt: "Blue mosaic lamp stained glass" },
   12: { src: hamsaAmber, alt: "Amber hamsa stained glass" },
+  13: { src: hamsaJerusalemTeal, alt: "Teal Jerusalem hamsa stained glass" },
   15: { src: hamsaJerusalem, alt: "Jerusalem hamsa stained glass" },
+  16: { src: hamsaJerusalemOrange, alt: "Orange Jerusalem hamsa stained glass" },
   18: { src: crossRed, alt: "Red cross stained glass" },
 };
 
