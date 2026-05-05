@@ -9,6 +9,8 @@ import { useState } from "react";
 import israelMezuzahsAbout from "@/assets/stores/israel-mezuzahs-about.png";
 import imBeadLogo from "@/assets/stores/im-bead-logo.png";
 import beggarsWireframe from "@/assets/stores/beggars-wireframe.png";
+import danielGlassArtLogo from "@/assets/stores/daniel-glass-art-logo.jpg";
+import floor1Shop6Img from "@/assets/stores/floor1-shop6.png";
 import InfrastructureBlueprintScene from "@/components/InfrastructureBlueprintScene";
 import imProduct1 from "@/assets/stores/im-product-1.png";
 import imProduct2 from "@/assets/stores/im-product-2.png";
@@ -425,7 +427,10 @@ const StorePage = () => {
       <BackButton />
 
       {/* Store banner */}
-      <div className={`bg-gradient-to-r ${store.signColor} py-8 md:py-12`}>
+      <div
+        className={`py-8 md:py-12 ${store.id === "s18" ? "" : `bg-gradient-to-r ${store.signColor}`}`}
+        style={store.id === "s18" ? { background: "linear-gradient(135deg, #1e4a8a, #0f2d5c)" } : undefined}
+      >
         <div className="container mx-auto text-center text-white">
           {isIsraelMezuzahs ? (
             <img
@@ -437,17 +442,27 @@ const StorePage = () => {
                   "drop-shadow(-2px -3px 2px rgba(255,240,210,0.55)) drop-shadow(14px 22px 10px rgba(0,0,0,0.65))",
               }}
             />
+          ) : store.id === "s18" ? (
+            <img
+              src={danielGlassArtLogo}
+              alt="Daniel Glass-Art logo"
+              className="block mx-auto mb-4 h-24 md:h-32 w-auto object-contain rounded-md bg-white/95 px-3 py-2 shadow-lg"
+            />
           ) : (
             <span className="text-6xl md:text-8xl block mb-4">{store.logoEmoji}</span>
           )}
           <h1 className="text-3xl md:text-5xl font-frank font-bold mb-2">
-            {isIsraelMezuzahs ? "Israel Mezuzahs" : store.name}
+            {isIsraelMezuzahs ? "Israel Mezuzahs" : store.id === "s18" ? "דוכן ויטראז'" : store.name}
           </h1>
           <p className="text-lg opacity-90 font-heebo">
-            {isIsraelMezuzahs ? "Olive Wood & Epoxy Art • אומנות בעץ זית ואפוקסי" : store.description}
+            {isIsraelMezuzahs
+              ? "Olive Wood & Epoxy Art • אומנות בעץ זית ואפוקסי"
+              : store.id === "s18"
+                ? "אמנות ויטראז' בעבודת יד"
+                : store.description}
           </p>
           <span className="inline-block mt-3 bg-white/20 px-4 py-1 rounded-full text-sm font-heebo">
-            {store.category} • קומה {store.floor}
+            {store.id === "s18" ? "אמנות" : store.category} • קומה {store.floor}
           </span>
         </div>
       </div>
