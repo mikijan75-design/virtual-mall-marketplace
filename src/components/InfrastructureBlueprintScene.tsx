@@ -21,41 +21,23 @@ const shelfRows = [135, 190, 245, 300, 375];
 const columns = [56, 206, 346, 486, 636, 778];
 const counterPanels = [168, 308, 448, 588, 728];
 
-const blueprintItems: BlueprintItem[] = [
-  { type: "laptop", x: 96, y: 117, label: "UI", scale: 0.75 },
-  { type: "document", x: 150, y: 117, label: "API", scale: 0.72 },
-  { type: "phone", x: 222, y: 172, scale: 0.72 },
-  { type: "router", x: 88, y: 172, scale: 0.8 },
-  { type: "globe", x: 128, y: 227, label: "ISO", scale: 0.7 },
-  { type: "tablet", x: 188, y: 227, scale: 0.72 },
-  { type: "laptop", x: 116, y: 282, label: "UX", scale: 0.84 },
-  { type: "phone", x: 260, y: 282, scale: 0.75 },
-  { type: "box", x: 336, y: 172, label: "DB", scale: 0.78 },
-  { type: "globe", x: 396, y: 227, scale: 0.64 },
-  { type: "tablet", x: 318, y: 227, scale: 0.74 },
-  { type: "monitor", x: 452, y: 117, scale: 0.82 },
-  { type: "router", x: 508, y: 172, scale: 0.78 },
-  { type: "printer", x: 410, y: 227, scale: 0.7 },
-  { type: "phone", x: 446, y: 282, scale: 0.72 },
-  { type: "document", x: 520, y: 282, label: "CSS", scale: 0.72 },
-  { type: "monitor", x: 596, y: 117, scale: 0.85 },
-  { type: "document", x: 600, y: 172, label: "DOC", scale: 0.75 },
-  { type: "router", x: 672, y: 172, label: "I/O", scale: 0.78 },
-  { type: "tablet", x: 620, y: 227, scale: 0.72 },
-  { type: "printer", x: 710, y: 282, scale: 0.72 },
-  { type: "box", x: 776, y: 117, scale: 0.74 },
-  { type: "globe", x: 824, y: 117, scale: 0.64 },
-  { type: "laptop", x: 786, y: 227, scale: 0.82 },
-  { type: "phone", x: 884, y: 282, scale: 0.72 },
-  { type: "laptop", x: 210, y: 357, label: "LIVE", scale: 0.92 },
-  { type: "laptop", x: 290, y: 357, scale: 0.86 },
-  { type: "tablet", x: 378, y: 357, label: "SVG", scale: 0.8 },
-  { type: "document", x: 466, y: 357, label: "TS", scale: 0.78 },
-  { type: "globe", x: 548, y: 357, scale: 0.74 },
-  { type: "monitor", x: 632, y: 357, scale: 0.84 },
-  { type: "printer", x: 712, y: 357, scale: 0.76 },
-  { type: "router", x: 798, y: 357, scale: 0.74 },
+const cellCenters = [135, 280, 420, 565, 711, 866];
+const rowItemTypes: BlueprintItemType[][] = [
+  ["laptop", "monitor", "document", "monitor", "box", "globe"],
+  ["router", "phone", "router", "router", "document", "tablet"],
+  ["globe", "tablet", "printer", "tablet", "globe", "laptop"],
+  ["laptop", "phone", "phone", "document", "printer", "phone"],
+  ["tablet", "laptop", "monitor", "globe", "router", "printer"],
 ];
+const blueprintItems: BlueprintItem[] = rowItemTypes.flatMap((row, rowIdx) => {
+  const shelfY = [135, 190, 245, 300, 375][rowIdx];
+  return row.map((type, colIdx) => ({
+    type,
+    x: cellCenters[colIdx],
+    y: shelfY - 22,
+    scale: 0.78,
+  }));
+});
 
 const lineProps = {
   stroke: "currentColor",
