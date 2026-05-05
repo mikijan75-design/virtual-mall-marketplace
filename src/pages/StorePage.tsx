@@ -408,6 +408,14 @@ const StorePage = () => {
                   "repeating-conic-gradient(#3a3a3a 0deg 90deg, #2e2e2e 90deg 180deg) 0 0/22px 22px",
               }}
             >
+              <img
+                src={beggarsWireframe}
+                alt="תשתית הקווים של חנות BEGGARS - מדפים, פריטים ודלפק"
+                className="block w-full h-auto select-none"
+                draggable={false}
+              />
+            </div>
+            <div className="hidden">
               <svg
                 viewBox="0 0 1400 760"
                 xmlns="http://www.w3.org/2000/svg"
