@@ -17,7 +17,12 @@ type BlueprintItem = {
   scale?: number;
 };
 
-import beggarsBagImage from "@/assets/beggars-bag.png";
+import beggarsP1 from "@/assets/beggars/p1.png";
+import beggarsP2 from "@/assets/beggars/p2.png";
+import beggarsP3 from "@/assets/beggars/p3.png";
+import beggarsP4 from "@/assets/beggars/p4.png";
+import beggarsP5 from "@/assets/beggars/p5.png";
+import beggarsP6 from "@/assets/beggars/p6.png";
 
 type FeaturedProduct = {
   rowIdx: number;
@@ -26,8 +31,14 @@ type FeaturedProduct = {
   alt: string;
 };
 
+// 6 unique products placed randomly across the 5×6 shelf grid (no duplicates, one per cell)
 const featuredProducts: FeaturedProduct[] = [
-  { rowIdx: 0, colIdx: 2, src: beggarsBagImage, alt: "BEGGARS printed canvas tote bag" },
+  { rowIdx: 0, colIdx: 1, src: beggarsP1, alt: "BEGGARS product 1" },
+  { rowIdx: 1, colIdx: 4, src: beggarsP2, alt: "BEGGARS product 2" },
+  { rowIdx: 2, colIdx: 0, src: beggarsP3, alt: "BEGGARS product 3" },
+  { rowIdx: 2, colIdx: 3, src: beggarsP4, alt: "BEGGARS product 4" },
+  { rowIdx: 3, colIdx: 5, src: beggarsP5, alt: "BEGGARS product 5" },
+  { rowIdx: 4, colIdx: 2, src: beggarsP6, alt: "BEGGARS product 6" },
 ];
 
 const shelfRows = [135, 190, 245, 300, 375];
