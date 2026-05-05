@@ -12,6 +12,12 @@ import hamsaBlueGems from "@/assets/stores/hamsa-blue-gems.png";
 import lampBlueMosaic from "@/assets/stores/lamp-blue-mosaic.png";
 import hamsaJerusalemTeal from "@/assets/stores/hamsa-jerusalem-teal.png";
 import hamsaJerusalemOrange from "@/assets/stores/hamsa-jerusalem-orange.png";
+import treeOfLife from "@/assets/stores/tree-of-life.png";
+import hamsaGreenEye from "@/assets/stores/hamsa-green-eye.png";
+import lotusPink from "@/assets/stores/lotus-pink.png";
+import candleHolderStarTeal from "@/assets/stores/candle-holder-star-teal.png";
+import hanukkiahBlueStar from "@/assets/stores/hanukkiah-blue-star.png";
+import hotAirBalloon from "@/assets/stores/hot-air-balloon.png";
 import DanielGlassartProfileDesign from "./DanielGlassartProfileDesign";
 
 const frameCount = 20;
@@ -21,15 +27,21 @@ const artworks: Record<number, { src: string; alt: string }> = {
   2: { src: hummingbirdBlue, alt: "Blue hummingbird stained glass" },
   3: { src: butterflyRainbow, alt: "Rainbow butterfly stained glass" },
   4: { src: hamsaJerusalemBlue, alt: "Blue Jerusalem hamsa stained glass" },
+  5: { src: treeOfLife, alt: "Tree of life stained glass" },
   6: { src: hamsaStainedGlass, alt: "Hamsa stained glass artwork" },
   7: { src: hamsaBlueGems, alt: "Blue hamsa with gems stained glass" },
+  8: { src: hamsaGreenEye, alt: "Green hamsa with eye stained glass" },
   9: { src: hummingbirdGreen, alt: "Green hummingbird stained glass" },
   10: { src: lampBlueMosaic, alt: "Blue mosaic lamp stained glass" },
+  11: { src: lotusPink, alt: "Pink lotus flower stained glass" },
   12: { src: hamsaAmber, alt: "Amber hamsa stained glass" },
   13: { src: hamsaJerusalemTeal, alt: "Teal Jerusalem hamsa stained glass" },
+  14: { src: candleHolderStarTeal, alt: "Teal Star of David candle holder stained glass" },
   15: { src: hamsaJerusalem, alt: "Jerusalem hamsa stained glass" },
   16: { src: hamsaJerusalemOrange, alt: "Orange Jerusalem hamsa stained glass" },
+  17: { src: hanukkiahBlueStar, alt: "Blue star hanukkiah stained glass" },
   18: { src: crossRed, alt: "Red cross stained glass" },
+  19: { src: hotAirBalloon, alt: "Hot air balloon stained glass" },
 };
 
 const GalleryWallSection = () => {
