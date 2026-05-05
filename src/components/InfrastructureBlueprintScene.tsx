@@ -159,6 +159,144 @@ const BlueprintIcon = ({ item }: { item: BlueprintItem }) => {
   }
 };
 
+type DecorType = "vase" | "books" | "lantern" | "plant";
+
+const ShelfDecor = ({ type, cx, baseY }: { type: DecorType; cx: number; baseY: number }) => {
+  // baseY is the shelf surface (objects sit on this line)
+  switch (type) {
+    case "vase":
+      return (
+        <g>
+          {/* Vase */}
+          <path
+            d={`M ${cx - 14} ${baseY - 4}
+                C ${cx - 22} ${baseY - 22}, ${cx - 22} ${baseY - 38}, ${cx - 12} ${baseY - 50}
+                L ${cx - 8} ${baseY - 60}
+                L ${cx + 8} ${baseY - 60}
+                L ${cx + 12} ${baseY - 50}
+                C ${cx + 22} ${baseY - 38}, ${cx + 22} ${baseY - 22}, ${cx + 14} ${baseY - 4} Z`}
+            fill="url(#vaseBody)"
+            stroke="#5e4b30"
+            strokeWidth="0.6"
+          />
+          {/* Vase rim */}
+          <ellipse cx={cx} cy={baseY - 60} rx="9" ry="2.4" fill="#3a2c1a" opacity="0.55" />
+          {/* Stems */}
+          <path d={`M ${cx - 4} ${baseY - 58} Q ${cx - 14} ${baseY - 76}, ${cx - 18} ${baseY - 92}`} stroke="#3e6b3a" strokeWidth="1.4" fill="none" strokeLinecap="round" />
+          <path d={`M ${cx} ${baseY - 58} Q ${cx + 2} ${baseY - 80}, ${cx} ${baseY - 100}`} stroke="#3e6b3a" strokeWidth="1.4" fill="none" strokeLinecap="round" />
+          <path d={`M ${cx + 4} ${baseY - 58} Q ${cx + 14} ${baseY - 76}, ${cx + 18} ${baseY - 90}`} stroke="#3e6b3a" strokeWidth="1.4" fill="none" strokeLinecap="round" />
+          {/* Leaves */}
+          <ellipse cx={cx - 10} cy={baseY - 78} rx="4.5" ry="2" fill="#4f8a4a" transform={`rotate(-30 ${cx - 10} ${baseY - 78})`} />
+          <ellipse cx={cx + 10} cy={baseY - 76} rx="4.5" ry="2" fill="#4f8a4a" transform={`rotate(30 ${cx + 10} ${baseY - 76})`} />
+          {/* Flowers */}
+          <Flower cx={cx - 18} cy={baseY - 92} fill="url(#petalRed)" />
+          <Flower cx={cx} cy={baseY - 100} fill="url(#petalYellow)" />
+          <Flower cx={cx + 18} cy={baseY - 90} fill="url(#petalPink)" />
+        </g>
+      );
+    case "books": {
+      const y = baseY - 4;
+      return (
+        <g>
+          {/* Stack of books lying down */}
+          <rect x={cx - 32} y={y - 14} width="64" height="14" fill="url(#bookA)" stroke="#2a140a" strokeWidth="0.5" />
+          <rect x={cx - 30} y={y - 11} width="60" height="2" fill="#fff" opacity="0.25" />
+          <rect x={cx - 28} y={y - 26} width="56" height="12" fill="url(#bookB)" stroke="#0f1f30" strokeWidth="0.5" />
+          <rect x={cx - 26} y={y - 23} width="52" height="2" fill="#fff" opacity="0.25" />
+          <rect x={cx - 24} y={y - 36} width="48" height="10" fill="url(#bookC)" stroke="#0f2410" strokeWidth="0.5" />
+          {/* Standing book leaning */}
+          <g transform={`translate(${cx + 18} ${y - 36}) rotate(-8)`}>
+            <rect x="0" y="-44" width="10" height="44" fill="url(#bookA)" stroke="#2a140a" strokeWidth="0.5" />
+            <rect x="1" y="-43" width="1.2" height="42" fill="#fff" opacity="0.35" />
+          </g>
+          {/* Small decorative apple */}
+          <circle cx={cx - 26} cy={y - 42} r="5" fill="#c83a3a" />
+          <path d={`M ${cx - 26} ${y - 47} q 1 -3 4 -3`} stroke="#3e6b3a" strokeWidth="1.2" fill="none" strokeLinecap="round" />
+        </g>
+      );
+    }
+    case "lantern": {
+      const y = baseY - 4;
+      return (
+        <g>
+          {/* Base */}
+          <rect x={cx - 16} y={y - 6} width="32" height="6" fill="url(#lanternMetal)" />
+          {/* Glass body */}
+          <rect x={cx - 12} y={y - 50} width="24" height="44" fill="#fef9d8" opacity="0.55" stroke="#3a2a18" strokeWidth="0.7" />
+          {/* Vertical bars */}
+          <line x1={cx - 12} y1={y - 50} x2={cx - 12} y2={y - 6} stroke="#2c2014" strokeWidth="1.2" />
+          <line x1={cx + 12} y1={y - 50} x2={cx + 12} y2={y - 6} stroke="#2c2014" strokeWidth="1.2" />
+          <line x1={cx} y1={y - 50} x2={cx} y2={y - 6} stroke="#2c2014" strokeWidth="0.6" opacity="0.6" />
+          {/* Top cap */}
+          <path d={`M ${cx - 16} ${y - 50} L ${cx} ${y - 62} L ${cx + 16} ${y - 50} Z`} fill="url(#lanternMetal)" />
+          <rect x={cx - 1.2} y={y - 70} width="2.4" height="8" fill="url(#lanternMetal)" />
+          <path d={`M ${cx - 8} ${y - 70} Q ${cx} ${y - 78}, ${cx + 8} ${y - 70}`} stroke="#2c2014" strokeWidth="1.2" fill="none" />
+          {/* Flame glow */}
+          <ellipse cx={cx} cy={y - 28} rx="14" ry="18" fill="url(#lanternFlame)" />
+          <ellipse cx={cx} cy={y - 26} rx="2.2" ry="5" fill="#ffd76a" />
+        </g>
+      );
+    }
+    case "plant": {
+      const y = baseY - 4;
+      return (
+        <g>
+          {/* Pot */}
+          <path
+            d={`M ${cx - 18} ${y - 22} L ${cx + 18} ${y - 22} L ${cx + 14} ${y} L ${cx - 14} ${y} Z`}
+            fill="url(#potClay)"
+            stroke="#4a2614"
+            strokeWidth="0.6"
+          />
+          <ellipse cx={cx} cy={y - 22} rx="18" ry="3" fill="#3a1f08" opacity="0.45" />
+          <ellipse cx={cx} cy={y - 22} rx="16" ry="2" fill="#2a1a10" />
+          {/* Foliage — layered leaves */}
+          {[
+            { dx: -16, dy: -34, r: -50, c: "#3e7a3a" },
+            { dx: -6, dy: -46, r: -20, c: "#4f9a4a" },
+            { dx: 8, dy: -44, r: 25, c: "#3e7a3a" },
+            { dx: 18, dy: -34, r: 55, c: "#5aa84f" },
+            { dx: 0, dy: -56, r: 0, c: "#67b85a" },
+            { dx: -10, dy: -52, r: -12, c: "#4f9a4a" },
+            { dx: 12, dy: -52, r: 18, c: "#67b85a" },
+          ].map((l, i) => (
+            <ellipse
+              key={i}
+              cx={cx + l.dx}
+              cy={y + l.dy}
+              rx="4.5"
+              ry="11"
+              fill={l.c}
+              transform={`rotate(${l.r} ${cx + l.dx} ${y + l.dy})`}
+              stroke="#1f3d1f"
+              strokeWidth="0.4"
+            />
+          ))}
+        </g>
+      );
+    }
+    default:
+      return null;
+  }
+};
+
+const Flower = ({ cx, cy, fill }: { cx: number; cy: number; fill: string }) => (
+  <g>
+    {[0, 60, 120, 180, 240, 300].map((deg) => (
+      <ellipse
+        key={deg}
+        cx={cx}
+        cy={cy - 3}
+        rx="2.4"
+        ry="3.6"
+        fill={fill}
+        transform={`rotate(${deg} ${cx} ${cy})`}
+      />
+    ))}
+    <circle cx={cx} cy={cy} r="1.6" fill="#3a2a14" />
+  </g>
+);
+
 const InfrastructureBlueprintScene = () => {
   const [products, setProducts] = useState<FeaturedProduct[]>(() => {
     if (typeof window !== "undefined") {
