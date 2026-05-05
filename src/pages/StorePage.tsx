@@ -9,7 +9,6 @@ import { useState } from "react";
 import israelMezuzahsAbout from "@/assets/stores/israel-mezuzahs-about.png";
 import imBeadLogo from "@/assets/stores/im-bead-logo.png";
 import beggarsWireframe from "@/assets/stores/beggars-wireframe.png";
-import danielGlassArtLogo from "@/assets/stores/daniel-glass-art-logo.jpg";
 import InfrastructureBlueprintScene from "@/components/InfrastructureBlueprintScene";
 import imProduct1 from "@/assets/stores/im-product-1.png";
 import imProduct2 from "@/assets/stores/im-product-2.png";
@@ -364,151 +363,6 @@ const israelMezuzahsProducts = [
   { src: imHanukkiahsCategory, name: "חנוכיות", slug: "hanukkiahs" },
 ];
 
-const glassPalette = [
-  { name: "Cobalt glass", hex: "#1f4fa8" },
-  { name: "Emerald glass", hex: "#1e7a4d" },
-  { name: "Ruby glass", hex: "#b3203a" },
-  { name: "Amber glass", hex: "#d99a2b" },
-  { name: "Slate lead", hex: "#2a2a2a" },
-  { name: "Lime panel", hex: "#9bc24b" },
-];
-
-const glassPanels = [
-  { color: "#1f4fa8", shape: "diamond" },
-  { color: "#1e7a4d", shape: "triangle" },
-  { color: "#b3203a", shape: "circle" },
-  { color: "#d99a2b", shape: "diamond" },
-  { color: "#9bc24b", shape: "triangle" },
-  { color: "#3b6fb8", shape: "circle" },
-  { color: "#7a1d2f", shape: "diamond" },
-  { color: "#c9a96e", shape: "triangle" },
-  { color: "#2a8a5e", shape: "circle" },
-  { color: "#e0b03f", shape: "diamond" },
-  { color: "#1f4fa8", shape: "triangle" },
-  { color: "#b3203a", shape: "circle" },
-] as const;
-
-const DanielGlassArtStoreView = ({ store }: { store: Store }) => (
-  <div className="min-h-screen bg-[#ece8df] font-heebo text-[#2f2f2d]">
-    <MallHeader />
-    <PageTracker storeId={store.id} />
-    <BackButton />
-
-    <main className="px-4 py-8" dir="rtl">
-      <section className="mx-auto grid max-w-7xl gap-8 lg:grid-cols-[minmax(0,1fr)_360px]">
-        {/* Gallery wall */}
-        <div className="overflow-hidden rounded-[2rem] border border-[#bbb8af] bg-[#c7c7c3] shadow-2xl">
-          <div
-            aria-label="קיר תצוגה של ויטראז'"
-            className="relative aspect-[4/3] min-h-[360px] overflow-hidden bg-[#c7c7c3]"
-            dir="ltr"
-          >
-            <div className="absolute inset-0 bg-[radial-gradient(circle_at_48%_35%,rgba(255,255,255,0.42),transparent_45%),linear-gradient(90deg,rgba(80,80,75,0.24)_1px,transparent_1px),linear-gradient(180deg,rgba(255,255,255,0.24),rgba(120,120,115,0.08))] bg-[length:auto,20%_100%,auto]" />
-            <div className="absolute inset-x-0 bottom-0 h-[16%] border-t border-[#9e968a]/70 bg-[linear-gradient(180deg,#d8d0c4,#c8bfb2)]">
-              <div className="absolute left-1/2 top-0 h-full w-px bg-[#9e968a]/55" />
-              <div className="absolute inset-x-0 top-2 h-5 bg-gradient-to-b from-black/10 to-transparent" />
-            </div>
-
-            <div className="absolute left-[7.5%] right-[7.5%] top-[8%] grid grid-cols-4 gap-x-[5.8%] gap-y-[5.5%]">
-              {glassPanels.map((panel, index) => (
-                <div
-                  key={index}
-                  className="relative aspect-square bg-[#e9e9e5] p-[5.5%] shadow-[7px_10px_10px_rgba(54,54,49,0.24)]"
-                >
-                  <div className="absolute inset-0 border border-[#bfc0bc] bg-[linear-gradient(135deg,#fbfbf8_0_9%,#d5d5d0_9%_14%,#f4f4f1_14%_86%,#c5c5c1_86%_91%,#ededeb_91%)]" />
-                  <div
-                    className="relative grid h-full w-full grid-cols-3 grid-rows-3 gap-[2px] border border-[#1a1a1a] bg-[#1a1a1a] shadow-inner"
-                  >
-                    {Array.from({ length: 9 }).map((_, i) => {
-                      const hues = ["#1f4fa8","#1e7a4d","#b3203a","#d99a2b","#9bc24b","#3b6fb8","#7a1d2f","#c9a96e","#2a8a5e"];
-                      const c = hues[(i + index) % hues.length];
-                      return (
-                        <span
-                          key={i}
-                          style={{ background: `linear-gradient(135deg, ${c}, ${panel.color})` }}
-                          className="block"
-                        />
-                      );
-                    })}
-                    <span className="pointer-events-none absolute inset-0 bg-[radial-gradient(circle_at_30%_25%,rgba(255,255,255,0.5),transparent_55%)]" />
-                  </div>
-                </div>
-              ))}
-            </div>
-          </div>
-        </div>
-
-        {/* Info aside */}
-        <aside className="rounded-[2rem] border border-[#c7c0b5] bg-[#f6f1e8] p-6 shadow-xl">
-          <div className="flex items-center justify-between gap-3">
-            <div>
-              <p className="text-sm font-semibold uppercase tracking-[0.24em] text-[#7b756c]">Stained glass studio</p>
-              <h1 className="mt-3 font-frank text-3xl font-black leading-tight">{store.name}</h1>
-              <p className="mt-1 text-sm text-[#5f5a52]">{store.description}</p>
-              <span className="mt-3 inline-block rounded-full bg-[#1a1a1a] px-3 py-1 text-xs font-bold text-[#f6f1e8]">
-                {store.category} • קומה {store.floor}
-              </span>
-            </div>
-            <img
-              src={danielGlassArtLogo}
-              alt={store.name}
-              className="h-20 w-20 rounded-xl border border-black/10 object-contain"
-            />
-          </div>
-
-          <p className="mt-5 text-sm leading-6 text-[#5f5a52]" dir="rtl">
-            סטודיו עצמאי לאמנות ויטראז' בעבודת יד — חיתוך זכוכית, הלחמת עופרת, וקומפוזיציות גיאומטריות בהשראת חלונות מסורתיים.
-            כל יצירה ייחודית, מאירה את המרחב בצבעים שמשתנים לאורך היום.
-          </p>
-
-          <div className="mt-6 space-y-2">
-            <h2 className="text-sm font-bold uppercase tracking-[0.18em] text-[#6f685f]">Sampled palette</h2>
-            {glassPalette.map((color) => (
-              <div className="flex items-center justify-between gap-3 rounded-xl bg-white/55 p-2.5" key={color.hex}>
-                <div className="flex items-center gap-3">
-                  <span className="h-8 w-8 rounded-lg border border-black/10" style={{ backgroundColor: color.hex }} />
-                  <span className="text-sm font-medium">{color.name}</span>
-                </div>
-                <code className="rounded bg-[#e8e1d6] px-2 py-1 text-xs">{color.hex}</code>
-              </div>
-            ))}
-          </div>
-
-          <dl className="mt-6 grid grid-cols-2 gap-3 text-sm">
-            <div className="rounded-xl bg-white/55 p-3">
-              <dt className="font-bold text-[#6f685f]">Grid</dt>
-              <dd>4 × 3 panels</dd>
-            </div>
-            <div className="rounded-xl bg-white/55 p-3">
-              <dt className="font-bold text-[#6f685f]">Technique</dt>
-              <dd>Lead came & solder</dd>
-            </div>
-            <div className="rounded-xl bg-white/55 p-3">
-              <dt className="font-bold text-[#6f685f]">Frame</dt>
-              <dd>1:1 square</dd>
-            </div>
-            <div className="rounded-xl bg-white/55 p-3">
-              <dt className="font-bold text-[#6f685f]">Lighting</dt>
-              <dd>Backlit / daylight</dd>
-            </div>
-          </dl>
-        </aside>
-      </section>
-
-      <div className="mt-8 text-center">
-        <Link
-          to="/"
-          className="inline-block rounded-lg bg-mall-sign px-6 py-3 font-heebo font-bold text-mall-gold shadow-md transition-colors hover:bg-mall-gold hover:text-mall-sign"
-        >
-          ← חזרה לקניון
-        </Link>
-      </div>
-    </main>
-
-    <MallFooter />
-  </div>
-);
-
 const StorePage = () => {
   const { storeId } = useParams<{ storeId: string }>();
   
@@ -562,10 +416,6 @@ const StorePage = () => {
         <MallFooter />
       </div>
     );
-  }
-
-  if (store.id === "s18") {
-    return <DanielGlassArtStoreView store={store} />;
   }
 
   return (
