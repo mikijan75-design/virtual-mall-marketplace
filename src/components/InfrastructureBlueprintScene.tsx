@@ -311,7 +311,7 @@ const InfrastructureBlueprintScene = () => {
         {/* Subtle inner shadow on cream back */}
         <rect x="75" y="70" width="872" height="14" fill="url(#shelfShadow)" />
         {/* Horizontal shelf planks (3D look) */}
-        {[135, 190, 245, 300, 375].map((y) => (
+        {shelfRows.map((y) => (
           <g key={`plank-${y}`}>
             <rect x="75" y={y - 4} width="872" height="8" fill="url(#shelfPlank)" />
             <rect x="75" y={y + 4} width="872" height="3" fill="#000" opacity="0.25" />
@@ -327,11 +327,8 @@ const InfrastructureBlueprintScene = () => {
           </g>
         ))}
         {/* Per-cell subtle inner shading for depth */}
-        {[70, 135, 190, 245, 300, 375].slice(0, 5).map((topY, rIdx) => {
-          const rowTops = [70, 135, 190, 245, 300];
-          const rowBots = [135, 190, 245, 300, 375];
-          const top = rowTops[rIdx];
-          const bot = rowBots[rIdx];
+        {shelfRows.map((bot, rIdx) => {
+          const top = rIdx === 0 ? 70 : shelfRows[rIdx - 1];
           const cellEdges = [75, ...columns.map((c) => c + 8), 947];
           return cellEdges.slice(0, -1).map((left, i) => {
             const right = cellEdges[i + 1];
@@ -378,10 +375,10 @@ const InfrastructureBlueprintScene = () => {
         </g>
 
         {featuredProducts.map((product) => {
-          const shelfY = [135, 190, 245, 300, 375][product.rowIdx];
+          const shelfY = shelfRows[product.rowIdx];
           const cx = cellCenters[product.colIdx];
-          const imgW = 70;
-          const imgH = 52;
+          const imgW = 110;
+          const imgH = 100;
           return (
             <image
               key={`featured-${product.rowIdx}-${product.colIdx}`}
