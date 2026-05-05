@@ -1,4 +1,5 @@
-import { Eye, Gift, Phone, Target, type LucideIcon } from "lucide-react";
+import { useState, type CSSProperties } from "react";
+import { Eye, Gift, Pencil, Phone, Target, Trash2, X, type LucideIcon } from "lucide-react";
 import danielGlassArtLogo from "@/assets/stores/daniel-glass-art-logo.jpg";
 import floor1Shop6Img from "@/assets/stores/floor1-shop6.png";
 import hamsaJerusalemBlue from "@/assets/stores/hamsa-jerusalem-blue.png";
@@ -6,68 +7,24 @@ import hamsaJerusalemOrange from "@/assets/stores/hamsa-jerusalem-orange.png";
 import lampBlueMosaic from "@/assets/stores/lamp-blue-mosaic.png";
 
 type TimelineItem = {
+  id: string;
   icon: LucideIcon;
   title: string;
   body: string;
 };
 
-const timelineItems: TimelineItem[] = [
-  {
-    icon: Eye,
-    title: "היכרות: דניאל שפגשתי בנחלת בנימין",
-    body:
-      "פגשתי את דניאל בדוכן שלו, בין הצבעים, האור והאנשים. השיחה איתו חיברה בין עבודת יד מוקפדת, אנושיות חמה ואופי ישראלי שמזמין להתקרב.",
-  },
-  {
-    icon: Target,
-    title: "הסיפור: מארגנטינה לישראל דרך העולם",
-    body:
-      "המסע של דניאל מתחיל במפגש בין תרבויות: מארגנטינה, דרך שנים של למידה ותנועה, ועד לדוכן ישראלי חי שבו כל יצירה מקבלת שפה מקומית וצבע אישי.",
-  },
-  {
-    icon: Target,
-    title: "היצירה: מורכבות, צבע וסיפור חיים",
-    body:
-      "הויטראז' שלו משלב קווי מתאר כהים, חלקי זכוכית צבעוניים ושכבות אור. כל עבודה נראית כמו פסיפס חי שמחבר בין זיכרון, מקום, מסורת ותנועה.",
-  },
-  {
-    icon: Gift,
-    title: "ההמלצה: המתנה המושלמת שאין שני לה",
-    body:
-      "פריטים שמרגישים אישיים, צבעוניים וחד פעמיים. מתנה לחג, לבית, לחברים או לאוספים שאוהבים עבודת יד עם נוכחות, עומק וסיפור מאחורי כל פרט.",
-  },
-  {
-    icon: Phone,
-    title: "יצירת קשר: בתיאום מראש",
-    body:
-      "לסיורים, הזמנות מיוחדות ושאלות על עבודות זמינות, מומלץ ליצור קשר מראש ולתאם את הפריט או הדגם המתאים.",
-  },
+const initialTimeline: TimelineItem[] = [
+  { id: "t1", icon: Eye, title: "היכרות: דניאל שפגשתי בנחלת בנימין", body: "פגשתי את דניאל בדוכן שלו, בין הצבעים, האור והאנשים. השיחה איתו חיברה בין עבודת יד מוקפדת, אנושיות חמה ואופי ישראלי שמזמין להתקרב." },
+  { id: "t2", icon: Target, title: "הסיפור: מארגנטינה לישראל דרך העולם", body: "המסע של דניאל מתחיל במפגש בין תרבויות: מארגנטינה, דרך שנים של למידה ותנועה, ועד לדוכן ישראלי חי שבו כל יצירה מקבלת שפה מקומית וצבע אישי." },
+  { id: "t3", icon: Target, title: "היצירה: מורכבות, צבע וסיפור חיים", body: "הויטראז' שלו משלב קווי מתאר כהים, חלקי זכוכית צבעוניים ושכבות אור. כל עבודה נראית כמו פסיפס חי שמחבר בין זיכרון, מקום, מסורת ותנועה." },
+  { id: "t4", icon: Gift, title: "ההמלצה: המתנה המושלמת שאין שני לה", body: "פריטים שמרגישים אישיים, צבעוניים וחד פעמיים. מתנה לחג, לבית, לחברים או לאוספים שאוהבים עבודת יד עם נוכחות, עומק וסיפור מאחורי כל פרט." },
+  { id: "t5", icon: Phone, title: "יצירת קשר: בתיאום מראש", body: "לסיורים, הזמנות מיוחדות ושאלות על עבודות זמינות, מומלץ ליצור קשר מראש ולתאם את הפריט או הדגם המתאים." },
 ];
 
-const sampledColors = [
-  "#0e5a97",
-  "#1f9db4",
-  "#e4a821",
-  "#d7682d",
-  "#102b48",
-  "#6d2f67",
-  "#f2f4e8",
-];
+const sampledColors = ["#0e5a97","#1f9db4","#e4a821","#d7682d","#102b48","#6d2f67","#f2f4e8"];
 
-const MosaicShard = ({
-  className,
-  color,
-  clipPath,
-}: {
-  className: string;
-  color: string;
-  clipPath: string;
-}) => (
-  <span
-    className={`absolute border border-slate-900/55 shadow-[inset_0_0_18px_rgba(255,255,255,0.28)] ${className}`}
-    style={{ backgroundColor: color, clipPath }}
-    aria-hidden="true"
-  />
+const MosaicShard = ({ className, color, clipPath }: { className: string; color: string; clipPath: string }) => (
+  <span className={`absolute border border-slate-900/55 shadow-[inset_0_0_18px_rgba(255,255,255,0.28)] ${className}`} style={{ backgroundColor: color, clipPath }} aria-hidden="true" />
 );
 
 const StainedGlassPreview = () => (
@@ -83,23 +40,12 @@ const StainedGlassPreview = () => (
       <div className="absolute bottom-[12%] left-[6%] h-[18%] w-[16%] rounded-t-full border-[4px] border-[#223040] bg-[#e6c373]" />
       <div className="absolute bottom-0 left-0 h-[9%] w-full bg-[#3b5537]" />
     </div>
-
     <div className="absolute right-[1%] top-[3%] h-[66%] w-[55%] overflow-hidden rounded-sm border-[5px] border-[#1a1a1a] bg-[#102b48] shadow-xl">
       {Array.from({ length: 11 }).map((_, index) => (
-        <span
-          key={index}
-          className="absolute left-1/2 top-1/2 h-[145%] w-[18%] origin-bottom rounded-full border border-slate-950/70"
-          style={{
-            background: sampledColors[index % sampledColors.length],
-            transform: `translate(-50%, -100%) rotate(${index * 20 - 92}deg)`,
-            opacity: index % 2 ? 0.9 : 1,
-          }}
-          aria-hidden="true"
-        />
+        <span key={index} className="absolute left-1/2 top-1/2 h-[145%] w-[18%] origin-bottom rounded-full border border-slate-950/70" style={{ background: sampledColors[index % sampledColors.length], transform: `translate(-50%, -100%) rotate(${index * 20 - 92}deg)`, opacity: index % 2 ? 0.9 : 1 }} aria-hidden="true" />
       ))}
       <div className="absolute inset-0 bg-[radial-gradient(circle_at_54%_58%,rgba(255,222,114,0.9)_0_8%,transparent_9%),radial-gradient(circle_at_50%_54%,transparent_0_14%,rgba(255,255,255,0.2)_15%,transparent_32%)]" />
     </div>
-
     <div className="absolute bottom-[2%] left-[31%] h-[42%] w-[24%] overflow-hidden rounded-sm border-[5px] border-[#1a1a1a] bg-[#0b4f86] shadow-2xl">
       <img src={lampBlueMosaic} alt="" className="h-full w-full object-cover" loading="lazy" />
     </div>
@@ -115,88 +61,131 @@ const PortraitSample = () => (
     <div className="absolute left-[35%] top-[36%] h-[9%] w-[30%] rounded-b-full bg-[#4e3327]" />
     <div className="absolute inset-x-[16%] bottom-0 h-[42%] rounded-t-[46%] bg-[#efefec]" />
     <div className="absolute bottom-0 right-[15%] h-[52%] w-[12%] rotate-[-18deg] bg-[#2f3135]" />
-    <span className="absolute bottom-3 left-1/2 -translate-x-1/2 text-xs font-black uppercase tracking-[0.24em] text-[#5c5c5c]">
-      portrait sample
-    </span>
+    <span className="absolute bottom-3 left-1/2 -translate-x-1/2 text-xs font-black uppercase tracking-[0.24em] text-[#5c5c5c]">portrait sample</span>
   </div>
 );
 
-const ProfileCard = () => (
-  <aside className="space-y-7">
-    <PortraitSample />
+type BlockId = "portrait" | "logo" | "stained" | "hamsaBlue" | "hamsaOrange" | "shop";
 
-    <div className="overflow-hidden rounded-md bg-white p-3 shadow-[0_10px_22px_rgba(15,23,42,0.16)]">
-      <img src={danielGlassArtLogo} alt="Daniel Glass-Art" className="h-auto w-full rounded-sm object-contain" loading="lazy" />
-    </div>
-
-    <StainedGlassPreview />
-
-    <div className="grid grid-cols-2 gap-3">
-      <img
-        src={hamsaJerusalemBlue}
-        alt="ויטראז' חמסה בגווני כחול"
-        className="aspect-square rounded-md border border-slate-200 bg-white object-contain p-2 shadow-md"
-        loading="lazy"
-      />
-      <img
-        src={hamsaJerusalemOrange}
-        alt="ויטראז' חמסה בגווני כתום"
-        className="aspect-square rounded-md border border-slate-200 bg-white object-contain p-2 shadow-md"
-        loading="lazy"
-      />
-    </div>
-
-    <img
-      src={floor1Shop6Img}
-      alt="דוכן דניאל גלאס ארט עם עבודות ויטראז'"
-      className="rounded-md border border-slate-200 bg-white object-cover shadow-md"
-      loading="lazy"
-    />
-  </aside>
+const EditableBlock = ({ editing, onDelete, children, style }: { editing: boolean; onDelete: () => void; children: React.ReactNode; style?: CSSProperties }) => (
+  <div className={`relative ${editing ? "outline outline-2 outline-dashed outline-rose-400/70 rounded-md" : ""}`} style={style}>
+    {editing && (
+      <button type="button" onClick={onDelete} aria-label="מחיקה" className="absolute -top-2 -left-2 z-10 grid h-6 w-6 place-items-center rounded-full bg-rose-600 text-white shadow-md hover:bg-rose-700">
+        <X className="h-3.5 w-3.5" />
+      </button>
+    )}
+    {children}
+  </div>
 );
 
-const TimelineSection = ({ item, isLast }: { item: TimelineItem; isLast: boolean }) => {
-  const Icon = item.icon;
-
-  return (
-    <section className="grid grid-cols-[minmax(0,1fr)_38px] gap-5 text-right">
-      <div className="pb-7">
-        <h2 className="text-[clamp(1.1rem,1.6vw,1.6rem)] font-black leading-tight tracking-[-0.03em] text-[#151515]">
-          {item.title}
-        </h2>
-        <p className="mt-2 text-[clamp(0.85rem,1.05vw,1.05rem)] font-semibold leading-[1.45] text-[#313131]">{item.body}</p>
-      </div>
-
-      <div className="relative flex justify-center">
-        <span className="grid h-[34px] w-[34px] place-items-center rounded-full bg-white text-[#444]">
-          <Icon className="h-7 w-7 stroke-[1.8]" aria-hidden="true" />
-        </span>
-        {!isLast && <span className="absolute top-11 h-[calc(100%-2rem)] w-px bg-[#606060]" aria-hidden="true" />}
-      </div>
-    </section>
-  );
-};
-
 const DanielGlassartProfileDesign = () => {
+  const [editing, setEditing] = useState(false);
+  const [items, setItems] = useState<TimelineItem[]>(initialTimeline);
+  const [headerTag, setHeaderTag] = useState("Sampled design code");
+  const [headerTitleHe, setHeaderTitleHe] = useState("אומן ויטראז' - ");
+  const [headerTitleEn, setHeaderTitleEn] = useState("DANIEL GLASSART");
+  const [blocks, setBlocks] = useState<Record<BlockId, boolean>>({
+    portrait: true, logo: true, stained: true, hamsaBlue: true, hamsaOrange: true, shop: true,
+  });
+
+  const hideBlock = (id: BlockId) => setBlocks((b) => ({ ...b, [id]: false }));
+  const removeItem = (id: string) => setItems((arr) => arr.filter((i) => i.id !== id));
+  const updateItem = (id: string, patch: Partial<TimelineItem>) => setItems((arr) => arr.map((i) => (i.id === id ? { ...i, ...patch } : i)));
+
+  const editProps = (value: string, onChange: (v: string) => void): React.HTMLAttributes<HTMLElement> =>
+    editing
+      ? {
+          contentEditable: true,
+          suppressContentEditableWarning: true,
+          onBlur: (e) => onChange((e.target as HTMLElement).innerText),
+          className: "focus:outline focus:outline-2 focus:outline-sky-400 rounded px-0.5",
+        }
+      : {};
+
   return (
-    <section
-      className="relative mx-auto w-full overflow-hidden rounded-[20px] bg-[#fbfbfb] p-[clamp(0.75rem,1.6vw,1.5rem)] shadow-[0_18px_50px_rgba(15,23,42,0.16)]"
-      dir="rtl"
-    >
+    <section className="relative mx-auto w-full overflow-hidden rounded-[20px] bg-[#fbfbfb] p-[clamp(0.75rem,1.6vw,1.5rem)] shadow-[0_18px_50px_rgba(15,23,42,0.16)]" dir="rtl">
+      <div className="mb-3 flex items-center justify-between gap-2">
+        <button type="button" onClick={() => setEditing((e) => !e)} className={`inline-flex items-center gap-1.5 rounded-full px-3 py-1.5 text-xs font-bold shadow ${editing ? "bg-rose-600 text-white" : "bg-slate-900 text-white hover:bg-slate-700"}`}>
+          {editing ? <><Trash2 className="h-3.5 w-3.5" /> סיום עריכה</> : <><Pencil className="h-3.5 w-3.5" /> עריכה</>}
+        </button>
+        {editing && <span className="text-[10px] text-rose-600 font-bold">לחץ על × כדי למחוק • לחץ על טקסט כדי לערוך</span>}
+      </div>
+
       <div className="grid gap-5">
         <header className="text-right">
-          <p className="text-[10px] font-black uppercase tracking-[0.35em] text-[#6b7280]">Sampled design code</p>
+          <p {...editProps(headerTag, setHeaderTag)} className={`text-[10px] font-black uppercase tracking-[0.35em] text-[#6b7280] ${editing ? "focus:outline focus:outline-2 focus:outline-sky-400 rounded px-0.5" : ""}`}>
+            {headerTag}
+          </p>
           <h1 className="mt-1 text-[clamp(1.2rem,1.9vw,2.1rem)] font-black leading-none tracking-[-0.05em] text-black">
-            אומן ויטראז' - <span dir="ltr">DANIEL GLASSART</span>
+            <span {...editProps(headerTitleHe, setHeaderTitleHe)}>{headerTitleHe}</span>
+            <span dir="ltr" {...editProps(headerTitleEn, setHeaderTitleEn)}>{headerTitleEn}</span>
           </h1>
         </header>
 
-        <ProfileCard />
+        <aside className="space-y-7">
+          {blocks.portrait && (
+            <EditableBlock editing={editing} onDelete={() => hideBlock("portrait")}>
+              <PortraitSample />
+            </EditableBlock>
+          )}
+          {blocks.logo && (
+            <EditableBlock editing={editing} onDelete={() => hideBlock("logo")}>
+              <div className="overflow-hidden rounded-md bg-white p-3 shadow-[0_10px_22px_rgba(15,23,42,0.16)]">
+                <img src={danielGlassArtLogo} alt="Daniel Glass-Art" className="h-auto w-full rounded-sm object-contain" loading="lazy" />
+              </div>
+            </EditableBlock>
+          )}
+          {blocks.stained && (
+            <EditableBlock editing={editing} onDelete={() => hideBlock("stained")}>
+              <StainedGlassPreview />
+            </EditableBlock>
+          )}
+          {(blocks.hamsaBlue || blocks.hamsaOrange) && (
+            <div className="grid grid-cols-2 gap-3">
+              {blocks.hamsaBlue && (
+                <EditableBlock editing={editing} onDelete={() => hideBlock("hamsaBlue")}>
+                  <img src={hamsaJerusalemBlue} alt="ויטראז' חמסה בגווני כחול" className="aspect-square w-full rounded-md border border-slate-200 bg-white object-contain p-2 shadow-md" loading="lazy" />
+                </EditableBlock>
+              )}
+              {blocks.hamsaOrange && (
+                <EditableBlock editing={editing} onDelete={() => hideBlock("hamsaOrange")}>
+                  <img src={hamsaJerusalemOrange} alt="ויטראז' חמסה בגווני כתום" className="aspect-square w-full rounded-md border border-slate-200 bg-white object-contain p-2 shadow-md" loading="lazy" />
+                </EditableBlock>
+              )}
+            </div>
+          )}
+          {blocks.shop && (
+            <EditableBlock editing={editing} onDelete={() => hideBlock("shop")}>
+              <img src={floor1Shop6Img} alt="דוכן דניאל גלאס ארט" className="w-full rounded-md border border-slate-200 bg-white object-cover shadow-md" loading="lazy" />
+            </EditableBlock>
+          )}
+        </aside>
 
         <div className="space-y-1">
-          {timelineItems.map((item, index) => (
-            <TimelineSection key={item.title} item={item} isLast={index === timelineItems.length - 1} />
-          ))}
+          {items.map((item, index) => {
+            const Icon = item.icon;
+            const isLast = index === items.length - 1;
+            return (
+              <EditableBlock key={item.id} editing={editing} onDelete={() => removeItem(item.id)}>
+                <section className="grid grid-cols-[minmax(0,1fr)_38px] gap-5 text-right">
+                  <div className="pb-7">
+                    <h2 {...editProps(item.title, (v) => updateItem(item.id, { title: v }))} className={`text-[clamp(1.1rem,1.6vw,1.6rem)] font-black leading-tight tracking-[-0.03em] text-[#151515] ${editing ? "focus:outline focus:outline-2 focus:outline-sky-400 rounded px-0.5" : ""}`}>
+                      {item.title}
+                    </h2>
+                    <p {...editProps(item.body, (v) => updateItem(item.id, { body: v }))} className={`mt-2 text-[clamp(0.85rem,1.05vw,1.05rem)] font-semibold leading-[1.45] text-[#313131] ${editing ? "focus:outline focus:outline-2 focus:outline-sky-400 rounded px-0.5" : ""}`}>
+                      {item.body}
+                    </p>
+                  </div>
+                  <div className="relative flex justify-center">
+                    <span className="grid h-[34px] w-[34px] place-items-center rounded-full bg-white text-[#444]">
+                      <Icon className="h-7 w-7 stroke-[1.8]" aria-hidden="true" />
+                    </span>
+                    {!isLast && <span className="absolute top-11 h-[calc(100%-2rem)] w-px bg-[#606060]" aria-hidden="true" />}
+                  </div>
+                </section>
+              </EditableBlock>
+            );
+          })}
         </div>
       </div>
     </section>
