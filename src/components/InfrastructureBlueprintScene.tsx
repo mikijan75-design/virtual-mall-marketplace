@@ -17,6 +17,19 @@ type BlueprintItem = {
   scale?: number;
 };
 
+import beggarsBagImage from "@/assets/beggars-bag.png";
+
+type FeaturedProduct = {
+  rowIdx: number;
+  colIdx: number;
+  src: string;
+  alt: string;
+};
+
+const featuredProducts: FeaturedProduct[] = [
+  { rowIdx: 0, colIdx: 2, src: beggarsBagImage, alt: "BEGGARS printed canvas tote bag" },
+];
+
 const shelfRows = [135, 190, 245, 300, 375];
 // Symmetric vertical dividers: equal 169px gap on both left (75→244) and right (778→947) edges
 const columns = [244, 377, 511, 644, 778];
@@ -34,12 +47,23 @@ const rowItemTypes: BlueprintItemType[][] = [
 ];
 const blueprintItems: BlueprintItem[] = rowItemTypes.flatMap((row, rowIdx) => {
   const shelfY = [135, 190, 245, 300, 375][rowIdx];
-  return row.map((type, colIdx) => ({
-    type,
-    x: cellCenters[colIdx],
-    y: shelfY - 22,
-    scale: 0.78,
-  }));
+  return row
+    .map((type, colIdx) => {
+      if (
+        featuredProducts.some(
+          (p) => p.rowIdx === rowIdx && p.colIdx === colIdx,
+        )
+      ) {
+        return null;
+      }
+      return {
+        type,
+        x: cellCenters[colIdx],
+        y: shelfY - 22,
+        scale: 0.78,
+      } as BlueprintItem;
+    })
+    .filter((item): item is BlueprintItem => item !== null);
 });
 
 const lineProps = {
@@ -250,6 +274,26 @@ const InfrastructureBlueprintScene = () => {
             <BlueprintIcon key={`${item.type}-${index}`} item={item} />
           ))}
         </g>
+
+        {featuredProducts.map((product) => {
+          const shelfY = [135, 190, 245, 300, 375][product.rowIdx];
+          const cx = cellCenters[product.colIdx];
+          const imgW = 70;
+          const imgH = 52;
+          return (
+            <image
+              key={`featured-${product.rowIdx}-${product.colIdx}`}
+              href={product.src}
+              x={cx - imgW / 2}
+              y={shelfY - imgH}
+              width={imgW}
+              height={imgH}
+              preserveAspectRatio="xMidYMax meet"
+            >
+              <title>{product.alt}</title>
+            </image>
+          );
+        })}
 
       </svg>
     </figure>
