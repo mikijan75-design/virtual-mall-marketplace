@@ -225,6 +225,11 @@ const InfrastructureBlueprintScene = () => {
             <stop offset="0%" stopColor="#f5f1e6" />
             <stop offset="100%" stopColor="#c9c0aa" />
           </linearGradient>
+          <linearGradient id="ledGlow" x1="0" y1="0" x2="0" y2="1">
+            <stop offset="0%" stopColor="#fff8d0" stopOpacity="0.85" />
+            <stop offset="60%" stopColor="#fff1a8" stopOpacity="0.35" />
+            <stop offset="100%" stopColor="#fff1a8" stopOpacity="0" />
+          </linearGradient>
           <pattern id="woodGrain" width="120" height="60" patternUnits="userSpaceOnUse">
             <rect width="120" height="60" fill="url(#woodLight)" />
             <path d="M0 12 Q30 8 60 14 T120 12" fill="none" stroke="#a87642" strokeOpacity="0.18" strokeWidth="0.6" />
@@ -316,6 +321,18 @@ const InfrastructureBlueprintScene = () => {
             <rect x="75" y={y - 4} width="872" height="8" fill="url(#shelfPlank)" />
             <rect x="75" y={y + 4} width="872" height="3" fill="#000" opacity="0.25" />
             <rect x="75" y={y - 4} width="872" height="1" fill="#fff" opacity="0.4" />
+          </g>
+        ))}
+        {/* LED light strip under each shelf top, illuminating products below */}
+        {[70, ...shelfRows.slice(0, -1)].map((topY) => (
+          <g key={`led-${topY}`}>
+            {/* Glow cone falling down onto products */}
+            <rect x="78" y={topY + 4} width="866" height="60" fill="url(#ledGlow)" pointerEvents="none" />
+            {/* LED strip housing */}
+            <rect x="78" y={topY + 1} width="866" height="3" fill="#e8e4d6" />
+            {/* Bright LED line */}
+            <rect x="80" y={topY + 2} width="862" height="1.4" fill="#ffffff" opacity="0.95" />
+            <rect x="80" y={topY + 2} width="862" height="0.6" fill="#fffbe0" />
           </g>
         ))}
         {/* Wood vertical partitions with rounded shading */}
