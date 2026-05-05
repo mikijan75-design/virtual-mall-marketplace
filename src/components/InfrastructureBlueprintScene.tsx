@@ -239,6 +239,12 @@ const InfrastructureBlueprintScene = () => {
     setSelectedId(null);
   };
 
+  const deleteSelected = () => {
+    if (!selectedId) return;
+    setProducts((prev) => prev.filter((p) => p.id !== selectedId));
+    setSelectedId(null);
+  };
+
   return (
     <figure className="relative mx-auto w-full max-w-6xl rounded-[2rem] border border-[#7a4a22] bg-white shadow-2xl shadow-slate-950/30">
       <div className="flex flex-wrap items-center justify-between gap-2 border-b border-[#7a4a22]/30 px-4 py-2 text-xs font-heebo text-[#3a1f08]">
@@ -263,6 +269,13 @@ const InfrastructureBlueprintScene = () => {
                 className="rounded bg-[#7a4a22] px-2 py-1 text-white hover:bg-[#5c3818]"
               >
                 +
+              </button>
+              <button
+                type="button"
+                onClick={deleteSelected}
+                className="rounded bg-red-600 px-2 py-1 text-white hover:bg-red-700"
+              >
+                מחק
               </button>
               <button
                 type="button"
