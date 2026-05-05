@@ -17,7 +17,7 @@ type BlueprintItem = {
   scale?: number;
 };
 
-const shelfRows = [88, 138, 190, 244, 300];
+const shelfRows = [135, 190, 245, 300, 375];
 const columns = [56, 206, 346, 486, 636, 778];
 const counterPanels = [168, 308, 448, 588, 728];
 
@@ -243,20 +243,17 @@ const InfrastructureBlueprintScene = () => {
         <g className="blueprint-main">
           <path className="drawn-line" d="M56 58h912l-6 7H62z" />
           <path className="drawn-line" d="M75 70v370M947 70v370M75 440h872" />
-          <path className="drawn-line" d="M75 122h872M75 176h872M75 230h872M75 284h872M75 338h872" />
+          <path className="drawn-line" d="M75 135h872M75 190h872M75 245h872M75 300h872M75 375h872" />
           {columns.map((x) => (
             <path key={x} className="drawn-line" d={`M${x} 70v370M${x + 8} 76v358`} />
           ))}
-          <path className="drawn-line" d="M184 470h664v90H184z" />
-          <path className="drawn-line" d="M208 486h616v62H208z" />
+          <path className="drawn-line" d="M184 470h664v80H184z" />
+          <path className="drawn-line" d="M208 484h616v52H208z" />
         </g>
 
         <g className="blueprint-detail">
-          {shelfRows.map((y) => (
-            <path key={y} d={`M75 ${y}h872`} />
-          ))}
           {counterPanels.map((x) => (
-            <path key={x} d={`M${x} 470v90`} />
+            <path key={x} d={`M${x} 470v80`} />
           ))}
           {columns.map((x) => (
             <path key={`cap-${x}`} d={`M${x - 5} 70l12-12 12 12`} />
