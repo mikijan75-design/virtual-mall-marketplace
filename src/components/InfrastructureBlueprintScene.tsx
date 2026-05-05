@@ -29,7 +29,7 @@ import n9 from "@/assets/beggars-new/n9.png";
 import n10 from "@/assets/beggars-new/n10.png";
 import n11 from "@/assets/beggars-new/n11.png";
 
-import { useEffect, useRef, useState } from "react";
+import { useEffect, useState } from "react";
 
 type FeaturedProduct = {
   id: string;
@@ -160,7 +160,6 @@ const BlueprintIcon = ({ item }: { item: BlueprintItem }) => {
 };
 
 const InfrastructureBlueprintScene = () => {
-  const svgRef = useRef<SVGSVGElement | null>(null);
   const [products, setProducts] = useState<FeaturedProduct[]>(() => {
     if (typeof window !== "undefined") {
       try {
@@ -176,133 +175,22 @@ const InfrastructureBlueprintScene = () => {
     }
     return initialProducts;
   });
-  const [selectedId, setSelectedId] = useState<string | null>(null);
-  const dragRef = useRef<{ id: string; offsetX: number; offsetY: number } | null>(null);
-
-  useEffect(() => {
-    try {
-      window.localStorage.setItem(
-        STORAGE_KEY,
-        JSON.stringify(products.map(({ src, ...rest }) => rest)),
-      );
-    } catch {
-      /* ignore */
-    }
-  }, [products]);
-
-  const toSvgPoint = (clientX: number, clientY: number) => {
-    const svg = svgRef.current;
-    if (!svg) return { x: 0, y: 0 };
-    const pt = svg.createSVGPoint();
-    pt.x = clientX;
-    pt.y = clientY;
-    const ctm = svg.getScreenCTM();
-    if (!ctm) return { x: 0, y: 0 };
-    const local = pt.matrixTransform(ctm.inverse());
-    return { x: local.x, y: local.y };
-  };
-
-  const handlePointerDown = (e: React.PointerEvent<SVGGElement>, id: string) => {
-    e.stopPropagation();
-    const product = products.find((p) => p.id === id);
-    if (!product) return;
-    const { x, y } = toSvgPoint(e.clientX, e.clientY);
-    dragRef.current = { id, offsetX: x - product.x, offsetY: y - product.y };
-    setSelectedId(id);
-    (e.currentTarget as Element).setPointerCapture?.(e.pointerId);
-  };
-
-  const handlePointerMove = (e: React.PointerEvent<SVGGElement>) => {
-    if (!dragRef.current) return;
-    const { id, offsetX, offsetY } = dragRef.current;
-    const { x, y } = toSvgPoint(e.clientX, e.clientY);
-    setProducts((prev) =>
-      prev.map((p) => (p.id === id ? { ...p, x: x - offsetX, y: y - offsetY } : p)),
-    );
-  };
-
-  const handlePointerUp = (e: React.PointerEvent<SVGGElement>) => {
-    dragRef.current = null;
-    (e.currentTarget as Element).releasePointerCapture?.(e.pointerId);
-  };
-
-  const adjustScale = (id: string, delta: number) => {
-    setProducts((prev) =>
-      prev.map((p) =>
-        p.id === id ? { ...p, scale: Math.max(0.3, Math.min(4, p.scale + delta)) } : p,
-      ),
-    );
-  };
-
-  const resetLayout = () => {
-    setProducts(initialProducts);
-    setSelectedId(null);
-  };
-
-  const deleteSelected = () => {
-    if (!selectedId) return;
-    setProducts((prev) => prev.filter((p) => p.id !== selectedId));
-    setSelectedId(null);
-  };
+  // Decorative fillers placed in shelf cells without products
+  const decorCells: { cell: number; type: "vase" | "books" | "lantern" | "plant" }[] = [
+    { cell: 1, type: "vase" },
+    { cell: 5, type: "books" },
+    { cell: 8, type: "lantern" },
+    { cell: 12, type: "plant" },
+  ];
 
   return (
-    <figure className="relative mx-auto w-full max-w-6xl rounded-[2rem] border border-[#7a4a22] bg-white shadow-2xl shadow-slate-950/30">
-      <div className="flex flex-wrap items-center justify-between gap-2 border-b border-[#7a4a22]/30 px-4 py-2 text-xs font-heebo text-[#3a1f08]">
-        <div>
-          {selectedId
-            ? "גרירה: לחיצה ארוכה והזזה • כפתורי + / − להגדלה/הקטנה"
-            : "לחץ על מוצר כדי לבחור אותו, ואז גרור או שנה גודל"}
-        </div>
-        <div className="flex items-center gap-2">
-          {selectedId && (
-            <>
-              <button
-                type="button"
-                onClick={() => adjustScale(selectedId, -0.1)}
-                className="rounded bg-[#7a4a22] px-2 py-1 text-white hover:bg-[#5c3818]"
-              >
-                −
-              </button>
-              <button
-                type="button"
-                onClick={() => adjustScale(selectedId, 0.1)}
-                className="rounded bg-[#7a4a22] px-2 py-1 text-white hover:bg-[#5c3818]"
-              >
-                +
-              </button>
-              <button
-                type="button"
-                onClick={deleteSelected}
-                className="rounded bg-red-600 px-2 py-1 text-white hover:bg-red-700"
-              >
-                מחק
-              </button>
-              <button
-                type="button"
-                onClick={() => setSelectedId(null)}
-                className="rounded border border-[#7a4a22] px-2 py-1 hover:bg-[#7a4a22]/10"
-              >
-                ביטול בחירה
-              </button>
-            </>
-          )}
-          <button
-            type="button"
-            onClick={resetLayout}
-            className="rounded border border-[#7a4a22] px-2 py-1 hover:bg-[#7a4a22]/10"
-          >
-            איפוס סידור
-          </button>
-        </div>
-      </div>
+    <figure className="relative mx-auto w-full max-w-6xl overflow-hidden rounded-[2rem] border border-[#7a4a22] bg-white shadow-2xl shadow-slate-950/30">
       <svg
-        ref={svgRef}
         className="h-auto w-full text-[#0a0a0a]"
         viewBox="0 0 1024 576"
         role="img"
         aria-labelledby="infrastructure-blueprint-title infrastructure-blueprint-desc"
         xmlns="http://www.w3.org/2000/svg"
-        onPointerDown={() => setSelectedId(null)}
       >
         <title id="infrastructure-blueprint-title">Live coded infrastructure blueprint</title>
         <desc id="infrastructure-blueprint-desc">
