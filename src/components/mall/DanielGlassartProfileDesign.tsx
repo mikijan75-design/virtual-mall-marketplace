@@ -163,7 +163,6 @@ const DanielGlassartProfileDesign = () => {
     <div style={{ zoom: 0.48 }}>
       <div className="grid gap-5">
         <header className="flex items-center gap-3 text-right">
-          <img src={danielPortrait} alt="דניאל" className="h-20 w-20 shrink-0 rounded-full object-cover shadow-md" loading="lazy" />
           <div className="flex-1">
             <p {...editProps(headerTag, setHeaderTag)} className={`text-[10px] font-black uppercase tracking-[0.35em] text-[#6b7280] ${editing ? "focus:outline focus:outline-2 focus:outline-sky-400 rounded px-0.5" : ""}`}>
               {headerTag}
@@ -173,6 +172,7 @@ const DanielGlassartProfileDesign = () => {
               <span dir="ltr" {...editProps(headerTitleEn, setHeaderTitleEn)}>{headerTitleEn}</span>
             </h1>
           </div>
+          <img src={danielPortrait} alt="דניאל" className="h-20 w-20 shrink-0 rounded-full object-cover shadow-md" loading="lazy" />
         </header>
 
         <aside className="space-y-7">
