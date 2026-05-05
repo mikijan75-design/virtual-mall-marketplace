@@ -411,43 +411,30 @@ const InfrastructureBlueprintScene = () => {
           ))}
         </g>
 
+        {/* Decorative fillers for empty cells (drawn beneath products) */}
+        {decorCells.map(({ cell, type }) => {
+          const rowIdx = Math.floor(cell / 5);
+          const colIdx = cell % 5;
+          const cx = cellCenters[colIdx];
+          const baseY = shelfRows[rowIdx];
+          return <ShelfDecor key={`decor-${cell}`} type={type} cx={cx} baseY={baseY} />;
+        })}
+
         {products.map((product) => {
           const w = BASE_W * product.scale;
           const h = BASE_H * product.scale;
-          const isSelected = selectedId === product.id;
           return (
-            <g
+            <image
               key={product.id}
-              onPointerDown={(e) => handlePointerDown(e, product.id)}
-              onPointerMove={handlePointerMove}
-              onPointerUp={handlePointerUp}
-              onPointerCancel={handlePointerUp}
-              style={{ cursor: dragRef.current?.id === product.id ? "grabbing" : "grab", touchAction: "none" }}
+              href={product.src}
+              x={product.x - w / 2}
+              y={product.y - h}
+              width={w}
+              height={h}
+              preserveAspectRatio="xMidYMax meet"
             >
-              <image
-                href={product.src}
-                x={product.x - w / 2}
-                y={product.y - h}
-                width={w}
-                height={h}
-                preserveAspectRatio="xMidYMax meet"
-              >
-                <title>{product.alt}</title>
-              </image>
-              {isSelected && (
-                <rect
-                  x={product.x - w / 2}
-                  y={product.y - h}
-                  width={w}
-                  height={h}
-                  fill="none"
-                  stroke="#ff8a00"
-                  strokeWidth={1.5}
-                  strokeDasharray="4 3"
-                  pointerEvents="none"
-                />
-              )}
-            </g>
+              <title>{product.alt}</title>
+            </image>
           );
         })}
 
