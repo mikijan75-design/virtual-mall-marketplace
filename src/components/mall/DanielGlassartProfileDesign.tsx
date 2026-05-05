@@ -1,5 +1,5 @@
 import { useEffect, useState, type CSSProperties } from "react";
-import { Eye, Gift, Phone, Target, type LucideIcon } from "lucide-react";
+import { Eye, Gift, Phone, Target, X, type LucideIcon } from "lucide-react";
 import danielGlassArtLogo from "@/assets/stores/daniel-glass-art-logo.jpg";
 import floor1Shop6Img from "@/assets/stores/floor1-shop6.png";
 import hamsaJerusalemBlue from "@/assets/stores/hamsa-jerusalem-blue.png";
