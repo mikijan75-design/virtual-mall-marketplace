@@ -419,6 +419,10 @@ const StorePage = () => {
     );
   }
 
+  if (store.id === "s18") {
+    return <DanielGlassArtStoreView store={store} />;
+  }
+
   return (
     <div className="min-h-screen bg-background">
       <MallHeader />
