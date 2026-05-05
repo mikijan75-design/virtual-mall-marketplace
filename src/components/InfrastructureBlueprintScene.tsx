@@ -225,6 +225,11 @@ const InfrastructureBlueprintScene = () => {
             <stop offset="0%" stopColor="#f5f1e6" />
             <stop offset="100%" stopColor="#c9c0aa" />
           </linearGradient>
+          <linearGradient id="ledGlow" x1="0" y1="0" x2="0" y2="1">
+            <stop offset="0%" stopColor="#fff8d0" stopOpacity="0.85" />
+            <stop offset="60%" stopColor="#fff1a8" stopOpacity="0.35" />
+            <stop offset="100%" stopColor="#fff1a8" stopOpacity="0" />
+          </linearGradient>
           <pattern id="woodGrain" width="120" height="60" patternUnits="userSpaceOnUse">
             <rect width="120" height="60" fill="url(#woodLight)" />
             <path d="M0 12 Q30 8 60 14 T120 12" fill="none" stroke="#a87642" strokeOpacity="0.18" strokeWidth="0.6" />
