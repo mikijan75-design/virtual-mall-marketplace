@@ -17,44 +17,44 @@ type BlueprintItem = {
   scale?: number;
 };
 
-const shelfRows = [88, 138, 190, 244, 300];
+const shelfRows = [135, 190, 245, 300, 375];
 const columns = [56, 206, 346, 486, 636, 778];
 const counterPanels = [168, 308, 448, 588, 728];
 
 const blueprintItems: BlueprintItem[] = [
-  { type: "laptop", x: 96, y: 110, label: "UI", scale: 0.75 },
-  { type: "document", x: 150, y: 110, label: "API", scale: 0.72 },
-  { type: "phone", x: 222, y: 162, scale: 0.72 },
-  { type: "router", x: 88, y: 162, scale: 0.8 },
-  { type: "globe", x: 128, y: 216, label: "ISO", scale: 0.7 },
-  { type: "tablet", x: 188, y: 216, scale: 0.72 },
-  { type: "laptop", x: 116, y: 270, label: "UX", scale: 0.84 },
-  { type: "phone", x: 260, y: 270, scale: 0.75 },
-  { type: "box", x: 336, y: 164, label: "DB", scale: 0.78 },
-  { type: "globe", x: 396, y: 216, scale: 0.64 },
-  { type: "tablet", x: 318, y: 216, scale: 0.74 },
-  { type: "monitor", x: 452, y: 110, scale: 0.82 },
-  { type: "router", x: 508, y: 162, scale: 0.78 },
-  { type: "printer", x: 410, y: 216, scale: 0.7 },
-  { type: "phone", x: 446, y: 270, scale: 0.72 },
-  { type: "document", x: 520, y: 270, label: "CSS", scale: 0.72 },
-  { type: "monitor", x: 596, y: 110, scale: 0.85 },
-  { type: "document", x: 600, y: 162, label: "DOC", scale: 0.75 },
-  { type: "router", x: 672, y: 162, label: "I/O", scale: 0.78 },
-  { type: "tablet", x: 620, y: 216, scale: 0.72 },
-  { type: "printer", x: 710, y: 270, scale: 0.72 },
-  { type: "box", x: 776, y: 110, scale: 0.74 },
-  { type: "globe", x: 824, y: 110, scale: 0.64 },
-  { type: "laptop", x: 786, y: 216, scale: 0.82 },
-  { type: "phone", x: 884, y: 270, scale: 0.72 },
-  { type: "laptop", x: 210, y: 344, label: "LIVE", scale: 0.92 },
-  { type: "laptop", x: 290, y: 344, scale: 0.86 },
-  { type: "tablet", x: 378, y: 344, label: "SVG", scale: 0.8 },
-  { type: "document", x: 466, y: 344, label: "TS", scale: 0.78 },
-  { type: "globe", x: 548, y: 344, scale: 0.74 },
-  { type: "monitor", x: 632, y: 344, scale: 0.84 },
-  { type: "printer", x: 712, y: 344, scale: 0.76 },
-  { type: "router", x: 798, y: 344, scale: 0.74 },
+  { type: "laptop", x: 96, y: 117, label: "UI", scale: 0.75 },
+  { type: "document", x: 150, y: 117, label: "API", scale: 0.72 },
+  { type: "phone", x: 222, y: 172, scale: 0.72 },
+  { type: "router", x: 88, y: 172, scale: 0.8 },
+  { type: "globe", x: 128, y: 227, label: "ISO", scale: 0.7 },
+  { type: "tablet", x: 188, y: 227, scale: 0.72 },
+  { type: "laptop", x: 116, y: 282, label: "UX", scale: 0.84 },
+  { type: "phone", x: 260, y: 282, scale: 0.75 },
+  { type: "box", x: 336, y: 172, label: "DB", scale: 0.78 },
+  { type: "globe", x: 396, y: 227, scale: 0.64 },
+  { type: "tablet", x: 318, y: 227, scale: 0.74 },
+  { type: "monitor", x: 452, y: 117, scale: 0.82 },
+  { type: "router", x: 508, y: 172, scale: 0.78 },
+  { type: "printer", x: 410, y: 227, scale: 0.7 },
+  { type: "phone", x: 446, y: 282, scale: 0.72 },
+  { type: "document", x: 520, y: 282, label: "CSS", scale: 0.72 },
+  { type: "monitor", x: 596, y: 117, scale: 0.85 },
+  { type: "document", x: 600, y: 172, label: "DOC", scale: 0.75 },
+  { type: "router", x: 672, y: 172, label: "I/O", scale: 0.78 },
+  { type: "tablet", x: 620, y: 227, scale: 0.72 },
+  { type: "printer", x: 710, y: 282, scale: 0.72 },
+  { type: "box", x: 776, y: 117, scale: 0.74 },
+  { type: "globe", x: 824, y: 117, scale: 0.64 },
+  { type: "laptop", x: 786, y: 227, scale: 0.82 },
+  { type: "phone", x: 884, y: 282, scale: 0.72 },
+  { type: "laptop", x: 210, y: 357, label: "LIVE", scale: 0.92 },
+  { type: "laptop", x: 290, y: 357, scale: 0.86 },
+  { type: "tablet", x: 378, y: 357, label: "SVG", scale: 0.8 },
+  { type: "document", x: 466, y: 357, label: "TS", scale: 0.78 },
+  { type: "globe", x: 548, y: 357, scale: 0.74 },
+  { type: "monitor", x: 632, y: 357, scale: 0.84 },
+  { type: "printer", x: 712, y: 357, scale: 0.76 },
+  { type: "router", x: 798, y: 357, scale: 0.74 },
 ];
 
 const lineProps = {
@@ -243,20 +243,17 @@ const InfrastructureBlueprintScene = () => {
         <g className="blueprint-main">
           <path className="drawn-line" d="M56 58h912l-6 7H62z" />
           <path className="drawn-line" d="M75 70v370M947 70v370M75 440h872" />
-          <path className="drawn-line" d="M75 122h872M75 176h872M75 230h872M75 284h872M75 338h872" />
+          <path className="drawn-line" d="M75 135h872M75 190h872M75 245h872M75 300h872M75 375h872" />
           {columns.map((x) => (
             <path key={x} className="drawn-line" d={`M${x} 70v370M${x + 8} 76v358`} />
           ))}
-          <path className="drawn-line" d="M184 470h664v90H184z" />
-          <path className="drawn-line" d="M208 486h616v62H208z" />
+          <path className="drawn-line" d="M184 470h664v80H184z" />
+          <path className="drawn-line" d="M208 484h616v52H208z" />
         </g>
 
         <g className="blueprint-detail">
-          {shelfRows.map((y) => (
-            <path key={y} d={`M75 ${y}h872`} />
-          ))}
           {counterPanels.map((x) => (
-            <path key={x} d={`M${x} 470v90`} />
+            <path key={x} d={`M${x} 470v80`} />
           ))}
           {columns.map((x) => (
             <path key={`cap-${x}`} d={`M${x - 5} 70l12-12 12 12`} />
