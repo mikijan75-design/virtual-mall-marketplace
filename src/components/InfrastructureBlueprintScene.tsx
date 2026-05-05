@@ -313,6 +313,19 @@ const InfrastructureBlueprintScene = () => {
     }
     return initialProducts;
   });
+  const [deleteMode, setDeleteMode] = useState(false);
+
+  const handleDelete = (id: string) => {
+    setProducts((prev) => {
+      const next = prev.filter((p) => p.id !== id);
+      try {
+        window.localStorage.setItem(STORAGE_KEY, JSON.stringify(next));
+      } catch {
+        /* ignore */
+      }
+      return next;
+    });
+  };
   // Decorative fillers placed in shelf cells without products
   const decorCells: { cell: number; type: "vase" | "books" | "lantern" | "plant" }[] = [
     { cell: 1, type: "vase" },
