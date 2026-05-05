@@ -29,26 +29,16 @@ import n9 from "@/assets/beggars-new/n9.png";
 import n10 from "@/assets/beggars-new/n10.png";
 import n11 from "@/assets/beggars-new/n11.png";
 
+import { useEffect, useRef, useState } from "react";
+
 type FeaturedProduct = {
-  rowIdx: number;
-  colIdx: number;
+  id: string;
   src: string;
   alt: string;
+  x: number; // center x in SVG units
+  y: number; // bottom y in SVG units
+  scale: number; // 1 = base size
 };
-
-// Available BEGGARS products randomly scattered across the 3×5 shelf grid (remaining cells stay empty)
-const productPool = [n1, n2, n3, n4, n5, n6, n7, n8, n9, n10, n11];
-// Pre-shuffled cell indices (0..14) — first N positions get products, rest stay empty
-const cellOrder = [7, 2, 11, 14, 4, 9, 0, 13, 6, 3, 10, 1, 12, 5, 8];
-const featuredProducts: FeaturedProduct[] = productPool.map((src, i) => {
-  const cell = cellOrder[i];
-  return {
-    rowIdx: Math.floor(cell / 5),
-    colIdx: cell % 5,
-    src,
-    alt: `BEGGARS product ${i + 1}`,
-  };
-});
 
 // 3 equal-height rows across the cabinet (70→440, step ≈123.33)
 const shelfRows = [193, 317, 440];
@@ -60,6 +50,28 @@ const counterPanels = [317, 450, 582, 715];
 // Cell centers for 5 equal columns
 const cellCenters = [162, 336, 511, 685, 859];
 const blueprintItems: BlueprintItem[] = [];
+
+const STORAGE_KEY = "beggars-product-layout-v1";
+const BASE_W = 110;
+const BASE_H = 100;
+
+// Available BEGGARS products randomly scattered across the 3×5 shelf grid (remaining cells stay empty)
+const productPool = [n1, n2, n3, n4, n5, n6, n7, n8, n9, n10, n11];
+// Pre-shuffled cell indices (0..14) — first N positions get products, rest stay empty
+const cellOrder = [7, 2, 11, 14, 4, 9, 0, 13, 6, 3, 10, 1, 12, 5, 8];
+const initialProducts: FeaturedProduct[] = productPool.map((src, i) => {
+  const cell = cellOrder[i];
+  const rowIdx = Math.floor(cell / 5);
+  const colIdx = cell % 5;
+  return {
+    id: `p-${i}`,
+    src,
+    alt: `BEGGARS product ${i + 1}`,
+    x: cellCenters[colIdx],
+    y: shelfRows[rowIdx],
+    scale: 1,
+  };
+});
 
 const lineProps = {
   stroke: "currentColor",
@@ -148,14 +160,136 @@ const BlueprintIcon = ({ item }: { item: BlueprintItem }) => {
 };
 
 const InfrastructureBlueprintScene = () => {
+  const svgRef = useRef<SVGSVGElement | null>(null);
+  const [products, setProducts] = useState<FeaturedProduct[]>(() => {
+    if (typeof window !== "undefined") {
+      try {
+        const saved = window.localStorage.getItem(STORAGE_KEY);
+        if (saved) {
+          const parsed = JSON.parse(saved) as FeaturedProduct[];
+          // Re-attach src from current bundled assets by index
+          return parsed.map((p, i) => ({ ...p, src: initialProducts[i]?.src ?? p.src }));
+        }
+      } catch {
+        /* ignore */
+      }
+    }
+    return initialProducts;
+  });
+  const [selectedId, setSelectedId] = useState<string | null>(null);
+  const dragRef = useRef<{ id: string; offsetX: number; offsetY: number } | null>(null);
+
+  useEffect(() => {
+    try {
+      window.localStorage.setItem(
+        STORAGE_KEY,
+        JSON.stringify(products.map(({ src, ...rest }) => rest)),
+      );
+    } catch {
+      /* ignore */
+    }
+  }, [products]);
+
+  const toSvgPoint = (clientX: number, clientY: number) => {
+    const svg = svgRef.current;
+    if (!svg) return { x: 0, y: 0 };
+    const pt = svg.createSVGPoint();
+    pt.x = clientX;
+    pt.y = clientY;
+    const ctm = svg.getScreenCTM();
+    if (!ctm) return { x: 0, y: 0 };
+    const local = pt.matrixTransform(ctm.inverse());
+    return { x: local.x, y: local.y };
+  };
+
+  const handlePointerDown = (e: React.PointerEvent<SVGGElement>, id: string) => {
+    e.stopPropagation();
+    const product = products.find((p) => p.id === id);
+    if (!product) return;
+    const { x, y } = toSvgPoint(e.clientX, e.clientY);
+    dragRef.current = { id, offsetX: x - product.x, offsetY: y - product.y };
+    setSelectedId(id);
+    (e.currentTarget as Element).setPointerCapture?.(e.pointerId);
+  };
+
+  const handlePointerMove = (e: React.PointerEvent<SVGGElement>) => {
+    if (!dragRef.current) return;
+    const { id, offsetX, offsetY } = dragRef.current;
+    const { x, y } = toSvgPoint(e.clientX, e.clientY);
+    setProducts((prev) =>
+      prev.map((p) => (p.id === id ? { ...p, x: x - offsetX, y: y - offsetY } : p)),
+    );
+  };
+
+  const handlePointerUp = (e: React.PointerEvent<SVGGElement>) => {
+    dragRef.current = null;
+    (e.currentTarget as Element).releasePointerCapture?.(e.pointerId);
+  };
+
+  const adjustScale = (id: string, delta: number) => {
+    setProducts((prev) =>
+      prev.map((p) =>
+        p.id === id ? { ...p, scale: Math.max(0.3, Math.min(4, p.scale + delta)) } : p,
+      ),
+    );
+  };
+
+  const resetLayout = () => {
+    setProducts(initialProducts);
+    setSelectedId(null);
+  };
+
   return (
-    <figure className="relative mx-auto w-full max-w-6xl overflow-hidden rounded-[2rem] border border-[#7a4a22] bg-white shadow-2xl shadow-slate-950/30">
+    <figure className="relative mx-auto w-full max-w-6xl rounded-[2rem] border border-[#7a4a22] bg-white shadow-2xl shadow-slate-950/30">
+      <div className="flex flex-wrap items-center justify-between gap-2 border-b border-[#7a4a22]/30 px-4 py-2 text-xs font-heebo text-[#3a1f08]">
+        <div>
+          {selectedId
+            ? "גרירה: לחיצה ארוכה והזזה • כפתורי + / − להגדלה/הקטנה"
+            : "לחץ על מוצר כדי לבחור אותו, ואז גרור או שנה גודל"}
+        </div>
+        <div className="flex items-center gap-2">
+          {selectedId && (
+            <>
+              <button
+                type="button"
+                onClick={() => adjustScale(selectedId, -0.1)}
+                className="rounded bg-[#7a4a22] px-2 py-1 text-white hover:bg-[#5c3818]"
+              >
+                −
+              </button>
+              <button
+                type="button"
+                onClick={() => adjustScale(selectedId, 0.1)}
+                className="rounded bg-[#7a4a22] px-2 py-1 text-white hover:bg-[#5c3818]"
+              >
+                +
+              </button>
+              <button
+                type="button"
+                onClick={() => setSelectedId(null)}
+                className="rounded border border-[#7a4a22] px-2 py-1 hover:bg-[#7a4a22]/10"
+              >
+                ביטול בחירה
+              </button>
+            </>
+          )}
+          <button
+            type="button"
+            onClick={resetLayout}
+            className="rounded border border-[#7a4a22] px-2 py-1 hover:bg-[#7a4a22]/10"
+          >
+            איפוס סידור
+          </button>
+        </div>
+      </div>
       <svg
+        ref={svgRef}
         className="h-auto w-full text-[#0a0a0a]"
         viewBox="0 0 1024 576"
         role="img"
         aria-labelledby="infrastructure-blueprint-title infrastructure-blueprint-desc"
         xmlns="http://www.w3.org/2000/svg"
+        onPointerDown={() => setSelectedId(null)}
       >
         <title id="infrastructure-blueprint-title">Live coded infrastructure blueprint</title>
         <desc id="infrastructure-blueprint-desc">
@@ -376,39 +510,42 @@ const InfrastructureBlueprintScene = () => {
           ))}
         </g>
 
-        {featuredProducts.map((product) => {
-          const shelfY = shelfRows[product.rowIdx];
-          const cx = cellCenters[product.colIdx];
-          const imgW = 110;
-          const imgH = 100;
-          // Cell bounds (between partitions) to clip any overflowing artwork
-          const cellEdges = [75, ...columns.map((c) => c + 8), 947];
-          const cellLeft = cellEdges[product.colIdx];
-          const cellRight = cellEdges[product.colIdx + 1];
-          const cellTop = product.rowIdx === 0 ? 70 : shelfRows[product.rowIdx - 1];
-          const cellBottom = shelfY - 4;
-          const clipId = `cell-clip-${product.rowIdx}-${product.colIdx}`;
+        {products.map((product) => {
+          const w = BASE_W * product.scale;
+          const h = BASE_H * product.scale;
+          const isSelected = selectedId === product.id;
           return (
-            <g key={`featured-${product.rowIdx}-${product.colIdx}`}>
-              <clipPath id={clipId}>
-                <rect
-                  x={cellLeft + 2}
-                  y={cellTop + 2}
-                  width={cellRight - cellLeft - 4}
-                  height={cellBottom - cellTop - 2}
-                />
-              </clipPath>
+            <g
+              key={product.id}
+              onPointerDown={(e) => handlePointerDown(e, product.id)}
+              onPointerMove={handlePointerMove}
+              onPointerUp={handlePointerUp}
+              onPointerCancel={handlePointerUp}
+              style={{ cursor: dragRef.current?.id === product.id ? "grabbing" : "grab", touchAction: "none" }}
+            >
               <image
                 href={product.src}
-                x={cx - imgW / 2}
-                y={shelfY - imgH}
-                width={imgW}
-                height={imgH}
+                x={product.x - w / 2}
+                y={product.y - h}
+                width={w}
+                height={h}
                 preserveAspectRatio="xMidYMax meet"
-                clipPath={`url(#${clipId})`}
               >
                 <title>{product.alt}</title>
               </image>
+              {isSelected && (
+                <rect
+                  x={product.x - w / 2}
+                  y={product.y - h}
+                  width={w}
+                  height={h}
+                  fill="none"
+                  stroke="#ff8a00"
+                  strokeWidth={1.5}
+                  strokeDasharray="4 3"
+                  pointerEvents="none"
+                />
+              )}
             </g>
           );
         })}
