@@ -5,6 +5,7 @@ import floor1Shop6Img from "@/assets/stores/floor1-shop6.png";
 import hamsaJerusalemBlue from "@/assets/stores/hamsa-jerusalem-blue.png";
 import hamsaJerusalemOrange from "@/assets/stores/hamsa-jerusalem-orange.png";
 import lampBlueMosaic from "@/assets/stores/lamp-blue-mosaic.png";
+import danielPortrait from "@/assets/stores/daniel-portrait.png";
 
 type TimelineItem = {
   id: string;
@@ -159,16 +160,19 @@ const DanielGlassartProfileDesign = () => {
 
   return (
     <section className="relative mx-auto w-full overflow-hidden rounded-[20px] bg-[#fbfbfb] p-[clamp(0.75rem,1.6vw,1.5rem)] shadow-[0_18px_50px_rgba(15,23,42,0.16)]" dir="rtl">
-    <div style={{ zoom: 0.6 }}>
+    <div style={{ zoom: 0.48 }}>
       <div className="grid gap-5">
-        <header className="text-right">
-          <p {...editProps(headerTag, setHeaderTag)} className={`text-[10px] font-black uppercase tracking-[0.35em] text-[#6b7280] ${editing ? "focus:outline focus:outline-2 focus:outline-sky-400 rounded px-0.5" : ""}`}>
-            {headerTag}
-          </p>
-          <h1 className="mt-1 text-[clamp(1.2rem,1.9vw,2.1rem)] font-black leading-none tracking-[-0.05em] text-black">
-            <span {...editProps(headerTitleHe, setHeaderTitleHe)}>{headerTitleHe}</span>
-            <span dir="ltr" {...editProps(headerTitleEn, setHeaderTitleEn)}>{headerTitleEn}</span>
-          </h1>
+        <header className="flex items-center gap-3 text-right">
+          <img src={danielPortrait} alt="דניאל" className="h-20 w-20 shrink-0 rounded-full object-cover shadow-md" loading="lazy" />
+          <div className="flex-1">
+            <p {...editProps(headerTag, setHeaderTag)} className={`text-[10px] font-black uppercase tracking-[0.35em] text-[#6b7280] ${editing ? "focus:outline focus:outline-2 focus:outline-sky-400 rounded px-0.5" : ""}`}>
+              {headerTag}
+            </p>
+            <h1 className="mt-1 text-[clamp(1.2rem,1.9vw,2.1rem)] font-black leading-none tracking-[-0.05em] text-black">
+              <span {...editProps(headerTitleHe, setHeaderTitleHe)}>{headerTitleHe}</span>
+              <span dir="ltr" {...editProps(headerTitleEn, setHeaderTitleEn)}>{headerTitleEn}</span>
+            </h1>
+          </div>
         </header>
 
         <aside className="space-y-7">
