@@ -156,7 +156,7 @@ const InfrastructureBlueprintScene = () => {
   return (
     <figure className="relative mx-auto w-full max-w-6xl overflow-hidden rounded-[2rem] border border-[#7a4a22] bg-white shadow-2xl shadow-slate-950/30">
       <svg
-        className="h-auto w-full text-[#7a4a22]"
+        className="h-auto w-full text-[#0a0a0a]"
         viewBox="0 0 1024 576"
         role="img"
         aria-labelledby="infrastructure-blueprint-title infrastructure-blueprint-desc"
@@ -196,15 +196,14 @@ const InfrastructureBlueprintScene = () => {
               }
 
               .blueprint-main {
-                stroke-width: 1.35;
-                opacity: 0.86;
-                filter: url(#blueprintSoftGlow);
+                stroke-width: 0.5;
+                opacity: 1;
               }
 
               .blueprint-detail,
               .blueprint-device {
-                stroke-width: 1.15;
-                opacity: 0.72;
+                stroke-width: 0.5;
+                opacity: 1;
               }
 
               .blueprint-perspective {
