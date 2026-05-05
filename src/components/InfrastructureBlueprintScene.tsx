@@ -40,6 +40,21 @@ type FeaturedProduct = {
   scale: number; // 1 = base size
 };
 
+// 3 equal-height rows across the cabinet (70→440, step ≈123.33)
+const shelfRows = [193, 317, 440];
+// 4 vertical partitions making 5 equal-width cells across 75→947 (step ≈174.4)
+const columns = [249, 424, 598, 773];
+// Symmetric inner counter dividers (counter spans 184→848, center 516)
+const counterPanels = [317, 450, 582, 715];
+
+// Cell centers for 5 equal columns
+const cellCenters = [162, 336, 511, 685, 859];
+const blueprintItems: BlueprintItem[] = [];
+
+const STORAGE_KEY = "beggars-product-layout-v1";
+const BASE_W = 110;
+const BASE_H = 100;
+
 // Available BEGGARS products randomly scattered across the 3×5 shelf grid (remaining cells stay empty)
 const productPool = [n1, n2, n3, n4, n5, n6, n7, n8, n9, n10, n11];
 // Pre-shuffled cell indices (0..14) — first N positions get products, rest stay empty
@@ -57,21 +72,6 @@ const initialProducts: FeaturedProduct[] = productPool.map((src, i) => {
     scale: 1,
   };
 });
-
-const STORAGE_KEY = "beggars-product-layout-v1";
-const BASE_W = 110;
-const BASE_H = 100;
-
-// 3 equal-height rows across the cabinet (70→440, step ≈123.33)
-const shelfRows = [193, 317, 440];
-// 4 vertical partitions making 5 equal-width cells across 75→947 (step ≈174.4)
-const columns = [249, 424, 598, 773];
-// Symmetric inner counter dividers (counter spans 184→848, center 516)
-const counterPanels = [317, 450, 582, 715];
-
-// Cell centers for 5 equal columns
-const cellCenters = [162, 336, 511, 685, 859];
-const blueprintItems: BlueprintItem[] = [];
 
 const lineProps = {
   stroke: "currentColor",
