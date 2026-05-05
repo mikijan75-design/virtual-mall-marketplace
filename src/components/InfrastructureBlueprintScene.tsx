@@ -416,39 +416,53 @@ const InfrastructureBlueprintScene = () => {
           </radialGradient>
           {/* Realistic wood gradients */}
           <linearGradient id="woodFrame" x1="0" y1="0" x2="0" y2="1">
-            <stop offset="0%" stopColor="#c89a68" />
-            <stop offset="50%" stopColor="#a87642" />
-            <stop offset="100%" stopColor="#7a4a22" />
+            <stop offset="0%" stopColor="#a8784a" />
+            <stop offset="50%" stopColor="#7a4a22" />
+            <stop offset="100%" stopColor="#3e220e" />
           </linearGradient>
           <linearGradient id="woodLight" x1="0" y1="0" x2="0" y2="1">
-            <stop offset="0%" stopColor="#f0d4a8" />
-            <stop offset="50%" stopColor="#e3bf8a" />
-            <stop offset="100%" stopColor="#c89a6a" />
+            <stop offset="0%" stopColor="#d9b482" />
+            <stop offset="50%" stopColor="#b88656" />
+            <stop offset="100%" stopColor="#8a5a30" />
           </linearGradient>
           <linearGradient id="woodPartition" x1="0" y1="0" x2="1" y2="0">
-            <stop offset="0%" stopColor="#8c5a30" />
-            <stop offset="35%" stopColor="#d4a878" />
-            <stop offset="65%" stopColor="#d4a878" />
-            <stop offset="100%" stopColor="#8c5a30" />
+            <stop offset="0%" stopColor="#3a1f08" />
+            <stop offset="20%" stopColor="#7a4a22" />
+            <stop offset="50%" stopColor="#b8865a" />
+            <stop offset="80%" stopColor="#7a4a22" />
+            <stop offset="100%" stopColor="#3a1f08" />
           </linearGradient>
           <linearGradient id="creamBack" x1="0" y1="0" x2="0" y2="1">
-            <stop offset="0%" stopColor="#fdfaf0" />
-            <stop offset="100%" stopColor="#f0e6d0" />
+            <stop offset="0%" stopColor="#f4ecd6" />
+            <stop offset="50%" stopColor="#e8dcbe" />
+            <stop offset="100%" stopColor="#cab896" />
           </linearGradient>
           <linearGradient id="shelfPlank" x1="0" y1="0" x2="0" y2="1">
-            <stop offset="0%" stopColor="#e8c79a" />
-            <stop offset="50%" stopColor="#b8895a" />
-            <stop offset="100%" stopColor="#7a4a22" />
+            <stop offset="0%" stopColor="#d4a878" />
+            <stop offset="40%" stopColor="#a87642" />
+            <stop offset="100%" stopColor="#4a2a10" />
+          </linearGradient>
+          <linearGradient id="shelfEdge" x1="0" y1="0" x2="0" y2="1">
+            <stop offset="0%" stopColor="#5a3418" />
+            <stop offset="100%" stopColor="#2a1608" />
           </linearGradient>
           <linearGradient id="shelfShadow" x1="0" y1="0" x2="0" y2="1">
             <stop offset="0%" stopColor="#000" stopOpacity="0.35" />
             <stop offset="100%" stopColor="#000" stopOpacity="0" />
           </linearGradient>
           <linearGradient id="cellShade" x1="0" y1="0" x2="0" y2="1">
-            <stop offset="0%" stopColor="#000" stopOpacity="0.18" />
-            <stop offset="40%" stopColor="#000" stopOpacity="0" />
-            <stop offset="100%" stopColor="#000" stopOpacity="0.08" />
+            <stop offset="0%" stopColor="#000" stopOpacity="0.32" />
+            <stop offset="35%" stopColor="#000" stopOpacity="0.04" />
+            <stop offset="100%" stopColor="#000" stopOpacity="0.18" />
           </linearGradient>
+          <radialGradient id="cellVignette" cx="50%" cy="50%" r="65%">
+            <stop offset="60%" stopColor="#000" stopOpacity="0" />
+            <stop offset="100%" stopColor="#000" stopOpacity="0.28" />
+          </radialGradient>
+          <radialGradient id="productShadow" cx="50%" cy="50%" r="50%">
+            <stop offset="0%" stopColor="#000" stopOpacity="0.55" />
+            <stop offset="100%" stopColor="#000" stopOpacity="0" />
+          </radialGradient>
           <linearGradient id="counterTop" x1="0" y1="0" x2="0" y2="1">
             <stop offset="0%" stopColor="#fafafa" />
             <stop offset="100%" stopColor="#dcd6c8" />
@@ -505,11 +519,20 @@ const InfrastructureBlueprintScene = () => {
             <stop offset="0%" stopColor="#c47a52" />
             <stop offset="100%" stopColor="#7a4226" />
           </linearGradient>
-          <pattern id="woodGrain" width="120" height="60" patternUnits="userSpaceOnUse">
-            <rect width="120" height="60" fill="url(#woodLight)" />
-            <path d="M0 12 Q30 8 60 14 T120 12" fill="none" stroke="#a87642" strokeOpacity="0.18" strokeWidth="0.6" />
-            <path d="M0 28 Q40 24 80 30 T120 28" fill="none" stroke="#8c5a30" strokeOpacity="0.14" strokeWidth="0.5" />
-            <path d="M0 44 Q35 40 70 46 T120 44" fill="none" stroke="#a87642" strokeOpacity="0.16" strokeWidth="0.6" />
+          <pattern id="woodGrain" width="180" height="90" patternUnits="userSpaceOnUse">
+            <rect width="180" height="90" fill="url(#woodLight)" />
+            <path d="M0 8 Q45 4 90 10 T180 8" fill="none" stroke="#5a3418" strokeOpacity="0.22" strokeWidth="0.7" />
+            <path d="M0 22 Q50 18 100 24 T180 22" fill="none" stroke="#3e220e" strokeOpacity="0.18" strokeWidth="0.5" />
+            <path d="M0 38 Q55 34 110 40 T180 38" fill="none" stroke="#7a4a22" strokeOpacity="0.28" strokeWidth="0.9" />
+            <path d="M0 54 Q40 50 80 56 T180 54" fill="none" stroke="#3e220e" strokeOpacity="0.2" strokeWidth="0.6" />
+            <path d="M0 70 Q45 66 90 72 T180 70" fill="none" stroke="#5a3418" strokeOpacity="0.22" strokeWidth="0.7" />
+            <ellipse cx="40" cy="30" rx="6" ry="2.4" fill="none" stroke="#3e220e" strokeOpacity="0.22" strokeWidth="0.5" />
+            <ellipse cx="140" cy="62" rx="7" ry="2.6" fill="none" stroke="#3e220e" strokeOpacity="0.22" strokeWidth="0.5" />
+          </pattern>
+          <pattern id="backWallTexture" width="6" height="6" patternUnits="userSpaceOnUse">
+            <rect width="6" height="6" fill="url(#creamBack)" />
+            <circle cx="1" cy="2" r="0.35" fill="#8a7654" opacity="0.18" />
+            <circle cx="4" cy="4" r="0.3" fill="#5a4632" opacity="0.16" />
           </pattern>
           <pattern id="blueprintGrid" width="32" height="32" patternUnits="userSpaceOnUse">
             <path d="M32 0H0v32" fill="none" stroke="#9ad4ff" strokeOpacity="0.08" strokeWidth="1" />
@@ -581,68 +604,88 @@ const InfrastructureBlueprintScene = () => {
           </style>
         </defs>
 
-        <rect width="1024" height="576" fill="#ffffff" />
+        <defs>
+          <linearGradient id="roomBg" x1="0" y1="0" x2="0" y2="1">
+            <stop offset="0%" stopColor="#f5f0e6" />
+            <stop offset="100%" stopColor="#d8cfbe" />
+          </linearGradient>
+        </defs>
+        <rect width="1024" height="576" fill="url(#roomBg)" />
         {/* Floor shadow under cabinet */}
-        <ellipse cx="512" cy="558" rx="430" ry="10" fill="#000" opacity="0.18" />
+        <ellipse cx="512" cy="560" rx="460" ry="14" fill="#000" opacity="0.32" />
+        <ellipse cx="512" cy="560" rx="430" ry="8" fill="#000" opacity="0.25" />
         {/* Wood frame body with grain pattern */}
         <rect x="57" y="58" width="910" height="392" fill="url(#woodGrain)" />
+        <rect x="57" y="58" width="910" height="392" fill="url(#cellShade)" opacity="0.6" />
         {/* Inner cream backing panel (the back wall of the cabinet) */}
-        <rect x="75" y="70" width="872" height="370" fill="url(#creamBack)" />
-        {/* Subtle inner shadow on cream back */}
-        <rect x="75" y="70" width="872" height="14" fill="url(#shelfShadow)" />
-        {/* Horizontal shelf planks (3D look) */}
+        <rect x="75" y="70" width="872" height="370" fill="url(#backWallTexture)" />
+        {/* Inner top shadow on back panel */}
+        <rect x="75" y="70" width="872" height="20" fill="url(#shelfShadow)" />
+        {/* Inner side shadows on back panel (depth into cabinet) */}
+        <rect x="75" y="70" width="22" height="370" fill="#000" opacity="0.18" />
+        <rect x="925" y="70" width="22" height="370" fill="#000" opacity="0.18" />
+        {/* Horizontal shelf planks with realistic edge thickness */}
         {shelfRows.map((y) => (
           <g key={`plank-${y}`}>
-            <rect x="75" y={y - 4} width="872" height="8" fill="url(#shelfPlank)" />
-            <rect x="75" y={y + 4} width="872" height="3" fill="#000" opacity="0.25" />
-            <rect x="75" y={y - 4} width="872" height="1" fill="#fff" opacity="0.4" />
+            {/* under-shelf cast shadow on next cell */}
+            <rect x="75" y={y + 7} width="872" height="14" fill="url(#shelfShadow)" opacity="0.7" />
+            {/* shelf top plank surface */}
+            <rect x="75" y={y - 5} width="872" height="6" fill="url(#shelfPlank)" />
+            {/* highlight line on shelf top */}
+            <rect x="75" y={y - 5} width="872" height="1.2" fill="#f0d4a0" opacity="0.7" />
+            {/* front edge of shelf (3D thickness) */}
+            <rect x="75" y={y + 1} width="872" height="6" fill="url(#shelfEdge)" />
+            {/* dark crease line */}
+            <rect x="75" y={y + 1} width="872" height="0.6" fill="#1a0d04" opacity="0.7" />
           </g>
         ))}
         {/* LED light strip under each shelf top, illuminating products below */}
         {[70, ...shelfRows.slice(0, -1)].map((topY) => (
           <g key={`led-${topY}`}>
             {/* Soft outer halo */}
-            <rect x="78" y={topY + 4} width="866" height="100" fill="url(#ledGlow)" pointerEvents="none" />
+            <rect x="78" y={topY + 8} width="866" height="110" fill="url(#ledGlow)" pointerEvents="none" />
             {/* Bright core wash on top of products */}
-            <rect x="78" y={topY + 4} width="866" height="38" fill="#ffffff" opacity="0.35" pointerEvents="none" />
+            <rect x="78" y={topY + 8} width="866" height="44" fill="#ffffff" opacity="0.3" pointerEvents="none" />
             {/* LED strip housing */}
-            <rect x="78" y={topY + 1} width="866" height="3.5" fill="#f4f1e6" />
+            <rect x="78" y={topY + 4} width="866" height="3.5" fill="#2a1608" />
+            <rect x="78" y={topY + 4} width="866" height="1" fill="#000" opacity="0.5" />
             {/* Bright white LED line (with glow) */}
-            <rect x="80" y={topY + 1.6} width="862" height="2.4" fill="#ffffff" />
-            <rect x="80" y={topY + 2} width="862" height="1.2" fill="#ffffff" opacity="1" filter="url(#blueprintSoftGlow)" />
+            <rect x="80" y={topY + 4.8} width="862" height="2" fill="#ffffff" />
+            <rect x="80" y={topY + 5.2} width="862" height="1.2" fill="#ffffff" opacity="1" filter="url(#blueprintSoftGlow)" />
           </g>
         ))}
         {/* Wood vertical partitions with rounded shading */}
         {columns.map((x) => (
           <g key={`partition-${x}`}>
             <rect x={x} y={70} width={8} height={370} fill="url(#woodPartition)" />
-            <rect x={x} y={70} width={1} height={370} fill="#fff" opacity="0.25" />
-            <rect x={x + 7} y={70} width={1} height={370} fill="#000" opacity="0.3" />
+            <rect x={x + 0.5} y={70} width={1} height={370} fill="#fff" opacity="0.35" />
+            <rect x={x + 6.5} y={70} width={1.5} height={370} fill="#000" opacity="0.45" />
           </g>
         ))}
-        {/* Per-cell subtle inner shading for depth */}
+        {/* Per-cell vignette for depth */}
         {shelfRows.map((bot, rIdx) => {
           const top = rIdx === 0 ? 70 : shelfRows[rIdx - 1];
           const cellEdges = [75, ...columns.map((c) => c + 8), 947];
           return cellEdges.slice(0, -1).map((left, i) => {
             const right = cellEdges[i + 1];
             return (
-              <rect
-                key={`cell-${rIdx}-${i}`}
-                x={left}
-                y={top}
-                width={right - left}
-                height={bot - top}
-                fill="url(#cellShade)"
-                pointerEvents="none"
-              />
+              <g key={`cell-${rIdx}-${i}`} pointerEvents="none">
+                <rect x={left} y={top} width={right - left} height={bot - top} fill="url(#cellVignette)" />
+                {/* left side shadow */}
+                <rect x={left} y={top} width={4} height={bot - top} fill="#000" opacity="0.12" />
+                {/* right side shadow */}
+                <rect x={right - 4} y={top} width={4} height={bot - top} fill="#000" opacity="0.12" />
+              </g>
             );
           });
         })}
-        {/* Outer wood frame highlights and edges */}
-        <rect x="57" y="58" width="910" height="392" fill="none" stroke="url(#woodFrame)" strokeWidth="6" />
-        <rect x="60" y="61" width="904" height="386" fill="none" stroke="#fff" strokeOpacity="0.25" strokeWidth="1" />
-        <rect x="57" y="58" width="910" height="392" fill="none" stroke="#3a1f08" strokeWidth="0.6" vectorEffect="non-scaling-stroke" />
+        {/* Outer wood frame: layered for realistic moulding */}
+        <rect x="54" y="55" width="916" height="398" fill="none" stroke="#2a1608" strokeWidth="2" />
+        <rect x="57" y="58" width="910" height="392" fill="none" stroke="url(#woodFrame)" strokeWidth="8" />
+        <rect x="61" y="62" width="902" height="384" fill="none" stroke="#fff" strokeOpacity="0.35" strokeWidth="1" />
+        <rect x="65" y="66" width="894" height="380" fill="none" stroke="#3a1f08" strokeOpacity="0.6" strokeWidth="0.6" />
+        {/* Bottom moulding cast shadow under cabinet */}
+        <rect x="57" y="450" width="910" height="6" fill="#1a0d04" opacity="0.5" />
         {/* Counter: top, front, base shadow */}
         <rect x="180" y="464" width="672" height="14" fill="url(#counterTop)" />
         <rect x="180" y="464" width="672" height="2" fill="#fff" opacity="0.6" />
@@ -693,6 +736,15 @@ const InfrastructureBlueprintScene = () => {
               }}
               style={editMode ? { cursor: "move" } : undefined}
             >
+              {/* contact shadow under product */}
+              <ellipse
+                cx={product.x}
+                cy={product.y - 1}
+                rx={w * 0.42}
+                ry={Math.max(3, h * 0.06)}
+                fill="url(#productShadow)"
+                pointerEvents="none"
+              />
               <image
                 href={product.src}
                 x={product.x - w / 2}
