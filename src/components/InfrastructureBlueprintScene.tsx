@@ -392,6 +392,25 @@ const InfrastructureBlueprintScene = () => {
 
   return (
     <figure className="relative mx-auto w-full max-w-6xl rounded-[2rem] border border-[#7a4a22] bg-white shadow-2xl shadow-slate-950/30">
+      <div className="absolute right-3 top-3 z-10 flex gap-2">
+        <button
+          type="button"
+          onClick={() => {
+            const json = JSON.stringify(
+              products.map(({ src, ...rest }) => rest),
+              null,
+              2
+            );
+            navigator.clipboard?.writeText(json).catch(() => {});
+            // eslint-disable-next-line no-console
+            console.log("BEGGARS LAYOUT EXPORT:\n" + json);
+            window.alert("הסידור הועתק ללוח. הדבק לי אותו בצ'אט כדי שאקבע אותו כמקור.");
+          }}
+          className="rounded-full border border-[#7a4a22] bg-white px-3 py-1 text-xs font-medium text-[#7a4a22] shadow-md hover:bg-[#f5ead8]"
+        >
+          ייצא סידור
+        </button>
+      </div>
       <svg
         ref={svgRef}
         className="h-auto w-full text-[#0a0a0a] [overflow:visible]"
