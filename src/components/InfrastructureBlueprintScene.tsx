@@ -31,7 +31,7 @@ import n11 from "@/assets/beggars-new/n11.png";
 import n12 from "@/assets/beggars-new/n12.png";
 import n13 from "@/assets/beggars-new/n13.png";
 
-import { useState } from "react";
+import { useRef, useState } from "react";
 
 type FeaturedProduct = {
   id: string;
@@ -316,15 +316,69 @@ const InfrastructureBlueprintScene = () => {
     return initialProducts;
   });
   const [deleteMode, setDeleteMode] = useState(false);
+  const [editMode, setEditMode] = useState(false);
+  const [selectedId, setSelectedId] = useState<string | null>(null);
+  const svgRef = useRef<SVGSVGElement | null>(null);
+  const dragRef = useRef<{ id: string; offX: number; offY: number } | null>(null);
+
+  const persist = (next: FeaturedProduct[]) => {
+    try {
+      window.localStorage.setItem(STORAGE_KEY, JSON.stringify(next));
+    } catch {
+      /* ignore */
+    }
+  };
+
+  const toSvgPoint = (clientX: number, clientY: number) => {
+    const svg = svgRef.current;
+    if (!svg) return { x: 0, y: 0 };
+    const pt = svg.createSVGPoint();
+    pt.x = clientX;
+    pt.y = clientY;
+    const ctm = svg.getScreenCTM();
+    if (!ctm) return { x: 0, y: 0 };
+    const sp = pt.matrixTransform(ctm.inverse());
+    return { x: sp.x, y: sp.y };
+  };
+
+  const onPointerDownItem = (e: React.PointerEvent, p: FeaturedProduct) => {
+    if (!editMode) return;
+    e.stopPropagation();
+    setSelectedId(p.id);
+    const { x, y } = toSvgPoint(e.clientX, e.clientY);
+    dragRef.current = { id: p.id, offX: x - p.x, offY: y - p.y };
+    (e.target as Element).setPointerCapture?.(e.pointerId);
+  };
+
+  const onPointerMove = (e: React.PointerEvent) => {
+    if (!editMode || !dragRef.current) return;
+    const { id, offX, offY } = dragRef.current;
+    const { x, y } = toSvgPoint(e.clientX, e.clientY);
+    setProducts((prev) => prev.map((p) => (p.id === id ? { ...p, x: x - offX, y: y - offY } : p)));
+  };
+
+  const onPointerUp = () => {
+    if (dragRef.current) {
+      dragRef.current = null;
+      setProducts((prev) => {
+        persist(prev);
+        return prev;
+      });
+    }
+  };
+
+  const updateScale = (id: string, scale: number) => {
+    setProducts((prev) => {
+      const next = prev.map((p) => (p.id === id ? { ...p, scale } : p));
+      persist(next);
+      return next;
+    });
+  };
 
   const handleDelete = (id: string) => {
     setProducts((prev) => {
       const next = prev.filter((p) => p.id !== id);
-      try {
-        window.localStorage.setItem(STORAGE_KEY, JSON.stringify(next));
-      } catch {
-        /* ignore */
-      }
+      persist(next);
       return next;
     });
   };
@@ -341,7 +395,25 @@ const InfrastructureBlueprintScene = () => {
       <div className="absolute right-3 top-3 z-10 flex gap-2">
         <button
           type="button"
-          onClick={() => setDeleteMode((v) => !v)}
+          onClick={() => {
+            setEditMode((v) => !v);
+            setSelectedId(null);
+            if (!editMode) setDeleteMode(false);
+          }}
+          className={`rounded-full border px-3 py-1 text-xs font-medium shadow-md transition ${
+            editMode
+              ? "border-emerald-700 bg-emerald-600 text-white"
+              : "border-[#7a4a22] bg-white text-[#7a4a22] hover:bg-[#f5ead8]"
+          }`}
+        >
+          {editMode ? "סיים עריכה" : "מצב עריכה"}
+        </button>
+        <button
+          type="button"
+          onClick={() => {
+            setDeleteMode((v) => !v);
+            if (!deleteMode) setEditMode(false);
+          }}
           className={`rounded-full border px-3 py-1 text-xs font-medium shadow-md transition ${
             deleteMode
               ? "border-red-700 bg-red-600 text-white"
@@ -351,9 +423,40 @@ const InfrastructureBlueprintScene = () => {
           {deleteMode ? "סיים מחיקה" : "מצב מחיקה"}
         </button>
       </div>
+      {editMode && selectedId && (() => {
+        const sel = products.find((p) => p.id === selectedId);
+        if (!sel) return null;
+        return (
+          <div className="absolute bottom-3 left-1/2 z-10 flex -translate-x-1/2 items-center gap-3 rounded-full border border-[#7a4a22] bg-white/95 px-4 py-2 text-xs shadow-md">
+            <span className="font-medium text-[#7a4a22]">גודל</span>
+            <input
+              type="range"
+              min={0.3}
+              max={3}
+              step={0.05}
+              value={sel.scale}
+              onChange={(e) => updateScale(sel.id, parseFloat(e.target.value))}
+              className="w-48"
+            />
+            <span className="tabular-nums text-[#7a4a22]">{sel.scale.toFixed(2)}×</span>
+            <button
+              type="button"
+              onClick={() => setSelectedId(null)}
+              className="rounded-full border border-[#7a4a22] px-2 py-0.5 text-[#7a4a22] hover:bg-[#f5ead8]"
+            >
+              סגור
+            </button>
+          </div>
+        );
+      })()}
       <svg
+        ref={svgRef}
         className="h-auto w-full text-[#0a0a0a]"
         viewBox="0 0 1024 576"
+        onPointerMove={onPointerMove}
+        onPointerUp={onPointerUp}
+        onPointerLeave={onPointerUp}
+        onClick={() => editMode && setSelectedId(null)}
         role="img"
         aria-labelledby="infrastructure-blueprint-title infrastructure-blueprint-desc"
         xmlns="http://www.w3.org/2000/svg"
