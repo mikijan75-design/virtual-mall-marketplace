@@ -391,7 +391,7 @@ const InfrastructureBlueprintScene = () => {
   ];
 
   return (
-    <figure className="relative mx-auto w-full max-w-6xl overflow-hidden rounded-[2rem] border border-[#7a4a22] bg-white shadow-2xl shadow-slate-950/30">
+    <figure className="relative mx-auto w-full max-w-6xl rounded-[2rem] border border-[#7a4a22] bg-white shadow-2xl shadow-slate-950/30">
       <div className="absolute right-3 top-3 z-10 flex gap-2">
         <button
           type="button"
@@ -737,8 +737,19 @@ const InfrastructureBlueprintScene = () => {
         {products.map((product) => {
           const w = BASE_W * product.scale;
           const h = BASE_H * product.scale;
+          const isSelected = editMode && selectedId === product.id;
           return (
-            <g key={product.id}>
+            <g
+              key={product.id}
+              onPointerDown={(e) => onPointerDownItem(e, product)}
+              onClick={(e) => {
+                if (editMode) {
+                  e.stopPropagation();
+                  setSelectedId(product.id);
+                }
+              }}
+              style={editMode ? { cursor: "move" } : undefined}
+            >
               <image
                 href={product.src}
                 x={product.x - w / 2}
@@ -746,11 +757,30 @@ const InfrastructureBlueprintScene = () => {
                 width={w}
                 height={h}
                 preserveAspectRatio="xMidYMax meet"
-                style={deleteMode ? { cursor: "pointer", opacity: 0.85 } : undefined}
+                style={
+                  deleteMode
+                    ? { cursor: "pointer", opacity: 0.85 }
+                    : editMode
+                    ? { cursor: "move" }
+                    : undefined
+                }
                 onClick={deleteMode ? () => handleDelete(product.id) : undefined}
               >
                 <title>{deleteMode ? "לחץ למחיקה" : product.alt}</title>
               </image>
+              {isSelected && (
+                <rect
+                  x={product.x - w / 2 - 3}
+                  y={product.y - h - 3}
+                  width={w + 6}
+                  height={h + 6}
+                  fill="none"
+                  stroke="#10b981"
+                  strokeDasharray="4 3"
+                  strokeWidth="1.4"
+                  pointerEvents="none"
+                />
+              )}
               {deleteMode && (
                 <g
                   style={{ cursor: "pointer" }}
