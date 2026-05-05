@@ -31,33 +31,32 @@ type FeaturedProduct = {
   alt: string;
 };
 
-// 6 unique products placed randomly across the 5×6 shelf grid (no duplicates, one per cell)
+// 6 unique products placed randomly across the 3×5 shelf grid (no duplicates, one per cell)
 const featuredProducts: FeaturedProduct[] = [
   { rowIdx: 0, colIdx: 1, src: beggarsP1, alt: "BEGGARS product 1" },
-  { rowIdx: 1, colIdx: 4, src: beggarsP2, alt: "BEGGARS product 2" },
-  { rowIdx: 2, colIdx: 0, src: beggarsP3, alt: "BEGGARS product 3" },
-  { rowIdx: 2, colIdx: 3, src: beggarsP4, alt: "BEGGARS product 4" },
-  { rowIdx: 3, colIdx: 5, src: beggarsP5, alt: "BEGGARS product 5" },
-  { rowIdx: 4, colIdx: 2, src: beggarsP6, alt: "BEGGARS product 6" },
+  { rowIdx: 0, colIdx: 4, src: beggarsP2, alt: "BEGGARS product 2" },
+  { rowIdx: 1, colIdx: 0, src: beggarsP3, alt: "BEGGARS product 3" },
+  { rowIdx: 1, colIdx: 3, src: beggarsP4, alt: "BEGGARS product 4" },
+  { rowIdx: 2, colIdx: 2, src: beggarsP5, alt: "BEGGARS product 5" },
+  { rowIdx: 2, colIdx: 4, src: beggarsP6, alt: "BEGGARS product 6" },
 ];
 
-const shelfRows = [135, 190, 245, 300, 375];
-// Symmetric vertical dividers: equal 169px gap on both left (75→244) and right (778→947) edges
-const columns = [244, 377, 511, 644, 778];
+// 3 equal-height rows across the cabinet (70→440, step ≈123.33)
+const shelfRows = [193, 317, 440];
+// 4 vertical partitions making 5 equal-width cells across 75→947 (step ≈174.4)
+const columns = [249, 424, 598, 773];
 // Symmetric inner counter dividers (counter spans 184→848, center 516)
 const counterPanels = [317, 450, 582, 715];
 
-// Cell centers symmetric around the shelf center (511)
-const cellCenters = [160, 311, 444, 578, 711, 862];
+// Cell centers for 5 equal columns
+const cellCenters = [162, 336, 511, 685, 859];
 const rowItemTypes: BlueprintItemType[][] = [
-  ["laptop", "monitor", "document", "monitor", "box", "globe"],
-  ["router", "phone", "router", "router", "document", "tablet"],
-  ["globe", "tablet", "printer", "tablet", "globe", "laptop"],
-  ["laptop", "phone", "phone", "document", "printer", "phone"],
-  ["tablet", "laptop", "monitor", "globe", "router", "printer"],
+  ["laptop", "monitor", "document", "monitor", "box"],
+  ["router", "phone", "router", "tablet", "document"],
+  ["globe", "tablet", "printer", "globe", "laptop"],
 ];
 const blueprintItems: BlueprintItem[] = rowItemTypes.flatMap((row, rowIdx) => {
-  const shelfY = [135, 190, 245, 300, 375][rowIdx];
+  const shelfY = shelfRows[rowIdx];
   return row
     .map((type, colIdx) => {
       if (
