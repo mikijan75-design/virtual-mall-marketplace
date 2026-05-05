@@ -740,13 +740,13 @@ const InfrastructureBlueprintScene = () => {
           return (
             <ellipse
               key={`shadow-${product.id}`}
-              cx={product.x + w * 0.45}
+              cx={product.x + w * 0.32}
               cy={product.y - h * 0.5}
-              rx={w * 0.28}
-              ry={h * 0.42}
+              rx={w * 0.085}
+              ry={h * 0.13}
               fill="#000"
-              opacity="0.32"
-              style={{ filter: "blur(6px)" }}
+              opacity="0.35"
+              style={{ filter: "blur(3px)" }}
               pointerEvents="none"
             />
           );
