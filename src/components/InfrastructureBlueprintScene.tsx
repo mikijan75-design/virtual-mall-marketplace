@@ -248,17 +248,7 @@ const InfrastructureBlueprintScene = () => {
           ))}
         </g>
 
-        <g className="blueprint-perspective">
-          <path d="M966 513c13-4 19-13 22-27 3 14 10 23 24 27-14 4-21 13-24 27-3-14-9-23-22-27z" fill="currentColor" opacity="0.34" />
-          <path d="M899 548h56M899 552h38" />
-          <text x="956" y="552" fill="currentColor" stroke="none" fontSize="8" textAnchor="end">
-            TECHNICAL LAYOUT: LIVE CODED VECTOR
-          </text>
-        </g>
       </svg>
-      <figcaption className="absolute bottom-4 left-6 rounded-full border border-white/20 bg-white/10 px-4 py-2 text-xs uppercase tracking-[0.28em] text-white/75 backdrop-blur">
-        Sampled infrastructure lines / blueprint shelf system
-      </figcaption>
     </figure>
   );
 };
