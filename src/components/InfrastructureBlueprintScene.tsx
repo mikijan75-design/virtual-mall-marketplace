@@ -243,26 +243,22 @@ const InfrastructureBlueprintScene = () => {
         <g className="blueprint-main">
           <path className="drawn-line" d="M56 58h912l-6 7H62z" />
           <path className="drawn-line" d="M75 70v370M947 70v370M75 440h872" />
-          <path className="drawn-line" d="M75 122h872M75 176h872M75 230h872M75 284h872M75 338h872" />
           {columns.map((x) => (
             <path key={x} className="drawn-line" d={`M${x} 70v370M${x + 8} 76v358`} />
           ))}
-          <path className="drawn-line" d="M184 352h664v120H184z" />
-          <path className="drawn-line" d="M208 372h616v82H208z" />
-          <path className="drawn-line" d="M184 472h664l-24 22H208zM208 494h616l16 16H192z" />
+          <path className="drawn-line" d="M184 470h664v90H184z" />
+          <path className="drawn-line" d="M208 486h616v62H208z" />
         </g>
 
         <g className="blueprint-detail">
           {shelfRows.map((y) => (
-            <path key={y} d={`M75 ${y}h872M75 ${y + 5}h872`} />
+            <path key={y} d={`M75 ${y}h872`} />
           ))}
           {counterPanels.map((x) => (
-            <path key={x} d={`M${x} 352v120M${x + 4} 372v82`} />
+            <path key={x} d={`M${x} 470v90`} />
           ))}
-          <path d="M75 440h110M848 440h99M184 352 75 440M848 352l99 88M184 472 75 440M848 472l99-32" />
-          <path d="M208 372 184 352M824 372l24-20M208 454l-24 18M824 454l24 18" />
           {columns.map((x) => (
-            <path key={`cap-${x}`} d={`M${x - 5} 70l12-12 12 12M${x - 3} 440l10 10 10-10`} />
+            <path key={`cap-${x}`} d={`M${x - 5} 70l12-12 12 12`} />
           ))}
         </g>
 
