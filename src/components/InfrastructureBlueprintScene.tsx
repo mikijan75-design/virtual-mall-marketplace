@@ -451,7 +451,7 @@ const InfrastructureBlueprintScene = () => {
       })()}
       <svg
         ref={svgRef}
-        className="h-auto w-full text-[#0a0a0a]"
+        className="h-auto w-full text-[#0a0a0a] [overflow:visible]"
         viewBox="0 0 1024 576"
         onPointerMove={onPointerMove}
         onPointerUp={onPointerUp}
