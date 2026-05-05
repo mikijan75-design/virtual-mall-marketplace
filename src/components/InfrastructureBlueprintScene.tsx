@@ -29,7 +29,7 @@ import n9 from "@/assets/beggars-new/n9.png";
 import n10 from "@/assets/beggars-new/n10.png";
 import n11 from "@/assets/beggars-new/n11.png";
 
-import { useEffect, useState } from "react";
+import { useState } from "react";
 
 type FeaturedProduct = {
   id: string;
