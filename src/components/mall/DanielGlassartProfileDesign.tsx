@@ -17,14 +17,14 @@ type IconKey = "eye" | "target" | "gift" | "phone";
 const iconMap: Record<IconKey, LucideIcon> = { eye: Eye, target: Target, gift: Gift, phone: Phone };
 
 const initialTimeline: TimelineItem[] = [
-  { id: "t1", iconKey: "eye", title: "היכרות: דניאל שפגשתי בנחלת בנימין", body: "פגשתי את דניאל בדוכן שלו, בין הצבעים, האור והאנשים. השיחה איתו חיברה בין עבודת יד מוקפדת, אנושיות חמה ואופי ישראלי שמזמין להתקרב." },
-  { id: "t2", iconKey: "target", title: "הסיפור: מארגנטינה לישראל דרך העולם", body: "המסע של דניאל מתחיל במפגש בין תרבויות: מארגנטינה, דרך שנים של למידה ותנועה, ועד לדוכן ישראלי חי שבו כל יצירה מקבלת שפה מקומית וצבע אישי." },
-  { id: "t3", iconKey: "target", title: "היצירה: מורכבות, צבע וסיפור חיים", body: "הויטראז' שלו משלב קווי מתאר כהים, חלקי זכוכית צבעוניים ושכבות אור. כל עבודה נראית כמו פסיפס חי שמחבר בין זיכרון, מקום, מסורת ותנועה." },
-  { id: "t4", iconKey: "gift", title: "ההמלצה: המתנה המושלמת שאין שני לה", body: "פריטים שמרגישים אישיים, צבעוניים וחד פעמיים. מתנה לחג, לבית, לחברים או לאוספים שאוהבים עבודת יד עם נוכחות, עומק וסיפור מאחורי כל פרט." },
-  { id: "t5", iconKey: "phone", title: "יצירת קשר: בתיאום מראש", body: "לסיורים, הזמנות מיוחדות ושאלות על עבודות זמינות, מומלץ ליצור קשר מראש ולתאם את הפריט או הדגם המתאים." },
+  { id: "t1", iconKey: "eye", title: " בנחלת בנימין", body: "פגשתי את דניאל בדוכן שלו שם הוא מציג את עבודותיו, עדיפות לתיאום מראש למעוניינים להשתתף בתצוגה" },
+  { id: "t2", iconKey: "target", title: "מארגנטינה לישראל דרך העולם", body: "דניאל יליד ארגנטינה ביקר בישראל בשנות ה70 ומאז נדד בעולם עד שהחליט להשתקע בישראל" },
+  { id: "t3", iconKey: "target", title: "היצירות שלו מספרות", body: "את סיפור חיו של יציאה מאזור הנוח והמוכר אל העולם ככה הן עבודותיו מלאות בפרטים מורכבים ושלל צבעים כנאה לעבודות ויטראז'" },
+  { id: "t4", iconKey: "gift", title: " המתנה המושלמת שאין שני לה", body: "לכם וליקירכם תמיד תתקבל בברכה  ותמלא  כל חלל בצבע אם זה בפתח הבית, על אחת הקירות, על ענף בחצר או על שידה." },
+  { id: "t5", iconKey: "phone", title: "לבירורים ושאלות", body: "השאירו לנו הודעה ונשמח לעזור" },
 ];
 
-const STORAGE_KEY = "daniel-glassart-profile-v1";
+const STORAGE_KEY = "daniel-glassart-profile-v2";
 type PersistedState = {
   items: TimelineItem[];
   headerTag: string;
@@ -33,10 +33,10 @@ type PersistedState = {
   blocks: Record<BlockId, boolean>;
 };
 type BlockId = "portrait" | "logo" | "stained" | "hamsaBlue" | "hamsaOrange" | "shop";
-const defaultBlocks: Record<BlockId, boolean> = { portrait: true, logo: true, stained: true, hamsaBlue: true, hamsaOrange: true, shop: true };
+const defaultBlocks: Record<BlockId, boolean> = { portrait: false, logo: false, stained: false, hamsaBlue: false, hamsaOrange: false, shop: false };
 
 const loadState = (): PersistedState => {
-  if (typeof window === "undefined") return { items: initialTimeline, headerTag: "Sampled design code", headerTitleHe: "אומן ויטראז' - ", headerTitleEn: "DANIEL GLASSART", blocks: defaultBlocks };
+  if (typeof window === "undefined") return { items: initialTimeline, headerTag: "\n", headerTitleHe: "אומן ויטראז' - ", headerTitleEn: "DANIEL GLASSART", blocks: defaultBlocks };
   try {
     const raw = localStorage.getItem(STORAGE_KEY);
     if (!raw) throw new Error("none");
@@ -49,7 +49,7 @@ const loadState = (): PersistedState => {
       blocks: { ...defaultBlocks, ...(parsed.blocks ?? {}) },
     };
   } catch {
-    return { items: initialTimeline, headerTag: "Sampled design code", headerTitleHe: "אומן ויטראז' - ", headerTitleEn: "DANIEL GLASSART", blocks: defaultBlocks };
+    return { items: initialTimeline, headerTag: "\n", headerTitleHe: "אומן ויטראז' - ", headerTitleEn: "DANIEL GLASSART", blocks: defaultBlocks };
   }
 };
 
