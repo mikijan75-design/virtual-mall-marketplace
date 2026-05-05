@@ -740,14 +740,14 @@ const InfrastructureBlueprintScene = () => {
           return (
             <g
               key={`shadow-${product.id}`}
-              transform={`translate(${product.x - w / 2} ${product.y - h}) skewX(-28) translate(${w * 0.18} 0)`}
-              style={{ filter: "blur(2px)", opacity: 0.38 }}
+              transform={`translate(${product.x} ${product.y}) skewX(-35) scale(1, -0.55)`}
+              style={{ filter: "blur(2.5px)", opacity: 0.4 }}
               pointerEvents="none"
             >
               <image
                 href={product.src}
-                x={0}
-                y={0}
+                x={-w / 2}
+                y={-h}
                 width={w}
                 height={h}
                 preserveAspectRatio="xMidYMax meet"
