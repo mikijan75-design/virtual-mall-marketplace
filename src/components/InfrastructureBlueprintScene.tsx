@@ -28,6 +28,8 @@ import n8 from "@/assets/beggars-new/n8.png";
 import n9 from "@/assets/beggars-new/n9.png";
 import n10 from "@/assets/beggars-new/n10.png";
 import n11 from "@/assets/beggars-new/n11.png";
+import n12 from "@/assets/beggars-new/n12.png";
+import n13 from "@/assets/beggars-new/n13.png";
 
 import { useState } from "react";
 
@@ -51,12 +53,12 @@ const counterPanels = [317, 450, 582, 715];
 const cellCenters = [162, 336, 511, 685, 859];
 const blueprintItems: BlueprintItem[] = [];
 
-const STORAGE_KEY = "beggars-product-layout-v1";
+const STORAGE_KEY = "beggars-product-layout-v2";
 const BASE_W = 110;
 const BASE_H = 100;
 
 // Available BEGGARS products randomly scattered across the 3×5 shelf grid (remaining cells stay empty)
-const productPool = [n1, n2, n3, n4, n5, n6, n7, n8, n9, n10, n11];
+const productPool = [n1, n2, n3, n4, n5, n6, n7, n8, n9, n10, n11, n12, n13];
 // Pre-shuffled cell indices (0..14) — first N positions get products, rest stay empty
 const cellOrder = [7, 2, 11, 14, 4, 9, 0, 13, 6, 3, 10, 1, 12, 5, 8];
 const initialProducts: FeaturedProduct[] = productPool.map((src, i) => {
