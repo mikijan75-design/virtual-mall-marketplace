@@ -633,17 +633,41 @@ const InfrastructureBlueprintScene = () => {
           const w = BASE_W * product.scale;
           const h = BASE_H * product.scale;
           return (
-            <image
-              key={product.id}
-              href={product.src}
-              x={product.x - w / 2}
-              y={product.y - h}
-              width={w}
-              height={h}
-              preserveAspectRatio="xMidYMax meet"
-            >
-              <title>{product.alt}</title>
-            </image>
+            <g key={product.id}>
+              <image
+                href={product.src}
+                x={product.x - w / 2}
+                y={product.y - h}
+                width={w}
+                height={h}
+                preserveAspectRatio="xMidYMax meet"
+                style={deleteMode ? { cursor: "pointer", opacity: 0.85 } : undefined}
+                onClick={deleteMode ? () => handleDelete(product.id) : undefined}
+              >
+                <title>{deleteMode ? "לחץ למחיקה" : product.alt}</title>
+              </image>
+              {deleteMode && (
+                <g
+                  style={{ cursor: "pointer" }}
+                  onClick={() => handleDelete(product.id)}
+                >
+                  <circle
+                    cx={product.x + w / 2 - 8}
+                    cy={product.y - h + 8}
+                    r="9"
+                    fill="#dc2626"
+                    stroke="#fff"
+                    strokeWidth="1.5"
+                  />
+                  <path
+                    d={`M ${product.x + w / 2 - 12} ${product.y - h + 4} L ${product.x + w / 2 - 4} ${product.y - h + 12} M ${product.x + w / 2 - 4} ${product.y - h + 4} L ${product.x + w / 2 - 12} ${product.y - h + 12}`}
+                    stroke="#fff"
+                    strokeWidth="2"
+                    strokeLinecap="round"
+                  />
+                </g>
+              )}
+            </g>
           );
         })}
 
