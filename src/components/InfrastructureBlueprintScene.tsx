@@ -738,17 +738,22 @@ const InfrastructureBlueprintScene = () => {
           const w = BASE_W * product.scale;
           const h = BASE_H * product.scale;
           return (
-            <ellipse
+            <g
               key={`shadow-${product.id}`}
-              cx={product.x + w * 0.18}
-              cy={product.y - 1}
-              rx={w * 0.42}
-              ry={Math.max(3, h * 0.07)}
-              fill="#000"
-              opacity="0.32"
-              style={{ filter: "blur(2.5px)" }}
+              transform={`translate(${product.x - w / 2} ${product.y - h}) skewX(-28) translate(${w * 0.18} 0)`}
+              style={{ filter: "blur(2px)", opacity: 0.38 }}
               pointerEvents="none"
-            />
+            >
+              <image
+                href={product.src}
+                x={0}
+                y={0}
+                width={w}
+                height={h}
+                preserveAspectRatio="xMidYMax meet"
+                style={{ filter: "brightness(0)" }}
+              />
+            </g>
           );
         })}
 
