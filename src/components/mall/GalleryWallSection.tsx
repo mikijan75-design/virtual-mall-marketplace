@@ -12,6 +12,7 @@ import hamsaBlueGems from "@/assets/stores/hamsa-blue-gems.png";
 import lampBlueMosaic from "@/assets/stores/lamp-blue-mosaic.png";
 import hamsaJerusalemTeal from "@/assets/stores/hamsa-jerusalem-teal.png";
 import hamsaJerusalemOrange from "@/assets/stores/hamsa-jerusalem-orange.png";
+import DanielGlassartProfileDesign from "./DanielGlassartProfileDesign";
 
 const frameCount = 20;
 const artworks: Record<number, { src: string; alt: string }> = {
@@ -67,9 +68,11 @@ const GalleryWallSection = () => {
         </div>
         <aside
           aria-label="Gallery wall side panel"
-          className="relative shrink-0 border-l border-[#9e968a]/60 bg-[linear-gradient(180deg,#cfcfcb,#bdbdb8)]"
+          className="relative shrink-0 overflow-y-auto border-l border-[#9e968a]/60 bg-[linear-gradient(180deg,#cfcfcb,#bdbdb8)] p-4"
           style={{ width: "30%" }}
-        />
+        >
+          <DanielGlassartProfileDesign />
+        </aside>
       </div>
     </section>
   );
