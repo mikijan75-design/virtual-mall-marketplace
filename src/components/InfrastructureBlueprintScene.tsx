@@ -392,63 +392,6 @@ const InfrastructureBlueprintScene = () => {
 
   return (
     <figure className="relative mx-auto w-full max-w-6xl rounded-[2rem] border border-[#7a4a22] bg-white shadow-2xl shadow-slate-950/30">
-      <div className="absolute right-3 top-3 z-10 flex gap-2">
-        <button
-          type="button"
-          onClick={() => {
-            setEditMode((v) => !v);
-            setSelectedId(null);
-            if (!editMode) setDeleteMode(false);
-          }}
-          className={`rounded-full border px-3 py-1 text-xs font-medium shadow-md transition ${
-            editMode
-              ? "border-emerald-700 bg-emerald-600 text-white"
-              : "border-[#7a4a22] bg-white text-[#7a4a22] hover:bg-[#f5ead8]"
-          }`}
-        >
-          {editMode ? "סיים עריכה" : "מצב עריכה"}
-        </button>
-        <button
-          type="button"
-          onClick={() => {
-            setDeleteMode((v) => !v);
-            if (!deleteMode) setEditMode(false);
-          }}
-          className={`rounded-full border px-3 py-1 text-xs font-medium shadow-md transition ${
-            deleteMode
-              ? "border-red-700 bg-red-600 text-white"
-              : "border-[#7a4a22] bg-white text-[#7a4a22] hover:bg-[#f5ead8]"
-          }`}
-        >
-          {deleteMode ? "סיים מחיקה" : "מצב מחיקה"}
-        </button>
-      </div>
-      {editMode && selectedId && (() => {
-        const sel = products.find((p) => p.id === selectedId);
-        if (!sel) return null;
-        return (
-          <div className="absolute bottom-3 left-1/2 z-10 flex -translate-x-1/2 items-center gap-3 rounded-full border border-[#7a4a22] bg-white/95 px-4 py-2 text-xs shadow-md">
-            <span className="font-medium text-[#7a4a22]">גודל</span>
-            <input
-              type="range"
-              min={0.3}
-              max={3}
-              step={0.05}
-              value={sel.scale}
-              onChange={(e) => updateScale(sel.id, parseFloat(e.target.value))}
-              className="w-48"
-            />
-            <span className="tabular-nums text-[#7a4a22]">{sel.scale.toFixed(2)}×</span>
-            <button
-              type="button"
-              onClick={() => setSelectedId(null)}
-              className="rounded-full border border-[#7a4a22] px-2 py-0.5 text-[#7a4a22] hover:bg-[#f5ead8]"
-            >
-              סגור
-            </button>
-          </div>
-        );
-      })()}
       <svg
         ref={svgRef}
         className="h-auto w-full text-[#0a0a0a] [overflow:visible]"
