@@ -244,10 +244,14 @@ const InfrastructureBlueprintScene = () => {
 
         <rect width="1024" height="576" fill="#ffffff" />
         {/* Light wood fill inside the outer frame */}
-        <rect x="57" y="58" width="910" height="392" fill="#d9b48a" />
-        {/* Cream background panels for cabinet and counter */}
-        <rect x="75" y="70" width="872" height="370" fill="#efe8d8" />
-        <rect x="184" y="470" width="664" height="80" fill="#efe8d8" />
+        <rect x="57" y="58" width="910" height="392" fill="#e8c79a" />
+        {/* Cream background panels for cabinet and counter (lighter) */}
+        <rect x="75" y="70" width="872" height="370" fill="#fbf7ec" />
+        <rect x="184" y="470" width="664" height="80" fill="#fbf7ec" />
+        {/* Light wood fill between the vertical column partitions */}
+        {columns.map((x) => (
+          <rect key={`partition-${x}`} x={x} y={70} width={8} height={370} fill="#e8c79a" />
+        ))}
         {/* Wood-colored outer frame around the cabinet */}
         <rect x="57" y="58" width="910" height="392" fill="none" stroke="#b8895a" strokeWidth="6" />
         {/* Thin dark outline on the outer frame edges */}
