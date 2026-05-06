@@ -30,6 +30,7 @@ import floor3Shop4Img from "@/assets/stores/floor3-shop4.png";
 import floor1Shop4Img from "@/assets/stores/floor1-shop4.png";
 import floor1Shop6Img from "@/assets/stores/floor1-shop6.png";
 import danielGlassArtLogo from "@/assets/stores/daniel-glass-art-logo.jpg";
+import floor3Shop1Svg from "@/assets/stores/floor3-shop1.svg";
 
 type BrandStyle = {
   bg: string;
@@ -43,6 +44,7 @@ type BrandStyle = {
   codedWordmark?: "israel-mezuzahs";
   codedSubtitle?: "olive-wood-epoxy";
   codedScene?: "israel-mezuzahs-storefront";
+  oversize?: boolean;
   // extended at usage site
 };
 
@@ -103,6 +105,10 @@ const idOverrides: Record<string, Partial<BrandStyle & { name: string }>> = {
     subtitle: "אמן ציור ישראלי",
     image: floor3Shop4Img,
     codedScene: "avner-ovad-storefront" as any,
+  },
+  s1: {
+    image: floor3Shop1Svg,
+    oversize: true,
   },
   s16: {
     name: "BEGGARS",
@@ -293,7 +299,7 @@ const StoreCard = ({ store, storeIndex }: StoreCardProps) => {
             <img
               src={style.image}
               alt={store.name}
-              className="h-full w-full object-cover transition-transform duration-700 group-hover:scale-110"
+              className={`h-full w-full object-cover transition-transform duration-700 group-hover:scale-110 ${style.oversize ? "scale-[1.07]" : ""}`}
               loading="lazy"
               width={512}
               height={512}
