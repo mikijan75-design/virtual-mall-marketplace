@@ -30,7 +30,6 @@ import floor3Shop4Img from "@/assets/stores/floor3-shop4.png";
 import floor1Shop4Img from "@/assets/stores/floor1-shop4.png";
 import floor1Shop6Img from "@/assets/stores/floor1-shop6.png";
 import danielGlassArtLogo from "@/assets/stores/daniel-glass-art-logo.jpg";
-import vintageVillageSvg from "@/assets/stores/floor3-shop1-vintage-village.svg";
 
 type BrandStyle = {
   bg: string;
@@ -124,13 +123,6 @@ const idOverrides: Record<string, Partial<BrandStyle & { name: string }>> = {
     subtitle: "אמנות ויטראז' בעבודת יד",
     logo: danielGlassArtLogo,
   },
-  s1: {
-    name: "Signature Vintage Village",
-    accent: "#7a4a26",
-    subtitle: "Artisan Collection",
-    image: vintageVillageSvg,
-    codedScene: "vintage-village-storefront" as any,
-  },
 };
 
 const defaultStyle: BrandStyle = { bg: "linear-gradient(135deg, #f5f0e8, #ede4d8)", text: "#3a2a20", accent: "#c9a96e", font: "font-frank", image: "", subtitle: "", logo: undefined, subtitleLogo: undefined };
@@ -206,27 +198,6 @@ const StoreCard = ({ store, storeIndex }: StoreCardProps) => {
             }}
           >
             <AvnerOvadStorefrontScene className="w-full h-full" preserveAspectRatio="xMidYMid slice" />
-            <div
-              className="absolute inset-0 pointer-events-none"
-              style={{
-                background: "linear-gradient(155deg, rgba(255,255,255,0.18) 0%, transparent 35%, transparent 60%, rgba(255,255,255,0.06) 100%)",
-              }}
-            />
-          </div>
-        ) : (style.codedScene as string) === "vintage-village-storefront" ? (
-          <div
-            className="relative flex-1 overflow-hidden"
-            style={{
-              background: "linear-gradient(180deg, #f5ede0 0%, #ebe0cc 100%)",
-              borderBottom: `2px solid ${style.accent}`,
-            }}
-          >
-            <img
-              src={style.image}
-              alt={displayName}
-              className="absolute inset-0 h-full w-full object-contain"
-              loading="lazy"
-            />
             <div
               className="absolute inset-0 pointer-events-none"
               style={{
