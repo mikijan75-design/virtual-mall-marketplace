@@ -30,7 +30,6 @@ import floor3Shop4Img from "@/assets/stores/floor3-shop4.png";
 import floor1Shop4Img from "@/assets/stores/floor1-shop4.png";
 import floor1Shop6Img from "@/assets/stores/floor1-shop6.png";
 import danielGlassArtLogo from "@/assets/stores/daniel-glass-art-logo.jpg";
-import floor3Shop1Svg from "@/assets/stores/floor3-shop1.svg";
 
 type BrandStyle = {
   bg: string;
@@ -44,7 +43,6 @@ type BrandStyle = {
   codedWordmark?: "israel-mezuzahs";
   codedSubtitle?: "olive-wood-epoxy";
   codedScene?: "israel-mezuzahs-storefront";
-  oversize?: boolean;
   // extended at usage site
 };
 
@@ -106,10 +104,6 @@ const idOverrides: Record<string, Partial<BrandStyle & { name: string }>> = {
     image: floor3Shop4Img,
     codedScene: "avner-ovad-storefront" as any,
   },
-  s1: {
-    image: floor3Shop1Svg,
-    oversize: true,
-  },
   s16: {
     name: "BEGGARS",
     bg: "linear-gradient(135deg, #1f3a5c, #14253d)",
@@ -151,55 +145,6 @@ const StoreCard = ({ store, storeIndex }: StoreCardProps) => {
   const style = override ? { ...baseStyle, ...override } : baseStyle;
   const displayName = override?.name ?? store.name;
   const isAvnerOvad = store.id === "s4";
-  const isFullSvg = store.id === "s1";
-
-  if (isFullSvg && style.image) {
-    return (
-      <button
-        onClick={() => navigate(`/store/${store.id}`)}
-        className={`group relative flex w-full flex-col ${STORE_CARD_CLASS} cursor-pointer transition-all duration-300 hover:scale-[1.03] focus:outline-none`}
-        aria-label={`כניסה לחנות ${store.name}`}
-      >
-        <div
-          className="relative flex h-full w-full overflow-hidden rounded-lg"
-          style={{ boxShadow: "0 6px 24px rgba(0,0,0,0.12)" }}
-        >
-          <img
-            src={style.image}
-            alt={store.name}
-            className="absolute inset-0 h-full w-full object-contain scale-[1.07] transition-transform duration-700 group-hover:scale-[1.12]"
-            loading="lazy"
-          />
-          <div
-            className="absolute inset-0 pointer-events-none"
-            style={{
-              background: "linear-gradient(155deg, rgba(255,255,255,0.18) 0%, transparent 35%, transparent 60%, rgba(255,255,255,0.06) 100%)",
-            }}
-          />
-          {storeIndex !== undefined && (
-            <div
-              className="absolute -bottom-2 left-1/2 -translate-x-1/2 z-20 flex items-center justify-center"
-              style={{
-                background: "linear-gradient(135deg, hsl(43,45%,55%), hsl(40,40%,45%))",
-                color: "hsl(40,10%,98%)",
-                width: "22px",
-                height: "22px",
-                borderRadius: "50%",
-                fontSize: "9px",
-                fontWeight: 700,
-                fontFamily: "serif",
-                letterSpacing: "0.02em",
-                boxShadow: "0 2px 6px rgba(0,0,0,0.25), inset 0 1px 0 rgba(255,255,255,0.3)",
-                border: "1.5px solid hsl(43,50%,65%)",
-              }}
-            >
-              {romanNumerals[storeIndex]}
-            </div>
-          )}
-        </div>
-      </button>
-    );
-  }
 
   return (
     <button
@@ -348,7 +293,7 @@ const StoreCard = ({ store, storeIndex }: StoreCardProps) => {
             <img
               src={style.image}
               alt={store.name}
-              className={`h-full w-full object-cover transition-transform duration-700 group-hover:scale-110 ${style.oversize ? "scale-[1.07]" : ""}`}
+              className="h-full w-full object-cover transition-transform duration-700 group-hover:scale-110"
               loading="lazy"
               width={512}
               height={512}
