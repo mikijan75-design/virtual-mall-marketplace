@@ -151,6 +151,55 @@ const StoreCard = ({ store, storeIndex }: StoreCardProps) => {
   const style = override ? { ...baseStyle, ...override } : baseStyle;
   const displayName = override?.name ?? store.name;
   const isAvnerOvad = store.id === "s4";
+  const isFullSvg = store.id === "s1";
+
+  if (isFullSvg && style.image) {
+    return (
+      <button
+        onClick={() => navigate(`/store/${store.id}`)}
+        className={`group relative flex w-full flex-col ${STORE_CARD_CLASS} cursor-pointer transition-all duration-300 hover:scale-[1.03] focus:outline-none`}
+        aria-label={`כניסה לחנות ${store.name}`}
+      >
+        <div
+          className="relative flex h-full w-full overflow-hidden rounded-lg"
+          style={{ boxShadow: "0 6px 24px rgba(0,0,0,0.12)" }}
+        >
+          <img
+            src={style.image}
+            alt={store.name}
+            className="absolute inset-0 h-full w-full object-contain scale-[1.07] transition-transform duration-700 group-hover:scale-[1.12]"
+            loading="lazy"
+          />
+          <div
+            className="absolute inset-0 pointer-events-none"
+            style={{
+              background: "linear-gradient(155deg, rgba(255,255,255,0.18) 0%, transparent 35%, transparent 60%, rgba(255,255,255,0.06) 100%)",
+            }}
+          />
+          {storeIndex !== undefined && (
+            <div
+              className="absolute -bottom-2 left-1/2 -translate-x-1/2 z-20 flex items-center justify-center"
+              style={{
+                background: "linear-gradient(135deg, hsl(43,45%,55%), hsl(40,40%,45%))",
+                color: "hsl(40,10%,98%)",
+                width: "22px",
+                height: "22px",
+                borderRadius: "50%",
+                fontSize: "9px",
+                fontWeight: 700,
+                fontFamily: "serif",
+                letterSpacing: "0.02em",
+                boxShadow: "0 2px 6px rgba(0,0,0,0.25), inset 0 1px 0 rgba(255,255,255,0.3)",
+                border: "1.5px solid hsl(43,50%,65%)",
+              }}
+            >
+              {romanNumerals[storeIndex]}
+            </div>
+          )}
+        </div>
+      </button>
+    );
+  }
 
   return (
     <button
