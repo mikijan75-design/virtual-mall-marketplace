@@ -45,8 +45,8 @@ export const mallFloors: Floor[] = [
     name: "קומה 3 - קומת עיצוב",
     stores: [
       { id: "s1", name: "אופנה עילית", floor: 3, position: 1, category: "אופנה", signColor: "from-pink-500 to-purple-600", logoEmoji: "👗", description: "בוטיק אופנה יוקרתי" },
-      { id: "s2", name: "טכנולוגיה מתקדמת", floor: 3, position: 2, category: "תשמישי קדושה", signColor: "from-cyan-400 to-blue-600", logoEmoji: "💻", description: "גאדג'טים וטכנולוגיה" },
-      { id: "s3", name: "חנות עיצוב", floor: 3, position: 3, category: "עיצוב", signColor: "from-emerald-400 to-teal-600", logoEmoji: "🎨", description: "עיצוב פנים ואקססוריז" },
+      { id: "s3", name: "חנות עיצוב", floor: 3, position: 2, category: "עיצוב", signColor: "from-emerald-400 to-teal-600", logoEmoji: "🎨", description: "עיצוב פנים ואקססוריז" },
+      { id: "s2", name: "טכנולוגיה מתקדמת", floor: 3, position: 3, category: "תשמישי קדושה", signColor: "from-cyan-400 to-blue-600", logoEmoji: "💻", description: "גאדג'טים וטכנולוגיה" },
       { id: "s4", name: "קוסמטיקה טבעית", floor: 3, position: 4, category: "קוסמטיקה", signColor: "from-rose-400 to-pink-600", logoEmoji: "🌸", description: "מוצרי טיפוח טבעיים" },
       { id: "s5", name: "גלריה לאמנות", floor: 3, position: 5, category: "אמנות", signColor: "from-amber-400 to-orange-600", logoEmoji: "🖼️", description: "גלריה ותערוכות" },
       { id: "s6", name: "ספורט ואתגר", floor: 3, position: 6, category: "ספורט", signColor: "from-lime-400 to-green-600", logoEmoji: "⚽", description: "ציוד ספורט מקצועי" },
