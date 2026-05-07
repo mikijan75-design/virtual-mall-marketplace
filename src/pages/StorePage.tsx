@@ -11,7 +11,6 @@ import imBeadLogo from "@/assets/stores/im-bead-logo.png";
 import beggarsWireframe from "@/assets/stores/beggars-wireframe.png";
 import danielGlassArtLogo from "@/assets/stores/daniel-glass-art-logo.jpg";
 import floor1Shop6Img from "@/assets/stores/floor1-shop6.png";
-import halenBinariaLayout from "@/assets/stores/halen-binaria-layout.png";
 import InfrastructureBlueprintScene from "@/components/InfrastructureBlueprintScene";
 import GalleryWallSection from "@/components/mall/GalleryWallSection";
 import imProduct1 from "@/assets/stores/im-product-1.png";
@@ -409,12 +408,47 @@ const StorePage = () => {
             Model homes designer · מודל בתים מעוצב
           </p>
         </header>
-        <main className="flex-1 w-full">
-          <img
-            src={halenBinariaLayout}
-            alt="HALEN BINARIA - תכנית מודל בתים מעוצב"
-            className="block w-full h-[calc(100vh-9rem)] object-contain bg-white"
-          />
+        <main className="flex-1 w-full bg-[#f3f1ec] relative overflow-hidden">
+          <div className="relative w-full h-[calc(100vh-9rem)]">
+            {/* Arc of 5 model house tiles */}
+            <div className="absolute inset-0">
+              {[
+                { left: "10%", top: "55%", rot: -28 },
+                { left: "27%", top: "38%", rot: -14 },
+                { left: "47%", top: "32%", rot: 0 },
+                { left: "67%", top: "38%", rot: 14 },
+                { left: "84%", top: "55%", rot: 28 },
+              ].map((p, i) => (
+                <button
+                  key={i}
+                  type="button"
+                  className="group absolute -translate-x-1/2 -translate-y-1/2 transition-transform hover:scale-105 hover:z-10"
+                  style={{ left: p.left, top: p.top, transform: `translate(-50%,-50%) rotate(${p.rot}deg)` }}
+                  aria-label={`מודל בית ${i + 1}`}
+                >
+                  <div className="w-[clamp(110px,15vw,200px)] aspect-square rounded-md border-2 border-[#3a3024] bg-gradient-to-br from-[#e7e4dc] to-[#cfcabe] shadow-[0_10px_24px_rgba(0,0,0,0.18)] grid place-items-center">
+                    <span className="font-frank text-[#3a3024]/60 text-2xl md:text-3xl font-black">
+                      0{i + 1}
+                    </span>
+                  </div>
+                </button>
+              ))}
+            </div>
+
+            {/* Bottom plaque */}
+            <div className="absolute left-1/2 bottom-[6%] -translate-x-1/2 w-[60%] max-w-[760px]">
+              <div className="rounded-sm border-2 border-[#2a2118] bg-white p-2 shadow-[0_10px_24px_rgba(0,0,0,0.12)]">
+                <div className="border border-[#2a2118] py-5 px-6 text-center">
+                  <p className="font-frank text-xl md:text-3xl font-black tracking-[0.25em] text-[#2a2118]">
+                    HALEN BINARIA
+                  </p>
+                  <p className="mt-1 font-heebo text-sm md:text-base text-[#5a4d3e]">
+                    Model homes designer · מודל בתים מעוצב
+                  </p>
+                </div>
+              </div>
+            </div>
+          </div>
         </main>
         <MallFooter />
       </div>
