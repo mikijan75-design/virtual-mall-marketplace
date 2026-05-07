@@ -60,7 +60,7 @@ const VintageVillageStorefrontScene = ({
     className={className}
     preserveAspectRatio={preserveAspectRatio}
     role="img"
-    viewBox="0 0 576 1024"
+    viewBox="120 275 315 505"
     xmlns="http://www.w3.org/2000/svg"
     {...svgProps}
     style={{
