@@ -2,12 +2,51 @@ import type { SVGProps } from "react";
 
 type VintageVillageStorefrontSceneProps = SVGProps<SVGSVGElement>;
 
-const tileColumns = Array.from({ length: 14 }, (_, index) => index);
-const baseGrainLines = [
-  "M64 518 C112 510 150 528 205 516 C252 505 296 522 336 512",
-  "M60 540 C118 550 160 532 214 542 C262 552 300 535 342 544",
-  "M72 560 C132 552 182 568 238 556 C282 548 318 562 342 556",
-];
+const roofRows = [
+  { y: 312, x: 146, count: 14, tileWidth: 18, tileHeight: 23, offset: 0 },
+  { y: 331, x: 139, count: 15, tileWidth: 18, tileHeight: 24, offset: 9 },
+  { y: 351, x: 135, count: 15, tileWidth: 18, tileHeight: 24, offset: 0 },
+  { y: 372, x: 130, count: 16, tileWidth: 18, tileHeight: 24, offset: 8 },
+  { y: 392, x: 127, count: 16, tileWidth: 18, tileHeight: 21, offset: 0 },
+] as const;
+
+const roofSurfaceMarks = [
+  [156, 318, 15, -8],
+  [204, 333, 13, 5],
+  [264, 319, 16, -4],
+  [326, 347, 14, 8],
+  [377, 384, 15, -7],
+  [170, 397, 12, 5],
+] as const;
+
+const verticalWoodStreaks = [
+  "M139 421 C144 486 137 569 142 704",
+  "M153 430 C148 510 157 612 151 705",
+  "M398 421 C392 502 404 616 399 704",
+  "M411 430 C416 524 407 624 413 706",
+] as const;
+
+const fasciaGrain = [
+  "M150 424 C195 417 235 431 282 422 C324 414 362 424 398 420",
+  "M151 446 C202 452 239 439 285 449 C328 458 364 442 399 450",
+  "M153 462 C197 457 238 466 279 459 C322 452 360 461 397 457",
+] as const;
+
+const baseGrain = [
+  "M135 713 C183 704 226 720 271 710 C319 699 365 716 418 708",
+  "M132 730 C190 741 230 721 283 733 C329 743 369 725 419 735",
+  "M139 750 C188 743 238 758 284 749 C331 739 371 754 416 747",
+  "M134 764 C184 770 230 758 281 768 C329 776 369 761 419 767",
+] as const;
+
+const stuccoSpeckles = [
+  [146, 474, 0.22],
+  [403, 489, 0.18],
+  [150, 614, 0.16],
+  [405, 670, 0.2],
+  [386, 421, 0.16],
+] as const;
+
 const signText = "MINIATURE VINTAGE VILLAGE · ARTISAN COLLECTION";
 
 const VintageVillageStorefrontScene = ({
@@ -17,11 +56,11 @@ const VintageVillageStorefrontScene = ({
   ...svgProps
 }: VintageVillageStorefrontSceneProps) => (
   <svg
-    aria-label="Miniature vintage village storefront sampled from reference image"
+    aria-label="Miniature vintage village display stand sampled from reference image"
     className={className}
     preserveAspectRatio={preserveAspectRatio}
     role="img"
-    viewBox="0 0 400 600"
+    viewBox="120 275 315 505"
     xmlns="http://www.w3.org/2000/svg"
     {...svgProps}
     style={{
@@ -33,130 +72,200 @@ const VintageVillageStorefrontScene = ({
     }}
   >
     <defs>
-      <linearGradient id="vintage-village-stucco" x1="0" x2="1" y1="0" y2="1">
-        <stop offset="0%" stopColor="#f9f7f2" />
-        <stop offset="100%" stopColor="#dedbd3" />
+      <clipPath id="vintage-village-roof-clip">
+        <path d="M145 309 H399 L415 410 H127 Z" />
+      </clipPath>
+      <linearGradient id="vintage-village-tile" x1="0" x2="0" y1="0" y2="1">
+        <stop offset="0%" stopColor="#d58a55" />
+        <stop offset="38%" stopColor="#bd6738" />
+        <stop offset="100%" stopColor="#7a351c" />
       </linearGradient>
-      <linearGradient id="vintage-village-wood" x1="0" x2="0" y1="0" y2="1">
-        <stop offset="0%" stopColor="#8f4a1f" />
-        <stop offset="48%" stopColor="#643413" />
-        <stop offset="100%" stopColor="#3e210d" />
+      <linearGradient id="vintage-village-roof-under" x1="0" x2="0" y1="0" y2="1">
+        <stop offset="0%" stopColor="#9b4a27" />
+        <stop offset="100%" stopColor="#4a2314" />
       </linearGradient>
-      <linearGradient id="vintage-village-dark-wood" x1="0" x2="1">
-        <stop offset="0%" stopColor="#251b15" />
-        <stop offset="45%" stopColor="#493024" />
-        <stop offset="100%" stopColor="#1d1713" />
+      <linearGradient id="vintage-village-old-wood" x1="0" x2="1" y1="0" y2="1">
+        <stop offset="0%" stopColor="#5f412f" />
+        <stop offset="34%" stopColor="#c09a75" />
+        <stop offset="58%" stopColor="#8b5e40" />
+        <stop offset="100%" stopColor="#3a251b" />
       </linearGradient>
-      <linearGradient id="vintage-village-side-post" x1="0" x2="1">
-        <stop offset="0%" stopColor="#8b654b" />
-        <stop offset="45%" stopColor="#d7b796" />
-        <stop offset="100%" stopColor="#6a4935" />
+      <linearGradient id="vintage-village-fascia" x1="0" x2="0" y1="0" y2="1">
+        <stop offset="0%" stopColor="#37271f" />
+        <stop offset="54%" stopColor="#221916" />
+        <stop offset="100%" stopColor="#14100e" />
+      </linearGradient>
+      <linearGradient id="vintage-village-display-fill" x1="0" x2="1" y1="0" y2="1">
+        <stop offset="0%" stopColor="#eeeeed" />
+        <stop offset="47%" stopColor="#d8d8d7" />
+        <stop offset="100%" stopColor="#c9c9c7" />
+      </linearGradient>
+      <linearGradient id="vintage-village-base" x1="0" x2="0" y1="0" y2="1">
+        <stop offset="0%" stopColor="#9b5428" />
+        <stop offset="45%" stopColor="#703717" />
+        <stop offset="100%" stopColor="#3f1f0d" />
       </linearGradient>
       <linearGradient id="vintage-village-brass" x1="0" x2="1" y1="0" y2="1">
-        <stop offset="0%" stopColor="#e2c47a" />
-        <stop offset="50%" stopColor="#a27935" />
-        <stop offset="100%" stopColor="#6d491e" />
+        <stop offset="0%" stopColor="#f3dc99" />
+        <stop offset="43%" stopColor="#b3843c" />
+        <stop offset="100%" stopColor="#65401b" />
       </linearGradient>
-      <filter id="vintage-village-soft-shadow" x="-18%" y="-16%" width="136%" height="132%">
-        <feDropShadow dx="0" dy="10" floodColor="#2b1a10" floodOpacity="0.24" stdDeviation="8" />
+      <radialGradient id="vintage-village-display-light" cx="42%" cy="32%" r="74%">
+        <stop offset="0%" stopColor="#ffffff" stopOpacity="0.42" />
+        <stop offset="70%" stopColor="#ffffff" stopOpacity="0.04" />
+        <stop offset="100%" stopColor="#92928f" stopOpacity="0.12" />
+      </radialGradient>
+      <filter id="vintage-village-object-shadow" x="-28%" y="-18%" width="156%" height="138%">
+        <feDropShadow dx="0" dy="11" floodColor="#2b1a10" floodOpacity="0.2" stdDeviation="8" />
       </filter>
       <filter id="vintage-village-grain">
-        <feTurbulence baseFrequency="0.85" numOctaves="4" seed="31" type="fractalNoise" />
+        <feTurbulence baseFrequency="0.86" numOctaves="4" seed="71" type="fractalNoise" />
         <feColorMatrix
           type="matrix"
-          values="0 0 0 0 0.42 0 0 0 0 0.25 0 0 0 0 0.13 0 0 0 0.18 0"
+          values="0 0 0 0 0.39 0 0 0 0 0.23 0 0 0 0 0.13 0 0 0 0.2 0"
         />
       </filter>
-      <pattern id="vintage-village-roof-tiles" width="28" height="32" patternUnits="userSpaceOnUse">
-        <path d="M0 10 Q14 0 28 10 V32 H0 Z" fill="#b95b2e" />
-        <path d="M2 12 Q14 4 26 12" fill="none" stroke="#74351d" strokeWidth="2" />
-        <path d="M0 31 H28" stroke="#542614" strokeWidth="1.4" />
-      </pattern>
+      <filter id="vintage-village-soft-noise">
+        <feTurbulence baseFrequency="1.18" numOctaves="3" seed="14" type="fractalNoise" />
+        <feColorMatrix
+          type="matrix"
+          values="0 0 0 0 0.74 0 0 0 0 0.68 0 0 0 0 0.6 0 0 0 0.16 0"
+        />
+      </filter>
     </defs>
 
-    <g filter="url(#vintage-village-soft-shadow)" transform="translate(-74 -123) scale(1.37 1.28)">
-      <path d="M70 230 H330 L318 520 H82 Z" fill="rgba(0,0,0,0.08)" />
+    <g filter="url(#vintage-village-object-shadow)">
+      <ellipse cx="276" cy="774" rx="148" ry="15" fill="#24160f" opacity="0.12" />
 
-      {/* Main display opening */}
-      <rect x="82" y="232" width="236" height="286" fill="url(#vintage-village-stucco)" />
-      <rect x="92" y="246" width="216" height="242" fill="#d7d7d6" />
+      {/* Rear plaster board and the flat grey display opening, matching the tall photo silhouette. */}
+      <path d="M146 411 H404 L397 708 H154 Z" fill="#d8c8b7" />
+      <path d="M146 411 H404 L397 708 H154 Z" filter="url(#vintage-village-soft-noise)" opacity="0.44" />
+      <rect x="154" y="470" width="244" height="236" fill="#c8baa8" />
+      <rect x="164" y="480" width="224" height="212" fill="url(#vintage-village-display-fill)" />
+      <rect x="164" y="480" width="224" height="212" fill="url(#vintage-village-display-light)" />
+      <path d="M164 480 H388 V692 H164 Z" fill="none" stroke="#efefed" strokeWidth="2.5" opacity="0.65" />
+      <path d="M164 480 H388 V692 H164 Z" fill="none" stroke="#a7a19a" strokeWidth="1.2" opacity="0.22" />
 
-      {/* Slim rustic posts */}
-      <path d="M72 214 H88 L84 520 H66 Z" fill="url(#vintage-village-side-post)" />
-      <path d="M312 214 H328 L334 520 H316 Z" fill="url(#vintage-village-side-post)" />
-      <path d="M75 222 C80 290 75 372 80 510" fill="none" stroke="#553626" strokeWidth="2" opacity="0.38" />
-      <path d="M322 220 C316 310 326 402 321 514" fill="none" stroke="#4e3223" strokeWidth="2" opacity="0.32" />
+      {/* Rough vertical side supports, deliberately narrow and slightly uneven. */}
+      <path d="M137 409 L154 411 L149 707 L130 707 Z" fill="url(#vintage-village-old-wood)" />
+      <path d="M398 410 L414 408 L421 708 L402 708 Z" fill="url(#vintage-village-old-wood)" />
+      {verticalWoodStreaks.map((line) => (
+        <path key={line} d={line} fill="none" stroke="#352116" strokeLinecap="round" strokeWidth="2.1" opacity="0.42" />
+      ))}
+      <ellipse cx="145" cy="550" rx="3.5" ry="7" fill="#3d2618" opacity="0.34" />
+      <ellipse cx="409" cy="626" rx="3.2" ry="7.5" fill="#3d2618" opacity="0.32" />
 
-      {/* Dark wooden fascia under the roof */}
-      <rect x="78" y="180" width="244" height="54" fill="url(#vintage-village-dark-wood)" />
-      <rect x="78" y="180" width="244" height="54" filter="url(#vintage-village-grain)" opacity="0.45" />
-      <path d="M86 196 C134 190 173 202 226 194 C264 188 292 197 314 192" stroke="#84614c" strokeWidth="2" opacity="0.45" />
-      <path d="M86 216 C132 220 176 208 222 218 C264 226 294 212 314 218" stroke="#1d130e" strokeWidth="2" opacity="0.52" />
+      {/* Dark fascia band below the tile roof. */}
+      <rect x="146" y="410" width="256" height="60" fill="url(#vintage-village-fascia)" />
+      <rect x="146" y="410" width="256" height="60" filter="url(#vintage-village-grain)" opacity="0.54" />
+      {fasciaGrain.map((line) => (
+        <path key={line} d={line} fill="none" stroke="#7c5d4c" strokeLinecap="round" strokeWidth="2" opacity="0.4" />
+      ))}
+      <path d="M146 469 H402" stroke="#0b0807" strokeWidth="3" opacity="0.35" />
 
-      {/* Terracotta roof sampled as layered scalloped tiles */}
-      <path d="M54 128 H346 L332 186 H68 Z" fill="url(#vintage-village-roof-tiles)" />
-      <path d="M54 128 H346 L332 186 H68 Z" fill="rgba(255,217,165,0.12)" />
-      {tileColumns.map((column) => (
-        <path
-          key={`roof-column-${column}`}
-          d={`M${62 + column * 20} 130 C${66 + column * 20} 148 ${66 + column * 20} 166 ${62 + column * 20} 184`}
-          fill="none"
-          stroke="#6b2f18"
-          strokeWidth="2"
-          opacity="0.7"
+      {/* Terracotta tile roof, clipped into the wide shallow roof shape from the photo. */}
+      <path d="M145 309 H399 L415 410 H127 Z" fill="url(#vintage-village-roof-under)" />
+      <g clipPath="url(#vintage-village-roof-clip)">
+        {roofRows.map((row) =>
+          Array.from({ length: row.count }, (_, tileIndex) => {
+            const x = row.x + row.offset + tileIndex * row.tileWidth;
+            const y = row.y;
+            const wobble = tileIndex % 4 === 0 ? -1.6 : tileIndex % 4 === 2 ? 1.2 : 0;
+            return (
+              <g key={`${row.y}-${tileIndex}`}>
+                <path
+                  d={`M${x} ${y + row.tileHeight} C${x + 1.5} ${y + 10} ${x + 5.5} ${y + 2} ${x + row.tileWidth / 2} ${y + wobble} C${x + row.tileWidth - 5.5} ${y + 2} ${x + row.tileWidth - 1.5} ${y + 10} ${x + row.tileWidth} ${y + row.tileHeight} Z`}
+                  fill="url(#vintage-village-tile)"
+                  stroke="#653019"
+                  strokeWidth="1.25"
+                />
+                <path
+                  d={`M${x + 3} ${y + row.tileHeight - 4} C${x + 7} ${y + row.tileHeight - 11} ${x + row.tileWidth - 7} ${y + row.tileHeight - 11} ${x + row.tileWidth - 3} ${y + row.tileHeight - 4}`}
+                  fill="none"
+                  stroke="#edae78"
+                  strokeLinecap="round"
+                  strokeWidth="1"
+                  opacity="0.36"
+                />
+              </g>
+            );
+          }),
+        )}
+      </g>
+      {roofSurfaceMarks.map(([cx, cy, rx, rotate]) => (
+        <ellipse
+          key={`${cx}-${cy}`}
+          cx={cx}
+          cy={cy}
+          rx={rx}
+          ry="2.4"
+          fill="#eab07a"
+          opacity="0.32"
+          transform={`rotate(${rotate} ${cx} ${cy})`}
         />
       ))}
-      <path d="M54 128 H346" stroke="#6b321b" strokeLinecap="round" strokeWidth="5" />
-      <path d="M65 184 C118 178 176 190 232 181 C276 174 304 184 334 181" fill="none" stroke="#5a2a18" strokeWidth="4" />
+      <path d="M145 309 H399" fill="none" stroke="#6d3219" strokeLinecap="round" strokeWidth="5" />
+      <path d="M127 410 C178 401 226 414 278 405 C329 397 371 409 415 402" fill="none" stroke="#522515" strokeLinecap="round" strokeWidth="5" />
 
-      {/* Small dormer window and chimney */}
-      <g transform="translate(182 96)">
-        <path d="M-26 34 L0 6 L28 34 V82 H-24 Z" fill="#6e3920" />
-        <path d="M-31 37 L0 0 L33 37" fill="none" stroke="#3d2116" strokeLinecap="round" strokeWidth="6" />
-        <path d="M-20 38 H22 V78 H-20 Z" fill="#efe8dc" />
-        <rect x="-10" y="45" width="18" height="26" fill="#1f1b18" />
-        <path d="M-4 47 L2 70" stroke="#f8f4ee" strokeLinecap="round" strokeWidth="3" opacity="0.8" />
-        <path d="M-20 38 H22 V78 H-20 Z" fill="none" stroke="#2b1b13" strokeWidth="3" />
-      </g>
-      <g transform="translate(258 90)">
-        <path d="M0 28 H24 L21 96 H4 Z" fill="#886247" />
-        <path d="M-5 26 L12 12 L30 26" fill="none" stroke="#3b2418" strokeLinecap="round" strokeWidth="5" />
-        <rect x="6" y="0" width="12" height="16" fill="#493124" />
-        <path d="M5 45 C13 40 16 48 23 43" fill="none" stroke="#d5b38e" strokeWidth="2" opacity="0.55" />
+      {/* Center dormer with aged plaster face and a small dark window. */}
+      <g transform="translate(276 286)">
+        <path d="M-30 37 L0 5 L31 37 V88 H-28 Z" fill="#744126" />
+        <path d="M-22 42 H22 V84 H-22 Z" fill="#d8cdbf" />
+        <path d="M-35 39 L0 0 L35 39" fill="none" stroke="#3f2115" strokeLinecap="round" strokeWidth="6" />
+        <path d="M-22 42 H22 V84 H-22 Z" fill="none" stroke="#2d1a11" strokeWidth="3" />
+        <rect x="-9" y="50" width="17" height="27" rx="1.5" fill="#171412" />
+        <path d="M-3 52 L3 75" stroke="#fff6e8" strokeLinecap="round" strokeWidth="2.4" opacity="0.72" />
+        <path d="M-25 87 H25" stroke="#3a2116" strokeLinecap="round" strokeWidth="4" />
       </g>
 
-      {/* Heavy plinth with medallion and brass name plate */}
-      <rect x="62" y="508" width="276" height="56" rx="2" fill="url(#vintage-village-wood)" />
-      <rect x="62" y="508" width="276" height="56" filter="url(#vintage-village-grain)" opacity="0.5" />
-      {baseGrainLines.map((line) => (
-        <path key={line} d={line} fill="none" stroke="#231309" strokeLinecap="round" strokeWidth="2" opacity="0.42" />
+      {/* Right chimney, sitting behind the tile line like the reference. */}
+      <g transform="translate(333 280)">
+        <path d="M4 31 H28 L25 101 H8 Z" fill="#8a6047" />
+        <path d="M-3 31 L16 17 L35 31" fill="none" stroke="#3b2318" strokeLinecap="round" strokeWidth="5" />
+        <rect x="10" y="4" width="12" height="15" rx="1" fill="#4a3024" />
+        <path d="M8 51 C15 47 18 55 26 50" fill="none" stroke="#d6b38d" strokeLinecap="round" strokeWidth="2" opacity="0.58" />
+        <path d="M9 69 H25 M10 86 H24" stroke="#4f3324" strokeWidth="1.4" opacity="0.45" />
+      </g>
+
+      {/* Heavy wood plinth with medallion and narrow engraved brass label. */}
+      <path d="M131 699 H421 L427 709 H126 Z" fill="#6b3215" />
+      <rect x="130" y="707" width="292" height="58" rx="3" fill="url(#vintage-village-base)" />
+      <rect x="130" y="707" width="292" height="58" filter="url(#vintage-village-grain)" opacity="0.5" />
+      <path d="M130 707 H422" stroke="#c28a4f" strokeWidth="2" opacity="0.48" />
+      {baseGrain.map((line) => (
+        <path key={line} d={line} fill="none" stroke="#211108" strokeLinecap="round" strokeWidth="2" opacity="0.4" />
       ))}
-      <circle cx="200" cy="525" r="16" fill="#5a2914" stroke="url(#vintage-village-brass)" strokeWidth="2.5" />
-      <circle cx="200" cy="525" r="11" fill="none" stroke="#a47b3c" strokeWidth="1" opacity="0.75" />
+      <circle cx="276" cy="726" r="17" fill="#552510" stroke="url(#vintage-village-brass)" strokeWidth="2.4" />
+      <circle cx="276" cy="726" r="11" fill="none" stroke="#b9904b" strokeWidth="1" opacity="0.82" />
       <text
-        x="200"
-        y="531"
-        fill="#d7bf85"
+        x="276"
+        y="732"
+        fill="#dcc58c"
         fontFamily="Georgia, 'Times New Roman', serif"
         fontSize="18"
         textAnchor="middle"
       >
         I
       </text>
-      <rect x="128" y="548" width="144" height="11" rx="3" fill="url(#vintage-village-brass)" />
+      <rect x="212" y="747" width="128" height="12" rx="3" fill="url(#vintage-village-brass)" />
+      <path d="M216 750 H336" stroke="#f7e0a2" strokeLinecap="round" strokeWidth="1" opacity="0.52" />
       <text
-        x="200"
-        y="556"
-        fill="#2a1b10"
+        x="276"
+        y="755"
+        fill="#28180d"
         fontFamily="Arial, sans-serif"
-        fontSize="5.4"
+        fontSize="4.9"
         fontWeight="700"
-        letterSpacing="0.18"
+        letterSpacing="0.08"
         textAnchor="middle"
       >
         {signText}
       </text>
     </g>
+
+    {stuccoSpeckles.map(([cx, cy, opacity]) => (
+      <circle key={`${cx}-${cy}`} cx={cx} cy={cy} r="2" fill="#725946" opacity={opacity} />
+    ))}
   </svg>
 );
 
