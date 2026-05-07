@@ -156,8 +156,6 @@ const VintageVillageStorefrontScene = ({
           preserveAspectRatio="xMidYMid slice"
         />
       )}
-      <path d="M164 480 H388 V692 H164 Z" fill="none" stroke="#efefed" strokeWidth="2.5" opacity="0.65" />
-      <path d="M164 480 H388 V692 H164 Z" fill="none" stroke="#a7a19a" strokeWidth="1.2" opacity="0.22" />
 
       {/* Rough vertical side supports, deliberately narrow and slightly uneven. */}
       <path d="M137 409 L154 411 L149 707 L130 707 Z" fill="url(#vintage-village-old-wood)" />
