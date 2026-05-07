@@ -74,9 +74,7 @@ const VintageVillageStorefrontScene = ({
       </pattern>
     </defs>
 
-    <rect width="400" height="600" fill="#ffffff" />
-
-    <g filter="url(#vintage-village-soft-shadow)">
+    <g filter="url(#vintage-village-soft-shadow)" transform="translate(-74 -123) scale(1.37 1.28)">
       <path d="M70 230 H330 L318 520 H82 Z" fill="rgba(0,0,0,0.08)" />
 
       {/* Main display opening */}
