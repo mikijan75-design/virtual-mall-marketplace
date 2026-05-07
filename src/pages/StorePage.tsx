@@ -11,6 +11,11 @@ import imBeadLogo from "@/assets/stores/im-bead-logo.png";
 import beggarsWireframe from "@/assets/stores/beggars-wireframe.png";
 import danielGlassArtLogo from "@/assets/stores/daniel-glass-art-logo.jpg";
 import floor1Shop6Img from "@/assets/stores/floor1-shop6.png";
+import halenModel1 from "@/assets/stores/halen-model-1.png";
+import halenModel2 from "@/assets/stores/halen-model-2.png";
+import halenModel3 from "@/assets/stores/halen-model-3.png";
+import halenModel4 from "@/assets/stores/halen-model-4.png";
+import halenModel5 from "@/assets/stores/halen-model-5.png";
 import InfrastructureBlueprintScene from "@/components/InfrastructureBlueprintScene";
 import GalleryWallSection from "@/components/mall/GalleryWallSection";
 import imProduct1 from "@/assets/stores/im-product-1.png";
@@ -413,11 +418,11 @@ const StorePage = () => {
             {/* Arc of 5 model house tiles */}
             <div className="absolute inset-0">
               {[
-                { left: "10%", top: "55%", rot: -28 },
-                { left: "27%", top: "38%", rot: -14 },
-                { left: "47%", top: "32%", rot: 0 },
-                { left: "67%", top: "38%", rot: 14 },
-                { left: "84%", top: "55%", rot: 28 },
+                { left: "10%", top: "55%", rot: -28, img: halenModel1 },
+                { left: "27%", top: "38%", rot: -14, img: halenModel2 },
+                { left: "47%", top: "32%", rot: 0, img: halenModel3 },
+                { left: "67%", top: "38%", rot: 14, img: halenModel4 },
+                { left: "84%", top: "55%", rot: 28, img: halenModel5 },
               ].map((p, i) => (
                 <button
                   key={i}
@@ -426,10 +431,8 @@ const StorePage = () => {
                   style={{ left: p.left, top: p.top, transform: `translate(-50%,-50%) rotate(${p.rot}deg)` }}
                   aria-label={`מודל בית ${i + 1}`}
                 >
-                  <div className="w-[clamp(110px,15vw,200px)] aspect-square rounded-md border-2 border-[#3a3024] bg-gradient-to-br from-[#e7e4dc] to-[#cfcabe] shadow-[0_10px_24px_rgba(0,0,0,0.18)] grid place-items-center">
-                    <span className="font-frank text-[#3a3024]/60 text-2xl md:text-3xl font-black">
-                      0{i + 1}
-                    </span>
+                  <div className="w-[clamp(110px,15vw,200px)] aspect-square rounded-md border-2 border-[#3a3024] bg-[#f3f1ec] shadow-[0_10px_24px_rgba(0,0,0,0.18)] overflow-hidden">
+                    <img src={p.img} alt={`מודל בית ${i + 1}`} className="w-full h-full object-cover" />
                   </div>
                 </button>
               ))}
