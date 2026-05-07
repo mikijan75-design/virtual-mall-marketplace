@@ -16,6 +16,7 @@ import halenModel2 from "@/assets/stores/halen-model-2.png";
 import halenModel3 from "@/assets/stores/halen-model-3.png";
 import halenModel4 from "@/assets/stores/halen-model-4.png";
 import halenModel5 from "@/assets/stores/halen-model-5.png";
+import halenVillage from "@/assets/stores/halen-village.png";
 import InfrastructureBlueprintScene from "@/components/InfrastructureBlueprintScene";
 import GalleryWallSection from "@/components/mall/GalleryWallSection";
 import imProduct1 from "@/assets/stores/im-product-1.png";
@@ -487,16 +488,56 @@ const StorePage = () => {
               ))}
             </div>
 
-            {/* Bottom plaque */}
-            <div className="absolute left-1/2 bottom-[6%] -translate-x-1/2 w-[60%] max-w-[760px]">
-              <div className="rounded-sm border-2 border-[#2a2118] bg-white p-2 shadow-[0_10px_24px_rgba(0,0,0,0.12)]">
-                <div className="border border-[#2a2118] py-5 px-6 text-center">
-                  <p className="font-frank text-xl md:text-3xl font-black tracking-[0.25em] text-[#2a2118]">
-                    HALEN BINARIA
-                  </p>
-                  <p className="mt-1 font-heebo text-sm md:text-base text-[#5a4d3e]">
-                    Model homes designer · מודל בתים מעוצב
-                  </p>
+            {/* Bottom showcase rectangle with same 3D effect as tiles */}
+            <div className="absolute left-1/2 bottom-[5%] -translate-x-1/2 w-[72%] max-w-[900px]">
+              <div
+                className="relative w-full aspect-[16/7] transition-transform duration-300 hover:-translate-y-1"
+                style={{
+                  filter:
+                    "drop-shadow(0 18px 16px rgba(0,0,0,0.25)) drop-shadow(0 6px 6px rgba(0,0,0,0.18))",
+                }}
+              >
+                {/* Stacked side faces to create thickness */}
+                {[8, 5, 2].map((off, k) => (
+                  <div
+                    key={k}
+                    aria-hidden
+                    className="absolute inset-0 rounded-lg"
+                    style={{
+                      transform: `translate(${off}px, ${off}px)`,
+                      background: `linear-gradient(135deg, #5a4a36, #362a1c)`,
+                      opacity: 0.55 - k * 0.12,
+                    }}
+                  />
+                ))}
+                {/* Top face with image */}
+                <div
+                  className="absolute inset-0 rounded-lg overflow-hidden bg-[#f3f1ec]"
+                  style={{
+                    boxShadow:
+                      "inset 0 1px 0 rgba(255,255,255,0.6), inset 0 -2px 4px rgba(0,0,0,0.15), 0 1px 0 rgba(0,0,0,0.3)",
+                  }}
+                >
+                  <img
+                    src={halenVillage}
+                    alt="HALEN BINARIA - מודל בתים מעוצב"
+                    className="w-full h-full object-cover"
+                  />
+                  <div
+                    className="pointer-events-none absolute inset-0"
+                    style={{
+                      background:
+                        "linear-gradient(115deg, rgba(255,255,255,0) 30%, rgba(255,255,255,0.45) 45%, rgba(255,255,255,0) 60%)",
+                      mixBlendMode: "overlay",
+                    }}
+                  />
+                  <div
+                    className="pointer-events-none absolute inset-x-0 top-0 h-1/3 rounded-t-lg"
+                    style={{
+                      background:
+                        "linear-gradient(180deg, rgba(255,255,255,0.3), rgba(255,255,255,0))",
+                    }}
+                  />
                 </div>
               </div>
             </div>
