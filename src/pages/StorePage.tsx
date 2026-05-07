@@ -653,6 +653,24 @@ const StorePage = () => {
     return <HalenBinariaStoreView store={store} />;
   }
 
+  if (store.id === "s9") {
+    return (
+      <div className="min-h-screen bg-background">
+        <MallHeader />
+        <PageTracker storeId={store.id} />
+        <BackButton />
+        <main>
+          <img
+            src={houseOfGonImg}
+            alt="House of Gon storefront"
+            className="block w-full h-auto"
+          />
+        </main>
+        <MallFooter />
+      </div>
+    );
+  }
+
   if (store.id === "s16") {
     return (
       <div className="min-h-screen bg-background">
