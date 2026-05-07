@@ -26,6 +26,7 @@ import OliveWoodEpoxyWordmark from "@/components/mall/OliveWoodEpoxyWordmark";
 import IsraelMezuzahsStorefrontScene from "@/components/mall/IsraelMezuzahsStorefrontScene";
 import AvnerOvadStorefrontScene from "@/components/mall/AvnerOvadStorefrontScene";
 import VintageVillageStorefrontScene from "@/components/mall/VintageVillageStorefrontScene";
+import vintageVillageEntranceImg from "@/assets/stores/vintage-village-entrance.png";
 import israelMezuzahsImg from "@/assets/stores/israel-mezuzahs.png";
 import floor3Shop4Img from "@/assets/stores/floor3-shop4.png";
 import floor1Shop4Img from "@/assets/stores/floor1-shop4.png";
@@ -164,6 +165,12 @@ const StoreCard = ({ store, storeIndex }: StoreCardProps) => {
           className="relative flex h-full w-full overflow-hidden rounded-lg"
         >
           <VintageVillageStorefrontScene className="h-full w-full transition-transform duration-700 group-hover:scale-[1.04]" preserveAspectRatio="xMidYMid slice" />
+          <img
+            src={vintageVillageEntranceImg}
+            alt="כניסה לחנות כפר וינטג'"
+            className="absolute z-10 pointer-events-none object-cover"
+            style={{ left: "14%", top: "40.6%", width: "71%", height: "42%" }}
+          />
           <div
             className="absolute inset-0 pointer-events-none"
             style={{
