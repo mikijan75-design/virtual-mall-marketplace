@@ -17,6 +17,18 @@ import halenModel3 from "@/assets/stores/halen-model-3.png";
 import halenModel4 from "@/assets/stores/halen-model-4.png";
 import halenModel5 from "@/assets/stores/halen-model-5.png";
 import halenVillage from "@/assets/stores/halen-village.png";
+import halenGallery1 from "@/assets/stores/halen-gallery/g1.jpg";
+import halenGallery2 from "@/assets/stores/halen-gallery/g2.jpg";
+import halenGallery3 from "@/assets/stores/halen-gallery/g3.jpg";
+import halenGallery4 from "@/assets/stores/halen-gallery/g4.jpg";
+import halenGallery5 from "@/assets/stores/halen-gallery/g5.jpg";
+import halenGallery6 from "@/assets/stores/halen-gallery/g6.jpg";
+import halenGallery7 from "@/assets/stores/halen-gallery/g7.jpg";
+import halenGallery8 from "@/assets/stores/halen-gallery/g8.jpg";
+import halenGallery9 from "@/assets/stores/halen-gallery/g9.jpg";
+import halenGallery10 from "@/assets/stores/halen-gallery/g10.jpg";
+import halenGallery11 from "@/assets/stores/halen-gallery/g11.jpg";
+import halenGallery12 from "@/assets/stores/halen-gallery/g12.jpg";
 import InfrastructureBlueprintScene from "@/components/InfrastructureBlueprintScene";
 import GalleryWallSection from "@/components/mall/GalleryWallSection";
 import imProduct1 from "@/assets/stores/im-product-1.png";
@@ -58,6 +70,242 @@ import avnerPainting18 from "@/assets/avner-paintings/p18.png";
 import avnerPainting19 from "@/assets/avner-paintings/p19.png";
 import avnerPainting20 from "@/assets/avner-paintings/p20.png";
 import type { Store } from "@/data/mallData";
+
+const halenGalleryImages = [
+  { src: halenGallery1, alt: "Halen Binaria - דגם 1" },
+  { src: halenGallery2, alt: "Halen Binaria - דגם 2" },
+  { src: halenGallery3, alt: "Halen Binaria - דגם 3" },
+  { src: halenGallery4, alt: "Halen Binaria - דגם 4" },
+  { src: halenGallery5, alt: "Halen Binaria - דגם 5" },
+  { src: halenGallery6, alt: "Halen Binaria - דגם 6" },
+  { src: halenGallery7, alt: "Halen Binaria - דגם 7" },
+  { src: halenGallery8, alt: "Halen Binaria - דגם 8" },
+  { src: halenGallery9, alt: "Halen Binaria - דגם 9" },
+  { src: halenGallery10, alt: "Halen Binaria - דגם 10" },
+  { src: halenGallery11, alt: "Halen Binaria - דגם 11" },
+  { src: halenGallery12, alt: "Halen Binaria - דגם 12" },
+];
+
+const HalenBinariaStoreView = ({ store }: { store: Store }) => {
+  const navigate = useNavigate();
+  const [lightboxIndex, setLightboxIndex] = useState<number | null>(null);
+  const open = (i: number) => setLightboxIndex(i);
+  const close = () => setLightboxIndex(null);
+  const prev = () =>
+    setLightboxIndex((i) => (i === null ? i : (i - 1 + halenGalleryImages.length) % halenGalleryImages.length));
+  const next = () =>
+    setLightboxIndex((i) => (i === null ? i : (i + 1) % halenGalleryImages.length));
+  const current = lightboxIndex !== null ? halenGalleryImages[lightboxIndex] : null;
+
+  return (
+    <div className="min-h-screen bg-background flex flex-col">
+      <MallHeader />
+      <PageTracker storeId={store.id} />
+      <BackButton />
+      <header className="bg-gradient-to-r from-[#2a2118] to-[#3d3024] text-white py-6 text-center">
+        <h1 className="font-frank text-3xl md:text-5xl font-black tracking-[0.15em]">
+          HALEN BINARIA
+        </h1>
+        <p className="mt-2 font-heebo text-base md:text-xl opacity-95">
+          Model homes designer · מודל בתים מעוצב
+        </p>
+      </header>
+      <main className="flex-1 w-full bg-[#f3f1ec] relative overflow-hidden">
+        <div className="relative w-full h-[calc(100vh-9rem)]">
+          <div className="absolute inset-0">
+            {[
+              { left: "10%", top: "55%", rot: -28, img: halenModel1 },
+              { left: "27%", top: "38%", rot: -14, img: halenModel2 },
+              { left: "47%", top: "32%", rot: 0, img: halenModel3 },
+              { left: "67%", top: "38%", rot: 14, img: halenModel4 },
+              { left: "84%", top: "55%", rot: 28, img: halenModel5 },
+            ].map((p, i) => (
+              <button
+                key={i}
+                type="button"
+                onClick={() => open(i)}
+                className="group absolute transition-transform duration-300 hover:z-10 [transform-style:preserve-3d]"
+                style={{
+                  left: p.left,
+                  top: p.top,
+                  transform: `translate(-50%,-50%) perspective(900px) rotateY(${p.rot * 0.6}deg) rotateX(6deg) rotate(${p.rot * 0.3}deg)`,
+                }}
+                aria-label={`מודל בית ${i + 1}`}
+              >
+                <div
+                  className="relative w-[clamp(110px,15vw,200px)] aspect-square transition-transform duration-300 group-hover:-translate-y-2 group-hover:scale-[1.04]"
+                  style={{
+                    filter:
+                      "drop-shadow(0 14px 12px rgba(0,0,0,0.22)) drop-shadow(0 4px 4px rgba(0,0,0,0.15))",
+                  }}
+                >
+                  {[6, 4, 2].map((off, k) => (
+                    <div
+                      key={k}
+                      aria-hidden
+                      className="absolute inset-0 rounded-lg"
+                      style={{
+                        transform: `translate(${off}px, ${off}px)`,
+                        background: `linear-gradient(135deg, #5a4a36, #362a1c)`,
+                        opacity: 0.55 - k * 0.12,
+                      }}
+                    />
+                  ))}
+                  <div
+                    className="absolute inset-0 rounded-lg overflow-hidden bg-[#f3f1ec]"
+                    style={{
+                      boxShadow:
+                        "inset 0 1px 0 rgba(255,255,255,0.6), inset 0 -2px 4px rgba(0,0,0,0.15), 0 1px 0 rgba(0,0,0,0.3)",
+                    }}
+                  >
+                    <img src={p.img} alt={`מודל בית ${i + 1}`} className="w-full h-full object-cover" />
+                    <div
+                      className="pointer-events-none absolute inset-0"
+                      style={{
+                        background:
+                          "linear-gradient(115deg, rgba(255,255,255,0) 30%, rgba(255,255,255,0.55) 45%, rgba(255,255,255,0) 60%)",
+                        mixBlendMode: "overlay",
+                      }}
+                    />
+                    <div
+                      className="pointer-events-none absolute inset-x-0 top-0 h-1/3 rounded-t-lg"
+                      style={{
+                        background:
+                          "linear-gradient(180deg, rgba(255,255,255,0.35), rgba(255,255,255,0))",
+                      }}
+                    />
+                  </div>
+                </div>
+              </button>
+            ))}
+          </div>
+
+          <div className="absolute left-1/2 bottom-[6%] -translate-x-1/2 w-[60%] max-w-[760px]">
+            <button
+              type="button"
+              onClick={() => open(0)}
+              className="block w-full"
+              aria-label="פתח גלריית תמונות"
+            >
+              <div
+                className="relative w-full aspect-[16/4] transition-transform duration-300 hover:-translate-y-1"
+                style={{
+                  filter:
+                    "drop-shadow(0 18px 16px rgba(0,0,0,0.25)) drop-shadow(0 6px 6px rgba(0,0,0,0.18))",
+                }}
+              >
+                {[8, 5, 2].map((off, k) => (
+                  <div
+                    key={k}
+                    aria-hidden
+                    className="absolute inset-0 rounded-lg"
+                    style={{
+                      transform: `translate(${off}px, ${off}px)`,
+                      background: `linear-gradient(135deg, #5a4a36, #362a1c)`,
+                      opacity: 0.55 - k * 0.12,
+                    }}
+                  />
+                ))}
+                <div
+                  className="absolute inset-0 rounded-lg overflow-hidden bg-[#f3f1ec]"
+                  style={{
+                    boxShadow:
+                      "inset 0 1px 0 rgba(255,255,255,0.6), inset 0 -2px 4px rgba(0,0,0,0.15), 0 1px 0 rgba(0,0,0,0.3)",
+                  }}
+                >
+                  <img
+                    src={halenVillage}
+                    alt="HALEN BINARIA - מודל בתים מעוצב"
+                    className="w-full h-full object-cover"
+                  />
+                  <div
+                    className="pointer-events-none absolute inset-0"
+                    style={{
+                      background:
+                        "linear-gradient(115deg, rgba(255,255,255,0) 30%, rgba(255,255,255,0.45) 45%, rgba(255,255,255,0) 60%)",
+                      mixBlendMode: "overlay",
+                    }}
+                  />
+                  <div
+                    className="pointer-events-none absolute inset-x-0 top-0 h-1/3 rounded-t-lg"
+                    style={{
+                      background:
+                        "linear-gradient(180deg, rgba(255,255,255,0.3), rgba(255,255,255,0))",
+                    }}
+                  />
+                </div>
+              </div>
+            </button>
+          </div>
+        </div>
+      </main>
+      <MallFooter />
+
+      {current && (
+        <div
+          className="fixed inset-0 z-[100] flex items-center justify-center bg-black/85 p-4"
+          role="dialog"
+          aria-modal="true"
+          onClick={close}
+        >
+          <button
+            type="button"
+            onClick={(e) => { e.stopPropagation(); close(); }}
+            aria-label="סגור"
+            className="absolute top-4 right-4 grid h-11 w-11 place-items-center rounded-full bg-white/10 text-white hover:bg-white/20"
+          >
+            <X className="h-6 w-6" />
+          </button>
+          <button
+            type="button"
+            onClick={(e) => { e.stopPropagation(); prev(); }}
+            aria-label="הקודם"
+            className="absolute left-3 md:left-8 top-1/2 -translate-y-1/2 grid h-12 w-12 place-items-center rounded-full bg-white/15 text-white hover:bg-white/30"
+          >
+            <ChevronLeft className="h-7 w-7" />
+          </button>
+          <button
+            type="button"
+            onClick={(e) => { e.stopPropagation(); next(); }}
+            aria-label="הבא"
+            className="absolute right-3 md:right-8 top-1/2 -translate-y-1/2 grid h-12 w-12 place-items-center rounded-full bg-white/15 text-white hover:bg-white/30"
+          >
+            <ChevronRight className="h-7 w-7" />
+          </button>
+
+          <div
+            className="flex max-h-[92vh] w-full max-w-[900px] flex-col items-center gap-4"
+            onClick={(e) => e.stopPropagation()}
+          >
+            <div className="flex max-h-[68vh] items-center justify-center overflow-hidden rounded-xl border-2 border-[#b3925a] bg-white p-3 shadow-2xl">
+              <img
+                src={current.src}
+                alt={current.alt}
+                className="max-h-[64vh] w-auto object-contain"
+              />
+            </div>
+            <p className="text-center text-sm md:text-base text-white/90 font-heebo" dir="rtl">
+              {current.alt} · {(lightboxIndex ?? 0) + 1} / {halenGalleryImages.length}
+            </p>
+            <div className="flex w-full max-w-[520px]" dir="rtl">
+              <button
+                type="button"
+                onClick={() => {
+                  navigate("/contact", {
+                    state: { product: current.alt, image: current.src, contact: true },
+                  });
+                }}
+                className="flex-1 rounded-lg bg-gradient-to-b from-[#c9a35e] to-[#a4824d] px-5 py-3 text-base font-black text-white shadow-lg hover:opacity-95"
+              >
+                בחירת דגם זה
+              </button>
+            </div>
+          </div>
+        </div>
+      )}
+    </div>
+  );
+};
 
 const avnerHighlights = [
   {
@@ -401,151 +649,7 @@ const StorePage = () => {
   }
 
   if (store.id === "s1") {
-    return (
-      <div className="min-h-screen bg-background flex flex-col">
-        <MallHeader />
-        <PageTracker storeId={store.id} />
-        <BackButton />
-        <header className="bg-gradient-to-r from-[#2a2118] to-[#3d3024] text-white py-6 text-center">
-          <h1 className="font-frank text-3xl md:text-5xl font-black tracking-[0.15em]">
-            HALEN BINARIA
-          </h1>
-          <p className="mt-2 font-heebo text-base md:text-xl opacity-95">
-            Model homes designer · מודל בתים מעוצב
-          </p>
-        </header>
-        <main className="flex-1 w-full bg-[#f3f1ec] relative overflow-hidden">
-          <div className="relative w-full h-[calc(100vh-9rem)]">
-            {/* Arc of 5 model house tiles */}
-            <div className="absolute inset-0">
-              {[
-                { left: "10%", top: "55%", rot: -28, img: halenModel1 },
-                { left: "27%", top: "38%", rot: -14, img: halenModel2 },
-                { left: "47%", top: "32%", rot: 0, img: halenModel3 },
-                { left: "67%", top: "38%", rot: 14, img: halenModel4 },
-                { left: "84%", top: "55%", rot: 28, img: halenModel5 },
-              ].map((p, i) => (
-                <button
-                  key={i}
-                  type="button"
-                  className="group absolute transition-transform duration-300 hover:z-10 [transform-style:preserve-3d]"
-                  style={{
-                    left: p.left,
-                    top: p.top,
-                    transform: `translate(-50%,-50%) perspective(900px) rotateY(${p.rot * 0.6}deg) rotateX(6deg) rotate(${p.rot * 0.3}deg)`,
-                  }}
-                  aria-label={`מודל בית ${i + 1}`}
-                >
-                  <div
-                    className="relative w-[clamp(110px,15vw,200px)] aspect-square transition-transform duration-300 group-hover:-translate-y-2 group-hover:scale-[1.04]"
-                    style={{
-                      filter:
-                        "drop-shadow(0 14px 12px rgba(0,0,0,0.22)) drop-shadow(0 4px 4px rgba(0,0,0,0.15))",
-                    }}
-                  >
-                    {/* Stacked side faces to create thickness */}
-                    {[6, 4, 2].map((off, k) => (
-                      <div
-                        key={k}
-                        aria-hidden
-                        className="absolute inset-0 rounded-lg"
-                        style={{
-                          transform: `translate(${off}px, ${off}px)`,
-                          background: `linear-gradient(135deg, #5a4a36, #362a1c)`,
-                          opacity: 0.55 - k * 0.12,
-                        }}
-                      />
-                    ))}
-                    {/* Top face with image */}
-                    <div
-                      className="absolute inset-0 rounded-lg overflow-hidden bg-[#f3f1ec]"
-                      style={{
-                        boxShadow:
-                          "inset 0 1px 0 rgba(255,255,255,0.6), inset 0 -2px 4px rgba(0,0,0,0.15), 0 1px 0 rgba(0,0,0,0.3)",
-                      }}
-                    >
-                      <img src={p.img} alt={`מודל בית ${i + 1}`} className="w-full h-full object-cover" />
-                      {/* glass shine sweep */}
-                      <div
-                        className="pointer-events-none absolute inset-0"
-                        style={{
-                          background:
-                            "linear-gradient(115deg, rgba(255,255,255,0) 30%, rgba(255,255,255,0.55) 45%, rgba(255,255,255,0) 60%)",
-                          mixBlendMode: "overlay",
-                        }}
-                      />
-                      {/* soft top highlight */}
-                      <div
-                        className="pointer-events-none absolute inset-x-0 top-0 h-1/3 rounded-t-lg"
-                        style={{
-                          background:
-                            "linear-gradient(180deg, rgba(255,255,255,0.35), rgba(255,255,255,0))",
-                        }}
-                      />
-                    </div>
-                  </div>
-                </button>
-              ))}
-            </div>
-
-            {/* Bottom showcase rectangle with same 3D effect as tiles */}
-            <div className="absolute left-1/2 bottom-[6%] -translate-x-1/2 w-[60%] max-w-[760px]">
-              <div
-                className="relative w-full aspect-[16/4] transition-transform duration-300 hover:-translate-y-1"
-                style={{
-                  filter:
-                    "drop-shadow(0 18px 16px rgba(0,0,0,0.25)) drop-shadow(0 6px 6px rgba(0,0,0,0.18))",
-                }}
-              >
-                {/* Stacked side faces to create thickness */}
-                {[8, 5, 2].map((off, k) => (
-                  <div
-                    key={k}
-                    aria-hidden
-                    className="absolute inset-0 rounded-lg"
-                    style={{
-                      transform: `translate(${off}px, ${off}px)`,
-                      background: `linear-gradient(135deg, #5a4a36, #362a1c)`,
-                      opacity: 0.55 - k * 0.12,
-                    }}
-                  />
-                ))}
-                {/* Top face with image */}
-                <div
-                  className="absolute inset-0 rounded-lg overflow-hidden bg-[#f3f1ec]"
-                  style={{
-                    boxShadow:
-                      "inset 0 1px 0 rgba(255,255,255,0.6), inset 0 -2px 4px rgba(0,0,0,0.15), 0 1px 0 rgba(0,0,0,0.3)",
-                  }}
-                >
-                  <img
-                    src={halenVillage}
-                    alt="HALEN BINARIA - מודל בתים מעוצב"
-                    className="w-full h-full object-cover"
-                  />
-                  <div
-                    className="pointer-events-none absolute inset-0"
-                    style={{
-                      background:
-                        "linear-gradient(115deg, rgba(255,255,255,0) 30%, rgba(255,255,255,0.45) 45%, rgba(255,255,255,0) 60%)",
-                      mixBlendMode: "overlay",
-                    }}
-                  />
-                  <div
-                    className="pointer-events-none absolute inset-x-0 top-0 h-1/3 rounded-t-lg"
-                    style={{
-                      background:
-                        "linear-gradient(180deg, rgba(255,255,255,0.3), rgba(255,255,255,0))",
-                    }}
-                  />
-                </div>
-              </div>
-            </div>
-          </div>
-        </main>
-        <MallFooter />
-      </div>
-    );
+    return <HalenBinariaStoreView store={store} />;
   }
 
   if (store.id === "s16") {
