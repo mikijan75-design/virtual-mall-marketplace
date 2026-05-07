@@ -32,7 +32,6 @@ import floor3Shop4Img from "@/assets/stores/floor3-shop4.png";
 import floor1Shop4Img from "@/assets/stores/floor1-shop4.png";
 import floor1Shop6Img from "@/assets/stores/floor1-shop6.png";
 import danielGlassArtLogo from "@/assets/stores/daniel-glass-art-logo.jpg";
-import houseOfGonImg from "@/assets/stores/house-of-gon.jpg";
 
 type BrandStyle = {
   bg: string;
@@ -83,11 +82,13 @@ const idOverrides: Record<string, Partial<BrandStyle & { name: string }>> = {
   s6: comingSoonOverride,
   s7: comingSoonOverride,
   s9: {
-    name: "House of Gon",
-    accent: "#b3925a",
-    subtitle: "",
-    image: houseOfGonImg,
-    codedScene: "house-of-gon-storefront" as any,
+    name: "להשכרה מיידית",
+    bg: "linear-gradient(135deg, #f5ede0, #ebe0cc)",
+    text: "#5a4424",
+    accent: "#c9a96e",
+    font: "font-frank",
+    image: forRentImg,
+    subtitle: "חנות וירטואלית",
   },
   s13: comingSoonOverride,
   s14: comingSoonOverride,
@@ -152,53 +153,6 @@ const StoreCard = ({ store, storeIndex }: StoreCardProps) => {
   const displayName = override?.name ?? store.name;
   const isAvnerOvad = store.id === "s4";
   const isVintageVillage = store.id === "s1";
-  const isHouseOfGon = store.id === "s9";
-
-  if (isHouseOfGon) {
-    return (
-      <button
-        onClick={() => navigate(`/store/${store.id}`)}
-        className={`group relative flex w-full flex-col ${STORE_CARD_CLASS} cursor-pointer transition-all duration-300 hover:scale-[1.03] focus:outline-none`}
-        aria-label={`כניסה לחנות ${store.name}`}
-      >
-        <div className="relative flex h-full w-full overflow-hidden rounded-lg">
-          <img
-            src={houseOfGonImg}
-            alt="House of Gon"
-            className="h-full w-full object-cover transition-transform duration-700 group-hover:scale-[1.04]"
-            loading="lazy"
-          />
-          <div
-            className="absolute inset-0 pointer-events-none"
-            style={{
-              background:
-                "linear-gradient(155deg, rgba(255,255,255,0.2) 0%, transparent 38%, transparent 62%, rgba(255,255,255,0.08) 100%)",
-            }}
-          />
-          {storeIndex !== undefined && (
-            <div
-              className="absolute -bottom-2 left-1/2 z-20 flex -translate-x-1/2 items-center justify-center"
-              style={{
-                background: "linear-gradient(135deg, hsl(43,45%,55%), hsl(40,40%,45%))",
-                color: "hsl(40,10%,98%)",
-                width: "22px",
-                height: "22px",
-                borderRadius: "50%",
-                fontSize: "9px",
-                fontWeight: 700,
-                fontFamily: "serif",
-                letterSpacing: "0.02em",
-                boxShadow: "0 2px 6px rgba(0,0,0,0.25), inset 0 1px 0 rgba(255,255,255,0.3)",
-                border: "1.5px solid hsl(43,50%,65%)",
-              }}
-            >
-              {romanNumerals[storeIndex]}
-            </div>
-          )}
-        </div>
-      </button>
-    );
-  }
 
   if (isVintageVillage) {
     return (
