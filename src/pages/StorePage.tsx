@@ -427,11 +427,21 @@ const StorePage = () => {
                 <button
                   key={i}
                   type="button"
-                  className="group absolute -translate-x-1/2 -translate-y-1/2 transition-transform hover:scale-105 hover:z-10"
-                  style={{ left: p.left, top: p.top, transform: `translate(-50%,-50%) rotate(${p.rot}deg)` }}
+                  className="group absolute transition-transform duration-300 hover:z-10 [transform-style:preserve-3d]"
+                  style={{
+                    left: p.left,
+                    top: p.top,
+                    transform: `translate(-50%,-50%) perspective(900px) rotateY(${p.rot * 0.6}deg) rotateX(6deg) rotate(${p.rot * 0.3}deg)`,
+                  }}
                   aria-label={`מודל בית ${i + 1}`}
                 >
-                  <div className="w-[clamp(110px,15vw,200px)] aspect-square rounded-md border-2 border-[#3a3024] bg-[#f3f1ec] shadow-[0_10px_24px_rgba(0,0,0,0.18)] overflow-hidden">
+                  <div
+                    className="w-[clamp(110px,15vw,200px)] aspect-square rounded-lg overflow-hidden bg-[#f3f1ec] transition-transform duration-300 group-hover:-translate-y-2 group-hover:scale-[1.06]"
+                    style={{
+                      boxShadow:
+                        "0 22px 38px -12px rgba(0,0,0,0.45), 0 8px 14px -6px rgba(0,0,0,0.30), inset 0 1px 0 rgba(255,255,255,0.55), inset 0 -2px 6px rgba(0,0,0,0.18)",
+                    }}
+                  >
                     <img src={p.img} alt={`מודל בית ${i + 1}`} className="w-full h-full object-cover" />
                   </div>
                 </button>
