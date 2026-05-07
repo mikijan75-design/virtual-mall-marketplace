@@ -1,6 +1,8 @@
 import type { SVGProps } from "react";
 
-type VintageVillageStorefrontSceneProps = SVGProps<SVGSVGElement>;
+type VintageVillageStorefrontSceneProps = SVGProps<SVGSVGElement> & {
+  displayImageHref?: string;
+};
 
 const roofRows = [
   { y: 312, x: 146, count: 14, tileWidth: 18, tileHeight: 23, offset: 0 },
@@ -53,6 +55,7 @@ const VintageVillageStorefrontScene = ({
   className,
   style,
   preserveAspectRatio = "xMidYMid meet",
+  displayImageHref,
   ...svgProps
 }: VintageVillageStorefrontSceneProps) => (
   <svg
@@ -143,6 +146,16 @@ const VintageVillageStorefrontScene = ({
       <rect x="154" y="470" width="244" height="236" fill="#c8baa8" />
       <rect x="164" y="480" width="224" height="212" fill="url(#vintage-village-display-fill)" />
       <rect x="164" y="480" width="224" height="212" fill="url(#vintage-village-display-light)" />
+      {displayImageHref && (
+        <image
+          href={displayImageHref}
+          x="164"
+          y="480"
+          width="224"
+          height="212"
+          preserveAspectRatio="xMidYMid slice"
+        />
+      )}
       <path d="M164 480 H388 V692 H164 Z" fill="none" stroke="#efefed" strokeWidth="2.5" opacity="0.65" />
       <path d="M164 480 H388 V692 H164 Z" fill="none" stroke="#a7a19a" strokeWidth="1.2" opacity="0.22" />
 

@@ -164,11 +164,10 @@ const StoreCard = ({ store, storeIndex }: StoreCardProps) => {
         <div
           className="relative flex h-full w-full overflow-hidden rounded-lg"
         >
-          <VintageVillageStorefrontScene className="h-full w-full transition-transform duration-700 group-hover:scale-[1.04]" preserveAspectRatio="xMidYMid slice" />
-          <img
-            src={vintageVillageEntranceImg}
-            alt="כניסה לחנות כפר וינטג'"
-            className="absolute left-1/2 top-1/2 -translate-x-1/2 -translate-y-1/2 z-10 w-[58%] h-auto object-contain pointer-events-none drop-shadow-lg"
+          <VintageVillageStorefrontScene
+            className="h-full w-full transition-transform duration-700 group-hover:scale-[1.04]"
+            preserveAspectRatio="xMidYMid slice"
+            displayImageHref={vintageVillageEntranceImg}
           />
           <div
             className="absolute inset-0 pointer-events-none"
