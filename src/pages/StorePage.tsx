@@ -104,7 +104,7 @@ const HalenBinariaStoreView = ({ store }: { store: Store }) => {
       <BackButton />
       <header className="bg-gradient-to-r from-[#2a2118] to-[#3d3024] text-white py-6 text-center">
         <h1 className="font-frank text-3xl md:text-5xl font-black tracking-[0.15em]">
-          HALEN BINARIA
+          HELEN BINARIE
         </h1>
         <p className="mt-2 font-heebo text-base md:text-xl opacity-95">
           Model homes designer · מודל בתים מעוצב
