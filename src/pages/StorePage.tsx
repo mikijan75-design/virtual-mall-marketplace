@@ -489,9 +489,9 @@ const StorePage = () => {
             </div>
 
             {/* Bottom showcase rectangle with same 3D effect as tiles */}
-            <div className="absolute left-1/2 bottom-[5%] -translate-x-1/2 w-[72%] max-w-[900px]">
+            <div className="absolute left-1/2 bottom-[6%] -translate-x-1/2 w-[60%] max-w-[760px]">
               <div
-                className="relative w-full aspect-[16/7] transition-transform duration-300 hover:-translate-y-1"
+                className="relative w-full aspect-[16/4] transition-transform duration-300 hover:-translate-y-1"
                 style={{
                   filter:
                     "drop-shadow(0 18px 16px rgba(0,0,0,0.25)) drop-shadow(0 6px 6px rgba(0,0,0,0.18))",
