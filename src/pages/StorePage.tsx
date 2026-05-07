@@ -11,6 +11,7 @@ import imBeadLogo from "@/assets/stores/im-bead-logo.png";
 import beggarsWireframe from "@/assets/stores/beggars-wireframe.png";
 import danielGlassArtLogo from "@/assets/stores/daniel-glass-art-logo.jpg";
 import floor1Shop6Img from "@/assets/stores/floor1-shop6.png";
+import houseOfGonImg from "@/assets/stores/house-of-gon.jpg";
 import halenModel1 from "@/assets/stores/halen-model-1.png";
 import halenModel2 from "@/assets/stores/halen-model-2.png";
 import halenModel3 from "@/assets/stores/halen-model-3.png";
@@ -650,6 +651,24 @@ const StorePage = () => {
 
   if (store.id === "s1") {
     return <HalenBinariaStoreView store={store} />;
+  }
+
+  if (store.id === "s9") {
+    return (
+      <div className="min-h-screen bg-background">
+        <MallHeader />
+        <PageTracker storeId={store.id} />
+        <BackButton />
+        <main>
+          <img
+            src={houseOfGonImg}
+            alt="House of Gon storefront"
+            className="block w-full h-auto"
+          />
+        </main>
+        <MallFooter />
+      </div>
+    );
   }
 
   if (store.id === "s16") {
