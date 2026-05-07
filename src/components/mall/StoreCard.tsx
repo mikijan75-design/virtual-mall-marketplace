@@ -25,6 +25,7 @@ import IsraelMezuzahsWordmark from "@/components/mall/IsraelMezuzahsWordmark";
 import OliveWoodEpoxyWordmark from "@/components/mall/OliveWoodEpoxyWordmark";
 import IsraelMezuzahsStorefrontScene from "@/components/mall/IsraelMezuzahsStorefrontScene";
 import AvnerOvadStorefrontScene from "@/components/mall/AvnerOvadStorefrontScene";
+import VintageVillageStorefrontScene from "@/components/mall/VintageVillageStorefrontScene";
 import israelMezuzahsImg from "@/assets/stores/israel-mezuzahs.png";
 import floor3Shop4Img from "@/assets/stores/floor3-shop4.png";
 import floor1Shop4Img from "@/assets/stores/floor1-shop4.png";
@@ -43,7 +44,7 @@ type BrandStyle = {
   subtitleLogo?: string;
   codedWordmark?: "israel-mezuzahs";
   codedSubtitle?: "olive-wood-epoxy";
-  codedScene?: "israel-mezuzahs-storefront";
+  codedScene?: "israel-mezuzahs-storefront" | "avner-ovad-storefront" | "vintage-village-storefront";
   oversize?: boolean;
   // extended at usage site
 };
@@ -104,10 +105,11 @@ const idOverrides: Record<string, Partial<BrandStyle & { name: string }>> = {
     accent: "#b3925a",
     subtitle: "אמן ציור ישראלי",
     image: floor3Shop4Img,
-    codedScene: "avner-ovad-storefront" as any,
+    codedScene: "avner-ovad-storefront",
   },
   s1: {
     image: floor3Shop1Svg,
+    codedScene: "vintage-village-storefront",
     oversize: true,
   },
   s16: {
@@ -151,7 +153,7 @@ const StoreCard = ({ store, storeIndex }: StoreCardProps) => {
   const style = override ? { ...baseStyle, ...override } : baseStyle;
   const displayName = override?.name ?? store.name;
   const isAvnerOvad = store.id === "s4";
-  const isFullSvg = store.id === "s1";
+  const isFullSvg = store.id === "s1" && !style.codedScene;
 
   if (isFullSvg && style.image) {
     return (
@@ -244,7 +246,7 @@ const StoreCard = ({ store, storeIndex }: StoreCardProps) => {
               }}
             />
           </div>
-        ) : (style.codedScene as string) === "avner-ovad-storefront" ? (
+        ) : style.codedScene === "avner-ovad-storefront" ? (
           <div
             className="relative flex-1 overflow-hidden"
             style={{
@@ -257,6 +259,22 @@ const StoreCard = ({ store, storeIndex }: StoreCardProps) => {
               className="absolute inset-0 pointer-events-none"
               style={{
                 background: "linear-gradient(155deg, rgba(255,255,255,0.18) 0%, transparent 35%, transparent 60%, rgba(255,255,255,0.06) 100%)",
+              }}
+            />
+          </div>
+        ) : style.codedScene === "vintage-village-storefront" ? (
+          <div
+            className="relative flex-1 overflow-hidden"
+            style={{
+              background: "#ffffff",
+              borderBottom: `2px solid ${style.accent}`,
+            }}
+          >
+            <VintageVillageStorefrontScene className="w-full h-full" preserveAspectRatio="xMidYMid meet" />
+            <div
+              className="absolute inset-0 pointer-events-none"
+              style={{
+                background: "linear-gradient(155deg, rgba(255,255,255,0.2) 0%, transparent 38%, transparent 62%, rgba(255,255,255,0.08) 100%)",
               }}
             />
           </div>
