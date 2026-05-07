@@ -139,18 +139,7 @@ const HalenBinariaStoreView = ({ store }: { store: Store }) => {
                       "drop-shadow(0 14px 12px rgba(0,0,0,0.22)) drop-shadow(0 4px 4px rgba(0,0,0,0.15))",
                   }}
                 >
-                  {[6, 4, 2].map((off, k) => (
-                    <div
-                      key={k}
-                      aria-hidden
-                      className="absolute inset-0 rounded-lg"
-                      style={{
-                        transform: `translate(${off}px, ${off}px)`,
-                        background: `linear-gradient(135deg, #5a4a36, #362a1c)`,
-                        opacity: 0.55 - k * 0.12,
-                      }}
-                    />
-                  ))}
+                  {/* depth side-faces removed */}
                   <div
                     className="absolute inset-0 rounded-lg overflow-hidden bg-[#f3f1ec]"
                     style={{
@@ -194,18 +183,7 @@ const HalenBinariaStoreView = ({ store }: { store: Store }) => {
                     "drop-shadow(0 18px 16px rgba(0,0,0,0.25)) drop-shadow(0 6px 6px rgba(0,0,0,0.18))",
                 }}
               >
-                {[8, 5, 2].map((off, k) => (
-                  <div
-                    key={k}
-                    aria-hidden
-                    className="absolute inset-0 rounded-lg"
-                    style={{
-                      transform: `translate(${off}px, ${off}px)`,
-                      background: `linear-gradient(135deg, #5a4a36, #362a1c)`,
-                      opacity: 0.55 - k * 0.12,
-                    }}
-                  />
-                ))}
+                {/* depth side-faces removed */}
                 <div
                   className="absolute inset-0 rounded-lg overflow-hidden bg-[#f3f1ec]"
                   style={{
