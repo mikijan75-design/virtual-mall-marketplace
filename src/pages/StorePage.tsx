@@ -439,19 +439,19 @@ const StorePage = () => {
                     className="relative w-[clamp(110px,15vw,200px)] aspect-square transition-transform duration-300 group-hover:-translate-y-2 group-hover:scale-[1.04]"
                     style={{
                       filter:
-                        "drop-shadow(0 26px 22px rgba(0,0,0,0.35)) drop-shadow(0 10px 8px rgba(0,0,0,0.25))",
+                        "drop-shadow(0 14px 12px rgba(0,0,0,0.22)) drop-shadow(0 4px 4px rgba(0,0,0,0.15))",
                     }}
                   >
                     {/* Stacked side faces to create thickness */}
-                    {[18, 14, 10, 6, 3].map((off, k) => (
+                    {[6, 4, 2].map((off, k) => (
                       <div
                         key={k}
                         aria-hidden
                         className="absolute inset-0 rounded-lg"
                         style={{
                           transform: `translate(${off}px, ${off}px)`,
-                          background: `linear-gradient(135deg, #4a3a28, #2a1f14)`,
-                          opacity: 0.85 - k * 0.05,
+                          background: `linear-gradient(135deg, #5a4a36, #362a1c)`,
+                          opacity: 0.55 - k * 0.12,
                         }}
                       />
                     ))}
@@ -460,16 +460,25 @@ const StorePage = () => {
                       className="absolute inset-0 rounded-lg overflow-hidden bg-[#f3f1ec]"
                       style={{
                         boxShadow:
-                          "inset 0 2px 0 rgba(255,255,255,0.7), inset 0 -3px 6px rgba(0,0,0,0.2), 0 1px 0 rgba(0,0,0,0.4)",
+                          "inset 0 1px 0 rgba(255,255,255,0.6), inset 0 -2px 4px rgba(0,0,0,0.15), 0 1px 0 rgba(0,0,0,0.3)",
                       }}
                     >
                       <img src={p.img} alt={`מודל בית ${i + 1}`} className="w-full h-full object-cover" />
-                      {/* subtle gloss */}
+                      {/* glass shine sweep */}
                       <div
                         className="pointer-events-none absolute inset-0"
                         style={{
                           background:
-                            "linear-gradient(160deg, rgba(255,255,255,0.18) 0%, rgba(255,255,255,0) 35%, rgba(0,0,0,0.12) 100%)",
+                            "linear-gradient(115deg, rgba(255,255,255,0) 30%, rgba(255,255,255,0.55) 45%, rgba(255,255,255,0) 60%)",
+                          mixBlendMode: "overlay",
+                        }}
+                      />
+                      {/* soft top highlight */}
+                      <div
+                        className="pointer-events-none absolute inset-x-0 top-0 h-1/3 rounded-t-lg"
+                        style={{
+                          background:
+                            "linear-gradient(180deg, rgba(255,255,255,0.35), rgba(255,255,255,0))",
                         }}
                       />
                     </div>
