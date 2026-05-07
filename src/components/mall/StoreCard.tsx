@@ -25,6 +25,7 @@ import IsraelMezuzahsWordmark from "@/components/mall/IsraelMezuzahsWordmark";
 import OliveWoodEpoxyWordmark from "@/components/mall/OliveWoodEpoxyWordmark";
 import IsraelMezuzahsStorefrontScene from "@/components/mall/IsraelMezuzahsStorefrontScene";
 import AvnerOvadStorefrontScene from "@/components/mall/AvnerOvadStorefrontScene";
+import VintageVillageStorefrontScene from "@/components/mall/VintageVillageStorefrontScene";
 import israelMezuzahsImg from "@/assets/stores/israel-mezuzahs.png";
 import floor3Shop4Img from "@/assets/stores/floor3-shop4.png";
 import floor1Shop4Img from "@/assets/stores/floor1-shop4.png";
@@ -43,7 +44,7 @@ type BrandStyle = {
   subtitleLogo?: string;
   codedWordmark?: "israel-mezuzahs";
   codedSubtitle?: "olive-wood-epoxy";
-  codedScene?: "israel-mezuzahs-storefront";
+  codedScene?: "israel-mezuzahs-storefront" | "avner-ovad-storefront" | "vintage-village-storefront";
   oversize?: boolean;
   // extended at usage site
 };
@@ -104,10 +105,11 @@ const idOverrides: Record<string, Partial<BrandStyle & { name: string }>> = {
     accent: "#b3925a",
     subtitle: "אמן ציור ישראלי",
     image: floor3Shop4Img,
-    codedScene: "avner-ovad-storefront" as any,
+    codedScene: "avner-ovad-storefront",
   },
   s1: {
     image: floor3Shop1Svg,
+    codedScene: "vintage-village-storefront",
     oversize: true,
   },
   s16: {
@@ -151,7 +153,54 @@ const StoreCard = ({ store, storeIndex }: StoreCardProps) => {
   const style = override ? { ...baseStyle, ...override } : baseStyle;
   const displayName = override?.name ?? store.name;
   const isAvnerOvad = store.id === "s4";
-  const isFullSvg = store.id === "s1";
+  const isFullSvg = store.id === "s1" && !style.codedScene;
+
+  if (style.codedScene === "vintage-village-storefront") {
+    return (
+      <button
+        onClick={() => navigate(`/store/${store.id}`)}
+        className={`group relative flex w-full flex-col ${STORE_CARD_CLASS} cursor-pointer transition-all duration-300 hover:scale-[1.03] focus:outline-none`}
+        aria-label={`כניסה לחנות ${store.name}`}
+      >
+        <div
+          className="relative flex h-full w-full overflow-hidden rounded-lg bg-white"
+          style={{
+            border: "2px solid hsl(40,25%,72%)",
+            boxShadow: "0 6px 24px rgba(0,0,0,0.12), inset 0 0 0 1px hsl(40,20%,85%)",
+          }}
+        >
+          <VintageVillageStorefrontScene className="h-full w-full transition-transform duration-700 group-hover:scale-[1.04]" />
+          <div
+            className="absolute inset-0 pointer-events-none"
+            style={{
+              background:
+                "linear-gradient(155deg, rgba(255,255,255,0.2) 0%, transparent 38%, transparent 62%, rgba(255,255,255,0.08) 100%)",
+            }}
+          />
+          {storeIndex !== undefined && (
+            <div
+              className="absolute -bottom-2 left-1/2 z-20 flex -translate-x-1/2 items-center justify-center"
+              style={{
+                background: "linear-gradient(135deg, hsl(43,45%,55%), hsl(40,40%,45%))",
+                color: "hsl(40,10%,98%)",
+                width: "22px",
+                height: "22px",
+                borderRadius: "50%",
+                fontSize: "9px",
+                fontWeight: 700,
+                fontFamily: "serif",
+                letterSpacing: "0.02em",
+                boxShadow: "0 2px 6px rgba(0,0,0,0.25), inset 0 1px 0 rgba(255,255,255,0.3)",
+                border: "1.5px solid hsl(43,50%,65%)",
+              }}
+            >
+              {romanNumerals[storeIndex]}
+            </div>
+          )}
+        </div>
+      </button>
+    );
+  }
 
   if (isFullSvg && style.image) {
     return (
@@ -244,7 +293,7 @@ const StoreCard = ({ store, storeIndex }: StoreCardProps) => {
               }}
             />
           </div>
-        ) : (style.codedScene as string) === "avner-ovad-storefront" ? (
+        ) : style.codedScene === "avner-ovad-storefront" ? (
           <div
             className="relative flex-1 overflow-hidden"
             style={{
