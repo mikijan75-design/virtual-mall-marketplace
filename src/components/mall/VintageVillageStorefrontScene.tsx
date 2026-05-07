@@ -134,8 +134,6 @@ const VintageVillageStorefrontScene = ({
       </filter>
     </defs>
 
-    <rect width="576" height="1024" fill="#fff" />
-
     <g filter="url(#vintage-village-object-shadow)">
       <ellipse cx="276" cy="774" rx="148" ry="15" fill="#24160f" opacity="0.12" />
 
