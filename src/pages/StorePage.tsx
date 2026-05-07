@@ -11,6 +11,7 @@ import imBeadLogo from "@/assets/stores/im-bead-logo.png";
 import beggarsWireframe from "@/assets/stores/beggars-wireframe.png";
 import danielGlassArtLogo from "@/assets/stores/daniel-glass-art-logo.jpg";
 import floor1Shop6Img from "@/assets/stores/floor1-shop6.png";
+import halenBinariaLayout from "@/assets/stores/halen-binaria-layout.png";
 import InfrastructureBlueprintScene from "@/components/InfrastructureBlueprintScene";
 import GalleryWallSection from "@/components/mall/GalleryWallSection";
 import imProduct1 from "@/assets/stores/im-product-1.png";
@@ -392,6 +393,32 @@ const StorePage = () => {
 
   if (isAvnerOvad) {
     return <AvnerOvadStoreView store={store} />;
+  }
+
+  if (store.id === "s1") {
+    return (
+      <div className="min-h-screen bg-background flex flex-col">
+        <MallHeader />
+        <PageTracker storeId={store.id} />
+        <BackButton />
+        <header className="bg-gradient-to-r from-[#2a2118] to-[#3d3024] text-white py-6 text-center">
+          <h1 className="font-frank text-3xl md:text-5xl font-black tracking-[0.15em]">
+            HALEN BINARIA
+          </h1>
+          <p className="mt-2 font-heebo text-base md:text-xl opacity-95">
+            Model homes designer · מודל בתים מעוצב
+          </p>
+        </header>
+        <main className="flex-1 w-full">
+          <img
+            src={halenBinariaLayout}
+            alt="HALEN BINARIA - תכנית מודל בתים מעוצב"
+            className="block w-full h-[calc(100vh-9rem)] object-contain bg-white"
+          />
+        </main>
+        <MallFooter />
+      </div>
+    );
   }
 
   if (store.id === "s16") {
