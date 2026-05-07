@@ -170,6 +170,52 @@ const Person = ({
 };
 
 
+const Dog = ({ className = "", flip = false }: { className?: string; flip?: boolean }) => (
+  // Medium-sized white dog with black spots, on a leash held by an adjacent person.
+  // Default orientation: dog faces RIGHT, leash rises to the upper-LEFT (to a person standing on the dog's left).
+  <svg
+    className={`absolute z-40 h-9 w-12 md:h-12 md:w-16 ${className}`}
+    viewBox="0 0 60 45"
+    style={{ transform: flip ? "scaleX(-1)" : undefined, overflow: "visible" }}
+    aria-hidden="true"
+  >
+    {/* Leash going up-left to the person's hand */}
+    <path d="M22 14 Q14 6 4 -2" stroke="hsl(0,60%,40%)" strokeWidth="1.1" fill="none" strokeLinecap="round" />
+    {/* Tail */}
+    <path d="M10 20 Q4 16 6 10" stroke="hsl(0,0%,98%)" strokeWidth="3.2" fill="none" strokeLinecap="round" />
+    <path d="M10 20 Q4 16 6 10" stroke="hsl(0,0%,55%)" strokeWidth="0.6" fill="none" strokeLinecap="round" />
+    {/* Body */}
+    <ellipse cx="26" cy="26" rx="16" ry="8" fill="hsl(0,0%,98%)" stroke="hsl(0,0%,55%)" strokeWidth="0.7" />
+    {/* Black spots on body */}
+    <ellipse cx="20" cy="24" rx="3" ry="2.2" fill="hsl(0,0%,10%)" />
+    <ellipse cx="30" cy="28" rx="2.4" ry="1.8" fill="hsl(0,0%,10%)" />
+    <ellipse cx="34" cy="22" rx="1.6" ry="1.2" fill="hsl(0,0%,10%)" />
+    {/* Legs */}
+    <rect x="14" y="30" width="2.6" height="9" rx="1" fill="hsl(0,0%,98%)" stroke="hsl(0,0%,55%)" strokeWidth="0.5" />
+    <rect x="20" y="30" width="2.6" height="9" rx="1" fill="hsl(0,0%,98%)" stroke="hsl(0,0%,55%)" strokeWidth="0.5" />
+    <rect x="32" y="30" width="2.6" height="9" rx="1" fill="hsl(0,0%,98%)" stroke="hsl(0,0%,55%)" strokeWidth="0.5" />
+    <rect x="38" y="30" width="2.6" height="9" rx="1" fill="hsl(0,0%,98%)" stroke="hsl(0,0%,55%)" strokeWidth="0.5" />
+    {/* Spot on a leg */}
+    <rect x="32" y="33" width="2.6" height="3" fill="hsl(0,0%,10%)" />
+    {/* Head */}
+    <ellipse cx="42" cy="20" rx="8" ry="7" fill="hsl(0,0%,98%)" stroke="hsl(0,0%,55%)" strokeWidth="0.7" />
+    {/* Snout */}
+    <ellipse cx="49" cy="22" rx="4" ry="3" fill="hsl(0,0%,98%)" stroke="hsl(0,0%,55%)" strokeWidth="0.6" />
+    {/* Ear (floppy) */}
+    <path d="M38 14 Q35 12 36 20 Q38 19 40 18 Z" fill="hsl(0,0%,10%)" stroke="hsl(0,0%,30%)" strokeWidth="0.4" />
+    {/* Eye */}
+    <circle cx="44" cy="19" r="0.7" fill="hsl(0,0%,8%)" />
+    {/* Nose */}
+    <circle cx="52" cy="21.5" r="1.1" fill="hsl(0,0%,8%)" />
+    {/* Mouth */}
+    <path d="M50 23.5 Q49 24.5 47.5 24" stroke="hsl(0,0%,25%)" strokeWidth="0.4" fill="none" strokeLinecap="round" />
+    {/* Spot on head */}
+    <ellipse cx="40" cy="22" rx="1.6" ry="1.1" fill="hsl(0,0%,10%)" />
+    {/* Collar */}
+    <path d="M36 23 Q40 26 44 24" stroke="hsl(0,60%,40%)" strokeWidth="1.4" fill="none" strokeLinecap="round" />
+  </svg>
+);
+
 const Stroller = ({ className = "", flip = false }: { className?: string; flip?: boolean }) => (
   // Designed in default orientation: handle on the RIGHT side, stroller faces LEFT.
   // When flip=true, handle ends up on the LEFT side and stroller faces RIGHT.
@@ -612,6 +658,7 @@ const CrossSectionMallScene = ({ floors }: CrossSectionMallSceneProps) => {
                   <Person className="left-[26%] bottom-9" style="longHair" shirt="hsl(345,55%,58%)" hair="hsl(28,55%,30%)" bagColor="hsl(0,0%,96%)" />
                   <Person className="right-[28%] bottom-9" flip style="hat" shirt="hsl(215,35%,38%)" />
                   <Person className="left-[44%] bottom-9" shirt="hsl(15,55%,55%)" style="bag" />
+                  <Dog className="left-[47%] bottom-9" />
                 </>
               )}
               {index === 1 && (
@@ -619,6 +666,7 @@ const CrossSectionMallScene = ({ floors }: CrossSectionMallSceneProps) => {
                   <Person className="left-[22%] bottom-9" shirt="hsl(213,48%,58%)" style="shortHair" />
                   <Person className="right-[24%] bottom-9" shirt="hsl(192,45%,62%)" flip style="cane" hair="hsl(0,0%,82%)" />
                   <Person className="left-[48%] bottom-9" shirt="hsl(280,40%,58%)" style="longHair" hair="hsl(38,65%,55%)" bagColor="hsl(48,90%,62%)" />
+                  <Dog className="left-[25%] bottom-9" />
                 </>
               )}
               {index === 2 && (
@@ -626,6 +674,7 @@ const CrossSectionMallScene = ({ floors }: CrossSectionMallSceneProps) => {
                   <Person className="left-[28%] bottom-9" shirt="hsl(205,55%,58%)" style="hat" />
                   <Person className="right-[30%] bottom-9" shirt="hsl(155,40%,50%)" flip style="bag" />
                   <Person className="left-[50%] bottom-9" shirt="hsl(332,55%,62%)" style="longHair" hair="hsl(20,45%,18%)" bagColor="hsl(48,90%,62%)" />
+                  <Dog className="left-[31%] bottom-9" />
                   {/* Family walking right: dad, mom, child */}
                   <Person className="left-[18%] bottom-2" shirt="hsl(210,40%,42%)" style="shortHair" hair="hsl(28,30%,18%)" />
                   <Person className="left-[22%] bottom-2" shirt="hsl(340,50%,55%)" style="longHair" hair="hsl(25,50%,25%)" bagColor="hsl(0,0%,96%)" />
