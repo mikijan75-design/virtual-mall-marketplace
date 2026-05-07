@@ -26,13 +26,13 @@ import OliveWoodEpoxyWordmark from "@/components/mall/OliveWoodEpoxyWordmark";
 import IsraelMezuzahsStorefrontScene from "@/components/mall/IsraelMezuzahsStorefrontScene";
 import AvnerOvadStorefrontScene from "@/components/mall/AvnerOvadStorefrontScene";
 import VintageVillageStorefrontScene from "@/components/mall/VintageVillageStorefrontScene";
+import HouseOfGonStorefrontScene from "@/components/mall/HouseOfGonStorefrontScene";
 import vintageVillageEntranceImg from "@/assets/stores/vintage-village-entrance.png";
 import israelMezuzahsImg from "@/assets/stores/israel-mezuzahs.png";
 import floor3Shop4Img from "@/assets/stores/floor3-shop4.png";
 import floor1Shop4Img from "@/assets/stores/floor1-shop4.png";
 import floor1Shop6Img from "@/assets/stores/floor1-shop6.png";
 import danielGlassArtLogo from "@/assets/stores/daniel-glass-art-logo.jpg";
-import houseOfGonImg from "@/assets/stores/house-of-gon.jpg";
 
 type BrandStyle = {
   bg: string;
@@ -45,7 +45,7 @@ type BrandStyle = {
   subtitleLogo?: string;
   codedWordmark?: "israel-mezuzahs";
   codedSubtitle?: "olive-wood-epoxy";
-  codedScene?: "israel-mezuzahs-storefront";
+  codedScene?: "israel-mezuzahs-storefront" | "house-of-gon-storefront";
   // extended at usage site
 };
 
@@ -86,8 +86,7 @@ const idOverrides: Record<string, Partial<BrandStyle & { name: string }>> = {
     name: "House of Gon",
     accent: "#b3925a",
     subtitle: "",
-    image: houseOfGonImg,
-    codedScene: "house-of-gon-storefront" as any,
+    codedScene: "house-of-gon-storefront",
   },
   s13: comingSoonOverride,
   s14: comingSoonOverride,
@@ -162,11 +161,9 @@ const StoreCard = ({ store, storeIndex }: StoreCardProps) => {
         aria-label={`כניסה לחנות ${store.name}`}
       >
         <div className="relative flex h-full w-full overflow-hidden rounded-lg">
-          <img
-            src={houseOfGonImg}
-            alt="House of Gon"
-            className="h-full w-full object-cover transition-transform duration-700 group-hover:scale-[1.04]"
-            loading="lazy"
+          <HouseOfGonStorefrontScene
+            className="h-full w-full transition-transform duration-700 group-hover:scale-[1.04]"
+            preserveAspectRatio="xMidYMid slice"
           />
           <div
             className="absolute inset-0 pointer-events-none"
