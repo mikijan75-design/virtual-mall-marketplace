@@ -436,13 +436,43 @@ const StorePage = () => {
                   aria-label={`מודל בית ${i + 1}`}
                 >
                   <div
-                    className="w-[clamp(110px,15vw,200px)] aspect-square rounded-lg overflow-hidden bg-[#f3f1ec] transition-transform duration-300 group-hover:-translate-y-2 group-hover:scale-[1.06]"
+                    className="relative w-[clamp(110px,15vw,200px)] aspect-square transition-transform duration-300 group-hover:-translate-y-2 group-hover:scale-[1.04]"
                     style={{
-                      boxShadow:
-                        "0 22px 38px -12px rgba(0,0,0,0.45), 0 8px 14px -6px rgba(0,0,0,0.30), inset 0 1px 0 rgba(255,255,255,0.55), inset 0 -2px 6px rgba(0,0,0,0.18)",
+                      filter:
+                        "drop-shadow(0 26px 22px rgba(0,0,0,0.35)) drop-shadow(0 10px 8px rgba(0,0,0,0.25))",
                     }}
                   >
-                    <img src={p.img} alt={`מודל בית ${i + 1}`} className="w-full h-full object-cover" />
+                    {/* Stacked side faces to create thickness */}
+                    {[18, 14, 10, 6, 3].map((off, k) => (
+                      <div
+                        key={k}
+                        aria-hidden
+                        className="absolute inset-0 rounded-lg"
+                        style={{
+                          transform: `translate(${off}px, ${off}px)`,
+                          background: `linear-gradient(135deg, #4a3a28, #2a1f14)`,
+                          opacity: 0.85 - k * 0.05,
+                        }}
+                      />
+                    ))}
+                    {/* Top face with image */}
+                    <div
+                      className="absolute inset-0 rounded-lg overflow-hidden bg-[#f3f1ec]"
+                      style={{
+                        boxShadow:
+                          "inset 0 2px 0 rgba(255,255,255,0.7), inset 0 -3px 6px rgba(0,0,0,0.2), 0 1px 0 rgba(0,0,0,0.4)",
+                      }}
+                    >
+                      <img src={p.img} alt={`מודל בית ${i + 1}`} className="w-full h-full object-cover" />
+                      {/* subtle gloss */}
+                      <div
+                        className="pointer-events-none absolute inset-0"
+                        style={{
+                          background:
+                            "linear-gradient(160deg, rgba(255,255,255,0.18) 0%, rgba(255,255,255,0) 35%, rgba(0,0,0,0.12) 100%)",
+                        }}
+                      />
+                    </div>
                   </div>
                 </button>
               ))}
