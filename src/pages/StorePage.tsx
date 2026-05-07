@@ -11,7 +11,6 @@ import imBeadLogo from "@/assets/stores/im-bead-logo.png";
 import beggarsWireframe from "@/assets/stores/beggars-wireframe.png";
 import danielGlassArtLogo from "@/assets/stores/daniel-glass-art-logo.jpg";
 import floor1Shop6Img from "@/assets/stores/floor1-shop6.png";
-import houseOfGonImg from "@/assets/stores/house-of-gon.jpg";
 import halenModel1 from "@/assets/stores/halen-model-1.png";
 import halenModel2 from "@/assets/stores/halen-model-2.png";
 import halenModel3 from "@/assets/stores/halen-model-3.png";
@@ -32,6 +31,7 @@ import halenGallery11 from "@/assets/stores/halen-gallery/g11.jpg";
 import halenGallery12 from "@/assets/stores/halen-gallery/g12.jpg";
 import InfrastructureBlueprintScene from "@/components/InfrastructureBlueprintScene";
 import GalleryWallSection from "@/components/mall/GalleryWallSection";
+import HouseOfGonStorefrontScene from "@/components/mall/HouseOfGonStorefrontScene";
 import imProduct1 from "@/assets/stores/im-product-1.png";
 import imProduct2 from "@/assets/stores/im-product-2.png";
 import imProduct3 from "@/assets/stores/im-product-3.png";
@@ -660,10 +660,9 @@ const StorePage = () => {
         <PageTracker storeId={store.id} />
         <BackButton />
         <main>
-          <img
-            src={houseOfGonImg}
-            alt="House of Gon storefront"
-            className="block w-full h-auto"
+          <HouseOfGonStorefrontScene
+            className="block w-full"
+            style={{ height: "auto" }}
           />
         </main>
         <MallFooter />
