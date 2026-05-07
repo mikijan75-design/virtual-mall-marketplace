@@ -155,6 +155,53 @@ const StoreCard = ({ store, storeIndex }: StoreCardProps) => {
   const isAvnerOvad = store.id === "s4";
   const isFullSvg = store.id === "s1" && !style.codedScene;
 
+  if (style.codedScene === "vintage-village-storefront") {
+    return (
+      <button
+        onClick={() => navigate(`/store/${store.id}`)}
+        className={`group relative flex w-full flex-col ${STORE_CARD_CLASS} cursor-pointer transition-all duration-300 hover:scale-[1.03] focus:outline-none`}
+        aria-label={`כניסה לחנות ${store.name}`}
+      >
+        <div
+          className="relative flex h-full w-full overflow-hidden rounded-lg bg-white"
+          style={{
+            border: "2px solid hsl(40,25%,72%)",
+            boxShadow: "0 6px 24px rgba(0,0,0,0.12), inset 0 0 0 1px hsl(40,20%,85%)",
+          }}
+        >
+          <VintageVillageStorefrontScene className="h-full w-full transition-transform duration-700 group-hover:scale-[1.04]" />
+          <div
+            className="absolute inset-0 pointer-events-none"
+            style={{
+              background:
+                "linear-gradient(155deg, rgba(255,255,255,0.2) 0%, transparent 38%, transparent 62%, rgba(255,255,255,0.08) 100%)",
+            }}
+          />
+          {storeIndex !== undefined && (
+            <div
+              className="absolute -bottom-2 left-1/2 z-20 flex -translate-x-1/2 items-center justify-center"
+              style={{
+                background: "linear-gradient(135deg, hsl(43,45%,55%), hsl(40,40%,45%))",
+                color: "hsl(40,10%,98%)",
+                width: "22px",
+                height: "22px",
+                borderRadius: "50%",
+                fontSize: "9px",
+                fontWeight: 700,
+                fontFamily: "serif",
+                letterSpacing: "0.02em",
+                boxShadow: "0 2px 6px rgba(0,0,0,0.25), inset 0 1px 0 rgba(255,255,255,0.3)",
+                border: "1.5px solid hsl(43,50%,65%)",
+              }}
+            >
+              {romanNumerals[storeIndex]}
+            </div>
+          )}
+        </div>
+      </button>
+    );
+  }
+
   if (isFullSvg && style.image) {
     return (
       <button
@@ -259,22 +306,6 @@ const StoreCard = ({ store, storeIndex }: StoreCardProps) => {
               className="absolute inset-0 pointer-events-none"
               style={{
                 background: "linear-gradient(155deg, rgba(255,255,255,0.18) 0%, transparent 35%, transparent 60%, rgba(255,255,255,0.06) 100%)",
-              }}
-            />
-          </div>
-        ) : style.codedScene === "vintage-village-storefront" ? (
-          <div
-            className="relative flex-1 overflow-hidden"
-            style={{
-              background: "#ffffff",
-              borderBottom: `2px solid ${style.accent}`,
-            }}
-          >
-            <VintageVillageStorefrontScene className="w-full h-full" preserveAspectRatio="xMidYMid meet" />
-            <div
-              className="absolute inset-0 pointer-events-none"
-              style={{
-                background: "linear-gradient(155deg, rgba(255,255,255,0.2) 0%, transparent 38%, transparent 62%, rgba(255,255,255,0.08) 100%)",
               }}
             />
           </div>
