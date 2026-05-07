@@ -161,11 +161,7 @@ const StoreCard = ({ store, storeIndex }: StoreCardProps) => {
         aria-label={`כניסה לחנות ${store.name}`}
       >
         <div
-          className="relative flex h-full w-full overflow-hidden rounded-lg bg-white"
-          style={{
-            border: "2px solid hsl(40,25%,72%)",
-            boxShadow: "0 6px 24px rgba(0,0,0,0.12), inset 0 0 0 1px hsl(40,20%,85%)",
-          }}
+          className="relative flex h-full w-full overflow-hidden rounded-lg"
         >
           <VintageVillageStorefrontScene className="h-full w-full transition-transform duration-700 group-hover:scale-[1.04]" preserveAspectRatio="xMidYMid slice" />
           <div
