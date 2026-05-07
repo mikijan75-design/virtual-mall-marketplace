@@ -45,7 +45,11 @@ type BrandStyle = {
   subtitleLogo?: string;
   codedWordmark?: "israel-mezuzahs";
   codedSubtitle?: "olive-wood-epoxy";
-  codedScene?: "israel-mezuzahs-storefront" | "house-of-gon-storefront";
+  codedScene?:
+    | "israel-mezuzahs-storefront"
+    | "avner-ovad-storefront"
+    | "vintage-village-storefront"
+    | "house-of-gon-storefront";
   // extended at usage site
 };
 
@@ -102,12 +106,12 @@ const idOverrides: Record<string, Partial<BrandStyle & { name: string }>> = {
     accent: "#b3925a",
     subtitle: "אמן ציור ישראלי",
     image: floor3Shop4Img,
-    codedScene: "avner-ovad-storefront" as any,
+    codedScene: "avner-ovad-storefront",
   },
   s1: {
     name: "כפר וינטג'",
     accent: "#8a5a32",
-    codedScene: "vintage-village-storefront" as any,
+    codedScene: "vintage-village-storefront",
   },
   s16: {
     name: "BEGGARS",
