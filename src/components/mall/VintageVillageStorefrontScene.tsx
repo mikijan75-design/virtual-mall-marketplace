@@ -149,10 +149,10 @@ const VintageVillageStorefrontScene = ({
       {displayImageHref && (
         <image
           href={displayImageHref}
-          x="164"
-          y="480"
-          width="224"
-          height="212"
+          x="154"
+          y="470"
+          width="244"
+          height="236"
           preserveAspectRatio="xMidYMid slice"
         />
       )}
