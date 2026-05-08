@@ -165,6 +165,7 @@ const GardenPromenade = () => (
     className="relative isolate w-full overflow-visible"
     aria-label="Reference-inspired plant garden with colorful flowers and clipped shrubs"
   >
+    <Butterflies />
     <svg viewBox="0 0 1400 110" preserveAspectRatio="none" className="block h-28 w-full md:h-36" role="img">
       <title>Plant garden inspired by the reference image</title>
       <defs>
