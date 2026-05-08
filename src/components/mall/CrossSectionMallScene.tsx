@@ -184,6 +184,28 @@ const Dog = ({ className = "", flip = false }: { className?: string; flip?: bool
   </div>
 );
 
+const Walker = ({
+  direction,
+  duration,
+  delay = 0,
+  children,
+}: {
+  direction: "ltr" | "rtl";
+  duration: number;
+  delay?: number;
+  children: React.ReactNode;
+}) => (
+  <div
+    className="pointer-events-none absolute inset-0"
+    style={{
+      animation: `walk-${direction} ${duration}s linear infinite`,
+      animationDelay: `${delay}s`,
+    }}
+  >
+    {children}
+  </div>
+);
+
 const Stroller = ({ className = "", flip = false }: { className?: string; flip?: boolean }) => (
   // Designed in default orientation: handle on the RIGHT side, stroller faces LEFT.
   // When flip=true, handle ends up on the LEFT side and stroller faces RIGHT.
