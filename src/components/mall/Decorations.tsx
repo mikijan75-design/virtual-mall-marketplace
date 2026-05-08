@@ -160,11 +160,136 @@ const PicketBorder = () => (
   </g>
 );
 
+type ButterflyPalette = {
+  primary: string;
+  highlight: string;
+  shadow: string;
+  body: string;
+  outline: string;
+  marking?: string;
+};
+
+const Butterfly = ({ palette, size = 22 }: { palette: ButterflyPalette; size?: number }) => (
+  <svg
+    viewBox="0 0 40 32"
+    width={size}
+    height={size * 0.8}
+    style={{ display: "block", overflow: "visible" }}
+  >
+    {/* Wings group with flap animation */}
+    <g style={{ transformOrigin: "20px 16px", animation: "butterfly-flap 0.42s ease-in-out infinite alternate" }}>
+      {/* Left wings */}
+      <path
+        d="M19 16 Q8 4 3 10 Q1 16 5 19 Q3 24 9 26 Q15 26 19 20 Z"
+        fill={palette.primary}
+        stroke={palette.outline}
+        strokeWidth="1.2"
+        strokeLinejoin="round"
+      />
+      <path d="M9 11 Q12 14 15 17" stroke={palette.shadow} strokeWidth="0.9" fill="none" />
+      <path d="M8 20 Q12 21 16 21" stroke={palette.shadow} strokeWidth="0.9" fill="none" />
+      <circle cx="7" cy="12" r="1.2" fill={palette.highlight} />
+      {palette.marking && <circle cx="6" cy="22" r="0.9" fill={palette.marking} />}
+      {/* Right wings */}
+      <path
+        d="M21 16 Q32 4 37 10 Q39 16 35 19 Q37 24 31 26 Q25 26 21 20 Z"
+        fill={palette.primary}
+        stroke={palette.outline}
+        strokeWidth="1.2"
+        strokeLinejoin="round"
+      />
+      <path d="M31 11 Q28 14 25 17" stroke={palette.shadow} strokeWidth="0.9" fill="none" />
+      <path d="M32 20 Q28 21 24 21" stroke={palette.shadow} strokeWidth="0.9" fill="none" />
+      <circle cx="33" cy="12" r="1.2" fill={palette.highlight} />
+      {palette.marking && <circle cx="34" cy="22" r="0.9" fill={palette.marking} />}
+    </g>
+    {/* Body */}
+    <ellipse cx="20" cy="16" rx="1.4" ry="6" fill={palette.body} />
+    <path d="M19 11 Q17 7 16 5" stroke={palette.outline} strokeWidth="0.7" fill="none" strokeLinecap="round" />
+    <path d="M21 11 Q23 7 24 5" stroke={palette.outline} strokeWidth="0.7" fill="none" strokeLinecap="round" />
+  </svg>
+);
+
+const butterflyPalettes: ButterflyPalette[] = [
+  // Blue
+  { primary: "#3FA2E4", highlight: "#79C7F0", shadow: "#1E67AE", body: "#173B77", outline: "#202020" },
+  // Yellow
+  { primary: "#E3C435", highlight: "#FFE47A", shadow: "#B59620", body: "#59620F", outline: "#262311" },
+  // Green
+  { primary: "#2DBB49", highlight: "#63D65A", shadow: "#178A3A", body: "#456B2A", outline: "#21331D" },
+  // Orange monarch
+  { primary: "#F0640A", highlight: "#FF8A12", shadow: "#B83A07", body: "#73310F", outline: "#1A120E", marking: "#FFFFFF" },
+  // Pink (extra)
+  { primary: "#F26FA1", highlight: "#FFB7CF", shadow: "#B33A6E", body: "#5C1F3B", outline: "#1F1014" },
+  // Purple (extra)
+  { primary: "#9B6CE0", highlight: "#C9A8F2", shadow: "#5E3DA1", body: "#2E1A57", outline: "#1A1024" },
+];
+
+type ButterflyPlacement = {
+  leftPct: number;
+  topPct: number;
+  size: number;
+  rotate: number;
+  flipX: boolean;
+  duration: number;
+  delay: number;
+  driftDuration: number;
+  driftDelay: number;
+  driftX: number;
+  driftY: number;
+};
+
+// Pre-randomized placements (deterministic — chosen to spread across the strip,
+// some hovering above the foliage, some nestled on shrubs).
+const butterflyPlacements: ButterflyPlacement[] = [
+  { leftPct: 6,  topPct: 18, size: 24, rotate: -14, flipX: false, duration: 0.38, delay: 0.0,  driftDuration: 5.2, driftDelay: 0.0, driftX: 10, driftY: -8 },
+  { leftPct: 22, topPct: 52, size: 20, rotate: 8,   flipX: true,  duration: 0.44, delay: 0.15, driftDuration: 6.1, driftDelay: 0.4, driftX: -8, driftY: 6 },
+  { leftPct: 38, topPct: 12, size: 22, rotate: 18,  flipX: false, duration: 0.5,  delay: 0.05, driftDuration: 4.8, driftDelay: 0.8, driftX: 12, driftY: 10 },
+  { leftPct: 55, topPct: 60, size: 18, rotate: -6,  flipX: false, duration: 0.36, delay: 0.22, driftDuration: 5.6, driftDelay: 0.2, driftX: -10, driftY: -6 },
+  { leftPct: 72, topPct: 22, size: 26, rotate: -22, flipX: true,  duration: 0.46, delay: 0.1,  driftDuration: 6.4, driftDelay: 1.0, driftX: 14, driftY: 8 },
+  { leftPct: 88, topPct: 48, size: 21, rotate: 12,  flipX: false, duration: 0.4,  delay: 0.3,  driftDuration: 5.0, driftDelay: 0.6, driftX: -12, driftY: -10 },
+];
+
+const Butterflies = () => (
+  <div className="pointer-events-none absolute inset-0 z-20 overflow-visible">
+    <style>{`
+      @keyframes butterfly-flap {
+        0%   { transform: scaleX(1)    scaleY(1); }
+        100% { transform: scaleX(0.55) scaleY(1.04); }
+      }
+      @keyframes butterfly-drift {
+        0%   { transform: translate(0, 0) rotate(var(--bf-rot)) scaleX(var(--bf-flip)); }
+        50%  { transform: translate(var(--bf-dx), var(--bf-dy)) rotate(calc(var(--bf-rot) + 6deg)) scaleX(var(--bf-flip)); }
+        100% { transform: translate(0, 0) rotate(var(--bf-rot)) scaleX(var(--bf-flip)); }
+      }
+    `}</style>
+    {butterflyPlacements.map((p, i) => (
+      <div
+        key={i}
+        className="absolute"
+        style={{
+          left: `${p.leftPct}%`,
+          top: `${p.topPct}%`,
+          width: p.size,
+          ["--bf-rot" as string]: `${p.rotate}deg`,
+          ["--bf-flip" as string]: p.flipX ? -1 : 1,
+          ["--bf-dx" as string]: `${p.driftX}px`,
+          ["--bf-dy" as string]: `${p.driftY}px`,
+          animation: `butterfly-drift ${p.driftDuration}s ease-in-out ${p.driftDelay}s infinite`,
+        }}
+      >
+        <Butterfly palette={butterflyPalettes[i]} size={p.size} />
+      </div>
+    ))}
+  </div>
+);
+
 const GardenPromenade = () => (
   <div
     className="relative isolate w-full overflow-visible"
     aria-label="Reference-inspired plant garden with colorful flowers and clipped shrubs"
   >
+    <Butterflies />
     <svg viewBox="0 0 1400 110" preserveAspectRatio="none" className="block h-28 w-full md:h-36" role="img">
       <title>Plant garden inspired by the reference image</title>
       <defs>
