@@ -128,7 +128,7 @@ const renderById = (id: string, { className = "", flip = false, colorOverride, p
         style={
           pivot && animation
             ? {
-                transformBox: "fill-box",
+                transformBox: "view-box",
                 transformOrigin: `${pivot.x}px ${pivot.y}px`,
                 animation,
                 animationDelay: delay,
@@ -184,8 +184,8 @@ const renderById = (id: string, { className = "", flip = false, colorOverride, p
       />
       <g
         style={{
-          transformBox: "fill-box",
-          transformOrigin: "center",
+          transformBox: "view-box",
+          transformOrigin: `${viewBox.width / 2}px ${viewBox.height / 2}px`,
           animation: "body-bob 0.7s ease-in-out infinite",
           animationDelay: delay,
         }}
