@@ -165,6 +165,8 @@ const renderById = (id: string, { className = "", flip = false, colorOverride, p
   const armSwingB = "arm-swing-b 1.15s ease-in-out infinite";
   const legSwingA = "leg-swing-a 1.15s ease-in-out infinite";
   const legSwingB = "leg-swing-b 1.15s ease-in-out infinite";
+  const lowerLegSwingA = "lower-leg-swing-a 1.15s ease-in-out infinite";
+  const lowerLegSwingB = "lower-leg-swing-b 1.15s ease-in-out infinite";
 
   return (
     <svg
@@ -184,10 +186,18 @@ const renderById = (id: string, { className = "", flip = false, colorOverride, p
           50%      { transform: rotate(28deg); }
         }
         @keyframes leg-swing-a {
+          0%, 100% { transform: rotate(0deg); }
+          50%      { transform: rotate(0deg); }
+        }
+        @keyframes leg-swing-b {
+          0%, 100% { transform: rotate(0deg); }
+          50%      { transform: rotate(0deg); }
+        }
+        @keyframes lower-leg-swing-a {
           0%, 100% { transform: translateX(20px) rotate(10deg); }
           50%      { transform: translateX(-20px) rotate(-10deg); }
         }
-        @keyframes leg-swing-b {
+        @keyframes lower-leg-swing-b {
           0%, 100% { transform: translateX(-20px) rotate(-10deg); }
           50%      { transform: translateX(20px) rotate(10deg); }
         }
@@ -197,6 +207,14 @@ const renderById = (id: string, { className = "", flip = false, colorOverride, p
           50%      { transform: translateY(0); }
         }
       `}</style>
+      <defs>
+        <clipPath id={upperLegClipId}>
+          <rect x="0" y="0" width={viewBox.width} height={lowerLegY} />
+        </clipPath>
+        <clipPath id={lowerLegClipId}>
+          <rect x="0" y={lowerLegY} width={viewBox.width} height={viewBox.height - lowerLegY} />
+        </clipPath>
+      </defs>
       <ellipse
         cx={character.illustration.shadow.cx}
         cy={character.illustration.shadow.cy}
