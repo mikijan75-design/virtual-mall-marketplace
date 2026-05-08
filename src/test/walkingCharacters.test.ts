@@ -16,6 +16,12 @@ describe("walking character samples", () => {
       expect(character.illustration.bodyLayer.length).toBeGreaterThan(0);
       expect(character.illustration.detailLayer.length).toBeGreaterThan(0);
       expect(character.illustration.microLayer?.length).toBeGreaterThanOrEqual(12);
+      expect(
+        character.illustration.backLayer.length +
+          character.illustration.bodyLayer.length +
+          character.illustration.detailLayer.length +
+          (character.illustration.microLayer?.length ?? 0),
+      ).toBeGreaterThanOrEqual(30);
       expect(character.poseAngles.strideLengthPx).toBeGreaterThan(70);
     }
   });
