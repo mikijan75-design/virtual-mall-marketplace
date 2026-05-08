@@ -171,48 +171,65 @@ const Person = ({
 
 
 const Dog = ({ className = "", flip = false }: { className?: string; flip?: boolean }) => (
-  // Medium-sized white dog with black spots, on a leash held by an adjacent person.
-  // Default orientation: dog faces RIGHT, leash rises to the upper-LEFT (to a person standing on the dog's left).
+  // Cartoon dalmatian puppy: cream body, large black spots, big floppy black ear,
+  // curled tail, red smile, gray shadow. On a red leash to an adjacent person (upper-left).
   <svg
     className={`absolute z-40 h-9 w-12 md:h-12 md:w-16 ${className}`}
     viewBox="0 0 60 45"
     style={{ transform: flip ? "scaleX(-1)" : undefined, overflow: "visible" }}
     aria-hidden="true"
   >
-    {/* Leash going up-left to the person's hand */}
-    <path d="M22 14 Q14 6 4 -2" stroke="hsl(0,60%,40%)" strokeWidth="1.1" fill="none" strokeLinecap="round" />
-    {/* Tail */}
-    <path d="M10 20 Q4 16 6 10" stroke="hsl(0,0%,98%)" strokeWidth="3.2" fill="none" strokeLinecap="round" />
-    <path d="M10 20 Q4 16 6 10" stroke="hsl(0,0%,55%)" strokeWidth="0.6" fill="none" strokeLinecap="round" />
-    {/* Body */}
-    <ellipse cx="26" cy="26" rx="16" ry="8" fill="hsl(0,0%,98%)" stroke="hsl(0,0%,55%)" strokeWidth="0.7" />
-    {/* Black spots on body */}
-    <ellipse cx="20" cy="24" rx="3" ry="2.2" fill="hsl(0,0%,10%)" />
-    <ellipse cx="30" cy="28" rx="2.4" ry="1.8" fill="hsl(0,0%,10%)" />
-    <ellipse cx="34" cy="22" rx="1.6" ry="1.2" fill="hsl(0,0%,10%)" />
-    {/* Legs */}
-    <rect x="14" y="30" width="2.6" height="9" rx="1" fill="hsl(0,0%,98%)" stroke="hsl(0,0%,55%)" strokeWidth="0.5" />
-    <rect x="20" y="30" width="2.6" height="9" rx="1" fill="hsl(0,0%,98%)" stroke="hsl(0,0%,55%)" strokeWidth="0.5" />
-    <rect x="32" y="30" width="2.6" height="9" rx="1" fill="hsl(0,0%,98%)" stroke="hsl(0,0%,55%)" strokeWidth="0.5" />
-    <rect x="38" y="30" width="2.6" height="9" rx="1" fill="hsl(0,0%,98%)" stroke="hsl(0,0%,55%)" strokeWidth="0.5" />
-    {/* Spot on a leg */}
-    <rect x="32" y="33" width="2.6" height="3" fill="hsl(0,0%,10%)" />
-    {/* Head */}
-    <ellipse cx="42" cy="20" rx="8" ry="7" fill="hsl(0,0%,98%)" stroke="hsl(0,0%,55%)" strokeWidth="0.7" />
-    {/* Snout */}
-    <ellipse cx="49" cy="22" rx="4" ry="3" fill="hsl(0,0%,98%)" stroke="hsl(0,0%,55%)" strokeWidth="0.6" />
-    {/* Ear (floppy) */}
-    <path d="M38 14 Q35 12 36 20 Q38 19 40 18 Z" fill="hsl(0,0%,10%)" stroke="hsl(0,0%,30%)" strokeWidth="0.4" />
-    {/* Eye */}
-    <circle cx="44" cy="19" r="0.7" fill="hsl(0,0%,8%)" />
-    {/* Nose */}
-    <circle cx="52" cy="21.5" r="1.1" fill="hsl(0,0%,8%)" />
-    {/* Mouth */}
-    <path d="M50 23.5 Q49 24.5 47.5 24" stroke="hsl(0,0%,25%)" strokeWidth="0.4" fill="none" strokeLinecap="round" />
-    {/* Spot on head */}
-    <ellipse cx="40" cy="22" rx="1.6" ry="1.1" fill="hsl(0,0%,10%)" />
-    {/* Collar */}
-    <path d="M36 23 Q40 26 44 24" stroke="hsl(0,60%,40%)" strokeWidth="1.4" fill="none" strokeLinecap="round" />
+    {(() => {
+      const cream = "hsl(40,55%,96%)";
+      const outline = "hsl(30,18%,30%)";
+      const black = "hsl(0,0%,12%)";
+      const red = "hsl(0,75%,48%)";
+      const shadow = "hsl(28,18%,75%)";
+      return (
+        <>
+          {/* Leash up-left to the person's hand */}
+          <path d="M22 14 Q14 6 4 -2" stroke={red} strokeWidth="1.1" fill="none" strokeLinecap="round" />
+          {/* Ground shadow */}
+          <ellipse cx="30" cy="40" rx="14" ry="1.8" fill={shadow} opacity="0.85" />
+          {/* Curled tail up */}
+          <path d="M12 22 Q6 18 8 11" stroke={cream} strokeWidth="2.6" fill="none" strokeLinecap="round" />
+          <path d="M12 22 Q6 18 8 11" stroke={outline} strokeWidth="0.7" fill="none" strokeLinecap="round" />
+          {/* Body */}
+          <path
+            d="M14 28 Q12 20 22 19 Q34 17 44 21 Q52 24 50 31 Q48 36 40 36 L20 36 Q13 35 14 28 Z"
+            fill={cream}
+            stroke={outline}
+            strokeWidth="0.8"
+          />
+          {/* Front legs */}
+          <path d="M22 34 Q21 40 22.5 41 L25 41 Q26 40 25 34 Z" fill={cream} stroke={outline} strokeWidth="0.7" />
+          <path d="M37 34 Q36 40 37.5 41 L40 41 Q41 40 40 34 Z" fill={cream} stroke={outline} strokeWidth="0.7" />
+          {/* Back leg hint */}
+          <path d="M16 32 Q14 39 16 41 L18 41 Q19 40 18 32 Z" fill={cream} stroke={outline} strokeWidth="0.7" />
+          {/* Body spots */}
+          <ellipse cx="22" cy="26" rx="2.6" ry="2.1" fill={black} />
+          <ellipse cx="29" cy="24" rx="3" ry="2.4" fill={black} />
+          <ellipse cx="33" cy="30" rx="2.2" ry="1.6" fill={black} />
+          <ellipse cx="40" cy="27" rx="2.6" ry="2" fill={black} />
+          {/* Leg spot */}
+          <ellipse cx="39" cy="38" rx="1.6" ry="1.2" fill={black} />
+          {/* Head */}
+          <ellipse cx="46" cy="20" rx="8.5" ry="7.5" fill={cream} stroke={outline} strokeWidth="0.8" />
+          {/* Snout */}
+          <ellipse cx="52" cy="23" rx="4" ry="3.2" fill={cream} stroke={outline} strokeWidth="0.7" />
+          {/* Big floppy black ear */}
+          <path d="M44 13 Q40 12 39 20 Q41 23 45 22 Q47 18 46 13 Z" fill={black} stroke={outline} strokeWidth="0.5" />
+          {/* Eye */}
+          <circle cx="49" cy="19" r="0.9" fill={black} />
+          {/* Nose */}
+          <ellipse cx="55" cy="22" rx="1.4" ry="1.1" fill={black} />
+          {/* Smile */}
+          <path d="M51 24.5 Q53 27 55 24.5" stroke={red} strokeWidth="0.7" fill="none" strokeLinecap="round" />
+          {/* Collar */}
+          <path d="M40 24 Q44 27 48 25" stroke={red} strokeWidth="1.2" fill="none" strokeLinecap="round" />
+        </>
+      );
+    })()}
   </svg>
 );
 
