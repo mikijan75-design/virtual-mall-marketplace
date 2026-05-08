@@ -624,8 +624,17 @@ const CrossSectionMallScene = ({ floors }: CrossSectionMallSceneProps) => {
               {index === 0 && (
                 <>
                   <WalkingCharacter className="left-[26%] bottom-9" gender="female" seed={0} />
-                  <WalkingCharacter className="right-[28%] bottom-9" flip gender="male" />
-                  <WalkingCharacter className="left-[44%] bottom-9" gender="male" />
+                  <WalkingCharacter
+                    className="right-[28%] bottom-9"
+                    flip
+                    gender="male"
+                    colorOverride={{ jacket: "#c0392b", "jacket-highlight": "#e15d4b", "jacket-shadow": "#8e2a20" }}
+                  />
+                  <WalkingCharacter
+                    className="left-[44%] bottom-9"
+                    gender="male"
+                    colorOverride={{ jacket: "#5fb9d6", "jacket-highlight": "#8fd3e6", "jacket-shadow": "#3a8aa6" }}
+                  />
                   <Dog className="left-[47%] bottom-1" />
                 </>
               )}
@@ -633,7 +642,12 @@ const CrossSectionMallScene = ({ floors }: CrossSectionMallSceneProps) => {
                 <>
                   <WalkingCharacter className="left-[22%] bottom-9" gender="male" />
                   <WalkingCharacter className="right-[24%] bottom-9" flip gender="male" />
-                  <WalkingCharacter className="left-[48%] bottom-9" gender="female" seed={1} />
+                  <WalkingCharacter
+                    className="left-[48%] bottom-9"
+                    gender="female"
+                    seed={1}
+                    colorOverride={{ dress: "#c0392b", "dress-highlight": "#e15d4b", "dress-shadow": "#8e2a20" }}
+                  />
                   <Dog className="left-[25%] bottom-1" />
                 </>
               )}
@@ -641,7 +655,12 @@ const CrossSectionMallScene = ({ floors }: CrossSectionMallSceneProps) => {
                 <>
                   <WalkingCharacter className="left-[28%] bottom-9" gender="male" />
                   <WalkingCharacter className="right-[30%] bottom-9" flip gender="male" />
-                  <WalkingCharacter className="left-[50%] bottom-9" gender="female" seed={2} />
+                  <WalkingCharacter
+                    className="left-[50%] bottom-9"
+                    gender="female"
+                    seed={2}
+                    colorOverride={{ top: "#f1c40f", "top-shadow": "#b89108" }}
+                  />
                   <Dog className="left-[31%] bottom-1" />
                   {/* Family walking right: dad, mom, child */}
                   <WalkingCharacter className="left-[18%] bottom-2" gender="male" />
