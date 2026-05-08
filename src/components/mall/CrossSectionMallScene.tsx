@@ -180,21 +180,6 @@ const Dog = ({ className = "", flip = false }: { className?: string; flip?: bool
     aria-hidden="true"
   >
     <SpottedDogIllustration style={{ width: "100%", height: "100%" }} />
-    {/* Leash overlay: from dog's collar area up-left to a person's hand */}
-    <svg
-      viewBox="0 0 100 100"
-      preserveAspectRatio="none"
-      className="absolute inset-0 h-full w-full"
-      style={{ overflow: "visible", pointerEvents: "none" }}
-    >
-      <path
-        d="M58 52 Q35 30 -8 -18"
-        stroke="hsl(0,75%,48%)"
-        strokeWidth="1.4"
-        fill="none"
-        strokeLinecap="round"
-      />
-    </svg>
   </div>
 );
 
