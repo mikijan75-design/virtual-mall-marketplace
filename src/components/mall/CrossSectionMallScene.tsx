@@ -1,4 +1,4 @@
-import { Fragment, type CSSProperties } from "react";
+import { Fragment, type CSSProperties, type ReactNode } from "react";
 import type { Floor } from "@/data/mallData";
 import StoreCard from "./StoreCard";
 import CenterFeature from "./CenterFeature";
@@ -181,6 +181,28 @@ const Dog = ({ className = "", flip = false }: { className?: string; flip?: bool
     aria-hidden="true"
   >
     <SpottedDogIllustration style={{ width: "100%", height: "100%" }} />
+  </div>
+);
+
+const Walker = ({
+  direction,
+  duration,
+  delay = 0,
+  children,
+}: {
+  direction: "ltr" | "rtl";
+  duration: number;
+  delay?: number;
+  children: ReactNode;
+}) => (
+  <div
+    className="pointer-events-none absolute inset-0"
+    style={{
+      animation: `walk-${direction} ${duration}s linear infinite`,
+      animationDelay: `${delay}s`,
+    }}
+  >
+    {children}
   </div>
 );
 
@@ -623,58 +645,83 @@ const CrossSectionMallScene = ({ floors }: CrossSectionMallSceneProps) => {
               {/* Per-floor signs */}
               {index === 0 && (
                 <>
-                  <WalkingCharacter className="left-[26%] bottom-9" gender="female" seed={0} />
-                  <WalkingCharacter
-                    className="right-[28%] bottom-9"
-                    flip
-                    gender="male"
-                    colorOverride={{ jacket: "#c0392b", "jacket-highlight": "#e15d4b", "jacket-shadow": "#8e2a20" }}
-                  />
-                  <WalkingCharacter
-                    className="left-[44%] bottom-9"
-                    gender="male"
-                    colorOverride={{ jacket: "#5fb9d6", "jacket-highlight": "#8fd3e6", "jacket-shadow": "#3a8aa6" }}
-                  />
-                  <Dog className="left-[47%] bottom-1" />
+                  <Walker direction="ltr" duration={75} delay={-15}>
+                    <WalkingCharacter className="left-0 bottom-9" gender="female" seed={0} />
+                  </Walker>
+                  <Walker direction="rtl" duration={80} delay={-25}>
+                    <WalkingCharacter
+                      className="left-0 bottom-9"
+                      flip
+                      gender="male"
+                      colorOverride={{ jacket: "#c0392b", "jacket-highlight": "#e15d4b", "jacket-shadow": "#8e2a20" }}
+                    />
+                  </Walker>
+                  <Walker direction="ltr" duration={90} delay={-50}>
+                    <WalkingCharacter
+                      className="left-0 bottom-9"
+                      gender="male"
+                      colorOverride={{ jacket: "#5fb9d6", "jacket-highlight": "#8fd3e6", "jacket-shadow": "#3a8aa6" }}
+                    />
+                  </Walker>
+                  <Walker direction="ltr" duration={95} delay={-55}>
+                    <Dog className="left-0 bottom-1" />
+                  </Walker>
                 </>
               )}
               {index === 1 && (
                 <>
-                  <WalkingCharacter
-                    className="left-[22%] bottom-9"
-                    gender="male"
-                    colorOverride={{ jacket: "#f4f1ea", "jacket-highlight": "#ffffff", "jacket-shadow": "#c8c2b4" }}
-                  />
-                  <WalkingCharacter className="right-[24%] bottom-9" flip gender="male" />
-                  <WalkingCharacter
-                    className="left-[48%] bottom-9"
-                    gender="female"
-                    seed={1}
-                    colorOverride={{ dress: "#c0392b", "dress-highlight": "#e15d4b", "dress-shadow": "#8e2a20" }}
-                  />
-                  <Dog className="left-[25%] bottom-1" />
+                  <Walker direction="ltr" duration={85} delay={-10}>
+                    <WalkingCharacter
+                      className="left-0 bottom-9"
+                      gender="male"
+                      colorOverride={{ jacket: "#f4f1ea", "jacket-highlight": "#ffffff", "jacket-shadow": "#c8c2b4" }}
+                    />
+                  </Walker>
+                  <Walker direction="rtl" duration={70} delay={-30}>
+                    <WalkingCharacter className="left-0 bottom-9" flip gender="male" />
+                  </Walker>
+                  <Walker direction="ltr" duration={100} delay={-60}>
+                    <WalkingCharacter
+                      className="left-0 bottom-9"
+                      gender="female"
+                      seed={1}
+                      colorOverride={{ dress: "#c0392b", "dress-highlight": "#e15d4b", "dress-shadow": "#8e2a20" }}
+                    />
+                  </Walker>
+                  <Walker direction="ltr" duration={110} delay={-20}>
+                    <Dog className="left-0 bottom-1" />
+                  </Walker>
                 </>
               )}
               {index === 2 && (
                 <>
-                  <WalkingCharacter className="left-[28%] bottom-9" gender="male" />
-                  <WalkingCharacter className="right-[30%] bottom-9" flip gender="male" />
-                  <WalkingCharacter
-                    className="left-[50%] bottom-9"
-                    gender="female"
-                    seed={2}
-                    colorOverride={{ top: "#f1c40f", "top-shadow": "#b89108" }}
-                  />
-                  <Dog className="left-[31%] bottom-1" />
-                  {/* Family walking right: dad, mom, child */}
-                  <WalkingCharacter className="left-[18%] bottom-2" gender="male" />
-                  <WalkingCharacter
-                    className="left-[22%] bottom-2"
-                    gender="female"
-                    seed={3}
-                    colorOverride={{ jacket: "#ec6fa3", "jacket-highlight": "#f59ac0", "jacket-shadow": "#b94c7c" }}
-                  />
-                  <svg className="absolute left-[25.5%] bottom-2 z-40 h-8 w-5 md:h-11 md:w-6" viewBox="0 0 30 60" aria-hidden="true">
+                  <Walker direction="ltr" duration={80} delay={-5}>
+                    <WalkingCharacter className="left-0 bottom-9" gender="male" />
+                  </Walker>
+                  <Walker direction="rtl" duration={90} delay={-40}>
+                    <WalkingCharacter className="left-0 bottom-9" flip gender="male" />
+                  </Walker>
+                  <Walker direction="ltr" duration={105} delay={-65}>
+                    <WalkingCharacter
+                      className="left-0 bottom-9"
+                      gender="female"
+                      seed={2}
+                      colorOverride={{ top: "#f1c40f", "top-shadow": "#b89108" }}
+                    />
+                  </Walker>
+                  <Walker direction="ltr" duration={120} delay={-35}>
+                    <Dog className="left-0 bottom-1" />
+                  </Walker>
+                  {/* Family walking right: dad, mom, child — together */}
+                  <Walker direction="ltr" duration={130} delay={-15}>
+                    <WalkingCharacter className="left-0 bottom-2" gender="male" />
+                    <WalkingCharacter
+                      className="left-[4%] bottom-2"
+                      gender="female"
+                      seed={3}
+                      colorOverride={{ jacket: "#ec6fa3", "jacket-highlight": "#f59ac0", "jacket-shadow": "#b94c7c" }}
+                    />
+                    <svg className="absolute left-[7.5%] bottom-2 z-40 h-8 w-5 md:h-11 md:w-6" viewBox="0 0 30 60" aria-hidden="true">
                     {/* Child profile head */}
                     <path d="M11.5 10 Q11.5 5.8 15 5.8 Q19 5.8 19.2 9.6 Q19.4 11 19 12.2 L19.6 12.6 Q20.2 13 19.6 13.4 L18.8 13.6 Q19 14.2 18.4 14.4 L17.6 14.4 Q17.6 15 17.2 15.2 L15.6 15.2 Q14.4 15.2 13.4 14.4 Q11.6 13 11.5 10 Z" fill="hsl(31,45%,72%)" stroke="hsl(25,35%,42%)" strokeWidth="0.7" />
                     <circle cx="17.4" cy="10.4" r="0.55" fill="hsl(220,25%,18%)" />
@@ -687,10 +734,13 @@ const CrossSectionMallScene = ({ floors }: CrossSectionMallSceneProps) => {
                     <path d="M17 30 L21 48" stroke="hsl(215,25%,38%)" strokeWidth="2" strokeLinecap="round" />
                     <path d="M7 49 L12 49" stroke="hsl(30,18%,18%)" strokeWidth="1.8" strokeLinecap="round" />
                     <path d="M19 49 L24 49" stroke="hsl(30,18%,18%)" strokeWidth="1.8" strokeLinecap="round" />
-                  </svg>
-                  {/* Two women walking together (toward the left). One pushes the stroller. */}
-                  <WalkingCharacter className="right-[20%] bottom-2" flip gender="female" seed={4} />
-                  <WalkingCharacter className="right-[14%] bottom-2" flip gender="female" seed={5} />
+                    </svg>
+                  </Walker>
+                  {/* Two women walking together (toward the left). */}
+                  <Walker direction="rtl" duration={115} delay={-50}>
+                    <WalkingCharacter className="left-0 bottom-2" flip gender="female" seed={4} />
+                    <WalkingCharacter className="left-[6%] bottom-2" flip gender="female" seed={5} />
+                  </Walker>
                 </>
               )}
             </div>
