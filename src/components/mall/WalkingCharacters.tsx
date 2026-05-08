@@ -99,6 +99,8 @@ const renderById = (id: string, { className = "", flip = false, colorOverride, p
   const shoulderY = viewBox.height * 0.34;
   const hipY = viewBox.height * 0.6;
   const pivotX = viewBox.width / 2;
+  const frontHipX = viewBox.width * 0.56;
+  const rearHipX = viewBox.width * 0.42;
   const delay = `${(phase % 1) * -0.7}s`;
 
   const partition = (shapes: typeof character.illustration.backLayer) => {
@@ -199,23 +201,23 @@ const renderById = (id: string, { className = "", flip = false, colorOverride, p
         }}
       >
         {/* Limbs swung behind the torso (rendered first so torso covers them) */}
-        {renderGroup(back.legB, { x: pivotX, y: hipY }, legSwingB)}
-        {renderGroup(body.legB, { x: pivotX, y: hipY }, legSwingB)}
+        {renderGroup(back.legB, { x: rearHipX, y: hipY }, legSwingB)}
+        {renderGroup(body.legB, { x: rearHipX, y: hipY }, legSwingB)}
         {renderGroup(back.armA, { x: pivotX, y: shoulderY }, armSwingA)}
         {renderGroup(body.armA, { x: pivotX, y: shoulderY }, armSwingA)}
         {/* Static base layers */}
         {renderGroup(back.base, null, null)}
         {renderGroup(body.base, null, null)}
         {/* Front-facing limbs on top */}
-        {renderGroup(back.legA, { x: pivotX, y: hipY }, legSwingA)}
-        {renderGroup(body.legA, { x: pivotX, y: hipY }, legSwingA)}
+        {renderGroup(back.legA, { x: frontHipX, y: hipY }, legSwingA)}
+        {renderGroup(body.legA, { x: frontHipX, y: hipY }, legSwingA)}
         {renderGroup(back.armB, { x: pivotX, y: shoulderY }, armSwingB)}
         {renderGroup(body.armB, { x: pivotX, y: shoulderY }, armSwingB)}
         {/* Details (face, accessories) — also include any limb details */}
-        {renderGroup(detail.legB, { x: pivotX, y: hipY }, legSwingB)}
+        {renderGroup(detail.legB, { x: rearHipX, y: hipY }, legSwingB)}
         {renderGroup(detail.armA, { x: pivotX, y: shoulderY }, armSwingA)}
         {renderGroup(detail.base, null, null)}
-        {renderGroup(detail.legA, { x: pivotX, y: hipY }, legSwingA)}
+        {renderGroup(detail.legA, { x: frontHipX, y: hipY }, legSwingA)}
         {renderGroup(detail.armB, { x: pivotX, y: shoulderY }, armSwingB)}
       </g>
     </svg>
