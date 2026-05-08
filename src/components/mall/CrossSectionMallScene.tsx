@@ -5,6 +5,7 @@ import CenterFeature from "./CenterFeature";
 import Decorations from "./Decorations";
 import GlassElevatorTower from "./elevator/GlassElevatorTower";
 import SpottedDogIllustration from "./SpottedDogIllustration";
+import { WalkingCharacter } from "./WalkingCharacters";
 import ceilingFresco from "@/assets/ceiling-sunset.jpg";
 import mallWall from "@/assets/mall-wall.jpg";
 import marbleFloor from "@/assets/marble-floor.jpg";
@@ -622,29 +623,29 @@ const CrossSectionMallScene = ({ floors }: CrossSectionMallSceneProps) => {
               {/* Per-floor signs */}
               {index === 0 && (
                 <>
-                  <Person className="left-[26%] bottom-9" style="longHair" shirt="hsl(345,55%,58%)" hair="hsl(28,55%,30%)" bagColor="hsl(0,0%,96%)" />
-                  <Person className="right-[28%] bottom-9" flip style="hat" shirt="hsl(215,35%,38%)" />
-                  <Person className="left-[44%] bottom-9" shirt="hsl(15,55%,55%)" style="bag" />
+                  <WalkingCharacter className="left-[26%] bottom-9" gender="female" seed={0} />
+                  <WalkingCharacter className="right-[28%] bottom-9" flip gender="male" />
+                  <WalkingCharacter className="left-[44%] bottom-9" gender="male" />
                   <Dog className="left-[47%] bottom-1" />
                 </>
               )}
               {index === 1 && (
                 <>
-                  <Person className="left-[22%] bottom-9" shirt="hsl(213,48%,58%)" style="shortHair" />
-                  <Person className="right-[24%] bottom-9" shirt="hsl(192,45%,62%)" flip style="cane" hair="hsl(0,0%,82%)" />
-                  <Person className="left-[48%] bottom-9" shirt="hsl(280,40%,58%)" style="longHair" hair="hsl(38,65%,55%)" bagColor="hsl(48,90%,62%)" />
+                  <WalkingCharacter className="left-[22%] bottom-9" gender="male" />
+                  <WalkingCharacter className="right-[24%] bottom-9" flip gender="male" />
+                  <WalkingCharacter className="left-[48%] bottom-9" gender="female" seed={1} />
                   <Dog className="left-[25%] bottom-1" />
                 </>
               )}
               {index === 2 && (
                 <>
-                  <Person className="left-[28%] bottom-9" shirt="hsl(205,55%,58%)" style="hat" />
-                  <Person className="right-[30%] bottom-9" shirt="hsl(155,40%,50%)" flip style="bag" />
-                  <Person className="left-[50%] bottom-9" shirt="hsl(332,55%,62%)" style="longHair" hair="hsl(20,45%,18%)" bagColor="hsl(48,90%,62%)" />
+                  <WalkingCharacter className="left-[28%] bottom-9" gender="male" />
+                  <WalkingCharacter className="right-[30%] bottom-9" flip gender="male" />
+                  <WalkingCharacter className="left-[50%] bottom-9" gender="female" seed={2} />
                   <Dog className="left-[31%] bottom-1" />
                   {/* Family walking right: dad, mom, child */}
-                  <Person className="left-[18%] bottom-2" shirt="hsl(210,40%,42%)" style="shortHair" hair="hsl(28,30%,18%)" />
-                  <Person className="left-[22%] bottom-2" shirt="hsl(340,50%,55%)" style="longHair" hair="hsl(25,50%,25%)" bagColor="hsl(0,0%,96%)" />
+                  <WalkingCharacter className="left-[18%] bottom-2" gender="male" />
+                  <WalkingCharacter className="left-[22%] bottom-2" gender="female" seed={3} />
                   <svg className="absolute left-[25.5%] bottom-2 z-40 h-8 w-5 md:h-11 md:w-6" viewBox="0 0 30 60" aria-hidden="true">
                     {/* Child profile head */}
                     <path d="M11.5 10 Q11.5 5.8 15 5.8 Q19 5.8 19.2 9.6 Q19.4 11 19 12.2 L19.6 12.6 Q20.2 13 19.6 13.4 L18.8 13.6 Q19 14.2 18.4 14.4 L17.6 14.4 Q17.6 15 17.2 15.2 L15.6 15.2 Q14.4 15.2 13.4 14.4 Q11.6 13 11.5 10 Z" fill="hsl(31,45%,72%)" stroke="hsl(25,35%,42%)" strokeWidth="0.7" />
@@ -660,8 +661,8 @@ const CrossSectionMallScene = ({ floors }: CrossSectionMallSceneProps) => {
                     <path d="M19 49 L24 49" stroke="hsl(30,18%,18%)" strokeWidth="1.8" strokeLinecap="round" />
                   </svg>
                   {/* Two women walking together (toward the left). One pushes the stroller. */}
-                  <Person className="right-[20%] bottom-2" flip style="longHair" shirt="hsl(280,45%,55%)" hair="hsl(18,55%,22%)" bagColor="hsl(48,90%,62%)" />
-                  <Person className="right-[14%] bottom-2" flip style="longHair" shirt="hsl(170,40%,48%)" hair="hsl(35,60%,42%)" bagColor="hsl(0,0%,96%)" />
+                  <WalkingCharacter className="right-[20%] bottom-2" flip gender="female" seed={4} />
+                  <WalkingCharacter className="right-[14%] bottom-2" flip gender="female" seed={5} />
                 </>
               )}
             </div>
