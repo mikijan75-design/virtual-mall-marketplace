@@ -47,6 +47,18 @@ const SpottedDogIllustration = ({
       }}
     >
       <title>Playful spotted dog illustration</title>
+      <style>{`
+        @keyframes dog-tail-wag {
+          0%   { transform: rotate(-8deg); }
+          50%  { transform: rotate(22deg); }
+          100% { transform: rotate(-8deg); }
+        }
+        .dog-tail {
+          transform-box: fill-box;
+          transform-origin: 95% 95%;
+          animation: dog-tail-wag 0.6s ease-in-out infinite;
+        }
+      `}</style>
       {showBackground ? (
         <rect width={params.canvas.width} height={params.canvas.height} fill={params.canvas.background} />
       ) : null}
@@ -55,16 +67,18 @@ const SpottedDogIllustration = ({
         <ellipse cx="153" cy="221" rx="129" ry="12" fill={params.palette.shadow} opacity="0.82" />
 
         <g fill="none" strokeLinecap="round" strokeLinejoin="round">
-          <path
-            d="M64 77 C33 70 10 48 8 20 C7 6 12 -1 17 1 C25 4 19 16 21 29 C25 51 42 64 67 66"
-            stroke={params.palette.outline}
-            strokeWidth="12"
-          />
-          <path
-            d="M64 77 C33 70 10 48 8 20 C7 6 12 -1 17 1 C25 4 19 16 21 29 C25 51 42 64 67 66"
-            stroke={params.palette.coat}
-            strokeWidth="7"
-          />
+          <g className="dog-tail">
+            <path
+              d="M64 77 C33 70 10 48 8 20 C7 6 12 -1 17 1 C25 4 19 16 21 29 C25 51 42 64 67 66"
+              stroke={params.palette.outline}
+              strokeWidth="12"
+            />
+            <path
+              d="M64 77 C33 70 10 48 8 20 C7 6 12 -1 17 1 C25 4 19 16 21 29 C25 51 42 64 67 66"
+              stroke={params.palette.coat}
+              strokeWidth="7"
+            />
+          </g>
 
           <path
             d="M67 80 C94 54 143 61 185 73 C206 79 225 70 240 53"
