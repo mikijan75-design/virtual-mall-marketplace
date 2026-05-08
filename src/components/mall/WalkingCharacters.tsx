@@ -124,23 +124,26 @@ const renderById = (id: string, { className = "", flip = false, colorOverride, p
     shapes: CharacterVectorShape[],
     pivot: { x: number; y: number } | null,
     animation: string | null,
+    offsetX = 0,
   ) =>
     shapes.length === 0 ? null : (
-      <g
-        style={
-          pivot && animation
-            ? {
-                transformBox: "view-box",
-                transformOrigin: `${pivot.x}px ${pivot.y}px`,
-                animation,
-                animationDelay: delay,
-              }
-            : undefined
-        }
-      >
-        {shapes.map((s) => (
-          <VectorShape key={s.id} character={character} shape={s} overrides={colorOverride} />
-        ))}
+      <g transform={offsetX !== 0 ? `translate(${offsetX} 0)` : undefined}>
+        <g
+          style={
+            pivot && animation
+              ? {
+                  transformBox: "view-box",
+                  transformOrigin: `${pivot.x}px ${pivot.y}px`,
+                  animation,
+                  animationDelay: delay,
+                }
+              : undefined
+          }
+        >
+          {shapes.map((s) => (
+            <VectorShape key={s.id} character={character} shape={s} overrides={colorOverride} />
+          ))}
+        </g>
       </g>
     );
 
@@ -171,12 +174,12 @@ const renderById = (id: string, { className = "", flip = false, colorOverride, p
           50%      { transform: rotate(28deg); }
         }
         @keyframes leg-swing-a {
-          0%, 100% { transform: translateX(3.6px) rotate(6deg); }
-          50%      { transform: translateX(-3.6px) rotate(-6deg); }
+          0%, 100% { transform: translateX(6px) rotate(8deg); }
+          50%      { transform: translateX(-6px) rotate(-8deg); }
         }
         @keyframes leg-swing-b {
-          0%, 100% { transform: translateX(-3.6px) rotate(-6deg); }
-          50%      { transform: translateX(3.6px) rotate(6deg); }
+          0%, 100% { transform: translateX(-6px) rotate(-8deg); }
+          50%      { transform: translateX(6px) rotate(8deg); }
         }
         @keyframes body-bob {
           0%, 100% { transform: translateY(0); }
@@ -201,23 +204,23 @@ const renderById = (id: string, { className = "", flip = false, colorOverride, p
         }}
       >
         {/* Limbs swung behind the torso (rendered first so torso covers them) */}
-        {renderGroup(back.legB, { x: pivotX, y: hipY }, legSwingB)}
-        {renderGroup(body.legB, { x: pivotX, y: hipY }, legSwingB)}
+        {renderGroup(back.legB, { x: pivotX, y: hipY }, legSwingB, 20)}
+        {renderGroup(body.legB, { x: pivotX, y: hipY }, legSwingB, 20)}
         {renderGroup(back.armA, { x: pivotX, y: shoulderY }, armSwingA)}
         {renderGroup(body.armA, { x: pivotX, y: shoulderY }, armSwingA)}
         {/* Static base layers */}
         {renderGroup(back.base, null, null)}
         {renderGroup(body.base, null, null)}
         {/* Front-facing limbs on top */}
-        {renderGroup(back.legA, { x: pivotX, y: hipY }, legSwingA)}
-        {renderGroup(body.legA, { x: pivotX, y: hipY }, legSwingA)}
+        {renderGroup(back.legA, { x: pivotX, y: hipY }, legSwingA, -20)}
+        {renderGroup(body.legA, { x: pivotX, y: hipY }, legSwingA, -20)}
         {renderGroup(back.armB, { x: pivotX, y: shoulderY }, armSwingB)}
         {renderGroup(body.armB, { x: pivotX, y: shoulderY }, armSwingB)}
         {/* Details (face, accessories) — also include any limb details */}
-        {renderGroup(detail.legB, { x: pivotX, y: hipY }, legSwingB)}
+        {renderGroup(detail.legB, { x: pivotX, y: hipY }, legSwingB, 20)}
         {renderGroup(detail.armA, { x: pivotX, y: shoulderY }, armSwingA)}
         {renderGroup(detail.base, null, null)}
-        {renderGroup(detail.legA, { x: pivotX, y: hipY }, legSwingA)}
+        {renderGroup(detail.legA, { x: pivotX, y: hipY }, legSwingA, -20)}
         {renderGroup(detail.armB, { x: pivotX, y: shoulderY }, armSwingB)}
       </g>
     </svg>
