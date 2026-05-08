@@ -79,11 +79,78 @@ interface WalkingCharProps {
   className?: string;
   flip?: boolean;
   colorOverride?: Record<string, string>;
+  /** Stagger the limb-swing phase so a crowd doesn't move in lockstep. */
+  phase?: number;
 }
 
-const renderById = (id: string, { className = "", flip = false, colorOverride }: WalkingCharProps) => {
+const limbCategory = (id: string): "armA" | "armB" | "legA" | "legB" | null => {
+  // Group A: rear arm + front leg (swing forward together).
+  // Group B: front arm + rear leg (swing the opposite way).
+  if (/^rear-(arm|hand|forearm|wrist)/.test(id)) return "armA";
+  if (/^front-(arm|hand|forearm|wrist)/.test(id)) return "armB";
+  if (/^rear-(leg|shoe|foot|thigh|calf)/.test(id)) return "legB";
+  if (/^front-(leg|shoe|foot|thigh|calf)/.test(id)) return "legA";
+  return null;
+};
+
+const renderById = (id: string, { className = "", flip = false, colorOverride, phase = 0 }: WalkingCharProps) => {
   const character = walkingCharacters.find((c) => c.id === id)!;
   const { viewBox } = character.illustration;
+  const shoulderY = viewBox.height * 0.34;
+  const hipY = viewBox.height * 0.6;
+  const pivotX = viewBox.width / 2;
+  const delay = `${(phase % 1) * -0.7}s`;
+
+  const partition = (shapes: typeof character.illustration.backLayer) => {
+    const base: typeof shapes = [];
+    const armA: typeof shapes = [];
+    const armB: typeof shapes = [];
+    const legA: typeof shapes = [];
+    const legB: typeof shapes = [];
+    for (const s of shapes) {
+      const cat = limbCategory(s.id);
+      if (cat === "armA") armA.push(s);
+      else if (cat === "armB") armB.push(s);
+      else if (cat === "legA") legA.push(s);
+      else if (cat === "legB") legB.push(s);
+      else base.push(s);
+    }
+    return { base, armA, armB, legA, legB };
+  };
+
+  const renderGroup = (
+    shapes: CharacterVectorShape[],
+    pivot: { x: number; y: number } | null,
+    animation: string | null,
+  ) =>
+    shapes.length === 0 ? null : (
+      <g
+        style={
+          pivot && animation
+            ? {
+                transformBox: "view-box",
+                transformOrigin: `${pivot.x}px ${pivot.y}px`,
+                animation,
+                animationDelay: delay,
+              }
+            : undefined
+        }
+      >
+        {shapes.map((s) => (
+          <VectorShape key={s.id} character={character} shape={s} overrides={colorOverride} />
+        ))}
+      </g>
+    );
+
+  const back = partition(character.illustration.backLayer);
+  const body = partition(character.illustration.bodyLayer);
+  const detail = partition(character.illustration.detailLayer);
+
+  const armSwingA = "limb-swing-a 0.7s ease-in-out infinite";
+  const armSwingB = "limb-swing-b 0.7s ease-in-out infinite";
+  const legSwingA = "limb-swing-a 0.7s ease-in-out infinite";
+  const legSwingB = "limb-swing-b 0.7s ease-in-out infinite";
+
   return (
     <svg
       className={`absolute z-40 h-12 w-7 md:h-16 md:w-9 ${className}`}
@@ -92,6 +159,21 @@ const renderById = (id: string, { className = "", flip = false, colorOverride }:
       style={{ transform: flip ? "scaleX(-1)" : undefined }}
       aria-hidden="true"
     >
+      <style>{`
+        @keyframes limb-swing-a {
+          0%, 100% { transform: rotate(14deg); }
+          50%      { transform: rotate(-14deg); }
+        }
+        @keyframes limb-swing-b {
+          0%, 100% { transform: rotate(-14deg); }
+          50%      { transform: rotate(14deg); }
+        }
+        @keyframes body-bob {
+          0%, 100% { transform: translateY(0); }
+          25%, 75% { transform: translateY(-1px); }
+          50%      { transform: translateY(0); }
+        }
+      `}</style>
       <ellipse
         cx={character.illustration.shadow.cx}
         cy={character.illustration.shadow.cy}
@@ -100,15 +182,34 @@ const renderById = (id: string, { className = "", flip = false, colorOverride }:
         fill={colorFor(character, character.illustration.shadow.fillToken)}
         opacity={character.illustration.shadow.opacity}
       />
-      {character.illustration.backLayer.map((s) => (
-        <VectorShape key={s.id} character={character} shape={s} overrides={colorOverride} />
-      ))}
-      {character.illustration.bodyLayer.map((s) => (
-        <VectorShape key={s.id} character={character} shape={s} overrides={colorOverride} />
-      ))}
-      {character.illustration.detailLayer.map((s) => (
-        <VectorShape key={s.id} character={character} shape={s} overrides={colorOverride} />
-      ))}
+      <g
+        style={{
+          transformBox: "view-box",
+          transformOrigin: `${viewBox.width / 2}px ${viewBox.height / 2}px`,
+          animation: "body-bob 0.7s ease-in-out infinite",
+          animationDelay: delay,
+        }}
+      >
+        {/* Limbs swung behind the torso (rendered first so torso covers them) */}
+        {renderGroup(back.legB, { x: pivotX, y: hipY }, legSwingB)}
+        {renderGroup(body.legB, { x: pivotX, y: hipY }, legSwingB)}
+        {renderGroup(back.armA, { x: pivotX, y: shoulderY }, armSwingA)}
+        {renderGroup(body.armA, { x: pivotX, y: shoulderY }, armSwingA)}
+        {/* Static base layers */}
+        {renderGroup(back.base, null, null)}
+        {renderGroup(body.base, null, null)}
+        {/* Front-facing limbs on top */}
+        {renderGroup(back.legA, { x: pivotX, y: hipY }, legSwingA)}
+        {renderGroup(body.legA, { x: pivotX, y: hipY }, legSwingA)}
+        {renderGroup(back.armB, { x: pivotX, y: shoulderY }, armSwingB)}
+        {renderGroup(body.armB, { x: pivotX, y: shoulderY }, armSwingB)}
+        {/* Details (face, accessories) — also include any limb details */}
+        {renderGroup(detail.legB, { x: pivotX, y: hipY }, legSwingB)}
+        {renderGroup(detail.armA, { x: pivotX, y: shoulderY }, armSwingA)}
+        {renderGroup(detail.base, null, null)}
+        {renderGroup(detail.legA, { x: pivotX, y: hipY }, legSwingA)}
+        {renderGroup(detail.armB, { x: pivotX, y: shoulderY }, armSwingB)}
+      </g>
     </svg>
   );
 };
@@ -135,18 +236,21 @@ export const WalkingCharacter = ({
   gender = "female",
   seed = 0,
   colorOverride,
+  phase,
 }: {
   className?: string;
   flip?: boolean;
   gender?: "male" | "female";
   seed?: number;
   colorOverride?: Record<string, string>;
+  phase?: number;
 }) => {
+  const resolvedPhase = phase ?? (seed * 0.137) % 1;
   if (gender === "male") {
-    return <CharDarkManJacket className={className} flip={flip} colorOverride={colorOverride} />;
+    return <CharDarkManJacket className={className} flip={flip} colorOverride={colorOverride} phase={resolvedPhase} />;
   }
   const Design = FEMALE_DESIGNS[seed % FEMALE_DESIGNS.length];
-  return <Design className={className} flip={flip} colorOverride={colorOverride} />;
+  return <Design className={className} flip={flip} colorOverride={colorOverride} phase={resolvedPhase} />;
 };
 
 export default WalkingCharacter;
