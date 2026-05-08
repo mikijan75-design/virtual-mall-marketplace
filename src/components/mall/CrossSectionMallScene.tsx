@@ -196,7 +196,7 @@ const Walker = ({
   children: ReactNode;
 }) => (
   <div
-    className="pointer-events-none absolute inset-0"
+    className="pointer-events-none absolute inset-0 z-40"
     style={{
       animation: `walk-${direction} ${duration}s linear infinite`,
       animationDelay: `${delay}s`,
