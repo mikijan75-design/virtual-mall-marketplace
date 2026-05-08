@@ -180,21 +180,6 @@ const Dog = ({ className = "", flip = false }: { className?: string; flip?: bool
     aria-hidden="true"
   >
     <SpottedDogIllustration style={{ width: "100%", height: "100%" }} />
-    {/* Leash overlay: from dog's collar area up-left to a person's hand */}
-    <svg
-      viewBox="0 0 100 100"
-      preserveAspectRatio="none"
-      className="absolute inset-0 h-full w-full"
-      style={{ overflow: "visible", pointerEvents: "none" }}
-    >
-      <path
-        d="M58 52 Q35 30 -8 -18"
-        stroke="hsl(0,75%,48%)"
-        strokeWidth="1.4"
-        fill="none"
-        strokeLinecap="round"
-      />
-    </svg>
   </div>
 );
 
@@ -640,7 +625,7 @@ const CrossSectionMallScene = ({ floors }: CrossSectionMallSceneProps) => {
                   <Person className="left-[26%] bottom-9" style="longHair" shirt="hsl(345,55%,58%)" hair="hsl(28,55%,30%)" bagColor="hsl(0,0%,96%)" />
                   <Person className="right-[28%] bottom-9" flip style="hat" shirt="hsl(215,35%,38%)" />
                   <Person className="left-[44%] bottom-9" shirt="hsl(15,55%,55%)" style="bag" />
-                  <Dog className="left-[47%] bottom-9" />
+                  <Dog className="left-[47%] bottom-1" />
                 </>
               )}
               {index === 1 && (
@@ -648,7 +633,7 @@ const CrossSectionMallScene = ({ floors }: CrossSectionMallSceneProps) => {
                   <Person className="left-[22%] bottom-9" shirt="hsl(213,48%,58%)" style="shortHair" />
                   <Person className="right-[24%] bottom-9" shirt="hsl(192,45%,62%)" flip style="cane" hair="hsl(0,0%,82%)" />
                   <Person className="left-[48%] bottom-9" shirt="hsl(280,40%,58%)" style="longHair" hair="hsl(38,65%,55%)" bagColor="hsl(48,90%,62%)" />
-                  <Dog className="left-[25%] bottom-9" />
+                  <Dog className="left-[25%] bottom-1" />
                 </>
               )}
               {index === 2 && (
@@ -656,7 +641,7 @@ const CrossSectionMallScene = ({ floors }: CrossSectionMallSceneProps) => {
                   <Person className="left-[28%] bottom-9" shirt="hsl(205,55%,58%)" style="hat" />
                   <Person className="right-[30%] bottom-9" shirt="hsl(155,40%,50%)" flip style="bag" />
                   <Person className="left-[50%] bottom-9" shirt="hsl(332,55%,62%)" style="longHair" hair="hsl(20,45%,18%)" bagColor="hsl(48,90%,62%)" />
-                  <Dog className="left-[31%] bottom-9" />
+                  <Dog className="left-[31%] bottom-1" />
                   {/* Family walking right: dad, mom, child */}
                   <Person className="left-[18%] bottom-2" shirt="hsl(210,40%,42%)" style="shortHair" hair="hsl(28,30%,18%)" />
                   <Person className="left-[22%] bottom-2" shirt="hsl(340,50%,55%)" style="longHair" hair="hsl(25,50%,25%)" bagColor="hsl(0,0%,96%)" />
