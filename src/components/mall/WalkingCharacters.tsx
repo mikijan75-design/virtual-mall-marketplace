@@ -146,10 +146,10 @@ const renderById = (id: string, { className = "", flip = false, colorOverride, p
   const body = partition(character.illustration.bodyLayer);
   const detail = partition(character.illustration.detailLayer);
 
-  const armSwingA = "limb-swing-a 0.7s ease-in-out infinite";
-  const armSwingB = "limb-swing-b 0.7s ease-in-out infinite";
-  const legSwingA = "limb-swing-a 0.7s ease-in-out infinite";
-  const legSwingB = "limb-swing-b 0.7s ease-in-out infinite";
+  const armSwingA = "limb-swing-a 1.15s ease-in-out infinite";
+  const armSwingB = "limb-swing-b 1.15s ease-in-out infinite";
+  const legSwingA = "limb-swing-a 1.15s ease-in-out infinite";
+  const legSwingB = "limb-swing-b 1.15s ease-in-out infinite";
 
   return (
     <svg
@@ -186,7 +186,7 @@ const renderById = (id: string, { className = "", flip = false, colorOverride, p
         style={{
           transformBox: "view-box",
           transformOrigin: `${viewBox.width / 2}px ${viewBox.height / 2}px`,
-          animation: "body-bob 0.7s ease-in-out infinite",
+          animation: "body-bob 1.15s ease-in-out infinite",
           animationDelay: delay,
         }}
       >
