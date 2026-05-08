@@ -4,6 +4,7 @@ import MallFooter from "@/components/mall/MallFooter";
 import PageTracker from "@/components/PageTracker";
 import FloorMap from "@/components/mall/FloorMap";
 import CrossSectionMallScene from "@/components/mall/CrossSectionMallScene";
+import WalkingCharactersDesignDemo from "@/components/mall/WalkingCharactersDesignDemo";
 import MeasurementRulers from "@/components/MeasurementRulers";
 import { TICK_BAND_PX } from "@/components/MeasurementRulers.constants";
 
@@ -22,6 +23,7 @@ const Index = () => {
       <MallHeader />
       <PageTracker />
       <CrossSectionMallScene floors={mallFloors} />
+      <WalkingCharactersDesignDemo />
 
       {/* Floor Map */}
       <FloorMap
