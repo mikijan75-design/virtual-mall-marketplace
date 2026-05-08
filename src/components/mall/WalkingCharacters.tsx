@@ -146,10 +146,10 @@ const renderById = (id: string, { className = "", flip = false, colorOverride, p
   const body = partition(character.illustration.bodyLayer);
   const detail = partition(character.illustration.detailLayer);
 
-  const armSwingA = "limb-swing-a 1.15s ease-in-out infinite";
-  const armSwingB = "limb-swing-b 1.15s ease-in-out infinite";
-  const legSwingA = "limb-swing-a 1.15s ease-in-out infinite";
-  const legSwingB = "limb-swing-b 1.15s ease-in-out infinite";
+  const armSwingA = "arm-swing-a 1.15s ease-in-out infinite";
+  const armSwingB = "arm-swing-b 1.15s ease-in-out infinite";
+  const legSwingA = "leg-swing-a 1.15s ease-in-out infinite";
+  const legSwingB = "leg-swing-b 1.15s ease-in-out infinite";
 
   return (
     <svg
@@ -160,13 +160,21 @@ const renderById = (id: string, { className = "", flip = false, colorOverride, p
       aria-hidden="true"
     >
       <style>{`
-        @keyframes limb-swing-a {
-          0%, 100% { transform: rotate(14deg); }
-          50%      { transform: rotate(-14deg); }
+        @keyframes arm-swing-a {
+          0%, 100% { transform: rotate(28deg); }
+          50%      { transform: rotate(-28deg); }
         }
-        @keyframes limb-swing-b {
-          0%, 100% { transform: rotate(-14deg); }
-          50%      { transform: rotate(14deg); }
+        @keyframes arm-swing-b {
+          0%, 100% { transform: rotate(-28deg); }
+          50%      { transform: rotate(28deg); }
+        }
+        @keyframes leg-swing-a {
+          0%, 100% { transform: rotate(24deg); }
+          50%      { transform: rotate(-24deg); }
+        }
+        @keyframes leg-swing-b {
+          0%, 100% { transform: rotate(-24deg); }
+          50%      { transform: rotate(24deg); }
         }
         @keyframes body-bob {
           0%, 100% { transform: translateY(0); }
