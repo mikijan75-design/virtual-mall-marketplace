@@ -278,16 +278,7 @@ const Butterflies = () => (
           animation: `butterfly-drift ${p.driftDuration}s ease-in-out ${p.driftDelay}s infinite`,
         }}
       >
-        <div style={{ animation: `none` }}>
-          <div
-            style={{
-              animation: `butterfly-flap ${p.duration}s ease-in-out ${p.delay}s infinite alternate`,
-              transformOrigin: "center",
-            }}
-          >
-            <Butterfly palette={butterflyPalettes[i]} size={p.size} />
-          </div>
-        </div>
+        <Butterfly palette={butterflyPalettes[i]} size={p.size} />
       </div>
     ))}
   </div>
