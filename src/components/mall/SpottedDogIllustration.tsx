@@ -11,6 +11,7 @@ export const SPOTTED_DOG_ILLUSTRATION_PARAMETERS = {
     outline: "#46433b",
     coat: "#f7f2e3",
     coatShade: "#ebe4d1",
+    highlight: "#fffdf4",
     spots: "#11110f",
     ear: "#4b4840",
     smile: "#d24b43",
@@ -50,99 +51,136 @@ const SpottedDogIllustration = ({
         <rect width={params.canvas.width} height={params.canvas.height} fill={params.canvas.background} />
       ) : null}
 
-      <g transform="translate(310 116)">
-        <ellipse cx="240" cy="306" rx="130" ry="14" fill={params.palette.shadow} opacity="0.82" />
+      <g transform="translate(402 203)">
+        <ellipse cx="153" cy="221" rx="129" ry="12" fill={params.palette.shadow} opacity="0.82" />
 
-        <g fill="none" stroke={params.palette.outline} strokeLinecap="round" strokeLinejoin="round">
+        <g fill="none" strokeLinecap="round" strokeLinejoin="round">
           <path
-            d="M78 167 C34 156 6 130 0 96 C-4 73 3 50 15 44 C25 39 31 44 27 57 C20 82 29 107 50 125 C66 139 84 145 102 149"
-            strokeWidth="4"
+            d="M64 77 C33 70 10 48 8 20 C7 6 12 -1 17 1 C25 4 19 16 21 29 C25 51 42 64 67 66"
+            stroke={params.palette.outline}
+            strokeWidth="12"
           />
           <path
-            d="M95 152 C127 121 185 126 230 141 C258 149 293 140 316 117"
-            strokeWidth="4"
+            d="M64 77 C33 70 10 48 8 20 C7 6 12 -1 17 1 C25 4 19 16 21 29 C25 51 42 64 67 66"
+            stroke={params.palette.coat}
+            strokeWidth="7"
+          />
+
+          <path
+            d="M67 80 C94 54 143 61 185 73 C206 79 225 70 240 53"
+            stroke={params.palette.outline}
+            strokeWidth="5"
           />
           <path
-            d="M86 162 C69 188 58 222 58 255 C58 275 49 290 42 302 M120 262 C108 281 103 296 104 314"
-            strokeWidth="4"
+            d="M62 84 C44 114 38 152 47 186"
+            stroke={params.palette.outline}
+            strokeWidth="5"
           />
-          <path d="M43 300 C36 306 36 317 47 318 L62 318 C68 317 70 310 63 306" strokeWidth="4" />
-          <path d="M100 309 C93 318 99 326 112 326 L126 326 C132 325 134 317 126 313" strokeWidth="4" />
-          <path d="M245 256 C241 278 241 295 246 314" strokeWidth="4" />
-          <path d="M289 251 C291 277 290 295 286 315" strokeWidth="4" />
-          <path d="M242 311 C233 319 237 329 250 329 L264 329 C271 327 272 319 264 315" strokeWidth="4" />
-          <path d="M283 312 C274 320 278 329 291 329 L306 329 C313 327 314 318 305 314" strokeWidth="4" />
+          <path
+            d="M97 153 C84 169 79 184 80 203"
+            stroke={params.palette.outline}
+            strokeWidth="5"
+          />
+          <path
+            d="M181 145 C176 166 176 186 180 205"
+            stroke={params.palette.outline}
+            strokeWidth="5"
+          />
+          <path
+            d="M220 139 C222 166 220 187 216 207"
+            stroke={params.palette.outline}
+            strokeWidth="5"
+          />
+          <path d="M43 184 C36 191 39 201 50 202 L61 202 C67 201 68 194 61 190" stroke={params.palette.outline} strokeWidth="5" />
+          <path d="M77 199 C70 207 74 216 86 216 L99 216 C105 214 106 207 98 203" stroke={params.palette.outline} strokeWidth="5" />
+          <path d="M177 201 C169 209 173 219 186 219 L199 219 C205 217 206 209 198 205" stroke={params.palette.outline} strokeWidth="5" />
+          <path d="M213 202 C205 211 209 220 222 220 L236 220 C242 218 243 209 234 205" stroke={params.palette.outline} strokeWidth="5" />
         </g>
 
         <path
-          d="M91 154 C122 124 181 129 227 143 C252 151 282 145 308 125 C334 104 373 110 393 138 C408 159 403 183 382 196 C361 209 338 208 318 197 C306 214 296 238 291 263 C255 278 206 275 154 262 C122 254 93 256 67 269 C55 240 59 193 91 154 Z"
+          d="M66 78 C95 54 144 60 185 73 C205 79 224 70 239 54 C260 32 298 37 316 62 C329 80 326 101 309 113 C290 126 268 125 247 112 C235 129 224 151 221 178 C188 190 143 185 105 168 C81 157 61 162 47 185 C37 149 42 106 66 78 Z"
           fill={params.palette.coat}
           stroke={params.palette.outline}
           strokeLinecap="round"
           strokeLinejoin="round"
-          strokeWidth="4"
+          strokeWidth="5"
+        />
+        <path
+          d="M74 87 C102 66 145 70 181 79 C201 84 220 76 234 63"
+          fill="none"
+          stroke={params.palette.highlight}
+          strokeLinecap="round"
+          strokeWidth="5"
+          opacity="0.55"
         />
 
         <path
-          d="M323 121 C341 98 376 103 399 125 C419 144 417 169 398 186 C374 208 335 201 317 174 C305 154 307 136 323 121 Z"
+          d="M242 54 C260 32 297 36 316 61 C331 81 326 105 306 118 C284 132 252 122 238 96 C230 80 231 64 242 54 Z"
           fill={params.palette.coat}
           stroke={params.palette.outline}
           strokeLinecap="round"
           strokeLinejoin="round"
-          strokeWidth="4"
+          strokeWidth="5"
         />
         <path
-          d="M389 137 C405 139 423 149 431 163 C411 162 398 154 389 137 Z"
+          d="M296 68 C310 70 325 79 333 92 C316 92 303 84 296 68 Z"
           fill={params.palette.coatShade}
           stroke={params.palette.outline}
           strokeLinecap="round"
           strokeLinejoin="round"
-          strokeWidth="4"
+          strokeWidth="5"
         />
         <path
-          d="M319 122 C332 111 358 102 368 112 C374 137 361 173 338 184 C319 177 309 143 319 122 Z"
+          d="M239 51 C252 39 278 30 286 40 C291 65 276 100 255 111 C239 104 229 69 239 51 Z"
           fill={params.palette.ear}
           stroke={params.palette.outline}
           strokeLinecap="round"
           strokeLinejoin="round"
-          strokeWidth="4"
+          strokeWidth="5"
         />
         <ellipse
-          cx="424"
-          cy="170"
-          rx="18"
-          ry="12"
+          cx="327"
+          cy="103"
+          rx="16"
+          ry="11"
           fill={params.palette.spots}
           stroke={params.palette.outline}
           strokeWidth="3"
-          transform="rotate(-9 424 170)"
+          transform="rotate(-9 327 103)"
         />
 
         <g fill={params.palette.spots}>
-          <ellipse cx="126" cy="176" rx="19" ry="15" transform="rotate(8 126 176)" />
-          <ellipse cx="188" cy="171" rx="10" ry="8" transform="rotate(-8 188 171)" />
-          <ellipse cx="242" cy="209" rx="17" ry="15" transform="rotate(-13 242 209)" />
-          <ellipse cx="70" cy="217" rx="11" ry="12" transform="rotate(-20 70 217)" />
-          <ellipse cx="94" cy="244" rx="11" ry="13" transform="rotate(18 94 244)" />
-          <ellipse cx="295" cy="199" rx="8" ry="12" transform="rotate(-18 295 199)" />
-          <ellipse cx="313" cy="156" rx="8" ry="9" />
+          <ellipse cx="105" cy="101" rx="20" ry="15" transform="rotate(5 105 101)" />
+          <ellipse cx="151" cy="89" rx="10" ry="8" transform="rotate(-8 151 89)" />
+          <ellipse cx="196" cy="126" rx="16" ry="15" transform="rotate(-12 196 126)" />
+          <ellipse cx="51" cy="124" rx="10" ry="13" transform="rotate(-20 51 124)" />
+          <ellipse cx="76" cy="150" rx="10" ry="12" transform="rotate(16 76 150)" />
+          <ellipse cx="226" cy="105" rx="8" ry="11" transform="rotate(-18 226 105)" />
+          <ellipse cx="241" cy="82" rx="8" ry="9" />
         </g>
 
         <g fill={params.palette.spots}>
-          <circle cx="369" cy="144" r="6" />
-          <circle cx="393" cy="143" r="5" />
-          <circle cx="418" cy="156" r="4" />
+          <circle cx="279" cy="71" r="6" />
+          <circle cx="302" cy="72" r="5" />
+          <circle cx="320" cy="87" r="4" />
         </g>
 
         <path
-          d="M341 171 C352 188 376 194 396 181"
+          d="M263 97 C274 113 296 117 313 104"
           fill="none"
           stroke={params.palette.smile}
           strokeLinecap="round"
           strokeWidth="4"
         />
         <path
-          d="M398 186 C407 189 416 187 423 181"
+          d="M311 110 C318 113 325 111 331 106"
+          fill="none"
+          stroke={params.palette.outline}
+          strokeLinecap="round"
+          strokeWidth="4"
+        />
+        <path
+          d="M222 123 C213 132 202 138 188 139"
           fill="none"
           stroke={params.palette.outline}
           strokeLinecap="round"
