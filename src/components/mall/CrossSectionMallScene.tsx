@@ -193,7 +193,7 @@ const Walker = ({
   direction: "ltr" | "rtl";
   duration: number;
   delay?: number;
-  children: React.ReactNode;
+  children: ReactNode;
 }) => (
   <div
     className="pointer-events-none absolute inset-0"
