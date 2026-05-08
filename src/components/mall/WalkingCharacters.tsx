@@ -171,12 +171,12 @@ const renderById = (id: string, { className = "", flip = false, colorOverride, p
           50%      { transform: rotate(28deg); }
         }
         @keyframes leg-swing-a {
-          0%, 100% { transform: rotate(10deg); }
-          50%      { transform: rotate(-10deg); }
+          0%, 100% { transform: rotate(18deg); }
+          50%      { transform: rotate(-18deg); }
         }
         @keyframes leg-swing-b {
-          0%, 100% { transform: rotate(-10deg); }
-          50%      { transform: rotate(10deg); }
+          0%, 100% { transform: rotate(-18deg); }
+          50%      { transform: rotate(18deg); }
         }
         @keyframes body-bob {
           0%, 100% { transform: translateY(0); }
