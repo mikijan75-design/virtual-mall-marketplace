@@ -1,3 +1,5 @@
+import { useId } from "react";
+
 import {
   walkingCharacters,
   type CharacterVectorShape,
@@ -94,11 +96,15 @@ const limbCategory = (id: string): "armA" | "armB" | "legA" | "legB" | null => {
 };
 
 const renderById = (id: string, { className = "", flip = false, colorOverride, phase = 0 }: WalkingCharProps) => {
+  const instanceId = useId();
   const character = walkingCharacters.find((c) => c.id === id)!;
   const { viewBox } = character.illustration;
   const shoulderY = viewBox.height * 0.34;
   const hipY = viewBox.height * 0.6;
   const pivotX = viewBox.width / 2;
+  const lowerLegY = viewBox.height * 0.77;
+  const upperLegClipId = `${instanceId}-upper-leg`;
+  const lowerLegClipId = `${instanceId}-lower-leg`;
   const frontHipX = viewBox.width * 0.56;
   const rearHipX = viewBox.width * 0.42;
   const delay = `${(phase % 1) * -0.7}s`;
@@ -125,9 +131,13 @@ const renderById = (id: string, { className = "", flip = false, colorOverride, p
     pivot: { x: number; y: number } | null,
     animation: string | null,
     offsetX = 0,
+    clipPathId?: string,
   ) =>
     shapes.length === 0 ? null : (
-      <g transform={offsetX !== 0 ? `translate(${offsetX} 0)` : undefined}>
+      <g
+        transform={offsetX !== 0 ? `translate(${offsetX} 0)` : undefined}
+        clipPath={clipPathId ? `url(#${clipPathId})` : undefined}
+      >
         <g
           style={
             pivot && animation
