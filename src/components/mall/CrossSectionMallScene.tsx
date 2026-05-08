@@ -171,66 +171,30 @@ const Person = ({
 
 
 const Dog = ({ className = "", flip = false }: { className?: string; flip?: boolean }) => (
-  // Cartoon dalmatian puppy: cream body, large black spots, big floppy black ear,
-  // curled tail, red smile, gray shadow. On a red leash to an adjacent person (upper-left).
-  <svg
-    className={`absolute z-40 h-9 w-12 md:h-12 md:w-16 ${className}`}
-    viewBox="0 0 60 45"
-    style={{ transform: flip ? "scaleX(-1)" : undefined, overflow: "visible" }}
+  // Refined spotted dog illustration (from PR #18) with a red leash overlay
+  // that connects the dog to a nearby person on the upper-left.
+  <div
+    className={`absolute z-40 h-12 w-[5.25rem] md:h-16 md:w-28 ${className}`}
+    style={{ transform: flip ? "scaleX(-1)" : undefined }}
     aria-hidden="true"
   >
-    {(() => {
-      const cream = "hsl(40,55%,96%)";
-      const outline = "hsl(30,18%,30%)";
-      const black = "hsl(0,0%,12%)";
-      const red = "hsl(0,75%,48%)";
-      const shadow = "hsl(28,18%,75%)";
-      return (
-        <>
-          {/* Leash up-left to the person's hand */}
-          <path d="M22 14 Q14 6 4 -2" stroke={red} strokeWidth="1.1" fill="none" strokeLinecap="round" />
-          {/* Ground shadow */}
-          <ellipse cx="30" cy="40" rx="14" ry="1.8" fill={shadow} opacity="0.85" />
-          {/* Curled tail up */}
-          <path d="M12 22 Q6 18 8 11" stroke={cream} strokeWidth="2.6" fill="none" strokeLinecap="round" />
-          <path d="M12 22 Q6 18 8 11" stroke={outline} strokeWidth="0.7" fill="none" strokeLinecap="round" />
-          {/* Body */}
-          <path
-            d="M14 28 Q12 20 22 19 Q34 17 44 21 Q52 24 50 31 Q48 36 40 36 L20 36 Q13 35 14 28 Z"
-            fill={cream}
-            stroke={outline}
-            strokeWidth="0.8"
-          />
-          {/* Front legs */}
-          <path d="M22 34 Q21 40 22.5 41 L25 41 Q26 40 25 34 Z" fill={cream} stroke={outline} strokeWidth="0.7" />
-          <path d="M37 34 Q36 40 37.5 41 L40 41 Q41 40 40 34 Z" fill={cream} stroke={outline} strokeWidth="0.7" />
-          {/* Back leg hint */}
-          <path d="M16 32 Q14 39 16 41 L18 41 Q19 40 18 32 Z" fill={cream} stroke={outline} strokeWidth="0.7" />
-          {/* Body spots */}
-          <ellipse cx="22" cy="26" rx="2.6" ry="2.1" fill={black} />
-          <ellipse cx="29" cy="24" rx="3" ry="2.4" fill={black} />
-          <ellipse cx="33" cy="30" rx="2.2" ry="1.6" fill={black} />
-          <ellipse cx="40" cy="27" rx="2.6" ry="2" fill={black} />
-          {/* Leg spot */}
-          <ellipse cx="39" cy="38" rx="1.6" ry="1.2" fill={black} />
-          {/* Head */}
-          <ellipse cx="46" cy="20" rx="8.5" ry="7.5" fill={cream} stroke={outline} strokeWidth="0.8" />
-          {/* Snout */}
-          <ellipse cx="52" cy="23" rx="4" ry="3.2" fill={cream} stroke={outline} strokeWidth="0.7" />
-          {/* Big floppy black ear */}
-          <path d="M44 13 Q40 12 39 20 Q41 23 45 22 Q47 18 46 13 Z" fill={black} stroke={outline} strokeWidth="0.5" />
-          {/* Eye */}
-          <circle cx="49" cy="19" r="0.9" fill={black} />
-          {/* Nose */}
-          <ellipse cx="55" cy="22" rx="1.4" ry="1.1" fill={black} />
-          {/* Smile */}
-          <path d="M51 24.5 Q53 27 55 24.5" stroke={red} strokeWidth="0.7" fill="none" strokeLinecap="round" />
-          {/* Collar */}
-          <path d="M40 24 Q44 27 48 25" stroke={red} strokeWidth="1.2" fill="none" strokeLinecap="round" />
-        </>
-      );
-    })()}
-  </svg>
+    <SpottedDogIllustration style={{ width: "100%", height: "100%" }} />
+    {/* Leash overlay: from dog's collar area up-left to a person's hand */}
+    <svg
+      viewBox="0 0 100 100"
+      preserveAspectRatio="none"
+      className="absolute inset-0 h-full w-full"
+      style={{ overflow: "visible", pointerEvents: "none" }}
+    >
+      <path
+        d="M58 52 Q35 30 -8 -18"
+        stroke="hsl(0,75%,48%)"
+        strokeWidth="1.4"
+        fill="none"
+        strokeLinecap="round"
+      />
+    </svg>
+  </div>
 );
 
 const Stroller = ({ className = "", flip = false }: { className?: string; flip?: boolean }) => (
