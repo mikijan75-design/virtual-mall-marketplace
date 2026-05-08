@@ -640,7 +640,11 @@ const CrossSectionMallScene = ({ floors }: CrossSectionMallSceneProps) => {
               )}
               {index === 1 && (
                 <>
-                  <WalkingCharacter className="left-[22%] bottom-9" gender="male" />
+                  <WalkingCharacter
+                    className="left-[22%] bottom-9"
+                    gender="male"
+                    colorOverride={{ jacket: "#f4f1ea", "jacket-highlight": "#ffffff", "jacket-shadow": "#c8c2b4" }}
+                  />
                   <WalkingCharacter className="right-[24%] bottom-9" flip gender="male" />
                   <WalkingCharacter
                     className="left-[48%] bottom-9"
@@ -664,7 +668,12 @@ const CrossSectionMallScene = ({ floors }: CrossSectionMallSceneProps) => {
                   <Dog className="left-[31%] bottom-1" />
                   {/* Family walking right: dad, mom, child */}
                   <WalkingCharacter className="left-[18%] bottom-2" gender="male" />
-                  <WalkingCharacter className="left-[22%] bottom-2" gender="female" seed={3} />
+                  <WalkingCharacter
+                    className="left-[22%] bottom-2"
+                    gender="female"
+                    seed={3}
+                    colorOverride={{ jacket: "#ec6fa3", "jacket-highlight": "#f59ac0", "jacket-shadow": "#b94c7c" }}
+                  />
                   <svg className="absolute left-[25.5%] bottom-2 z-40 h-8 w-5 md:h-11 md:w-6" viewBox="0 0 30 60" aria-hidden="true">
                     {/* Child profile head */}
                     <path d="M11.5 10 Q11.5 5.8 15 5.8 Q19 5.8 19.2 9.6 Q19.4 11 19 12.2 L19.6 12.6 Q20.2 13 19.6 13.4 L18.8 13.6 Q19 14.2 18.4 14.4 L17.6 14.4 Q17.6 15 17.2 15.2 L15.6 15.2 Q14.4 15.2 13.4 14.4 Q11.6 13 11.5 10 Z" fill="hsl(31,45%,72%)" stroke="hsl(25,35%,42%)" strokeWidth="0.7" />
