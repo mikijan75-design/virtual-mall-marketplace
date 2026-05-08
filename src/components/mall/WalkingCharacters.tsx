@@ -13,24 +13,31 @@ const fallbackColors: Record<string, string> = {
   white: "#ffffff",
 };
 
-const colorFor = (character: WalkingCharacterSample, token?: string) => {
+const colorFor = (
+  character: WalkingCharacterSample,
+  token?: string,
+  overrides?: Record<string, string>,
+) => {
   if (!token) return "none";
+  if (overrides && overrides[token]) return overrides[token];
   return character.palette.find((s) => s.token === token)?.hex ?? fallbackColors[token] ?? token;
 };
 
 const VectorShape = ({
   character,
   shape,
+  overrides,
 }: {
   character: WalkingCharacterSample;
   shape: CharacterVectorShape;
+  overrides?: Record<string, string>;
 }) => {
   if (shape.kind === "ellipse") {
     return (
       <ellipse
         cx={shape.cx} cy={shape.cy} rx={shape.rx} ry={shape.ry}
-        fill={colorFor(character, shape.fillToken)}
-        stroke={colorFor(character, shape.strokeToken)}
+        fill={colorFor(character, shape.fillToken, overrides)}
+        stroke={colorFor(character, shape.strokeToken, overrides)}
         strokeWidth={shape.strokeWidth} opacity={shape.opacity}
       />
     );
@@ -39,8 +46,8 @@ const VectorShape = ({
     return (
       <circle
         cx={shape.cx} cy={shape.cy} r={shape.r}
-        fill={colorFor(character, shape.fillToken)}
-        stroke={colorFor(character, shape.strokeToken)}
+        fill={colorFor(character, shape.fillToken, overrides)}
+        stroke={colorFor(character, shape.strokeToken, overrides)}
         strokeWidth={shape.strokeWidth} opacity={shape.opacity}
       />
     );
@@ -49,7 +56,7 @@ const VectorShape = ({
     return (
       <line
         x1={shape.x1} y1={shape.y1} x2={shape.x2} y2={shape.y2}
-        stroke={colorFor(character, shape.strokeToken)}
+        stroke={colorFor(character, shape.strokeToken, overrides)}
         strokeWidth={shape.strokeWidth} strokeLinecap={shape.lineCap}
         opacity={shape.opacity}
       />
@@ -58,8 +65,8 @@ const VectorShape = ({
   return (
     <path
       d={shape.d}
-      fill={colorFor(character, shape.fillToken)}
-      stroke={colorFor(character, shape.strokeToken)}
+      fill={colorFor(character, shape.fillToken, overrides)}
+      stroke={colorFor(character, shape.strokeToken, overrides)}
       strokeWidth={shape.strokeWidth}
       strokeLinecap={shape.lineCap}
       strokeLinejoin={shape.lineJoin}
@@ -71,9 +78,10 @@ const VectorShape = ({
 interface WalkingCharProps {
   className?: string;
   flip?: boolean;
+  colorOverride?: Record<string, string>;
 }
 
-const renderById = (id: string, { className = "", flip = false }: WalkingCharProps) => {
+const renderById = (id: string, { className = "", flip = false, colorOverride }: WalkingCharProps) => {
   const character = walkingCharacters.find((c) => c.id === id)!;
   const { viewBox } = character.illustration;
   return (
@@ -93,13 +101,13 @@ const renderById = (id: string, { className = "", flip = false }: WalkingCharPro
         opacity={character.illustration.shadow.opacity}
       />
       {character.illustration.backLayer.map((s) => (
-        <VectorShape key={s.id} character={character} shape={s} />
+        <VectorShape key={s.id} character={character} shape={s} overrides={colorOverride} />
       ))}
       {character.illustration.bodyLayer.map((s) => (
-        <VectorShape key={s.id} character={character} shape={s} />
+        <VectorShape key={s.id} character={character} shape={s} overrides={colorOverride} />
       ))}
       {character.illustration.detailLayer.map((s) => (
-        <VectorShape key={s.id} character={character} shape={s} />
+        <VectorShape key={s.id} character={character} shape={s} overrides={colorOverride} />
       ))}
     </svg>
   );
@@ -126,17 +134,19 @@ export const WalkingCharacter = ({
   flip = false,
   gender = "female",
   seed = 0,
+  colorOverride,
 }: {
   className?: string;
   flip?: boolean;
   gender?: "male" | "female";
   seed?: number;
+  colorOverride?: Record<string, string>;
 }) => {
   if (gender === "male") {
-    return <CharDarkManJacket className={className} flip={flip} />;
+    return <CharDarkManJacket className={className} flip={flip} colorOverride={colorOverride} />;
   }
   const Design = FEMALE_DESIGNS[seed % FEMALE_DESIGNS.length];
-  return <Design className={className} flip={flip} />;
+  return <Design className={className} flip={flip} colorOverride={colorOverride} />;
 };
 
 export default WalkingCharacter;
