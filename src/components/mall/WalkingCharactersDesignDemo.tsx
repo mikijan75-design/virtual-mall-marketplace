@@ -110,12 +110,34 @@ const WalkingFigure = ({ character }: { character: WalkingCharacterSample }) => 
       {character.illustration.detailLayer.map((shape) => (
         <VectorShape key={shape.id} character={character} shape={shape} />
       ))}
+      {character.illustration.microLayer?.map((shape) => (
+        <VectorShape key={shape.id} character={character} shape={shape} />
+      ))}
       {character.illustration.annotationLayer.map((shape) => (
         <VectorShape key={shape.id} character={character} shape={shape} />
       ))}
     </g>
   );
 };
+
+const SamplePointOverlay = ({ character }: { character: WalkingCharacterSample }) => (
+  <g aria-label={`${character.label} source sample points`}>
+    {character.samplePoints.map((point, index) => (
+      <g key={point.id}>
+        <circle
+          cx={point.x}
+          cy={point.y}
+          r={index < 5 ? 4.4 : 3.2}
+          fill={point.hex}
+          stroke="#ffffff"
+          strokeWidth="1.7"
+          opacity="0.9"
+        />
+        <circle cx={point.x} cy={point.y} r={index < 5 ? 6.8 : 5.2} fill="none" stroke="#0f172a" strokeWidth="0.7" opacity="0.35" />
+      </g>
+    ))}
+  </g>
+);
 
 const PaletteSwatches = ({ character }: { character: WalkingCharacterSample }) => (
   <div className="mt-3 flex flex-wrap gap-1.5" aria-label={`${character.label} sampled colors`}>
@@ -156,12 +178,16 @@ const CharacterSummaryCard = ({ character }: { character: WalkingCharacterSample
         {character.proportions.shoulderWidthPx}px, hips {character.proportions.hipWidthPx}px, legs{" "}
         {character.proportions.legLengthPx}px
       </div>
+      <div className="rounded-xl bg-slate-50 p-3">
+        <span className="font-bold text-slate-900">Micro paths:</span>{" "}
+        {character.illustration.microLayer?.length ?? 0} sampled strands, seams, fingers, cuffs, and shoe edges
+      </div>
     </div>
 
     <PaletteSwatches character={character} />
 
     <dl className="mt-4 grid grid-cols-2 gap-2 text-xs">
-      {character.samplePoints.slice(0, 4).map((point) => (
+      {character.samplePoints.slice(0, 6).map((point) => (
         <div key={point.id} className="rounded-xl border border-slate-100 bg-slate-50 p-2">
           <dt className="font-bold text-slate-900">{point.label}</dt>
           <dd className="mt-0.5 text-slate-500">
@@ -183,7 +209,8 @@ const WalkingCharactersDesignDemo = () => (
         </h2>
         <p className="mt-3 text-base leading-7 text-slate-600">
           The four people from the reference are now represented as structured data and rendered from that same data:
-          bounds, pose, palette, clothing layers, hair, face details, and stride annotations.
+          bounds, pose, sampled pixels, palette, clothing layers, hair strands, face details, fingers, shoe edges,
+          and stride annotations.
         </p>
       </div>
 
@@ -215,6 +242,7 @@ const WalkingCharactersDesignDemo = () => (
                 opacity="0.45"
               />
               <WalkingFigure character={character} />
+              <SamplePointOverlay character={character} />
               <text x={character.bounds.x} y={character.bounds.y - 10} fill="#334155" fontSize="16" fontWeight="800">
                 {character.order}. {character.presentation}
               </text>

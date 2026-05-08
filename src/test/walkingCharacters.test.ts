@@ -9,11 +9,13 @@ describe("walking character samples", () => {
     for (const character of walkingCharacters) {
       expect(character.bounds.width).toBeGreaterThan(100);
       expect(character.bounds.height).toBeGreaterThan(275);
-      expect(character.samplePoints.length).toBeGreaterThanOrEqual(5);
+      expect(character.samplePoints.length).toBeGreaterThanOrEqual(9);
       expect(character.measurements.length).toBeGreaterThanOrEqual(4);
+      expect(character.palette.length).toBeGreaterThanOrEqual(9);
       expect(character.illustration.backLayer.length).toBeGreaterThan(0);
       expect(character.illustration.bodyLayer.length).toBeGreaterThan(0);
       expect(character.illustration.detailLayer.length).toBeGreaterThan(0);
+      expect(character.illustration.microLayer?.length).toBeGreaterThanOrEqual(12);
       expect(character.poseAngles.strideLengthPx).toBeGreaterThan(70);
     }
   });
