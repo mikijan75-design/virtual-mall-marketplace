@@ -1,5 +1,3 @@
-import { useId } from "react";
-
 import {
   walkingCharacters,
   type CharacterVectorShape,
@@ -96,17 +94,11 @@ const limbCategory = (id: string): "armA" | "armB" | "legA" | "legB" | null => {
 };
 
 const renderById = (id: string, { className = "", flip = false, colorOverride, phase = 0 }: WalkingCharProps) => {
-  const instanceId = useId();
   const character = walkingCharacters.find((c) => c.id === id)!;
   const { viewBox } = character.illustration;
   const shoulderY = viewBox.height * 0.34;
   const hipY = viewBox.height * 0.6;
   const pivotX = viewBox.width / 2;
-  const lowerLegY = viewBox.height * 0.77;
-  const upperLegClipId = `${instanceId}-upper-leg`;
-  const lowerLegClipId = `${instanceId}-lower-leg`;
-  const frontHipX = viewBox.width * 0.56;
-  const rearHipX = viewBox.width * 0.42;
   const delay = `${(phase % 1) * -0.7}s`;
 
   const partition = (shapes: typeof character.illustration.backLayer) => {
@@ -130,30 +122,23 @@ const renderById = (id: string, { className = "", flip = false, colorOverride, p
     shapes: CharacterVectorShape[],
     pivot: { x: number; y: number } | null,
     animation: string | null,
-    offsetX = 0,
-    clipPathId?: string,
   ) =>
     shapes.length === 0 ? null : (
       <g
-        transform={offsetX !== 0 ? `translate(${offsetX} 0)` : undefined}
-        clipPath={clipPathId ? `url(#${clipPathId})` : undefined}
+        style={
+          pivot && animation
+            ? {
+                transformBox: "view-box",
+                transformOrigin: `${pivot.x}px ${pivot.y}px`,
+                animation,
+                animationDelay: delay,
+              }
+            : undefined
+        }
       >
-        <g
-          style={
-            pivot && animation
-              ? {
-                  transformBox: "view-box",
-                  transformOrigin: `${pivot.x}px ${pivot.y}px`,
-                  animation,
-                  animationDelay: delay,
-                }
-              : undefined
-          }
-        >
-          {shapes.map((s) => (
-            <VectorShape key={s.id} character={character} shape={s} overrides={colorOverride} />
-          ))}
-        </g>
+        {shapes.map((s) => (
+          <VectorShape key={s.id} character={character} shape={s} overrides={colorOverride} />
+        ))}
       </g>
     );
 
@@ -161,12 +146,10 @@ const renderById = (id: string, { className = "", flip = false, colorOverride, p
   const body = partition(character.illustration.bodyLayer);
   const detail = partition(character.illustration.detailLayer);
 
-  const armSwingA = "arm-swing-a 1.15s ease-in-out infinite";
-  const armSwingB = "arm-swing-b 1.15s ease-in-out infinite";
-  const legSwingA = "leg-swing-a 1.15s ease-in-out infinite";
-  const legSwingB = "leg-swing-b 1.15s ease-in-out infinite";
-  const lowerLegSwingA = "lower-leg-swing-a 1.15s ease-in-out infinite";
-  const lowerLegSwingB = "lower-leg-swing-b 1.15s ease-in-out infinite";
+  const armSwingA = "limb-swing-a 1.15s ease-in-out infinite";
+  const armSwingB = "limb-swing-b 1.15s ease-in-out infinite";
+  const legSwingA = "limb-swing-a 1.15s ease-in-out infinite";
+  const legSwingB = "limb-swing-b 1.15s ease-in-out infinite";
 
   return (
     <svg
@@ -177,29 +160,13 @@ const renderById = (id: string, { className = "", flip = false, colorOverride, p
       aria-hidden="true"
     >
       <style>{`
-        @keyframes arm-swing-a {
-          0%, 100% { transform: rotate(28deg); }
-          50%      { transform: rotate(-28deg); }
+        @keyframes limb-swing-a {
+          0%, 100% { transform: rotate(14deg); }
+          50%      { transform: rotate(-14deg); }
         }
-        @keyframes arm-swing-b {
-          0%, 100% { transform: rotate(-28deg); }
-          50%      { transform: rotate(28deg); }
-        }
-        @keyframes leg-swing-a {
-          0%, 100% { transform: rotate(0deg); }
-          50%      { transform: rotate(0deg); }
-        }
-        @keyframes leg-swing-b {
-          0%, 100% { transform: rotate(0deg); }
-          50%      { transform: rotate(0deg); }
-        }
-        @keyframes lower-leg-swing-a {
-          0%, 100% { transform: translateX(20px) rotate(10deg); }
-          50%      { transform: translateX(-20px) rotate(-10deg); }
-        }
-        @keyframes lower-leg-swing-b {
-          0%, 100% { transform: translateX(-20px) rotate(-10deg); }
-          50%      { transform: translateX(20px) rotate(10deg); }
+        @keyframes limb-swing-b {
+          0%, 100% { transform: rotate(-14deg); }
+          50%      { transform: rotate(14deg); }
         }
         @keyframes body-bob {
           0%, 100% { transform: translateY(0); }
@@ -207,14 +174,6 @@ const renderById = (id: string, { className = "", flip = false, colorOverride, p
           50%      { transform: translateY(0); }
         }
       `}</style>
-      <defs>
-        <clipPath id={upperLegClipId}>
-          <rect x="0" y="0" width={viewBox.width} height={lowerLegY} />
-        </clipPath>
-        <clipPath id={lowerLegClipId}>
-          <rect x="0" y={lowerLegY} width={viewBox.width} height={viewBox.height - lowerLegY} />
-        </clipPath>
-      </defs>
       <ellipse
         cx={character.illustration.shadow.cx}
         cy={character.illustration.shadow.cy}
@@ -232,29 +191,23 @@ const renderById = (id: string, { className = "", flip = false, colorOverride, p
         }}
       >
         {/* Limbs swung behind the torso (rendered first so torso covers them) */}
-        {renderGroup(back.legB, { x: pivotX, y: hipY }, legSwingB, 12, upperLegClipId)}
-        {renderGroup(body.legB, { x: pivotX, y: hipY }, legSwingB, 12, upperLegClipId)}
-        {renderGroup(back.legB, { x: pivotX, y: lowerLegY }, lowerLegSwingB, 12, lowerLegClipId)}
-        {renderGroup(body.legB, { x: pivotX, y: lowerLegY }, lowerLegSwingB, 12, lowerLegClipId)}
+        {renderGroup(back.legB, { x: pivotX, y: hipY }, legSwingB)}
+        {renderGroup(body.legB, { x: pivotX, y: hipY }, legSwingB)}
         {renderGroup(back.armA, { x: pivotX, y: shoulderY }, armSwingA)}
         {renderGroup(body.armA, { x: pivotX, y: shoulderY }, armSwingA)}
         {/* Static base layers */}
         {renderGroup(back.base, null, null)}
         {renderGroup(body.base, null, null)}
         {/* Front-facing limbs on top */}
-        {renderGroup(back.legA, { x: pivotX, y: hipY }, legSwingA, -12, upperLegClipId)}
-        {renderGroup(body.legA, { x: pivotX, y: hipY }, legSwingA, -12, upperLegClipId)}
-        {renderGroup(back.legA, { x: pivotX, y: lowerLegY }, lowerLegSwingA, -12, lowerLegClipId)}
-        {renderGroup(body.legA, { x: pivotX, y: lowerLegY }, lowerLegSwingA, -12, lowerLegClipId)}
+        {renderGroup(back.legA, { x: pivotX, y: hipY }, legSwingA)}
+        {renderGroup(body.legA, { x: pivotX, y: hipY }, legSwingA)}
         {renderGroup(back.armB, { x: pivotX, y: shoulderY }, armSwingB)}
         {renderGroup(body.armB, { x: pivotX, y: shoulderY }, armSwingB)}
         {/* Details (face, accessories) — also include any limb details */}
-        {renderGroup(detail.legB, { x: pivotX, y: hipY }, legSwingB, 12, upperLegClipId)}
-        {renderGroup(detail.legB, { x: pivotX, y: lowerLegY }, lowerLegSwingB, 12, lowerLegClipId)}
+        {renderGroup(detail.legB, { x: pivotX, y: hipY }, legSwingB)}
         {renderGroup(detail.armA, { x: pivotX, y: shoulderY }, armSwingA)}
         {renderGroup(detail.base, null, null)}
-        {renderGroup(detail.legA, { x: pivotX, y: hipY }, legSwingA, -12, upperLegClipId)}
-        {renderGroup(detail.legA, { x: pivotX, y: lowerLegY }, lowerLegSwingA, -12, lowerLegClipId)}
+        {renderGroup(detail.legA, { x: pivotX, y: hipY }, legSwingA)}
         {renderGroup(detail.armB, { x: pivotX, y: shoulderY }, armSwingB)}
       </g>
     </svg>
