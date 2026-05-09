@@ -81,6 +81,10 @@ interface WalkingCharProps {
   colorOverride?: Record<string, string>;
   /** Stagger the limb-swing phase so a crowd doesn't move in lockstep. */
   phase?: number;
+  /** Show a shopping bag in the front hand. */
+  withBag?: boolean;
+  /** Optional bag color (hex). */
+  bagColor?: string;
 }
 
 const limbCategory = (id: string): "armA" | "armB" | "legA" | "legB" | null => {
@@ -93,7 +97,7 @@ const limbCategory = (id: string): "armA" | "armB" | "legA" | "legB" | null => {
   return null;
 };
 
-const renderById = (id: string, { className = "", flip = false, colorOverride, phase = 0 }: WalkingCharProps) => {
+const renderById = (id: string, { className = "", flip = false, colorOverride, phase = 0, withBag = false, bagColor = "#d94f6b" }: WalkingCharProps) => {
   const character = walkingCharacters.find((c) => c.id === id)!;
   const { viewBox } = character.illustration;
   const shoulderY = viewBox.height * 0.34;
@@ -150,6 +154,52 @@ const renderById = (id: string, { className = "", flip = false, colorOverride, p
   const armSwingB = "limb-swing-b 1.15s ease-in-out infinite";
   const legSwingA = "limb-swing-a 1.15s ease-in-out infinite";
   const legSwingB = "limb-swing-b 1.15s ease-in-out infinite";
+
+  // Shopping bag drawn in viewBox units, anchored near the front hand,
+  // and rendered inside the armB swing group so it sways with the arm.
+  const bagW = 22;
+  const bagH = 26;
+  const bagX = pivotX + 8;
+  const bagY = viewBox.height * 0.66;
+  const bag = withBag ? (
+    <g
+      style={{
+        transformBox: "view-box",
+        transformOrigin: `${pivotX}px ${shoulderY}px`,
+        animation: armSwingB,
+        animationDelay: delay,
+      }}
+    >
+      {/* Handles */}
+      <path
+        d={`M ${bagX + 3} ${bagY} q ${(bagW - 6) / 2} -8 ${bagW - 6} 0`}
+        fill="none"
+        stroke="#3f3029"
+        strokeWidth={1.4}
+        strokeLinecap="round"
+      />
+      {/* Bag body */}
+      <rect
+        x={bagX}
+        y={bagY}
+        width={bagW}
+        height={bagH}
+        rx={2}
+        fill={bagColor}
+        stroke="#3f3029"
+        strokeWidth={1.2}
+      />
+      {/* Subtle stripe */}
+      <rect
+        x={bagX + 2}
+        y={bagY + bagH * 0.55}
+        width={bagW - 4}
+        height={2}
+        fill="#ffffff"
+        opacity={0.5}
+      />
+    </g>
+  ) : null;
 
   return (
     <svg
@@ -209,6 +259,7 @@ const renderById = (id: string, { className = "", flip = false, colorOverride, p
         {renderGroup(detail.base, null, null)}
         {renderGroup(detail.legA, { x: pivotX, y: hipY }, legSwingA)}
         {renderGroup(detail.armB, { x: pivotX, y: shoulderY }, armSwingB)}
+        {bag}
       </g>
     </svg>
   );
@@ -237,6 +288,8 @@ export const WalkingCharacter = ({
   seed = 0,
   colorOverride,
   phase,
+  withBag,
+  bagColor,
 }: {
   className?: string;
   flip?: boolean;
@@ -244,13 +297,19 @@ export const WalkingCharacter = ({
   seed?: number;
   colorOverride?: Record<string, string>;
   phase?: number;
+  withBag?: boolean;
+  bagColor?: string;
 }) => {
   const resolvedPhase = phase ?? (seed * 0.137) % 1;
+  // Default: ~40% of characters carry a bag, deterministically by seed.
+  const carriesBag = withBag ?? (seed % 5 < 2);
+  const palette = ["#d94f6b", "#2f6f8f", "#c98a2b", "#5a8a3a", "#7a4ea8"];
+  const resolvedBagColor = bagColor ?? palette[seed % palette.length];
   if (gender === "male") {
-    return <CharDarkManJacket className={className} flip={flip} colorOverride={colorOverride} phase={resolvedPhase} />;
+    return <CharDarkManJacket className={className} flip={flip} colorOverride={colorOverride} phase={resolvedPhase} withBag={carriesBag} bagColor={resolvedBagColor} />;
   }
   const Design = FEMALE_DESIGNS[seed % FEMALE_DESIGNS.length];
-  return <Design className={className} flip={flip} colorOverride={colorOverride} phase={resolvedPhase} />;
+  return <Design className={className} flip={flip} colorOverride={colorOverride} phase={resolvedPhase} withBag={carriesBag} bagColor={resolvedBagColor} />;
 };
 
 export default WalkingCharacter;
