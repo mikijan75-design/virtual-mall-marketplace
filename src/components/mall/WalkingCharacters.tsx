@@ -155,12 +155,27 @@ const renderById = (id: string, { className = "", flip = false, colorOverride, p
   const legSwingA = "limb-swing-a 1.15s ease-in-out infinite";
   const legSwingB = "limb-swing-b 1.15s ease-in-out infinite";
 
-  // Shopping bag drawn in viewBox units, anchored near the front hand,
+  // Find the front hand position from the character data so the bag hangs
+  // exactly off the hand for each character design.
+  const allShapes = [
+    ...character.illustration.backLayer,
+    ...character.illustration.bodyLayer,
+    ...character.illustration.detailLayer,
+  ];
+  const handShape = allShapes.find((s) => s.id === "front-hand") as
+    | { kind: "circle"; cx: number; cy: number; r: number }
+    | undefined;
+  const handX = handShape?.cx ?? pivotX + 12;
+  const handY = handShape?.cy ?? viewBox.height * 0.6;
+
+  // Shopping bag drawn in viewBox units, anchored to the front hand,
   // and rendered inside the armB swing group so it sways with the arm.
-  const bagW = 22;
-  const bagH = 26;
-  const bagX = pivotX + 8;
-  const bagY = viewBox.height * 0.66;
+  const bagW = 34;
+  const bagH = 40;
+  const bagX = handX - bagW / 2;
+  const bagY = handY + 4; // hangs just below the hand
+  const handleInset = 7;
+  const handleRise = 10;
   const bag = withBag ? (
     <g
       style={{
@@ -170,33 +185,62 @@ const renderById = (id: string, { className = "", flip = false, colorOverride, p
         animationDelay: delay,
       }}
     >
-      {/* Handles */}
+      {/* Soft drop shadow under bag */}
+      <ellipse
+        cx={handX}
+        cy={bagY + bagH + 2}
+        rx={bagW / 2}
+        ry={1.6}
+        fill="#1f2937"
+        opacity={0.18}
+      />
+      {/* Handle (loops over the hand) */}
       <path
-        d={`M ${bagX + 3} ${bagY} q ${(bagW - 6) / 2} -8 ${bagW - 6} 0`}
+        d={`M ${bagX + handleInset} ${bagY + 1} C ${bagX + handleInset} ${bagY - handleRise}, ${bagX + bagW - handleInset} ${bagY - handleRise}, ${bagX + bagW - handleInset} ${bagY + 1}`}
         fill="none"
         stroke="#3f3029"
-        strokeWidth={1.4}
+        strokeWidth={1.6}
         strokeLinecap="round"
       />
       {/* Bag body */}
-      <rect
-        x={bagX}
-        y={bagY}
-        width={bagW}
-        height={bagH}
-        rx={2}
-        fill={bagColor}
-        stroke="#3f3029"
-        strokeWidth={1.2}
-      />
-      {/* Subtle stripe */}
-      <rect
-        x={bagX + 2}
-        y={bagY + bagH * 0.55}
-        width={bagW - 4}
-        height={2}
+      <path
+        d={`M ${bagX} ${bagY}
+            L ${bagX + bagW} ${bagY}
+            L ${bagX + bagW - 1.5} ${bagY + bagH}
+            L ${bagX + 1.5} ${bagY + bagH} Z`}
         fill="#ffffff"
+        stroke="#3f3029"
+        strokeWidth={1.3}
+        strokeLinejoin="round"
+      />
+      {/* Soft side shading */}
+      <path
+        d={`M ${bagX + bagW - 5} ${bagY + 2}
+            L ${bagX + bagW - 1.5} ${bagY + bagH - 1}`}
+        stroke="#3f3029"
+        strokeWidth={0.8}
+        strokeLinecap="round"
+        opacity={0.18}
+      />
+      {/* Folded top edge */}
+      <line
+        x1={bagX + 1}
+        y1={bagY + 2}
+        x2={bagX + bagW - 1}
+        y2={bagY + 2}
+        stroke="#3f3029"
+        strokeWidth={0.8}
         opacity={0.5}
+      />
+      {/* Small accent label */}
+      <rect
+        x={bagX + bagW / 2 - 4}
+        y={bagY + bagH * 0.45}
+        width={8}
+        height={3}
+        rx={0.6}
+        fill={bagColor}
+        opacity={0.85}
       />
     </g>
   ) : null;
