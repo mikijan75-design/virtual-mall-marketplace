@@ -673,7 +673,10 @@ const StorePage = () => {
   }
 
   return (
-    <div className="min-h-screen bg-background">
+    <div
+      className="min-h-screen bg-background"
+      style={store.id === "s15" ? { fontFamily: '"Amatic SC", "Noto Sans Hebrew", cursive' } : undefined}
+    >
       <MallHeader />
       <PageTracker storeId={store.id} />
       <BackButton />
@@ -840,7 +843,7 @@ const StorePage = () => {
               <div className="flex flex-col gap-4" dir="rtl">
                 <div className="grid grid-cols-[3fr_7fr] gap-4 items-stretch">
                   <div className="aspect-[3/2] rounded-lg bg-muted border border-border overflow-hidden">
-                    <img src={tuli1} alt="טולי" className="w-full h-full object-cover" />
+                    <img src={tuli1} alt="טולי" className="w-full h-full object-cover object-right-top" />
                   </div>
                   <div className="rounded-lg bg-muted border border-border p-5 text-right">
                     <h3 className="text-xl font-frank font-bold text-foreground mb-3">
@@ -858,9 +861,9 @@ const StorePage = () => {
                       כל המוצרים הם פרי יצירתה של טולי וכל אחד הוא מעופיין ובעל תכונות אישיות, היצירה והיזמות הן מעבר למלאכת יד אלה רצון להעניק לכם ערך מוסף וכלים לחיים.
                     </p>
                   </div>
-                  <div className="grid grid-cols-4 gap-3">
+                  <div className="grid grid-cols-4 gap-3 h-full">
                     {[tuliP1, tuliP2, tuliP3, tuliP4].map((src, i) => (
-                      <div key={i} className="rounded-lg bg-muted border border-border overflow-hidden aspect-square">
+                      <div key={i} className="rounded-lg bg-muted border border-border overflow-hidden h-full">
                         <img src={src} alt={`מוצר ${i + 1}`} className="w-full h-full object-cover" loading="lazy" />
                       </div>
                     ))}
