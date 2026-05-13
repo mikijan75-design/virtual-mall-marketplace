@@ -23,6 +23,8 @@ import comingSoonImg from "@/assets/stores/coming-soon.png";
 import forRentImg from "@/assets/stores/for-rent.png";
 import IsraelMezuzahsWordmark from "@/components/mall/IsraelMezuzahsWordmark";
 import OliveWoodEpoxyWordmark from "@/components/mall/OliveWoodEpoxyWordmark";
+import NaturalPharmacyWordmark from "@/components/mall/NaturalPharmacyWordmark";
+import { NATURAL_PHARMACY_WORDMARK_DESIGN } from "@/components/mall/NaturalPharmacyWordmark.design";
 import IsraelMezuzahsStorefrontScene from "@/components/mall/IsraelMezuzahsStorefrontScene";
 import AvnerOvadStorefrontScene from "@/components/mall/AvnerOvadStorefrontScene";
 import VintageVillageStorefrontScene from "@/components/mall/VintageVillageStorefrontScene";
@@ -45,6 +47,7 @@ type BrandStyle = {
   logo?: string;
   subtitleLogo?: string;
   codedWordmark?: "israel-mezuzahs";
+  codedSign?: "natural-pharmacy";
   codedSubtitle?: "olive-wood-epoxy";
   codedScene?: "israel-mezuzahs-storefront";
   // extended at usage site
@@ -142,13 +145,14 @@ const idOverrides: Record<string, Partial<BrandStyle & { name: string }>> = {
     subtitle: "",
   },
   s15: {
-    name: "ניחוחות היער",
-    bg: "linear-gradient(135deg, #efe4d2, #e0d2ba)",
-    text: "#3e2a18",
+    name: "רוקחות טבעית",
+    bg: NATURAL_PHARMACY_WORDMARK_DESIGN.canvas.backgroundColor,
+    text: NATURAL_PHARMACY_WORDMARK_DESIGN.text.color,
     accent: "#a67c52",
     font: "font-frank",
     image: floor1Shop3Img,
-    subtitle: "בשמים ונרות טבעיים",
+    subtitle: "מרפא טבעי",
+    codedSign: "natural-pharmacy",
   },
 };
 
