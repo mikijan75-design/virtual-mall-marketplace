@@ -708,17 +708,26 @@ const StorePage = () => {
           ) : store.id === "s10" ? null : (
             <span className="text-6xl md:text-8xl block mb-4">{store.logoEmoji}</span>
           )}
-          <h1 className="text-3xl md:text-5xl font-frank font-bold mb-2">
+          <h1
+            className="text-3xl md:text-5xl font-frank font-bold mb-2"
+            style={store.id === "s15" ? { fontFamily: '"Amatic SC", "Noto Sans Hebrew", cursive', letterSpacing: 2 } : undefined}
+          >
             {isIsraelMezuzahs ? "Israel Mezuzahs" : store.id === "s18" ? "דוכן ויטראז'" : store.name}
           </h1>
-          <p className="text-lg opacity-90 font-heebo">
+          <p
+            className="text-lg opacity-90 font-heebo"
+            style={store.id === "s15" ? { fontFamily: '"Amatic SC", "Noto Sans Hebrew", cursive', letterSpacing: 1 } : undefined}
+          >
             {isIsraelMezuzahs
               ? "Olive Wood & Epoxy Art • אומנות בעץ זית ואפוקסי"
               : store.id === "s18"
                 ? "אמנות ויטראז' בעבודת יד"
                 : store.description}
           </p>
-          <span className="inline-block mt-3 bg-white/20 px-4 py-1 rounded-full text-sm font-heebo">
+          <span
+            className="inline-block mt-3 bg-white/20 px-4 py-1 rounded-full text-sm font-heebo"
+            style={store.id === "s15" ? { fontFamily: '"Amatic SC", "Noto Sans Hebrew", cursive', letterSpacing: 1 } : undefined}
+          >
             {store.id === "s18" ? "אמנות" : store.category} • קומה {store.floor}
           </span>
         </div>
