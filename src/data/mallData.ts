@@ -21,7 +21,7 @@ export const mallFloors: Floor[] = [
     name: "קומה 1 - קומת כניסה",
     stores: [
       { id: "s13", name: "מסעדה איטלקית", floor: 1, position: 1, category: "מזון", signColor: "from-red-500 to-orange-600", logoEmoji: "🍕", description: "פסטה ופיצה אותנטית" },
-      { id: "s14", name: "קפה בוטיק", floor: 1, position: 2, category: "מזון", signColor: "from-amber-700 to-yellow-800", logoEmoji: "☕", description: "קפה ומאפים" },
+      { id: "s12", name: "גלריה לאמנות", floor: 1, position: 2, category: "אמנות", signColor: "from-yellow-400 to-amber-600", logoEmoji: "🎭", description: "אמנות ותרבות" },
       { id: "s15", name: "רוקחות טבעית טיפולית", floor: 1, position: 3, category: "פארם", signColor: "from-red-400 to-pink-500", logoEmoji: "🍣", description: "בעבודת יד" },
       { id: "s16", name: "גלידריה", floor: 1, position: 4, category: "מזון", signColor: "from-pink-300 to-blue-400", logoEmoji: "🍦", description: "גלידה ארטיזנלית" },
       { id: "s17", name: "מאפיית שמרים", floor: 1, position: 5, category: "מזון", signColor: "from-yellow-600 to-amber-700", logoEmoji: "🥐", description: "מאפים טריים" },
@@ -37,7 +37,7 @@ export const mallFloors: Floor[] = [
       { id: "s10", name: "JORDI STUDIO", floor: 2, position: 3, category: "קוסמטיקה", signColor: "from-fuchsia-400 to-purple-600", logoEmoji: "💄", description: "צורפת תכשיטים" },
       { id: "s9", name: "בנק", floor: 2, position: 4, category: "שירותים", signColor: "from-slate-400 to-gray-600", logoEmoji: "🏦", description: "שירותים בנקאיים" },
       { id: "s11", name: "סמארט ואתגר", floor: 2, position: 5, category: "טכנולוגיה", signColor: "from-violet-400 to-purple-600", logoEmoji: "📱", description: "סמארטפונים ואביזרים" },
-      { id: "s12", name: "גלריה לאמנות", floor: 2, position: 6, category: "אמנות", signColor: "from-yellow-400 to-amber-600", logoEmoji: "🎭", description: "אמנות ותרבות" },
+      { id: "s14", name: "קפה בוטיק", floor: 2, position: 6, category: "מזון", signColor: "from-amber-700 to-yellow-800", logoEmoji: "☕", description: "קפה ומאפים" },
     ],
   },
   {
