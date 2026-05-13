@@ -71,6 +71,10 @@ import avnerPainting19 from "@/assets/avner-paintings/p19.png";
 import avnerPainting20 from "@/assets/avner-paintings/p20.png";
 import type { Store } from "@/data/mallData";
 import jordiStudioProfile from "@/assets/stores/jordi-studio-profile.png";
+import jordiE1 from "@/assets/stores/jordi/e1.png";
+import jordiE2 from "@/assets/stores/jordi/e2.png";
+import jordiE3 from "@/assets/stores/jordi/e3.png";
+import jordiE4 from "@/assets/stores/jordi/e4.png";
 
 const halenGalleryImages = [
   { src: halenGallery1, alt: "Halen Binaria - דגם 1" },
@@ -778,12 +782,31 @@ const StorePage = () => {
             ) : store.id === "s18" ? (
               <GalleryWallSection />
             ) : store.id === "s10" ? (
-              <img
-                src={jordiStudioProfile}
-                alt="JORDI STUDIO - פרופיל אמן: ירדן, צורפת ומלכת יד"
-                className="w-full h-auto rounded-lg shadow-md object-contain"
-                loading="lazy"
-              />
+              <div className="flex flex-row-reverse items-stretch gap-4">
+                <div className="flex-1">
+                  <img
+                    src={jordiStudioProfile}
+                    alt="JORDI STUDIO - פרופיל אמן: ירדן, צורפת ומלכת יד"
+                    className="w-full h-auto rounded-lg shadow-md object-contain"
+                    loading="lazy"
+                  />
+                </div>
+                <div className="flex flex-col-reverse gap-3 w-[22%] min-w-[120px]">
+                  {[jordiE1, jordiE2, jordiE3, jordiE4].map((src, i) => (
+                    <div
+                      key={i}
+                      className="flex-1 rounded-lg overflow-hidden bg-white border border-[#d2b48c]/40 shadow-md"
+                    >
+                      <img
+                        src={src}
+                        alt={`עגיל JORDI STUDIO ${i + 1}`}
+                        className="w-full h-full object-cover"
+                        loading="lazy"
+                      />
+                    </div>
+                  ))}
+                </div>
+              </div>
             ) : (
               <>
                 <h2 className="text-2xl font-frank font-bold text-foreground mb-4">
