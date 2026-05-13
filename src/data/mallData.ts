@@ -22,7 +22,7 @@ export const mallFloors: Floor[] = [
     stores: [
       { id: "s13", name: "מסעדה איטלקית", floor: 1, position: 1, category: "מזון", signColor: "from-red-500 to-orange-600", logoEmoji: "🍕", description: "פסטה ופיצה אותנטית" },
       { id: "s14", name: "קפה בוטיק", floor: 1, position: 2, category: "מזון", signColor: "from-amber-700 to-yellow-800", logoEmoji: "☕", description: "קפה ומאפים" },
-      { id: "s15", name: "סושי בר", floor: 1, position: 3, category: "מזון", signColor: "from-red-400 to-pink-500", logoEmoji: "🍣", description: "סושי טרי יומיומי" },
+      { id: "s15", name: "רוקחות טבעית טיפולית", floor: 1, position: 3, category: "פארם", signColor: "from-red-400 to-pink-500", logoEmoji: "🍣", description: "בעבודת יד" },
       { id: "s16", name: "גלידריה", floor: 1, position: 4, category: "מזון", signColor: "from-pink-300 to-blue-400", logoEmoji: "🍦", description: "גלידה ארטיזנלית" },
       { id: "s17", name: "מאפיית שמרים", floor: 1, position: 5, category: "מזון", signColor: "from-yellow-600 to-amber-700", logoEmoji: "🥐", description: "מאפים טריים" },
       { id: "s18", name: "בר מיצים", floor: 1, position: 6, category: "מזון", signColor: "from-green-400 to-lime-500", logoEmoji: "🥤", description: "מיצים טבעיים" },
