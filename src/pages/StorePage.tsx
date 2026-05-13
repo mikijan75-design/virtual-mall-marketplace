@@ -912,7 +912,7 @@ const StorePage = () => {
                   <div className="rounded-lg bg-muted border border-border p-5 text-right flex flex-col justify-center">
                     <h3 className="text-xl font-frank font-bold text-foreground mb-3">סדנאות</h3>
                     <p className="text-sm text-muted-foreground font-heebo leading-relaxed">
-                      אתם מוזמנים להשתתף ולקחת חלק בפעילויות חברתיות אשר לכל אחת יש יעוד וכוונה לפי ההרגשה האישית שלכם, אצה רצויה היא כמובן לחוות ולנצל כל אירוע וכל מפגש, מידע ובירורים ימסרו לכל המעוניין.
+                      אתם מוזמנים להשתתף ולקחת חלק בפעילויות חברתיות אשר לכל אחד יש יעוד וכוונה לפי ההרגשה האישית שלכם, עצה רצויה היא כמובן לחוות ולנצל כל אירוע וכל מפגש, מידע ובירורים ימסרו לכל המעוניין.
                     </p>
                   </div>
                   <div className="grid grid-cols-4 gap-3">
