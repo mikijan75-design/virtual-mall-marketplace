@@ -119,3 +119,9 @@
   font-family: 'Amatic SC', 'Noto Sans Hebrew', cursive !important;
   letter-spacing: 0.5px;
 }
+
+.font-tuli .tuli-content,
+.font-tuli .tuli-content * {
+  color: #000 !important;
+  font-weight: 700 !important;
+}

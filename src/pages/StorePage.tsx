@@ -693,7 +693,7 @@ const StorePage = () => {
                 : undefined
         }
       >
-        <div className={`container mx-auto text-center ${store.id === "s15" ? "text-foreground" : "text-white"}`}>
+        <div className={`container mx-auto text-center ${store.id === "s15" ? "text-foreground tuli-content" : "text-white"}`}>
           {isIsraelMezuzahs ? (
             <img
               src={imBeadLogo}
@@ -747,7 +747,7 @@ const StorePage = () => {
       </div>
 
       {/* Store content placeholder */}
-      <div className="container mx-auto py-12 px-4">
+      <div className={`container mx-auto py-12 px-4 ${store.id === "s15" ? "tuli-content" : ""}`}>
         <div className={`${store.id === "s18" ? "max-w-[1400px]" : "max-w-4xl"} mx-auto`}>
           <div className={`bg-card border border-border rounded-xl ${store.id === "s18" ? "p-2" : "p-8"} shadow-lg text-center`}>
             {isIsraelMezuzahs ? (
