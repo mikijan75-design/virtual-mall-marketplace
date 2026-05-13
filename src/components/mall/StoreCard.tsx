@@ -354,7 +354,7 @@ const StoreCard = ({ store, storeIndex }: StoreCardProps) => {
 
         {/* Realistic store image */}
         {style.image ? (
-          <div className={`relative overflow-hidden ${IMAGE_AREA_CLASS}`}>
+          <div className={`relative overflow-hidden ${style.subtitle || style.subtitleLogo || style.codedSubtitle ? IMAGE_AREA_CLASS : "flex-1 min-h-0"}`}>
             <img
               src={style.image}
               alt={store.name}
