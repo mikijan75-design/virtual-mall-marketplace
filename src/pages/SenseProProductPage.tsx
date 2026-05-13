@@ -165,15 +165,21 @@ const SenseProProductPage = () => {
       ? sheonimProducts
       : israelMezuzahProducts;
 
-  // Selected product (by id) for the new product-based mezuzah flow
-  const initialIndex = initialMezuzah?.productId
-    ? Math.max(0, productCollection.findIndex((p) => p.id === initialMezuzah.productId))
-    : 0;
-  const [selectedProductIndex, setSelectedProductIndex] = useState<number>(initialIndex);
+  // Selected product (by id) for the new product-based mezuzah flow.
+  // If the passed productId is NOT in the active collection (e.g. a tuli
+  // product navigated from store s15), we must NOT fall back to a default
+  // mezuzah — use the data passed via location.state directly instead.
+  const matchedIndex = initialMezuzah?.productId
+    ? productCollection.findIndex((p) => p.id === initialMezuzah.productId)
+    : -1;
+  const hasCollectionMatch = matchedIndex >= 0;
+  const [selectedProductIndex, setSelectedProductIndex] = useState<number>(
+    hasCollectionMatch ? matchedIndex : 0,
+  );
   const [thumbsStart, setThumbsStart] = useState(0);
 
-  const selectedProduct = initialMezuzah?.productId
-    ? productCollection[selectedProductIndex] ?? productCollection[0]
+  const selectedProduct = hasCollectionMatch
+    ? productCollection[selectedProductIndex] ?? null
     : null;
 
   const mezuzah = initialMezuzah
