@@ -736,7 +736,13 @@ const StorePage = () => {
       {/* Store content placeholder */}
       <div className="container mx-auto py-12 px-4">
         <div className={`${store.id === "s18" ? "max-w-[1400px]" : "max-w-4xl"} mx-auto`}>
-          <div className={`bg-card border border-border rounded-xl ${store.id === "s18" ? "p-2" : "p-8"} shadow-lg text-center`}>
+          <div
+            className={
+              store.id === "s15"
+                ? "rounded-[14px] border border-[#d5cabd] bg-[#f6f5ee] p-5 md:p-7 shadow-[0_2px_8px_rgba(105,88,64,0.12)] text-right"
+                : `bg-card border border-border rounded-xl ${store.id === "s18" ? "p-2" : "p-8"} shadow-lg text-center`
+            }
+          >
             {isIsraelMezuzahs ? (
               <>
                 {/* Image in center with products on sides */}
