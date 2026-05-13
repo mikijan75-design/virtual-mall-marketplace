@@ -863,8 +863,9 @@ const StorePage = () => {
                   </div>
                   <div className="grid grid-cols-4 gap-3 h-full">
                     {[tuliP1, tuliP2, tuliP3, tuliP4].map((src, i) => (
-                      <div key={i} className="rounded-lg overflow-hidden h-full flex items-center justify-center" style={{ backgroundColor: '#f4e8cc' }}>
-                        <img src={src} alt={`מוצר ${i + 1}`} className="w-full h-auto object-contain" loading="lazy" />
+                      <div key={i} className="rounded-lg overflow-hidden h-full flex flex-col" style={{ backgroundColor: '#f4e8cc' }}>
+                        <img src={src} alt={`מוצר ${i + 1}`} className="w-full h-auto object-contain block" style={{ transform: 'scale(1.15)', transformOrigin: 'top center' }} loading="lazy" />
+                        <div className="mt-auto pb-2 text-center text-sm font-heebo text-foreground/70">לעריכה</div>
                       </div>
                     ))}
                   </div>
