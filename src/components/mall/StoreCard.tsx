@@ -328,7 +328,7 @@ const StoreCard = ({ store, storeIndex }: StoreCardProps) => {
               src={style.logo}
               alt={store.name}
               className="h-full w-full object-cover"
-              style={store.id === "s8" ? { objectPosition: "center 75%" } : undefined}
+              style={store.id === "s8" ? { objectPosition: "center top" } : undefined}
             />
           </div>
         ) : (
