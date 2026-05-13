@@ -666,8 +666,14 @@ const StorePage = () => {
 
       {/* Store banner */}
       <div
-        className={`py-8 md:py-12 ${store.id === "s18" ? "" : `bg-gradient-to-r ${store.signColor}`}`}
-        style={store.id === "s18" ? { background: "linear-gradient(135deg, #1e4a8a, #0f2d5c)" } : undefined}
+        className={`py-8 md:py-12 ${store.id === "s18" || store.id === "s10" ? "" : `bg-gradient-to-r ${store.signColor}`}`}
+        style={
+          store.id === "s18"
+            ? { background: "linear-gradient(135deg, #1e4a8a, #0f2d5c)" }
+            : store.id === "s10"
+              ? { background: "linear-gradient(135deg, #d2b48c, #b8956a)" }
+              : undefined
+        }
       >
         <div className="container mx-auto text-center text-white">
           {isIsraelMezuzahs ? (
@@ -686,7 +692,7 @@ const StorePage = () => {
               alt="Daniel Glass-Art logo"
               className="block mx-auto mb-4 h-24 md:h-32 w-auto object-contain rounded-md bg-white/95 px-3 py-2 shadow-lg"
             />
-          ) : (
+          ) : store.id === "s10" ? null : (
             <span className="text-6xl md:text-8xl block mb-4">{store.logoEmoji}</span>
           )}
           <h1 className="text-3xl md:text-5xl font-frank font-bold mb-2">
