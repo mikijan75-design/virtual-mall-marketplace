@@ -80,6 +80,10 @@ import tuliP1 from "@/assets/stores/jordi/tuli-products/p1.png";
 import tuliP2 from "@/assets/stores/jordi/tuli-products/p2.png";
 import tuliP3 from "@/assets/stores/jordi/tuli-products/p3.png";
 import tuliP4 from "@/assets/stores/jordi/tuli-products/p4.png";
+import tuliW1 from "@/assets/stores/jordi/tuli-workshops/w1.png";
+import tuliW2 from "@/assets/stores/jordi/tuli-workshops/w2.png";
+import tuliW3 from "@/assets/stores/jordi/tuli-workshops/w3.png";
+import tuliW4 from "@/assets/stores/jordi/tuli-workshops/w4.png";
 
 const halenGalleryImages = [
   { src: halenGallery1, alt: "Halen Binaria - דגם 1" },
@@ -843,8 +847,29 @@ const StorePage = () => {
                   </div>
                 </div>
                 <div className="flex gap-4 items-stretch">
-                  <div className="w-[30%] aspect-[3/2] rounded-lg bg-muted border border-border" />
-                  <div className="w-[70%] aspect-[7/2] rounded-lg bg-muted border border-border" />
+                  <div className="w-[30%] rounded-lg bg-muted border border-border p-5 text-right flex flex-col justify-center">
+                    <h3 className="text-xl font-frank font-bold text-foreground mb-3">סדנאות</h3>
+                    <p className="text-sm text-muted-foreground font-heebo leading-relaxed">
+                      אתם מוזמנים להשתתף ולקחת חלק בפעילויות חברתיות אשר לכל אחת יש יעוד וכוונה לפי ההרגשה האישית שלכם, אצה רצויה היא כמובן לחוות ולנצל כל אירוע וכל מפגש, מידע ובירורים ימסרו לכל המעוניין.
+                    </p>
+                  </div>
+                  <div className="w-[70%] grid grid-cols-4 gap-3">
+                    {[
+                      { src: tuliW1, title: "יצירת קמע קריסטלים אישי" },
+                      { src: tuliW2, title: "סדנאת קריסטלים" },
+                      { src: tuliW3, title: "סדנאת ארומתרפיה" },
+                      { src: tuliW4, title: "סדנאת עשן השרפים" },
+                    ].map((w, i) => (
+                      <div key={i} className="rounded-lg bg-muted border border-border overflow-hidden flex flex-col">
+                        <div className="aspect-square overflow-hidden">
+                          <img src={w.src} alt={w.title} className="w-full h-full object-cover" loading="lazy" />
+                        </div>
+                        <div className="p-2 text-center text-xs font-heebo font-bold text-foreground">
+                          {w.title}
+                        </div>
+                      </div>
+                    ))}
+                  </div>
                 </div>
               </div>
             ) : (
