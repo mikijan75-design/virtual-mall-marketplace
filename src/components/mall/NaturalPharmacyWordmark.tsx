@@ -23,7 +23,7 @@ const NaturalPharmacyWordmark = ({ className, style }: NaturalPharmacyWordmarkPr
       }}
     >
       <svg
-        viewBox="0 0 220 60"
+        viewBox="0 0 220 80"
         width="100%"
         height="100%"
         preserveAspectRatio="xMidYMid meet"
@@ -31,15 +31,15 @@ const NaturalPharmacyWordmark = ({ className, style }: NaturalPharmacyWordmarkPr
       >
         <text
           x="110"
-          y="42"
+          y="56"
           textAnchor="middle"
           direction="rtl"
           style={{
             fill: design.text.color,
-            fontFamily: '"Noto Sans Hebrew", "Heebo", sans-serif',
-            fontSize: 36,
-            fontWeight: 700,
-            letterSpacing: 1,
+            fontFamily: design.text.fontFamily,
+            fontSize: 56,
+            fontWeight: design.text.fontWeight,
+            letterSpacing: design.text.letterSpacing,
           }}
         >
           {design.caption}
