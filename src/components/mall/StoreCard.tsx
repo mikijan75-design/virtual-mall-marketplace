@@ -32,6 +32,7 @@ import floor3Shop4Img from "@/assets/stores/floor3-shop4.png";
 import floor1Shop4Img from "@/assets/stores/floor1-shop4.png";
 import floor1Shop6Img from "@/assets/stores/floor1-shop6.png";
 import danielGlassArtLogo from "@/assets/stores/daniel-glass-art-logo.jpg";
+import yardensJewelryImg from "@/assets/stores/yardens-jewelry.png";
 
 type BrandStyle = {
   bg: string;
@@ -129,6 +130,15 @@ const idOverrides: Record<string, Partial<BrandStyle & { name: string }>> = {
     image: floor1Shop6Img,
     subtitle: "אמנות ויטראז' בעבודת יד",
     logo: danielGlassArtLogo,
+  },
+  s10: {
+    name: "ירדנ'ס ג'ולרי",
+    bg: "linear-gradient(135deg, #f5ede0, #ebe0cc)",
+    text: "#3a2a20",
+    accent: "#c9a96e",
+    font: "font-frank",
+    image: yardensJewelryImg,
+    subtitle: "",
   },
 };
 
@@ -344,7 +354,7 @@ const StoreCard = ({ store, storeIndex }: StoreCardProps) => {
 
         {/* Realistic store image */}
         {style.image ? (
-          <div className={`relative overflow-hidden ${IMAGE_AREA_CLASS}`}>
+          <div className={`relative overflow-hidden ${style.subtitle || style.subtitleLogo || style.codedSubtitle ? IMAGE_AREA_CLASS : "flex-1 min-h-0"}`}>
             <img
               src={style.image}
               alt={store.name}
