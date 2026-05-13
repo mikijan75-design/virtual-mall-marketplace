@@ -674,7 +674,8 @@ const StorePage = () => {
 
   return (
     <div
-      className={`min-h-screen bg-background ${store.id === "s15" ? "font-tuli" : ""}`}
+      className="min-h-screen bg-background"
+      style={store.id === "s15" ? { fontFamily: '"Amatic SC", "Noto Sans Hebrew", cursive' } : undefined}
     >
       <MallHeader />
       <PageTracker storeId={store.id} />
@@ -693,7 +694,7 @@ const StorePage = () => {
                 : undefined
         }
       >
-        <div className={`container mx-auto text-center ${store.id === "s15" ? "text-foreground tuli-content" : "text-white"}`}>
+        <div className={`container mx-auto text-center ${store.id === "s15" ? "text-foreground" : "text-white"}`}>
           {isIsraelMezuzahs ? (
             <img
               src={imBeadLogo}
@@ -747,7 +748,7 @@ const StorePage = () => {
       </div>
 
       {/* Store content placeholder */}
-      <div className={`container mx-auto py-12 px-4 ${store.id === "s15" ? "tuli-content" : ""}`}>
+      <div className="container mx-auto py-12 px-4">
         <div className={`${store.id === "s18" ? "max-w-[1400px]" : "max-w-4xl"} mx-auto`}>
           <div className={`bg-card border border-border rounded-xl ${store.id === "s18" ? "p-2" : "p-8"} shadow-lg text-center`}>
             {isIsraelMezuzahs ? (
@@ -861,25 +862,9 @@ const StorePage = () => {
                     </p>
                   </div>
                   <div className="grid grid-cols-4 gap-3 h-full">
-                    {[
-                      { src: tuliP1, name: "אלו סנטו", price: "₪35" },
-                      { src: tuliP2, name: "קצוף", price: "₪65" },
-                      { src: tuliP3, name: "קליל – יומיומי לכל סוגי העור", price: "₪97" },
-                      { src: tuliP4, name: "לחות – קרם גוף יומיומי", price: "₪50" },
-                    ].map((p, i) => (
-                      <div key={i} className="relative rounded-lg bg-muted border border-border overflow-hidden h-full">
-                        <img src={p.src} alt={p.name} className="w-full h-full object-cover" loading="lazy" />
-                        <div
-                          className="absolute inset-x-0 bottom-0 px-2 py-2 text-center"
-                          style={{ backgroundColor: "#e8b84a" }}
-                        >
-                          <div className="text-xs md:text-sm font-bold leading-tight" style={{ color: "#000" }}>
-                            {p.name}
-                          </div>
-                          <div className="text-[10px] md:text-xs font-bold" style={{ color: "#000" }}>
-                            {p.price}
-                          </div>
-                        </div>
+                    {[tuliP1, tuliP2, tuliP3, tuliP4].map((src, i) => (
+                      <div key={i} className="rounded-lg bg-muted border border-border overflow-hidden h-full">
+                        <img src={src} alt={`מוצר ${i + 1}`} className="w-full h-full object-cover" loading="lazy" />
                       </div>
                     ))}
                   </div>
