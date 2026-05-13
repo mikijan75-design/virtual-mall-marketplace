@@ -324,7 +324,12 @@ const StoreCard = ({ store, storeIndex }: StoreCardProps) => {
               borderBottom: `2px solid ${style.accent}`,
             }}
           >
-            <img src={style.logo} alt={store.name} className="h-full w-full object-cover" />
+            <img
+              src={style.logo}
+              alt={store.name}
+              className="h-full w-full object-cover"
+              style={store.id === "s8" ? { objectPosition: "center 75%" } : undefined}
+            />
           </div>
         ) : (
           <div
