@@ -862,7 +862,7 @@ const StorePage = () => {
                     ].map((w, i) => (
                       <div key={i} className="rounded-lg bg-muted border border-border overflow-hidden flex flex-col">
                         <div className="aspect-square overflow-hidden">
-                          <img src={w.src} alt={w.title} className="w-full h-full object-cover" loading="lazy" />
+                          <img src={w.src} alt={w.title} className="w-full h-full object-cover object-top" loading="lazy" />
                         </div>
                         <div className="p-2 text-center text-xs font-heebo font-bold text-foreground">
                           {w.title}
