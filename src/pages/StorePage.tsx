@@ -863,8 +863,8 @@ const StorePage = () => {
                   </div>
                   <div className="grid grid-cols-4 gap-3 h-full">
                     {[tuliP1, tuliP2, tuliP3, tuliP4].map((src, i) => (
-                      <div key={i} className="overflow-hidden h-full">
-                        <img src={src} alt={`מוצר ${i + 1}`} className="w-full h-full object-cover" loading="lazy" />
+                      <div key={i} className="rounded-lg overflow-hidden h-full flex items-center justify-center" style={{ backgroundColor: '#f4e8cc' }}>
+                        <img src={src} alt={`מוצר ${i + 1}`} className="w-full h-auto object-contain" loading="lazy" />
                       </div>
                     ))}
                   </div>
