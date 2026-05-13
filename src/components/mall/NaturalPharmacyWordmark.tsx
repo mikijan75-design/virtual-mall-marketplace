@@ -37,7 +37,7 @@ const NaturalPharmacyWordmark = ({ className, style }: NaturalPharmacyWordmarkPr
           style={{
             fill: design.text.color,
             fontFamily: design.text.fontFamily,
-            fontSize: 56,
+            fontSize: 44,
             fontWeight: design.text.fontWeight,
             letterSpacing: design.text.letterSpacing,
           }}
