@@ -1,7 +1,6 @@
 import BackButton from "@/components/BackButton";
-import NaturalPharmacyWordmark, {
-  NATURAL_PHARMACY_WORDMARK_DESIGN,
-} from "@/components/mall/NaturalPharmacyWordmark";
+import { NATURAL_PHARMACY_WORDMARK_DESIGN } from "@/components/mall/NaturalPharmacyWordmark.design";
+import NaturalPharmacyWordmark from "@/components/mall/NaturalPharmacyWordmark";
 
 const NaturalPharmacyDesignPage = () => {
   const design = NATURAL_PHARMACY_WORDMARK_DESIGN;

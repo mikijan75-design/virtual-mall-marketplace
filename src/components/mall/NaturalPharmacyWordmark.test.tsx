@@ -1,6 +1,7 @@
 import { render, screen } from "@testing-library/react";
 import { describe, expect, it } from "vitest";
-import NaturalPharmacyWordmark, { NATURAL_PHARMACY_WORDMARK_DESIGN } from "./NaturalPharmacyWordmark";
+import { NATURAL_PHARMACY_WORDMARK_DESIGN } from "./NaturalPharmacyWordmark.design";
+import NaturalPharmacyWordmark from "./NaturalPharmacyWordmark";
 
 describe("NaturalPharmacyWordmark", () => {
   it("renders the saved caption with the matching design values", () => {
