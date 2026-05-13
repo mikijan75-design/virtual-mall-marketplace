@@ -284,6 +284,18 @@ const StoreCard = ({ store, storeIndex }: StoreCardProps) => {
               }}
             />
           </div>
+        ) : style.codedSign === "natural-pharmacy" ? (
+          <div
+            className={SIGN_BAND_CLASS}
+            style={{
+              background: NATURAL_PHARMACY_WORDMARK_DESIGN.canvas.backgroundColor,
+              borderBottom: `2px solid ${style.accent}`,
+            }}
+          >
+            <NaturalPharmacyWordmark
+              style={{ width: "100%", height: "100%", backgroundColor: "transparent" }}
+            />
+          </div>
         ) : style.codedWordmark === "israel-mezuzahs" ? (
           <div
             className={SIGN_BAND_CLASS}
