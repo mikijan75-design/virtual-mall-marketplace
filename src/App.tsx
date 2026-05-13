@@ -10,6 +10,7 @@ import SenseProProductPage from "./pages/SenseProProductPage.tsx";
 import CartPage from "./pages/CartPage.tsx";
 import InfoPage from "./pages/InfoPage.tsx";
 import ContactPage from "./pages/ContactPage.tsx";
+import NaturalPharmacyDesignPage from "./pages/NaturalPharmacyDesignPage.tsx";
 import NotFound from "./pages/NotFound.tsx";
 import { CartProvider } from "./context/CartContext";
 
@@ -29,6 +30,7 @@ const App = () => (
           <Route path="/product/sense-pro" element={<SenseProProductPage />} />
           <Route path="/store/:storeId" element={<StorePage />} />
           <Route path="/store/s2/category/:categorySlug" element={<IsraelMezuzahsCategoryPage />} />
+          <Route path="/natural-pharmacy-design" element={<NaturalPharmacyDesignPage />} />
           <Route path="/info" element={<InfoPage />} />
           <Route path="/contact" element={<ContactPage />} />
           <Route path="*" element={<NotFound />} />
