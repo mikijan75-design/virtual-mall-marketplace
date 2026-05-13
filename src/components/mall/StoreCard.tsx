@@ -159,6 +159,7 @@ const idOverrides: Record<string, Partial<BrandStyle & { name: string }>> = {
   s8: {
     image: storeFloor2Pos2Img,
     logo: storeFloor2Pos2Sign,
+    subtitle: "יישור שיניים",
   },
 };
 
