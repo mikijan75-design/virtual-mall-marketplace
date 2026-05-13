@@ -771,6 +771,13 @@ const StorePage = () => {
               </>
             ) : store.id === "s18" ? (
               <GalleryWallSection />
+            ) : store.id === "s10" ? (
+              <img
+                src={jordiStudioProfile}
+                alt="JORDI STUDIO - פרופיל אמן: ירדן, צורפת ומלכת יד"
+                className="w-full h-auto rounded-lg shadow-md object-contain"
+                loading="lazy"
+              />
             ) : (
               <>
                 <h2 className="text-2xl font-frank font-bold text-foreground mb-4">
