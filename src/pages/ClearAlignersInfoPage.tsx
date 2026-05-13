@@ -1,32 +1,32 @@
-import { useEffect, useMemo, useState, type ChangeEvent } from "react";
+import { useEffect, useMemo, useState, type ChangeEvent, type ReactNode } from "react";
 import { Link } from "react-router-dom";
-import {
-  CalendarDays,
-  Camera,
-  CheckCircle2,
-  Clock3,
-  Cpu,
-  MessageCircle,
-  PackageCheck,
-  RotateCw,
-  ShieldCheck,
-  Smile,
-  Sparkles,
-  Stethoscope,
-  ThumbsUp,
-  Upload,
-  type LucideIcon,
-} from "lucide-react";
+
+type IconName =
+  | "camera"
+  | "engineering"
+  | "package"
+  | "doctor"
+  | "cycle"
+  | "toothCheck"
+  | "clock"
+  | "methods"
+  | "benefits"
+  | "aesthetic"
+  | "message"
+  | "check"
+  | "calendar"
+  | "shield"
+  | "upload";
 
 type Callout = {
   title: string;
   body: string;
-  Icon: LucideIcon;
+  icon: IconName;
 };
 
 type InfoCard = {
   title: string;
-  Icon: LucideIcon;
+  icon: IconName;
   items: string[];
 };
 
@@ -34,17 +34,17 @@ const calloutsRight: Callout[] = [
   {
     title: "צילום ראשוני",
     body: "צילום עצמי של השיניים לסינון מקדים וקבלת הצעה ראשונית.",
-    Icon: Camera,
+    icon: "camera",
   },
   {
     title: "הנדסת התהליך",
     body: "תכנון דיגיטלי מותאם אישית של תנועת השיניים והיעד הרצוי.",
-    Icon: Cpu,
+    icon: "engineering",
   },
   {
     title: "הזמנת הקשתיות",
     body: "ייצור סדרת קשתיות שקופות לפי התוכנית הדיגיטלית.",
-    Icon: PackageCheck,
+    icon: "package",
   },
 ];
 
@@ -52,24 +52,24 @@ const calloutsLeft: Callout[] = [
   {
     title: "ליווי לכל אורך התהליך",
     body: "מעקב והכוונה מקצועית מרופא בכל שלב חשוב.",
-    Icon: Stethoscope,
+    icon: "doctor",
   },
   {
     title: "תהליך עצמאי",
     body: "החלפת קשתיות עצמאית בבית לפי הנחיות התוכנית.",
-    Icon: RotateCw,
+    icon: "cycle",
   },
   {
     title: "התאמה של קוביות",
     body: "בדיקת קוביות סמוכות, צבע השן ומבנה האזור האסתטי.",
-    Icon: Smile,
+    icon: "toothCheck",
   },
 ];
 
 const infoCards: InfoCard[] = [
   {
     title: "תזרים זמנים",
-    Icon: Clock3,
+    icon: "clock",
     items: [
       "צילום ותכנון ראשוני",
       "ייצור קשתיות לאחר אישור",
@@ -79,7 +79,7 @@ const infoCards: InfoCard[] = [
   },
   {
     title: "שיטות",
-    Icon: Smile,
+    icon: "methods",
     items: [
       "קשתיות שקופות נשלפות",
       "קוביות לבנות במידת הצורך",
@@ -88,7 +88,7 @@ const infoCards: InfoCard[] = [
   },
   {
     title: "יתרונות",
-    Icon: ThumbsUp,
+    icon: "benefits",
     items: [
       "נראות אסתטית ועדינה",
       "עצמאות גבוהה בהחלפות",
@@ -98,7 +98,7 @@ const infoCards: InfoCard[] = [
   },
   {
     title: "אסתטיקה",
-    Icon: Sparkles,
+    icon: "aesthetic",
     items: [
       "קשתיות כמעט בלתי מורגשות",
       "קוביות בצבע השן",
@@ -107,7 +107,7 @@ const infoCards: InfoCard[] = [
   },
   {
     title: "זמינות",
-    Icon: MessageCircle,
+    icon: "message",
     items: [
       "זמינות דיגיטלית לשאלות",
       "תנאי תשלום נוחים",
@@ -117,13 +117,13 @@ const infoCards: InfoCard[] = [
 ];
 
 const processSteps = [
-  { label: "צילום", Icon: Camera, top: "8%", left: "50%" },
-  { label: "תכנון", Icon: Cpu, top: "26%", left: "82%" },
-  { label: "ייצור", Icon: PackageCheck, top: "68%", left: "82%" },
-  { label: "מעקב", Icon: CheckCircle2, top: "92%", left: "50%" },
-  { label: "החלפות", Icon: CalendarDays, top: "68%", left: "18%" },
-  { label: "ליווי", Icon: Stethoscope, top: "26%", left: "18%" },
-] satisfies { label: string; Icon: LucideIcon; top: string; left: string }[];
+  { label: "צילום", icon: "camera", top: "8%", left: "50%" },
+  { label: "תכנון", icon: "engineering", top: "26%", left: "82%" },
+  { label: "ייצור", icon: "package", top: "68%", left: "82%" },
+  { label: "מעקב", icon: "check", top: "92%", left: "50%" },
+  { label: "החלפות", icon: "calendar", top: "68%", left: "18%" },
+  { label: "ליווי", icon: "doctor", top: "26%", left: "18%" },
+] satisfies { label: string; icon: IconName; top: string; left: string }[];
 
 const polarToCartesian = (cx: number, cy: number, radius: number, angleInDegrees: number) => {
   const angleInRadians = ((angleInDegrees - 90) * Math.PI) / 180;
@@ -137,6 +137,190 @@ const describeArc = (startAngle: number, endAngle: number) => {
   const start = polarToCartesian(250, 250, 178, startAngle);
   const end = polarToCartesian(250, 250, 178, endAngle);
   return `M ${start.x} ${start.y} A 178 178 0 0 1 ${end.x} ${end.y}`;
+};
+
+const iconPalette = {
+  ink: "#154461",
+  blue: "#1688bf",
+  blueDark: "#0d5f90",
+  blueLight: "#bcecff",
+  cyan: "#54c7e8",
+  cream: "#fff7ef",
+  gum: "#f39aaa",
+  gumDark: "#bd5263",
+  mint: "#dff9f3",
+  white: "#ffffff",
+  gold: "#ffd166",
+};
+
+const IconSvg = ({
+  children,
+  className = "",
+  viewBox = "0 0 96 96",
+}: {
+  children: ReactNode;
+  className?: string;
+  viewBox?: string;
+}) => (
+  <svg className={className} viewBox={viewBox} fill="none" xmlns="http://www.w3.org/2000/svg" aria-hidden="true">
+    {children}
+  </svg>
+);
+
+const DesignedIcon = ({ name, className = "h-8 w-8" }: { name: IconName; className?: string }) => {
+  const p = iconPalette;
+  const commonStroke = {
+    stroke: p.ink,
+    strokeWidth: 4,
+    strokeLinecap: "round" as const,
+    strokeLinejoin: "round" as const,
+  };
+
+  switch (name) {
+    case "camera":
+      return (
+        <IconSvg className={className}>
+          <path d="M22 31h13l5-8h16l5 8h13c5 0 8 3 8 8v29c0 5-3 8-8 8H22c-5 0-8-3-8-8V39c0-5 3-8 8-8Z" fill={p.blueLight} {...commonStroke} />
+          <circle cx="48" cy="54" r="15" fill={p.white} {...commonStroke} />
+          <circle cx="48" cy="54" r="7" fill={p.blue} />
+          <path d="M67 41h6" {...commonStroke} />
+          <path d="M25 22v-8M21 18h8" stroke={p.gold} strokeWidth="4" strokeLinecap="round" />
+        </IconSvg>
+      );
+    case "engineering":
+      return (
+        <IconSvg className={className}>
+          <path d="M18 21h60v42H18V21Z" fill={p.blueLight} {...commonStroke} />
+          <path d="M29 75h38M40 63v12M56 63v12" {...commonStroke} />
+          <path d="M29 47c8-13 22-17 39-12" stroke={p.blueDark} strokeWidth="5" strokeLinecap="round" />
+          <path d="M31 35h10M31 43h6M61 47h8" stroke={p.white} strokeWidth="4" strokeLinecap="round" />
+          <circle cx="49" cy="40" r="5" fill={p.gum} stroke={p.ink} strokeWidth="3" />
+          <path d="M72 17l2-7M78 21l7-3" stroke={p.gold} strokeWidth="4" strokeLinecap="round" />
+        </IconSvg>
+      );
+    case "package":
+      return (
+        <IconSvg className={className}>
+          <path d="M18 38 48 22l30 16-30 17-30-17Z" fill={p.cream} {...commonStroke} />
+          <path d="M18 38v33l30 15 30-15V38" fill={p.blueLight} {...commonStroke} />
+          <path d="M48 55v31M31 29l30 17" {...commonStroke} />
+          <path d="M57 63c-7-5-13-5-20 0 2 7 18 7 20 0Z" fill={p.white} stroke={p.blueDark} strokeWidth="3" />
+          <path d="M59 61c5-3 10-3 15 1" stroke={p.blueDark} strokeWidth="3" strokeLinecap="round" />
+        </IconSvg>
+      );
+    case "doctor":
+      return (
+        <IconSvg className={className}>
+          <circle cx="48" cy="28" r="13" fill="#f2c6a4" {...commonStroke} />
+          <path d="M29 80c2-22 36-22 38 0H29Z" fill={p.white} {...commonStroke} />
+          <path d="M39 49 48 62l9-13" stroke={p.blueDark} strokeWidth="4" strokeLinecap="round" strokeLinejoin="round" />
+          <path d="M33 60c-8 11-7 21 1 24M63 60c8 11 7 21-1 24" stroke={p.blue} strokeWidth="4" strokeLinecap="round" />
+          <circle cx="34" cy="84" r="5" fill={p.gum} stroke={p.ink} strokeWidth="3" />
+          <path d="M35 24c8 3 17 3 26-2" stroke={p.ink} strokeWidth="4" strokeLinecap="round" />
+        </IconSvg>
+      );
+    case "cycle":
+      return (
+        <IconSvg className={className}>
+          <path d="M25 35c10-15 31-18 45-6" stroke={p.blueDark} strokeWidth="7" strokeLinecap="round" />
+          <path d="M70 29h-1l-2-13 13 7-10 6Z" fill={p.blueDark} />
+          <path d="M71 61c-11 14-32 16-46 4" stroke={p.cyan} strokeWidth="7" strokeLinecap="round" />
+          <path d="m25 65 2 13-13-7 11-6Z" fill={p.cyan} />
+          <path d="M29 50c10-10 29-11 39 0-6 9-33 9-39 0Z" fill={p.mint} stroke={p.ink} strokeWidth="4" />
+          <path d="M38 50c7 3 13 3 21 0" stroke={p.white} strokeWidth="4" strokeLinecap="round" />
+        </IconSvg>
+      );
+    case "toothCheck":
+      return (
+        <IconSvg className={className}>
+          <path d="M24 16c7-5 14-2 22 3 8-5 15-8 22-3 12 8 6 31 0 43-4 9-7 18-14 18-6 0-5-15-8-24-3 9-2 24-8 24-7 0-10-9-14-18-6-12-12-35 0-43Z" fill={p.white} {...commonStroke} />
+          <path d="m55 58 7 7 16-18" stroke={p.blue} strokeWidth="6" strokeLinecap="round" strokeLinejoin="round" />
+          <path d="M31 27c5-3 10-3 16 0" stroke={p.blueLight} strokeWidth="4" strokeLinecap="round" />
+        </IconSvg>
+      );
+    case "clock":
+      return (
+        <IconSvg className={className}>
+          <rect x="13" y="22" width="53" height="57" rx="8" fill={p.white} {...commonStroke} />
+          <path d="M13 36h53M27 16v12M52 16v12" {...commonStroke} />
+          <circle cx="64" cy="61" r="20" fill={p.blueLight} {...commonStroke} />
+          <path d="M64 50v12l8 5" stroke={p.blueDark} strokeWidth="4" strokeLinecap="round" strokeLinejoin="round" />
+          <path d="M25 49h9M25 61h9M42 49h4" stroke={p.cyan} strokeWidth="4" strokeLinecap="round" />
+        </IconSvg>
+      );
+    case "methods":
+      return (
+        <IconSvg className={className}>
+          <path d="M17 33c14-20 46-20 62 0-7 14-20 21-31 21S24 47 17 33Z" fill={p.mint} stroke={p.ink} strokeWidth="4" />
+          <path d="M30 34c12 5 25 5 38 0" stroke={p.white} strokeWidth="5" strokeLinecap="round" />
+          <path d="M23 68h50" stroke={p.ink} strokeWidth="4" strokeLinecap="round" />
+          {[31, 42, 53, 64].map((x) => (
+            <rect key={x} x={x - 4} y="61" width="8" height="8" rx="2" fill={p.white} stroke={p.blueDark} strokeWidth="3" />
+          ))}
+          <path d="M27 65h41" stroke={p.gum} strokeWidth="3" strokeLinecap="round" />
+        </IconSvg>
+      );
+    case "benefits":
+      return (
+        <IconSvg className={className}>
+          <path d="M39 41V27c0-6 8-7 10-2 1 3 0 10 0 16h14c7 0 9 5 7 10l-8 24H36V47l3-6Z" fill={p.cream} {...commonStroke} />
+          <path d="M19 43h17v34H19V43Z" fill={p.blueLight} {...commonStroke} />
+          <path d="M70 28c0 6-4 10-10 10 6 0 10 4 10 10 0-6 4-10 10-10-6 0-10-4-10-10Z" fill={p.gold} stroke={p.ink} strokeWidth="3" />
+        </IconSvg>
+      );
+    case "aesthetic":
+      return (
+        <IconSvg className={className}>
+          <path d="M23 21c7-5 15-2 25 4 10-6 18-9 25-4 11 8 5 29-2 42-4 8-7 15-14 15-6 0-5-12-9-22-4 10-3 22-9 22-7 0-10-7-14-15-7-13-13-34-2-42Z" fill={p.white} {...commonStroke} />
+          <path d="M63 14c0 6-4 10-10 10 6 0 10 4 10 10 0-6 4-10 10-10-6 0-10-4-10-10Z" fill={p.gold} stroke={p.ink} strokeWidth="3" />
+          <path d="M29 34c8-3 17-2 25 2" stroke={p.blueLight} strokeWidth="4" strokeLinecap="round" />
+          <path d="M20 74h16M14 66h9" stroke={p.cyan} strokeWidth="4" strokeLinecap="round" />
+        </IconSvg>
+      );
+    case "message":
+      return (
+        <IconSvg className={className}>
+          <path d="M19 27h58c5 0 8 3 8 8v25c0 5-3 8-8 8H49L32 80v-12H19c-5 0-8-3-8-8V35c0-5 3-8 8-8Z" fill={p.blueLight} {...commonStroke} />
+          <path d="M30 45h36M30 55h22" stroke={p.white} strokeWidth="5" strokeLinecap="round" />
+          <circle cx="73" cy="23" r="11" fill={p.gum} stroke={p.ink} strokeWidth="3" />
+          <path d="M68 23h10" stroke={p.white} strokeWidth="3" strokeLinecap="round" />
+        </IconSvg>
+      );
+    case "check":
+      return (
+        <IconSvg className={className}>
+          <rect x="24" y="14" width="48" height="67" rx="8" fill={p.white} {...commonStroke} />
+          <path d="M36 14h24v11H36V14Z" fill={p.blueLight} {...commonStroke} />
+          <path d="m35 52 9 9 19-23" stroke={p.blue} strokeWidth="7" strokeLinecap="round" strokeLinejoin="round" />
+          <path d="M35 72h26" stroke={p.cyan} strokeWidth="4" strokeLinecap="round" />
+        </IconSvg>
+      );
+    case "calendar":
+      return (
+        <IconSvg className={className}>
+          <rect x="17" y="20" width="62" height="58" rx="8" fill={p.white} {...commonStroke} />
+          <path d="M17 36h62M31 14v12M65 14v12" {...commonStroke} />
+          <path d="M31 51h8M47 51h8M63 51h8M31 65h8M47 65h8" stroke={p.blue} strokeWidth="5" strokeLinecap="round" />
+          <path d="m61 66 5 5 12-14" stroke={p.gumDark} strokeWidth="5" strokeLinecap="round" strokeLinejoin="round" />
+        </IconSvg>
+      );
+    case "shield":
+      return (
+        <IconSvg className={className}>
+          <path d="M48 11 76 23v20c0 20-11 34-28 42-17-8-28-22-28-42V23l28-12Z" fill={p.blueLight} {...commonStroke} />
+          <path d="m34 49 10 10 20-24" stroke={p.blueDark} strokeWidth="7" strokeLinecap="round" strokeLinejoin="round" />
+          <path d="M30 28 48 20l18 8" stroke={p.white} strokeWidth="4" strokeLinecap="round" />
+        </IconSvg>
+      );
+    case "upload":
+      return (
+        <IconSvg className={className}>
+          <path d="M29 68H23c-9 0-15-6-15-14 0-8 6-14 14-14 3-13 14-22 27-22 15 0 27 12 27 27 7 1 12 6 12 12 0 7-6 11-14 11h-7" fill={p.blueLight} {...commonStroke} />
+          <path d="M48 72V40M36 52l12-12 12 12" stroke={p.blueDark} strokeWidth="6" strokeLinecap="round" strokeLinejoin="round" />
+          <path d="M34 78h28" stroke={p.white} strokeWidth="5" strokeLinecap="round" />
+        </IconSvg>
+      );
+  }
 };
 
 const ProcessRing = () => {
@@ -245,12 +429,10 @@ const LogoMark = ({ align = "left" }: { align?: "left" | "right" }) => (
 );
 
 const CalloutCard = ({ callout }: { callout: Callout }) => {
-  const Icon = callout.Icon;
-
   return (
     <article className="group flex items-center gap-3 rounded-2xl border border-sky-100/80 bg-white/85 p-3 text-right shadow-[0_10px_24px_rgba(14,100,145,0.12)] backdrop-blur transition hover:-translate-y-0.5 hover:shadow-[0_16px_30px_rgba(14,100,145,0.18)]">
       <div className="flex h-16 w-16 shrink-0 items-center justify-center rounded-2xl bg-gradient-to-br from-sky-100 to-cyan-50 text-sky-700 ring-1 ring-sky-200/80">
-        <Icon className="h-8 w-8" strokeWidth={2.25} />
+        <DesignedIcon name={callout.icon} className="h-12 w-12" />
       </div>
       <div>
         <h2 className="text-xl font-black leading-tight text-slate-950">{callout.title}</h2>
@@ -261,13 +443,11 @@ const CalloutCard = ({ callout }: { callout: Callout }) => {
 };
 
 const InfoPanel = ({ card }: { card: InfoCard }) => {
-  const Icon = card.Icon;
-
   return (
     <article className="min-h-[150px] rounded-2xl border border-sky-100 bg-gradient-to-b from-sky-50 to-white p-4 text-right shadow-[inset_0_1px_0_rgba(255,255,255,0.9),0_10px_22px_rgba(11,96,141,0.1)]">
       <div className="mb-2 flex items-center justify-center">
         <span className="flex h-12 w-12 items-center justify-center rounded-2xl bg-white text-sky-700 shadow ring-1 ring-sky-100">
-          <Icon className="h-7 w-7" />
+          <DesignedIcon name={card.icon} className="h-10 w-10" />
         </span>
       </div>
       <h3 className="text-center text-lg font-black leading-none text-slate-950">{card.title}</h3>
@@ -345,14 +525,14 @@ const ClearAlignersInfoPage = () => {
                 <div className="relative mx-auto aspect-square w-full max-w-[440px]">
                   <ProcessRing />
 
-                  {processSteps.map(({ label, Icon, top, left }) => (
+                  {processSteps.map(({ label, icon, top, left }) => (
                     <div
                       key={label}
                       className="absolute flex -translate-x-1/2 -translate-y-1/2 flex-col items-center gap-1 text-center"
                       style={{ top, left }}
                     >
                       <span className="flex h-14 w-14 items-center justify-center rounded-full border-2 border-white bg-gradient-to-br from-white to-sky-100 text-sky-700 shadow-[0_8px_18px_rgba(16,102,151,0.24)]">
-                        <Icon className="h-7 w-7" strokeWidth={2.4} />
+                        <DesignedIcon name={icon} className="h-11 w-11" />
                       </span>
                       <span className="rounded-full bg-white/90 px-2 py-0.5 text-[0.64rem] font-black text-sky-900 shadow">
                         {label}
@@ -372,7 +552,7 @@ const ClearAlignersInfoPage = () => {
                       )}
                     </div>
                     <label className="inline-flex cursor-pointer items-center gap-1.5 rounded-full bg-[#0e83bd] px-3.5 py-2 text-[0.68rem] font-black text-white shadow transition hover:bg-[#096d9e]">
-                      <Upload className="h-3.5 w-3.5" />
+                      <DesignedIcon name="upload" className="h-5 w-5" />
                       בחירת קובץ
                       <input type="file" accept="image/*" className="hidden" onChange={handleImageChange} />
                     </label>
@@ -405,7 +585,7 @@ const ClearAlignersInfoPage = () => {
             to="/"
             className="inline-flex items-center gap-2 rounded-full bg-white/80 px-5 py-2 text-sm font-black text-sky-900 shadow ring-1 ring-sky-200 transition hover:bg-white"
           >
-            <ShieldCheck className="h-4 w-4" />
+            <DesignedIcon name="shield" className="h-5 w-5" />
             חזרה לדף הבית
           </Link>
         </div>
