@@ -33,6 +33,7 @@ import floor1Shop4Img from "@/assets/stores/floor1-shop4.png";
 import floor1Shop6Img from "@/assets/stores/floor1-shop6.png";
 import danielGlassArtLogo from "@/assets/stores/daniel-glass-art-logo.jpg";
 import yardensJewelryImg from "@/assets/stores/yardens-jewelry.png";
+import floor1Shop3Img from "@/assets/stores/floor1-shop3.png";
 
 type BrandStyle = {
   bg: string;
@@ -139,6 +140,15 @@ const idOverrides: Record<string, Partial<BrandStyle & { name: string }>> = {
     font: "font-frank",
     image: yardensJewelryImg,
     subtitle: "",
+  },
+  s15: {
+    name: "ניחוחות היער",
+    bg: "linear-gradient(135deg, #efe4d2, #e0d2ba)",
+    text: "#3e2a18",
+    accent: "#a67c52",
+    font: "font-frank",
+    image: floor1Shop3Img,
+    subtitle: "בשמים ונרות טבעיים",
   },
 };
 
