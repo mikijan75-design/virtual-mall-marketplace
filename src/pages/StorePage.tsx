@@ -75,6 +75,7 @@ import jordiE1 from "@/assets/stores/jordi/e1.png";
 import jordiE2 from "@/assets/stores/jordi/e2.png";
 import jordiE3 from "@/assets/stores/jordi/e3.png";
 import jordiE4 from "@/assets/stores/jordi/e4.png";
+import tuli1 from "@/assets/stores/jordi/tuli1.png";
 
 const halenGalleryImages = [
   { src: halenGallery1, alt: "Halen Binaria - דגם 1" },
@@ -809,7 +810,20 @@ const StorePage = () => {
               </div>
             ) : store.id === "s15" ? (
               <div className="flex flex-col gap-4" dir="rtl">
-                {[0, 1, 2].map((row) => (
+                <div className="flex gap-4 items-stretch">
+                  <div className="w-[30%] aspect-[3/2] rounded-lg bg-muted border border-border overflow-hidden">
+                    <img src={tuli1} alt="טולי" className="w-full h-full object-cover" />
+                  </div>
+                  <div className="w-[70%] rounded-lg bg-muted border border-border p-5 text-right">
+                    <h3 className="text-xl font-frank font-bold text-foreground mb-3">
+                      תכירו את טולי!
+                    </h3>
+                    <p className="text-sm md:text-base text-muted-foreground font-heebo leading-relaxed">
+                      בחורה שכולה מתנה אחת גדולה לכם ולכל מי שפתוח לנסות את מה שיש לה להציע, להשתתף בפעילות חברתית, ללמוד בכל אחד אשר יוזם ופותח את האפשרויות להעשיר לך את הידע בזוית ראייה שלו או הרצון בעולם המופלא של חיבור לרגש ולהרצות של כולנו לחוות, טולי מציעה שלל של מפגשים וסדנאות אשר יכולים להיות הערב הפעיל שלכם, מלבד זה היא היוצרת של כלים או חומרים שכולם הם למטרה אחת לתת לכם אהבה ואהבה לעצמכם, טולי מציגה את המוצרים שלה בירידי אומנים ששווה להתעדכן ולהשתתף וזאת הזדמנות טובה להכיר אדם שקסם לי מהרגע הראשון והרצון הטוב שלה לתרום כמה שיותר עם מוצרים רוחניים ופעילויות חברתיות.
+                    </p>
+                  </div>
+                </div>
+                {[1, 2].map((row) => (
                   <div key={row} className="flex gap-4 items-stretch">
                     <div className="w-[30%] aspect-[3/2] rounded-lg bg-muted border border-border" />
                     <div className="w-[70%] aspect-[7/2] rounded-lg bg-muted border border-border" />
