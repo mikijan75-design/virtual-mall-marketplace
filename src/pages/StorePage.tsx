@@ -807,6 +807,15 @@ const StorePage = () => {
                   ))}
                 </div>
               </div>
+            ) : store.id === "s15" ? (
+              <div className="flex flex-col gap-4" dir="rtl">
+                {[0, 1, 2].map((row) => (
+                  <div key={row} className="flex gap-4 items-stretch">
+                    <div className="w-[30%] aspect-[3/2] rounded-lg bg-muted border border-border" />
+                    <div className="w-[70%] aspect-[7/2] rounded-lg bg-muted border border-border" />
+                  </div>
+                ))}
+              </div>
             ) : (
               <>
                 <h2 className="text-2xl font-frank font-bold text-foreground mb-4">
