@@ -76,6 +76,7 @@ import jordiE2 from "@/assets/stores/jordi/e2.png";
 import jordiE3 from "@/assets/stores/jordi/e3.png";
 import jordiE4 from "@/assets/stores/jordi/e4.png";
 import tuli1 from "@/assets/stores/jordi/tuli1.png";
+import tuliLogo from "@/assets/tuli-logo.png";
 import tuliP1 from "@/assets/stores/jordi/tuli-products/p1.png";
 import tuliP2 from "@/assets/stores/jordi/tuli-products/p2.png";
 import tuliP3 from "@/assets/stores/jordi/tuli-products/p3.png";
@@ -679,16 +680,18 @@ const StorePage = () => {
 
       {/* Store banner */}
       <div
-        className={`py-8 md:py-12 ${store.id === "s18" || store.id === "s10" ? "" : `bg-gradient-to-r ${store.signColor}`}`}
+        className={`py-8 md:py-12 ${store.id === "s18" || store.id === "s10" || store.id === "s15" ? "" : `bg-gradient-to-r ${store.signColor}`}`}
         style={
           store.id === "s18"
             ? { background: "linear-gradient(135deg, #1e4a8a, #0f2d5c)" }
             : store.id === "s10"
               ? { background: "linear-gradient(135deg, #d2b48c, #b8956a)" }
-              : undefined
+              : store.id === "s15"
+                ? { background: "#f7f1e3" }
+                : undefined
         }
       >
-        <div className="container mx-auto text-center text-white">
+        <div className={`container mx-auto text-center ${store.id === "s15" ? "text-foreground" : "text-white"}`}>
           {isIsraelMezuzahs ? (
             <img
               src={imBeadLogo}
@@ -706,7 +709,15 @@ const StorePage = () => {
               className="block mx-auto mb-4 h-24 md:h-32 w-auto object-contain rounded-md bg-white/95 px-3 py-2 shadow-lg"
             />
           ) : store.id === "s10" ? null : (
-            <span className="text-6xl md:text-8xl block mb-4">{store.logoEmoji}</span>
+            store.id === "s15" ? (
+              <img
+                src={tuliLogo}
+                alt="טולי לוגו"
+                className="block mx-auto mb-4 h-28 md:h-36 w-auto object-contain"
+              />
+            ) : (
+              <span className="text-6xl md:text-8xl block mb-4">{store.logoEmoji}</span>
+            )
           )}
           <h1
             className="text-3xl md:text-5xl font-frank font-bold mb-2"
@@ -827,11 +838,11 @@ const StorePage = () => {
               </div>
             ) : store.id === "s15" ? (
               <div className="flex flex-col gap-4" dir="rtl">
-                <div className="flex gap-4 items-stretch">
-                  <div className="w-[30%] aspect-[3/2] rounded-lg bg-muted border border-border overflow-hidden">
+                <div className="grid grid-cols-[3fr_7fr] gap-4 items-stretch">
+                  <div className="aspect-[3/2] rounded-lg bg-muted border border-border overflow-hidden">
                     <img src={tuli1} alt="טולי" className="w-full h-full object-cover" />
                   </div>
-                  <div className="w-[70%] rounded-lg bg-muted border border-border p-5 text-right">
+                  <div className="rounded-lg bg-muted border border-border p-5 text-right">
                     <h3 className="text-xl font-frank font-bold text-foreground mb-3">
                       תכירו את טולי!
                     </h3>
@@ -840,14 +851,14 @@ const StorePage = () => {
                     </p>
                   </div>
                 </div>
-                <div className="flex gap-4 items-stretch">
-                  <div className="w-[30%] rounded-lg bg-muted border border-border p-5 text-right flex flex-col justify-center">
+                <div className="grid grid-cols-[3fr_7fr] gap-4 items-stretch">
+                  <div className="rounded-lg bg-muted border border-border p-5 text-right flex flex-col justify-center">
                     <h3 className="text-xl font-frank font-bold text-foreground mb-3">מוצרים</h3>
                     <p className="text-sm text-muted-foreground font-heebo leading-relaxed">
                       כל המוצרים הם פרי יצירתה של טולי וכל אחד הוא מעופיין ובעל תכונות אישיות, היצירה והיזמות הן מעבר למלאכת יד אלה רצון להעניק לכם ערך מוסף וכלים לחיים.
                     </p>
                   </div>
-                  <div className="w-[70%] grid grid-cols-4 gap-3">
+                  <div className="grid grid-cols-4 gap-3">
                     {[tuliP1, tuliP2, tuliP3, tuliP4].map((src, i) => (
                       <div key={i} className="rounded-lg bg-muted border border-border overflow-hidden aspect-square">
                         <img src={src} alt={`מוצר ${i + 1}`} className="w-full h-full object-cover" loading="lazy" />
@@ -855,14 +866,14 @@ const StorePage = () => {
                     ))}
                   </div>
                 </div>
-                <div className="flex gap-4 items-stretch">
-                  <div className="w-[30%] rounded-lg bg-muted border border-border p-5 text-right flex flex-col justify-center">
+                <div className="grid grid-cols-[3fr_7fr] gap-4 items-stretch">
+                  <div className="rounded-lg bg-muted border border-border p-5 text-right flex flex-col justify-center">
                     <h3 className="text-xl font-frank font-bold text-foreground mb-3">סדנאות</h3>
                     <p className="text-sm text-muted-foreground font-heebo leading-relaxed">
                       אתם מוזמנים להשתתף ולקחת חלק בפעילויות חברתיות אשר לכל אחת יש יעוד וכוונה לפי ההרגשה האישית שלכם, אצה רצויה היא כמובן לחוות ולנצל כל אירוע וכל מפגש, מידע ובירורים ימסרו לכל המעוניין.
                     </p>
                   </div>
-                  <div className="w-[70%] grid grid-cols-4 gap-3">
+                  <div className="grid grid-cols-4 gap-3">
                     {[
                       { src: tuliW1, title: "יצירת קמע קריסטלים אישי" },
                       { src: tuliW2, title: "סדנאת קריסטלים" },
