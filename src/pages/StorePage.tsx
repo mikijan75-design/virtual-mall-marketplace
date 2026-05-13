@@ -615,7 +615,8 @@ const israelMezuzahsProducts = [
 
 const StorePage = () => {
   const { storeId } = useParams<{ storeId: string }>();
-  
+  const navigate = useNavigate();
+
   const store = mallFloors
     .flatMap((f) => f.stores)
     .find((s) => s.id === storeId);
