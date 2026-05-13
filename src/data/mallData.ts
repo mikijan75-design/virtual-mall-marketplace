@@ -34,7 +34,7 @@ export const mallFloors: Floor[] = [
     stores: [
       { id: "s7", name: "ספורט עיוותי", floor: 2, position: 1, category: "ספורט", signColor: "from-red-400 to-rose-600", logoEmoji: "🏋️", description: "חנות ספורט אקסטרים" },
       { id: "s8", name: "אמבטיות מתקדמות", floor: 2, position: 2, category: "בית", signColor: "from-sky-400 to-indigo-600", logoEmoji: "🛁", description: "עיצוב חדרי אמבטיה" },
-      { id: "s10", name: "קוסמטיקה טבעית", floor: 2, position: 3, category: "קוסמטיקה", signColor: "from-fuchsia-400 to-purple-600", logoEmoji: "💄", description: "מוצרי יופי וטיפוח" },
+      { id: "s10", name: "JORDI STUDIO", floor: 2, position: 3, category: "קוסמטיקה", signColor: "from-fuchsia-400 to-purple-600", logoEmoji: "💄", description: "צורפת תכשיטים" },
       { id: "s9", name: "בנק", floor: 2, position: 4, category: "שירותים", signColor: "from-slate-400 to-gray-600", logoEmoji: "🏦", description: "שירותים בנקאיים" },
       { id: "s11", name: "סמארט ואתגר", floor: 2, position: 5, category: "טכנולוגיה", signColor: "from-violet-400 to-purple-600", logoEmoji: "📱", description: "סמארטפונים ואביזרים" },
       { id: "s12", name: "גלריה לאמנות", floor: 2, position: 6, category: "אמנות", signColor: "from-yellow-400 to-amber-600", logoEmoji: "🎭", description: "אמנות ותרבות" },

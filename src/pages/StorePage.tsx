@@ -70,6 +70,7 @@ import avnerPainting18 from "@/assets/avner-paintings/p18.png";
 import avnerPainting19 from "@/assets/avner-paintings/p19.png";
 import avnerPainting20 from "@/assets/avner-paintings/p20.png";
 import type { Store } from "@/data/mallData";
+import jordiStudioProfile from "@/assets/stores/jordi-studio-profile.png";
 
 const halenGalleryImages = [
   { src: halenGallery1, alt: "Halen Binaria - דגם 1" },
@@ -770,6 +771,13 @@ const StorePage = () => {
               </>
             ) : store.id === "s18" ? (
               <GalleryWallSection />
+            ) : store.id === "s10" ? (
+              <img
+                src={jordiStudioProfile}
+                alt="JORDI STUDIO - פרופיל אמן: ירדן, צורפת ומלכת יד"
+                className="w-full h-auto rounded-lg shadow-md object-contain"
+                loading="lazy"
+              />
             ) : (
               <>
                 <h2 className="text-2xl font-frank font-bold text-foreground mb-4">
