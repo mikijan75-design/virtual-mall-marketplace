@@ -863,11 +863,38 @@ const StorePage = () => {
                     </p>
                   </div>
                   <div className="grid grid-cols-4 gap-3 h-full">
-                    {[tuliP1, tuliP2, tuliP3, tuliP4].map((src, i) => (
-                      <div key={i} className="rounded-lg overflow-hidden h-full flex flex-col" style={{ backgroundColor: '#f4e8cc' }}>
-                        <img src={src} alt={`מוצר ${i + 1}`} className="w-full h-1/2 object-cover block" loading="lazy" />
-                        <div className="p-2 text-center text-xs font-heebo font-bold text-foreground">לעריכה</div>
-                      </div>
+                    {[
+                      { src: tuliP1, name: "לחות" },
+                      { src: tuliP2, name: "קלילי" },
+                      { src: tuliP3, name: "קעקע" },
+                      { src: tuliP4, name: "מקל מור" },
+                    ].map((p, i) => (
+                      <button
+                        key={i}
+                        type="button"
+                        onClick={() =>
+                          navigate("/sense-pro", {
+                            state: {
+                              mezuzah: {
+                                productId: `tuli-p${i + 1}`,
+                                itemNumber: i + 1,
+                                image: p.src,
+                                name: p.name,
+                                brand: "טולי",
+                                unitPrice: 100,
+                                shippingPerItem: 0,
+                              },
+                            },
+                          })
+                        }
+                        className="rounded-lg overflow-hidden h-full flex flex-col text-right hover:ring-2 hover:ring-mall-gold transition"
+                        style={{ backgroundColor: '#f4e8cc' }}
+                        aria-label={`בחר מוצר ${p.name}`}
+                      >
+                        <img src={p.src} alt={p.name} className="w-full h-1/2 object-cover block" loading="lazy" />
+                        <div className="p-2 text-center text-xs font-heebo font-bold text-foreground">{p.name}</div>
+                        <div className="px-2 pb-2 text-center text-[11px] font-heebo text-foreground/70">100 ₪</div>
+                      </button>
                     ))}
                   </div>
                 </div>
