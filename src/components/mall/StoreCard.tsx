@@ -37,6 +37,7 @@ import danielGlassArtLogo from "@/assets/stores/daniel-glass-art-logo.jpg";
 import yardensJewelryImg from "@/assets/stores/yardens-jewelry.png";
 import floor1Shop3Img from "@/assets/stores/floor1-shop3.png";
 import storeFloor2Pos2Img from "@/assets/store-floor2-2.png";
+import storeFloor2Pos2Sign from "@/assets/store-floor2-2-sign.png";
 
 type BrandStyle = {
   bg: string;
@@ -157,6 +158,7 @@ const idOverrides: Record<string, Partial<BrandStyle & { name: string }>> = {
   },
   s8: {
     image: storeFloor2Pos2Img,
+    logo: storeFloor2Pos2Sign,
   },
 };
 
