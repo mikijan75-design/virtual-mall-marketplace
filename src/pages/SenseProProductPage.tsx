@@ -135,6 +135,9 @@ const SenseProProductPage = () => {
         shippingPerItem: number;
       }
     | undefined;
+  const initialSiblings = (location.state as any)?.siblings as
+    | Array<{ productId: string; image: string; name: string; unitPrice: number }>
+    | undefined;
   const { addItem: addToCart } = useCart();
 
   const [mainImage, setMainImage] = useState<string | null>(null);
@@ -182,17 +185,36 @@ const SenseProProductPage = () => {
     ? productCollection[selectedProductIndex] ?? null
     : null;
 
-  const mezuzah = initialMezuzah
+  // Sibling-based selection (used when products are passed directly via state,
+  // e.g. from store s15 / טולי). Lets user switch between sibling products
+  // shown as thumbnails below the main image.
+  const [siblingId, setSiblingId] = useState<string | undefined>(initialMezuzah?.productId);
+  const activeSibling =
+    initialSiblings && siblingId
+      ? initialSiblings.find((s) => s.productId === siblingId) ?? initialSiblings[0]
+      : undefined;
+
+  const baseMezuzah = initialMezuzah && activeSibling
+    ? {
+        ...initialMezuzah,
+        productId: activeSibling.productId,
+        image: activeSibling.image,
+        name: activeSibling.name,
+        unitPrice: activeSibling.unitPrice,
+      }
+    : initialMezuzah;
+
+  const mezuzah = baseMezuzah
     ? selectedProduct
       ? {
-          ...initialMezuzah,
+          ...baseMezuzah,
           itemNumber: selectedProductIndex + 1,
           image: selectedProduct.image,
           name: selectedProduct.name,
           unitPrice: selectedProduct.price,
           productId: selectedProduct.id,
         }
-      : initialMezuzah
+      : baseMezuzah
     : undefined;
 
   // Other products to show as thumbnails (excluding the currently selected one)
@@ -268,7 +290,24 @@ const SenseProProductPage = () => {
             }}
           />
 
-          {initialMezuzah && selectedProduct ? (
+          {initialSiblings && initialSiblings.length > 0 ? (
+            <div className="mt-[13px] grid grid-cols-4 gap-[10px]" aria-label="מוצרים נוספים">
+              {initialSiblings.map((s) => (
+                <button
+                  key={s.productId}
+                  type="button"
+                  onClick={() => setSiblingId(s.productId)}
+                  title={s.name}
+                  aria-label={`בחר ${s.name}`}
+                  className={`relative flex h-[63px] w-full items-center justify-center overflow-hidden rounded-[7px] border-2 bg-white transition ${
+                    siblingId === s.productId ? "border-[#0d5960]" : "border-[#cdd2d2] hover:border-[#0d5960]"
+                  }`}
+                >
+                  <img src={s.image} alt={s.name} loading="lazy" className="max-h-full max-w-full object-contain" />
+                </button>
+              ))}
+            </div>
+          ) : initialMezuzah && selectedProduct ? (
             <div className="mt-[13px] flex items-center gap-2" aria-label="בחירת מזוזה נוספת">
               <button
                 type="button"
