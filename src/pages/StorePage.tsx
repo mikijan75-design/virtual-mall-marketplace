@@ -859,7 +859,7 @@ const StorePage = () => {
                   <div className="rounded-lg bg-muted border border-border p-5 text-right flex flex-col justify-center">
                     <h3 className="text-xl font-frank font-bold text-foreground mb-3">מוצרים</h3>
                     <p className="text-sm text-muted-foreground font-heebo leading-relaxed">
-                      כל המוצרים הם פרי יצירתה של טולי וכל אחד הוא מעופיין ובעל תכונות אישיות, היצירה והיזמות הן מעבר למלאכת יד אלה רצון להעניק לכם ערך מוסף וכלים לחיים.
+                      כל המוצרים הם פרי יצירתה של טולי וכל אחד מעופיין ובעל תכונות אישיות, היצירה והיזמות הן מעבר למלאכת יד אלה רצון להעניק לכם ערך מוסף וכלים לחיים.
                     </p>
                   </div>
                    <div className="grid grid-cols-4 gap-3 h-full">
