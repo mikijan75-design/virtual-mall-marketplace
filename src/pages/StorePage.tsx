@@ -832,60 +832,64 @@ const StorePage = () => {
                 </div>
               </div>
             ) : store.id === "s15" ? (
-              <div className="flex flex-col gap-4" dir="rtl">
-                <div className="flex gap-4 items-stretch">
-                  <div className="w-[30%] aspect-[3/2] rounded-lg bg-muted border border-border overflow-hidden">
-                    <img src={tuli1} alt="טולי" className="w-full h-full object-cover" />
-                  </div>
-                  <div className="w-[70%] rounded-lg bg-muted border border-border p-5 text-right">
-                    <h3 className="text-xl font-frank font-bold text-foreground mb-3">
-                      תכירו את טולי!
-                    </h3>
-                    <p className="text-sm md:text-base text-muted-foreground font-heebo leading-relaxed">
-                      בחורה שכולה מתנה אחת גדולה לכם ולכל מי שפתוח לנסות את מה שיש לה להציע, להשתתף בפעילות חברתית, ללמוד בכל אחד אשר יוזם ופותח את האפשרויות להעשיר לך את הידע בזוית ראייה שלו או הרצון בעולם המופלא של חיבור לרגש ולהרצות של כולנו לחוות, טולי מציעה שלל של מפגשים וסדנאות אשר יכולים להיות הערב הפעיל שלכם, מלבד זה היא היוצרת של כלים או חומרים שכולם הם למטרה אחת לתת לכם אהבה ואהבה לעצמכם, טולי מציגה את המוצרים שלה בירידי אומנים ששווה להתעדכן ולהשתתף וזאת הזדמנות טובה להכיר אדם שקסם לי מהרגע הראשון והרצון הטוב שלה לתרום כמה שיותר עם מוצרים רוחניים ופעילויות חברתיות.
-                    </p>
-                  </div>
-                </div>
-                <div className="flex gap-4 items-stretch">
-                  <div className="w-[30%] rounded-lg bg-muted border border-border p-5 text-right flex flex-col justify-center">
-                    <h3 className="text-xl font-frank font-bold text-foreground mb-3">מוצרים</h3>
-                    <p className="text-sm text-muted-foreground font-heebo leading-relaxed">
-                      כל המוצרים הם פרי יצירתה של טולי וכל אחד הוא מעופיין ובעל תכונות אישיות, היצירה והיזמות הן מעבר למלאכת יד אלה רצון להעניק לכם ערך מוסף וכלים לחיים.
-                    </p>
-                  </div>
-                  <div className="w-[70%] grid grid-cols-4 gap-3">
-                    {[tuliP1, tuliP2, tuliP3, tuliP4].map((src, i) => (
-                      <div key={i} className="rounded-lg bg-muted border border-border overflow-hidden aspect-square">
+              <div dir="rtl" className="grid gap-5 lg:grid-cols-[minmax(0,1fr)_300px]">
+                {/* Row 1 - Hero image + intro panel */}
+                <section className="overflow-hidden rounded-[10px] border border-[#d5cabd] bg-[#ded6cf] shadow-[inset_0_1px_0_rgba(255,255,255,0.42),0_1px_2px_rgba(105,88,64,0.08)] min-h-[260px]">
+                  <img src={tuli1} alt="טולי" className="w-full h-full object-cover min-h-[260px]" />
+                </section>
+                <section className="rounded-[10px] border border-[#d5cabd] bg-[radial-gradient(circle_at_50%_35%,rgba(232,225,207,0.58),transparent_43%),linear-gradient(135deg,#ddd4cd_0%,#e5ded9_100%)] p-5 shadow-[inset_0_1px_0_rgba(255,255,255,0.42),0_1px_2px_rgba(105,88,64,0.08)] text-right">
+                  <h3 className="text-xl font-frank font-bold text-[#5a4a3a] mb-3">תכירו את טולי!</h3>
+                  <p className="text-sm font-heebo leading-relaxed text-[#5a4a3a]/85">
+                    בחורה שכולה מתנה אחת גדולה לכם ולכל מי שפתוח לנסות את מה שיש לה להציע, להשתתף בפעילות חברתית, ללמוד בכל אחד אשר יוזם ופותח את האפשרויות להעשיר לך את הידע בזוית ראייה שלו או הרצון בעולם המופלא של חיבור לרגש ולהרצות של כולנו לחוות, טולי מציעה שלל של מפגשים וסדנאות אשר יכולים להיות הערב הפעיל שלכם, מלבד זה היא היוצרת של כלים או חומרים שכולם הם למטרה אחת לתת לכם אהבה ואהבה לעצמכם.
+                  </p>
+                </section>
+
+                {/* Row 2 - Products small frames + side panel */}
+                <div className="grid grid-cols-2 sm:grid-cols-4 gap-[14px] self-start">
+                  {[tuliP1, tuliP2, tuliP3, tuliP4].map((src, i) => (
+                    <article key={i} className="rounded-[9px] border border-[#d9cfbd] bg-[#f3eed8] p-[5px] pb-[10px] shadow-[inset_0_1px_1px_rgba(255,255,255,0.85),0_1px_2px_rgba(119,99,62,0.08)]">
+                      <div className="aspect-square overflow-hidden rounded-[6px] shadow-[inset_0_1px_0_rgba(255,255,255,0.28)]">
                         <img src={src} alt={`מוצר ${i + 1}`} className="w-full h-full object-cover" loading="lazy" />
                       </div>
-                    ))}
-                  </div>
+                    </article>
+                  ))}
                 </div>
-                <div className="flex gap-4 items-stretch">
-                  <div className="w-[30%] rounded-lg bg-muted border border-border p-5 text-right flex flex-col justify-center">
-                    <h3 className="text-xl font-frank font-bold text-foreground mb-3">סדנאות</h3>
-                    <p className="text-sm text-muted-foreground font-heebo leading-relaxed">
-                      אתם מוזמנים להשתתף ולקחת חלק בפעילויות חברתיות אשר לכל אחת יש יעוד וכוונה לפי ההרגשה האישית שלכם, אצה רצויה היא כמובן לחוות ולנצל כל אירוע וכל מפגש, מידע ובירורים ימסרו לכל המעוניין.
-                    </p>
-                  </div>
-                  <div className="w-[70%] grid grid-cols-4 gap-3">
-                    {[
-                      { src: tuliW1, title: "יצירת קמע קריסטלים אישי" },
-                      { src: tuliW2, title: "סדנאת קריסטלים" },
-                      { src: tuliW3, title: "סדנאת ארומתרפיה" },
-                      { src: tuliW4, title: "סדנאת עשן השרפים" },
-                    ].map((w, i) => (
-                      <div key={i} className="rounded-lg bg-muted border border-border overflow-hidden flex flex-col">
-                        <div className="aspect-square overflow-hidden">
-                          <img src={w.src} alt={w.title} className="w-full h-full object-cover object-top" loading="lazy" />
-                        </div>
-                        <div className="p-2 text-center text-xs font-heebo font-bold text-foreground">
-                          {w.title}
-                        </div>
+                <section className="rounded-[10px] border border-[#d5cabd] bg-[radial-gradient(circle_at_50%_35%,rgba(232,225,207,0.58),transparent_43%),linear-gradient(135deg,#ddd4cd_0%,#e5ded9_100%)] p-5 shadow-[inset_0_1px_0_rgba(255,255,255,0.42),0_1px_2px_rgba(105,88,64,0.08)] text-right">
+                  <h3 className="text-xl font-frank font-bold text-[#5a4a3a] mb-3">מוצרים</h3>
+                  <p className="text-sm font-heebo leading-relaxed text-[#5a4a3a]/85">
+                    כל המוצרים הם פרי יצירתה של טולי וכל אחד הוא מעופיין ובעל תכונות אישיות, היצירה והיזמות הן מעבר למלאכת יד אלה רצון להעניק לכם ערך מוסף וכלים לחיים.
+                  </p>
+                </section>
+
+                {/* Row 3 - Workshops tall frames + sparkle side panel */}
+                <div className="grid grid-cols-2 sm:grid-cols-4 gap-[14px]">
+                  {[
+                    { src: tuliW1, title: "יצירת קמע קריסטלים אישי" },
+                    { src: tuliW2, title: "סדנאת קריסטלים" },
+                    { src: tuliW3, title: "סדנאת ארומתרפיה" },
+                    { src: tuliW4, title: "סדנאת עשן השרפים" },
+                  ].map((w, i) => (
+                    <article key={i} className="overflow-hidden rounded-[9px] border border-[#d6cbbb] bg-[#f3edd7] shadow-[inset_0_1px_0_rgba(255,255,255,0.62),0_1px_2px_rgba(112,91,56,0.08)] flex flex-col">
+                      <div className="aspect-square overflow-hidden">
+                        <img src={w.src} alt={w.title} className="w-full h-full object-cover object-top" loading="lazy" />
                       </div>
-                    ))}
-                  </div>
+                      <div className="p-2 text-center text-xs font-heebo font-bold text-[#5a4a3a] bg-[linear-gradient(180deg,#f4eed8_0%,#f7f2de_100%)]">
+                        {w.title}
+                      </div>
+                    </article>
+                  ))}
                 </div>
+                <section className="relative overflow-hidden rounded-[10px] border border-[#d5cabd] bg-[radial-gradient(circle_at_50%_35%,rgba(232,225,207,0.58),transparent_43%),linear-gradient(135deg,#ddd4cd_0%,#e5ded9_100%)] p-5 shadow-[inset_0_1px_0_rgba(255,255,255,0.42),0_1px_2px_rgba(105,88,64,0.08)] text-right">
+                  <h3 className="text-xl font-frank font-bold text-[#5a4a3a] mb-3">סדנאות</h3>
+                  <p className="text-sm font-heebo leading-relaxed text-[#5a4a3a]/85">
+                    אתם מוזמנים להשתתף ולקחת חלק בפעילויות חברתיות אשר לכל אחת יש יעוד וכוונה לפי ההרגשה האישית שלכם, אצה רצויה היא כמובן לחוות ולנצל כל אירוע וכל מפגש, מידע ובירורים ימסרו לכל המעוניין.
+                  </p>
+                  <div aria-hidden="true" className="absolute bottom-4 left-4 h-10 w-10 text-[#fbfaf3] drop-shadow-[0_1px_2px_rgba(160,145,119,0.25)]">
+                    <div className="absolute left-1/2 top-0 h-full w-[28%] -translate-x-1/2 rounded-full bg-current" />
+                    <div className="absolute left-0 top-1/2 h-[28%] w-full -translate-y-1/2 rounded-full bg-current" />
+                    <div className="absolute inset-0 rotate-45 scale-75 rounded-full bg-current" />
+                  </div>
+                </section>
               </div>
             ) : (
               <>
