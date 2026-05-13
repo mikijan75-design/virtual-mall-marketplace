@@ -76,6 +76,10 @@ import jordiE2 from "@/assets/stores/jordi/e2.png";
 import jordiE3 from "@/assets/stores/jordi/e3.png";
 import jordiE4 from "@/assets/stores/jordi/e4.png";
 import tuli1 from "@/assets/stores/jordi/tuli1.png";
+import tuliP1 from "@/assets/stores/jordi/tuli-products/p1.png";
+import tuliP2 from "@/assets/stores/jordi/tuli-products/p2.png";
+import tuliP3 from "@/assets/stores/jordi/tuli-products/p3.png";
+import tuliP4 from "@/assets/stores/jordi/tuli-products/p4.png";
 
 const halenGalleryImages = [
   { src: halenGallery1, alt: "Halen Binaria - דגם 1" },
@@ -823,12 +827,25 @@ const StorePage = () => {
                     </p>
                   </div>
                 </div>
-                {[1, 2].map((row) => (
-                  <div key={row} className="flex gap-4 items-stretch">
-                    <div className="w-[30%] aspect-[3/2] rounded-lg bg-muted border border-border" />
-                    <div className="w-[70%] aspect-[7/2] rounded-lg bg-muted border border-border" />
+                <div className="flex gap-4 items-stretch">
+                  <div className="w-[30%] rounded-lg bg-muted border border-border p-5 text-right flex flex-col justify-center">
+                    <h3 className="text-xl font-frank font-bold text-foreground mb-3">מוצרים</h3>
+                    <p className="text-sm text-muted-foreground font-heebo leading-relaxed">
+                      כל המוצרים הם פרי יצירתה של טולי וכל אחד הוא מעופיין ובעל תכונות אישיות, היצירה והיזמות הן מעבר למלאכת יד אלה רצון להעניק לכם ערך מוסף וכלים לחיים.
+                    </p>
                   </div>
-                ))}
+                  <div className="w-[70%] grid grid-cols-4 gap-3">
+                    {[tuliP1, tuliP2, tuliP3, tuliP4].map((src, i) => (
+                      <div key={i} className="rounded-lg bg-muted border border-border overflow-hidden aspect-square">
+                        <img src={src} alt={`מוצר ${i + 1}`} className="w-full h-full object-cover" loading="lazy" />
+                      </div>
+                    ))}
+                  </div>
+                </div>
+                <div className="flex gap-4 items-stretch">
+                  <div className="w-[30%] aspect-[3/2] rounded-lg bg-muted border border-border" />
+                  <div className="w-[70%] aspect-[7/2] rounded-lg bg-muted border border-border" />
+                </div>
               </div>
             ) : (
               <>
