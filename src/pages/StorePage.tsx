@@ -876,15 +876,20 @@ const StorePage = () => {
                       אתם מוזמנים להשתתף ולקחת חלק בפעילויות חברתיות אשר לכל אחת יש יעוד וכוונה לפי ההרגשה האישית שלכם, אצה רצויה היא כמובן לחוות ולנצל כל אירוע וכל מפגש, מידע ובירורים ימסרו לכל המעוניין.
                     </p>
                   </div>
-                  <div className="grid grid-cols-4 gap-3 h-full">
+                  <div className="grid grid-cols-4 gap-3">
                     {[
                       { src: tuliW1, title: "יצירת קמע קריסטלים אישי" },
                       { src: tuliW2, title: "סדנאת קריסטלים" },
                       { src: tuliW3, title: "סדנאת ארומתרפיה" },
                       { src: tuliW4, title: "סדנאת עשן השרפים" },
                     ].map((w, i) => (
-                      <div key={i} className="rounded-lg bg-muted border border-border overflow-hidden h-full">
-                        <img src={w.src} alt={w.title} className="w-full h-full object-cover object-top" loading="lazy" />
+                      <div key={i} className="rounded-lg bg-muted border border-border overflow-hidden flex flex-col">
+                        <div className="aspect-square overflow-hidden">
+                          <img src={w.src} alt={w.title} className="w-full h-full object-cover object-top" loading="lazy" />
+                        </div>
+                        <div className="p-2 text-center text-xs font-heebo font-bold text-foreground">
+                          {w.title}
+                        </div>
                       </div>
                     ))}
                   </div>
