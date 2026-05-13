@@ -10,10 +10,10 @@ import {
   PackageCheck,
   RotateCw,
   ShieldCheck,
+  Smile,
   Sparkles,
   Stethoscope,
   ThumbsUp,
-  Tooth,
   Upload,
   type LucideIcon,
 } from "lucide-react";
@@ -62,7 +62,7 @@ const calloutsLeft: Callout[] = [
   {
     title: "התאמה של קוביות",
     body: "בדיקת קוביות סמוכות, צבע השן ומבנה האזור האסתטי.",
-    Icon: Tooth,
+    Icon: Smile,
   },
 ];
 
@@ -79,7 +79,7 @@ const infoCards: InfoCard[] = [
   },
   {
     title: "שיטות",
-    Icon: Tooth,
+    Icon: Smile,
     items: [
       "קשתיות שקופות נשלפות",
       "קוביות לבנות במידת הצורך",
@@ -221,10 +221,21 @@ const AlignerTraySketch = ({ className = "" }: { className?: string }) => (
   </svg>
 );
 
+const ToothMark = ({ className = "" }: { className?: string }) => (
+  <svg className={className} viewBox="0 0 80 80" fill="none" xmlns="http://www.w3.org/2000/svg" aria-hidden="true">
+    <path
+      d="M23 13c6-4 12-2 17 2 5-4 11-6 17-2 11 7 7 28 1 40-4 8-6 14-12 14-5 0-4-12-6-18-2 6-1 18-6 18-6 0-8-6-12-14-6-12-10-33 1-40Z"
+      fill="currentColor"
+      opacity="0.96"
+    />
+    <path d="M27 22c4-3 8-3 12 0" stroke="#dff5ff" strokeLinecap="round" strokeWidth="4" opacity="0.9" />
+  </svg>
+);
+
 const LogoMark = ({ align = "left" }: { align?: "left" | "right" }) => (
   <div className={`flex items-center gap-2 ${align === "right" ? "justify-end" : "justify-start"}`}>
     <div className="flex h-11 w-11 items-center justify-center rounded-full border border-sky-100/70 bg-sky-950/20">
-      <Tooth className="h-7 w-7 fill-white/25 text-white" strokeWidth={2.4} />
+      <ToothMark className="h-7 w-7 text-white" />
     </div>
     <div className="hidden text-[0.55rem] font-black uppercase leading-tight tracking-[0.12em] text-white/90 sm:block">
       <span className="block">Clear Aligners</span>
