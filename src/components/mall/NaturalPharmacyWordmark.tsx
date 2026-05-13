@@ -13,32 +13,38 @@ const NaturalPharmacyWordmark = ({ className, style }: NaturalPharmacyWordmarkPr
     <div
       aria-label={design.caption}
       className={className}
-      dir="rtl"
       role="img"
       style={{
-        alignItems: "center",
         backgroundColor: design.canvas.backgroundColor,
-        display: "flex",
-        height: design.canvas.height,
-        justifyContent: "center",
-        maxWidth: "100%",
-        width: design.canvas.width,
+        width: "100%",
+        height: "100%",
+        display: "block",
         ...style,
       }}
     >
-      <span
-        style={{
-          color: design.text.color,
-          fontFamily: design.text.fontFamily,
-          fontSize: design.text.fontSize,
-          fontWeight: design.text.fontWeight,
-          letterSpacing: design.text.letterSpacing,
-          lineHeight: design.text.lineHeight,
-          textAlign: "center",
-        }}
+      <svg
+        viewBox="0 0 220 60"
+        width="100%"
+        height="100%"
+        preserveAspectRatio="xMidYMid meet"
+        role="presentation"
       >
-        {design.caption}
-      </span>
+        <text
+          x="110"
+          y="42"
+          textAnchor="middle"
+          direction="rtl"
+          style={{
+            fill: design.text.color,
+            fontFamily: '"Noto Sans Hebrew", "Heebo", sans-serif',
+            fontSize: 36,
+            fontWeight: 700,
+            letterSpacing: 1,
+          }}
+        >
+          {design.caption}
+        </text>
+      </svg>
     </div>
   );
 };
