@@ -674,8 +674,7 @@ const StorePage = () => {
 
   return (
     <div
-      className="min-h-screen bg-background"
-      style={store.id === "s15" ? { fontFamily: '"Amatic SC", "Noto Sans Hebrew", cursive' } : undefined}
+      className={`min-h-screen bg-background ${store.id === "s15" ? "font-tuli" : ""}`}
     >
       <MallHeader />
       <PageTracker storeId={store.id} />
