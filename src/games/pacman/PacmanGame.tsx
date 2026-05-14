@@ -107,11 +107,11 @@ const PacmanGame = ({ onGameEnd }: PacmanGameProps = {}) => {
       speed: 0.12,
     };
     stateRef.current.ghosts = ghostColors.map((color, i) => ({
-      x: gs.x + 0.5 + (i - 1.5) * 0.6,
-      y: gs.y + 0.5,
-      dir: i % 2 === 0 ? DIRS.left : DIRS.right,
-      next: DIRS.none,
-      speed: 0.085,
+      x: gs.x + 0.5,
+      y: gs.y + 0.5 - i * 0.01, // tiny stagger to avoid identical positions
+      dir: DIRS.up,
+      next: DIRS.up,
+      speed: 0.09,
       color,
       scared: false,
       home: { x: gs.x + 0.5, y: gs.y + 0.5 },
@@ -193,8 +193,10 @@ const PacmanGame = ({ onGameEnd }: PacmanGameProps = {}) => {
     const tryTurn = (e: Entity) => {
       const cx = e.x - Math.floor(e.x);
       const cy = e.y - Math.floor(e.y);
+      // Don't turn to a "none" direction (would freeze the entity)
+      if (e.next.x === 0 && e.next.y === 0) return;
       // Only turn at cell centers (with tolerance)
-      if (Math.abs(cx - 0.5) < 0.1 && Math.abs(cy - 0.5) < 0.1 && canMove(e, e.next)) {
+      if (Math.abs(cx - 0.5) < 0.15 && Math.abs(cy - 0.5) < 0.15 && canMove(e, e.next)) {
         e.x = Math.floor(e.x) + 0.5;
         e.y = Math.floor(e.y) + 0.5;
         e.dir = e.next;
@@ -219,11 +221,18 @@ const PacmanGame = ({ onGameEnd }: PacmanGameProps = {}) => {
     const ghostAI = (g: Entity) => {
       const cx = g.x - Math.floor(g.x);
       const cy = g.y - Math.floor(g.y);
-      if (Math.abs(cx - 0.5) < 0.1 && Math.abs(cy - 0.5) < 0.1) {
+      if (Math.abs(cx - 0.5) < 0.15 && Math.abs(cy - 0.5) < 0.15) {
+        // snap to center to keep grid alignment
+        g.x = Math.floor(g.x) + 0.5;
+        g.y = Math.floor(g.y) + 0.5;
         const opts = (Object.values(DIRS) as Dir[]).filter(
           (d) => (d.x !== 0 || d.y !== 0) && canMove(g, d) && !(d.x === -g.dir.x && d.y === -g.dir.y),
         );
-        const choices = opts.length ? opts : [{ x: -g.dir.x, y: -g.dir.y }];
+        const choices =
+          opts.length > 0
+            ? opts
+            : [{ x: -g.dir.x, y: -g.dir.y } as Dir].filter((d) => canMove(g, d));
+        if (choices.length === 0) return;
         // Bias toward / away from pacman
         const pac = stateRef.current.pac!;
         const scored = choices.map((d) => {
@@ -235,6 +244,7 @@ const PacmanGame = ({ onGameEnd }: PacmanGameProps = {}) => {
         });
         scored.sort((a, b) => a.score - b.score);
         g.dir = scored[0].d;
+        g.next = g.dir;
       }
     };
 
