@@ -363,11 +363,11 @@ const PacmanGame = ({ onGameEnd }: PacmanGameProps = {}) => {
 
       if (type === "powerpill") {
         pac.beastTicks = 240;
+        stateRef.current.ghostFrightened = true;
+        stateRef.current.ghostFrightenedTimer = 240;
         stateRef.current.ghosts.forEach((ghost) => {
-          if (!ghost.dead) {
-            ghost.scared = true;
-            changeGhostSpeed(ghost, GHOST_SPEED_DAZZLED);
-          }
+          ghost.scared = true;
+          changeGhostSpeed(ghost, GHOST_SPEED_DAZZLED);
         });
         addScore(POWERPILL_POINTS);
       } else {
