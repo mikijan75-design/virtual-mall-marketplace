@@ -153,6 +153,8 @@ const PacmanGame = ({ onGameEnd }: PacmanGameProps = {}) => {
   const lastScoreStatusRef = useRef<string>("");
   const [score, setScore] = useState(0);
   const [lives, setLives] = useState(3);
+  const [level, setLevel] = useState(1);
+  const [levelTransition, setLevelTransition] = useState<string | null>(null);
   const [status, setStatusState] = useState<"ready" | "playing" | "win" | "lose">("ready");
   const [overlayVisible, setOverlayVisible] = useState(true);
 
@@ -164,6 +166,7 @@ const PacmanGame = ({ onGameEnd }: PacmanGameProps = {}) => {
     frame: 0,
     score: 0,
     lives: 3,
+    level: 1,
     ghostMode: 0,
     ghostModeTimer: 200,
   });
@@ -176,6 +179,8 @@ const PacmanGame = ({ onGameEnd }: PacmanGameProps = {}) => {
 
   const resetPositions = useCallback(() => {
     const s = stateRef.current;
+    const lvl = s.level;
+    const ghostSpeed = Math.min(2 + (lvl - 1) * 0.4, 4);
     s.pac = {
       x: 0,
       y: 6 * CELL,
@@ -192,6 +197,9 @@ const PacmanGame = ({ onGameEnd }: PacmanGameProps = {}) => {
       makeGhost("blinky", 9, 5, "#ff3b30", 13, 0),
       makeGhost("clyde", 10, 5, "#ffb142", 2, 11),
     ];
+    s.ghosts.forEach((g) => {
+      g.speed = ghostSpeed;
+    });
   }, []);
 
   const reset = useCallback(() => {
@@ -201,11 +209,14 @@ const PacmanGame = ({ onGameEnd }: PacmanGameProps = {}) => {
     stateRef.current.frame = 0;
     stateRef.current.score = 0;
     stateRef.current.lives = 3;
+    stateRef.current.level = 1;
     stateRef.current.ghostMode = 0;
     stateRef.current.ghostModeTimer = 200;
     resetPositions();
     setScore(0);
     setLives(3);
+    setLevel(1);
+    setLevelTransition(null);
     setStatus("ready");
     lastScoreStatusRef.current = "";
   }, [resetPositions, setStatus]);
