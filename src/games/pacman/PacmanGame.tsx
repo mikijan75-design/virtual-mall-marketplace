@@ -175,6 +175,8 @@ const PacmanGame = ({ onGameEnd }: PacmanGameProps = {}) => {
     score: 0,
     lives: 3,
     level: 1,
+    ghostFrightened: false,
+    ghostFrightenedTimer: 240,
     ghostMode: 0,
     ghostModeTimer: 200,
   });
@@ -189,6 +191,10 @@ const PacmanGame = ({ onGameEnd }: PacmanGameProps = {}) => {
     const s = stateRef.current;
     const lvl = s.level;
     const ghostSpeed = ghostSpeedForLevel(lvl);
+    s.ghostFrightened = false;
+    s.ghostFrightenedTimer = 240;
+    s.ghostMode = 0;
+    s.ghostModeTimer = 200;
     s.pac = {
       x: 0,
       y: 6 * CELL,
@@ -221,6 +227,8 @@ const PacmanGame = ({ onGameEnd }: PacmanGameProps = {}) => {
     stateRef.current.score = 0;
     stateRef.current.lives = 3;
     stateRef.current.level = 1;
+    stateRef.current.ghostFrightened = false;
+    stateRef.current.ghostFrightenedTimer = 240;
     stateRef.current.ghostMode = 0;
     stateRef.current.ghostModeTimer = 200;
     resetPositions();
@@ -359,11 +367,11 @@ const PacmanGame = ({ onGameEnd }: PacmanGameProps = {}) => {
 
       if (type === "powerpill") {
         pac.beastTicks = 240;
+        stateRef.current.ghostFrightened = true;
+        stateRef.current.ghostFrightenedTimer = 240;
         stateRef.current.ghosts.forEach((ghost) => {
-          if (!ghost.dead) {
-            ghost.scared = true;
-            changeGhostSpeed(ghost, GHOST_SPEED_DAZZLED);
-          }
+          ghost.scared = true;
+          changeGhostSpeed(ghost, GHOST_SPEED_DAZZLED);
         });
         addScore(POWERPILL_POINTS);
       } else {
@@ -387,7 +395,7 @@ const PacmanGame = ({ onGameEnd }: PacmanGameProps = {}) => {
         const blinky = stateRef.current.ghosts.find((g) => g.name === "blinky") ?? ghost;
         const leadX = px + pac.dir.x * 2;
         const leadY = py + pac.dir.y * 2;
-        return { x: gridX(blinky) + (leadX - gridX(blinky)) * 2, y: gridY(blinky) + (leadY - gridY(blinky)) * 2 };
+        return { x: Math.abs(gridX(blinky) + (leadX - gridX(blinky)) * 2), y: Math.abs(gridY(blinky) + (leadY - gridY(blinky)) * 2) };
       }
       if (ghost.name === "clyde") {
         const dist = Math.hypot(gx - px, gy - py);
@@ -422,11 +430,11 @@ const PacmanGame = ({ onGameEnd }: PacmanGameProps = {}) => {
       const target = targetForGhost(ghost);
       const reverse = opposite(ghost.dir);
       const choices = DIRECTIONS.filter((dir) => {
-        if (dir.name === reverse.name && !ghost.dead) return false;
+        if (dir.name === reverse.name) return false;
         return nextTileIsOpen(ghost, dir, "ghost", ghost.dead);
       });
       const fallback = choices.length ? choices : DIRECTIONS.filter((dir) => {
-        if (dir.name === reverse.name && !ghost.dead) return false;
+        if (dir.name === reverse.name) return false;
         return nextTileIsOpen(ghost, dir, "ghost", ghost.dead);
       });
       if (!fallback.length) return;
@@ -445,6 +453,13 @@ const PacmanGame = ({ onGameEnd }: PacmanGameProps = {}) => {
     };
 
     const moveGhost = (ghost: GhostEntity) => {
+      if (ghost.dead && gridX(ghost) === ghost.startX / CELL && gridY(ghost) === ghost.startY / CELL && inGrid(ghost)) {
+        ghost.dead = false;
+        ghost.scared = false;
+        ghost.ghostHouse = true;
+        changeGhostSpeed(ghost, ghostSpeedForLevel(stateRef.current.level));
+      }
+
       chooseGhostDirection(ghost);
       if (ghost.stopped) return;
 
@@ -456,12 +471,6 @@ const PacmanGame = ({ onGameEnd }: PacmanGameProps = {}) => {
       if (ghost.y >= H - RADIUS) ghost.y = ghost.speed - RADIUS;
       if (ghost.y <= -RADIUS) ghost.y = H - ghost.speed - RADIUS;
 
-      if (ghost.dead && gridX(ghost) === ghost.startX / CELL && gridY(ghost) === ghost.startY / CELL && inGrid(ghost)) {
-        ghost.dead = false;
-        ghost.scared = false;
-        ghost.ghostHouse = true;
-        changeGhostSpeed(ghost, ghostSpeedForLevel(stateRef.current.level));
-      }
     };
 
     const loseLife = () => {
@@ -487,7 +496,6 @@ const PacmanGame = ({ onGameEnd }: PacmanGameProps = {}) => {
         if (ghost.scared) {
           addScore(GHOST_POINTS);
           ghost.dead = true;
-          ghost.scared = false;
           changeGhostSpeed(ghost, ghostSpeedForLevel(s.level));
         } else {
           loseLife();
@@ -501,29 +509,31 @@ const PacmanGame = ({ onGameEnd }: PacmanGameProps = {}) => {
       if (statusRef.current !== "playing" || !s.pac) return;
 
       s.frame++;
+      if (s.ghostFrightened) {
+        s.ghostFrightenedTimer--;
+        if (s.ghostFrightenedTimer <= 0) {
+          s.ghostFrightened = false;
+          s.ghostFrightenedTimer = 240;
+          s.ghosts.forEach((ghost) => {
+            if (!ghost.dead) changeGhostSpeed(ghost, ghostSpeedForLevel(s.level));
+            ghost.scared = false;
+          });
+        }
+      }
+
       s.ghostModeTimer--;
-      if (s.ghostModeTimer <= 0) {
+      if (s.ghostModeTimer <= 0 && s.level > 1) {
         s.ghostMode = s.ghostMode === 0 ? 1 : 0;
         s.ghostModeTimer = 200 + s.ghostMode * 450;
         s.ghosts.forEach((ghost) => {
-          if (!ghost.ghostHouse) ghost.dir = opposite(ghost.dir);
+          ghost.dir = opposite(ghost.dir);
         });
       }
 
       movePacman(s.pac);
       eatFood(s.pac);
 
-      if (s.pac.beastTicks > 0) {
-        s.pac.beastTicks--;
-        if (s.pac.beastTicks === 0) {
-          s.ghosts.forEach((ghost) => {
-            if (!ghost.dead) {
-              ghost.scared = false;
-              changeGhostSpeed(ghost, ghostSpeedForLevel(s.level));
-            }
-          });
-        }
-      }
+      if (s.pac.beastTicks > 0) s.pac.beastTicks--;
 
       s.ghosts.forEach(moveGhost);
       checkGhostCollision();
