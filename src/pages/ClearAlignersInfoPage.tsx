@@ -134,9 +134,10 @@ const polarToCartesian = (cx: number, cy: number, radius: number, angleInDegrees
 };
 
 const describeArc = (startAngle: number, endAngle: number) => {
-  const start = polarToCartesian(250, 250, 178, startAngle);
-  const end = polarToCartesian(250, 250, 178, endAngle);
-  return `M ${start.x} ${start.y} A 178 178 0 0 1 ${end.x} ${end.y}`;
+  const radius = 165;
+  const start = polarToCartesian(250, 250, radius, startAngle);
+  const end = polarToCartesian(250, 250, radius, endAngle);
+  return `M ${start.x} ${start.y} A ${radius} ${radius} 0 0 1 ${end.x} ${end.y}`;
 };
 
 const iconPalette = {
@@ -326,12 +327,12 @@ const DesignedIcon = ({ name, className = "h-8 w-8" }: { name: IconName; classNa
 const ProcessRing = () => {
   const arcs = useMemo(
     () => [
-      [14, 58],
-      [74, 118],
-      [134, 178],
-      [194, 238],
-      [254, 298],
-      [314, 358],
+      [12, 52],
+      [72, 112],
+      [132, 172],
+      [192, 232],
+      [252, 292],
+      [312, 352],
     ],
     [],
   );
@@ -343,13 +344,22 @@ const ProcessRing = () => {
           <stop offset="0%" stopColor="#5fc6ee" />
           <stop offset="100%" stopColor="#117fb4" />
         </linearGradient>
-        <marker id="alignerArrowHead" markerHeight="12" markerWidth="12" orient="auto" refX="9" refY="6">
-          <path d="M0,0 L12,6 L0,12 Z" fill="#1688bf" />
+        <marker
+          id="alignerArrowHead"
+          markerHeight="8"
+          markerWidth="8"
+          orient="auto"
+          refX="4"
+          refY="4"
+          viewBox="0 0 8 8"
+        >
+          <path d="M0,0 L8,4 L0,8 L2,4 Z" fill="#0d6799" />
         </marker>
         <filter id="softRingShadow" x="-20%" y="-20%" width="140%" height="140%">
-          <feDropShadow dx="0" dy="6" floodColor="#0b5c83" floodOpacity="0.22" stdDeviation="5" />
+          <feDropShadow dx="0" dy="3" floodColor="#0b5c83" floodOpacity="0.18" stdDeviation="3" />
         </filter>
       </defs>
+      <circle cx="250" cy="250" r="165" fill="none" stroke="#bfe3f3" strokeOpacity="0.55" strokeWidth="2" strokeDasharray="3 6" />
       {arcs.map(([start, end]) => (
         <path
           key={`${start}-${end}`}
@@ -359,11 +369,9 @@ const ProcessRing = () => {
           markerEnd="url(#alignerArrowHead)"
           stroke="url(#alignerArrowGradient)"
           strokeLinecap="round"
-          strokeWidth="28"
+          strokeWidth="6"
         />
       ))}
-      <circle cx="250" cy="250" r="112" fill="#d8effa" stroke="#0f6697" strokeWidth="8" />
-      <circle cx="250" cy="250" r="101" fill="none" stroke="#ffffff" strokeOpacity="0.9" strokeWidth="4" />
     </svg>
   );
 };
