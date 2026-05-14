@@ -234,8 +234,10 @@ const PacmanGame = ({ onGameEnd }: PacmanGameProps = {}) => {
     stateRef.current.level = 1;
     stateRef.current.ghostFrightened = false;
     stateRef.current.ghostFrightenedTimer = 240;
-    stateRef.current.ghostMode = 0;
-    stateRef.current.ghostModeTimer = 200;
+    stateRef.current.ghostMode = 1;
+    stateRef.current.ghostModeTimer = 650;
+    stateRef.current.cherry = null;
+    stateRef.current.cherryCooldown = CHERRY_SPAWN_INTERVAL;
     resetPositions();
     setScore(0);
     setLives(3);
@@ -417,10 +419,13 @@ const PacmanGame = ({ onGameEnd }: PacmanGameProps = {}) => {
         const gx = gridX(ghost);
         const gy = gridY(ghost);
         ghost.stopped = false;
-        if (!ghost.dead && ghost.name === "clyde" && (stateRef.current.level < 4 || stateRef.current.pills > 104 / 3)) {
+        // Loosened release rules so all 4 ghosts always leave the house in every level.
+        const eaten = countFood(stateRef.current.map);
+        const pillsRemaining = stateRef.current.pills;
+        if (!ghost.dead && ghost.name === "inky" && pillsRemaining > 70 && eaten > 70) {
           ghost.stopped = true;
         }
-        if (!ghost.dead && ghost.name === "inky" && (stateRef.current.level < 3 || stateRef.current.pills > 104 - 30)) {
+        if (!ghost.dead && ghost.name === "clyde" && pillsRemaining > 50 && eaten > 50) {
           ghost.stopped = true;
         }
         if (gy === 5) {
