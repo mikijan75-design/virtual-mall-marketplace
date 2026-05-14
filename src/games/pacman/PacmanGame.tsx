@@ -330,12 +330,14 @@ const PacmanGame = ({ onGameEnd }: PacmanGameProps = {}) => {
     };
 
     const changeGhostSpeed = (ghost: GhostEntity, speed: number) => {
-      // Snap to the cell grid (not the speed grid) so the ghost is
-      // immediately re-aligned with the maze and can pick a legal
-      // direction on the next frame — prevents scared/eyes ghosts from
-      // walking through walls after a speed transition.
-      ghost.x = Math.round(ghost.x / CELL) * CELL;
-      ghost.y = Math.round(ghost.y / CELL) * CELL;
+      // Snap to the cell the ghost is currently inside (floor, not nearest).
+      // The current cell is guaranteed to be a corridor — the ghost is
+      // standing in it — so this can never teleport the ghost into a wall.
+      // Snapping to the *nearest* cell could push it forward into a wall
+      // tile (the visible "ghost walks on stones" bug at scared/eyes
+      // transitions in later levels).
+      ghost.x = gridX(ghost) * CELL;
+      ghost.y = gridY(ghost) * CELL;
       ghost.speed = speed;
     };
 
@@ -480,22 +482,27 @@ const PacmanGame = ({ onGameEnd }: PacmanGameProps = {}) => {
       chooseGhostDirection(ghost);
       if (ghost.stopped) return;
 
-      // Safety net: never let a ghost step into a wall — even after a
-      // forced mode-switch reverse or a snap to the speed grid. If the
-      // current direction is blocked while we're aligned to a cell, snap
-      // to the cell and skip the move so the next frame re-chooses.
-      if (inGrid(ghost) && !nextTileIsOpen(ghost, ghost.dir, "ghost", ghost.dead || ghost.ghostHouse)) {
-        snapToGrid(ghost);
+      // Safety net: never let a ghost step into a wall — even when the
+      // ghost is mid-cell (e.g. just after a tunnel wrap that landed it
+      // off the grid). Floor-snap to the current cell so the next frame
+      // re-chooses a legal direction. This is what fixes scared/eyes
+      // ghosts walking through stones in later levels.
+      if (!nextTileIsOpen(ghost, ghost.dir, "ghost", ghost.dead || ghost.ghostHouse)) {
+        ghost.x = gridX(ghost) * CELL;
+        ghost.y = gridY(ghost) * CELL;
         return;
       }
 
       ghost.x += ghost.speed * ghost.dir.x;
       ghost.y += ghost.speed * ghost.dir.y;
 
-      if (ghost.x >= W - RADIUS) ghost.x = ghost.speed - RADIUS;
-      if (ghost.x <= -RADIUS) ghost.x = W - ghost.speed - RADIUS;
-      if (ghost.y >= H - RADIUS) ghost.y = ghost.speed - RADIUS;
-      if (ghost.y <= -RADIUS) ghost.y = H - ghost.speed - RADIUS;
+      // Tunnel wrap — land back on the cell grid so the ghost can pick a
+      // direction on the very next frame (otherwise speed-2 ghosts never
+      // re-align after the wrap and march straight through walls).
+      if (ghost.x >= W) ghost.x = 0;
+      if (ghost.x < 0) ghost.x = W - CELL;
+      if (ghost.y >= H) ghost.y = 0;
+      if (ghost.y < 0) ghost.y = H - CELL;
 
     };
 
