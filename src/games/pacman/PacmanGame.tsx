@@ -488,7 +488,7 @@ const PacmanGame = ({ onGameEnd }: PacmanGameProps = {}) => {
           addScore(GHOST_POINTS);
           ghost.dead = true;
           ghost.scared = false;
-          ghost.speed = 4;
+          changeGhostSpeed(ghost, ghostSpeedForLevel(s.level));
         } else {
           loseLife();
           break;
