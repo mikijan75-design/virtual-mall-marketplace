@@ -582,6 +582,8 @@ const PacmanGame = ({ onGameEnd }: PacmanGameProps = {}) => {
         s.ghostMode = 0;
         s.ghostModeTimer = 200;
         resetPositions();
+        s.cherry = null;
+        s.cherryCooldown = CHERRY_SPAWN_INTERVAL;
         statusRef.current = "ready";
         setStatusState("ready");
         setOverlayVisible(true);
@@ -712,6 +714,7 @@ const PacmanGame = ({ onGameEnd }: PacmanGameProps = {}) => {
       ctx.fillRect(0, 0, W, H);
       drawWalls();
       drawFood();
+      drawCherry();
       stateRef.current.ghosts.forEach(drawGhost);
       drawPacman();
     };
