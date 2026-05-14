@@ -80,6 +80,9 @@ const PILL_POINTS = 10;
 const POWERPILL_POINTS = 50;
 const GHOST_POINTS = 100;
 const GHOST_SPEED_DAZZLED = 2;
+const CHERRY_POINTS = 100;
+const CHERRY_SPAWN_INTERVAL = 600; // ~20s @ 30fps
+const CHERRY_LIFETIME = 300; // ~10s visible
 
 const UP: Direction = { name: "up", angle1: 1.75, angle2: 1.25, x: 0, y: -1 };
 const LEFT: Direction = { name: "left", angle1: 1.25, angle2: 0.75, x: -1, y: 0 };
@@ -177,8 +180,10 @@ const PacmanGame = ({ onGameEnd }: PacmanGameProps = {}) => {
     level: 1,
     ghostFrightened: false,
     ghostFrightenedTimer: 240,
-    ghostMode: 0,
-    ghostModeTimer: 200,
+    ghostMode: 1,
+    ghostModeTimer: 650,
+    cherry: null as { x: number; y: number; ticks: number } | null,
+    cherryCooldown: CHERRY_SPAWN_INTERVAL,
   });
 
   const setStatus = useCallback((next: "ready" | "playing" | "win" | "lose") => {
@@ -193,8 +198,8 @@ const PacmanGame = ({ onGameEnd }: PacmanGameProps = {}) => {
     const ghostSpeed = ghostSpeedForLevel(lvl);
     s.ghostFrightened = false;
     s.ghostFrightenedTimer = 240;
-    s.ghostMode = 0;
-    s.ghostModeTimer = 200;
+    s.ghostMode = 1;
+    s.ghostModeTimer = 650;
     s.pac = {
       x: 0,
       y: 6 * CELL,
