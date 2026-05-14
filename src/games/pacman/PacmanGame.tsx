@@ -80,6 +80,9 @@ const PILL_POINTS = 10;
 const POWERPILL_POINTS = 50;
 const GHOST_POINTS = 100;
 const GHOST_SPEED_DAZZLED = 2;
+const CHERRY_POINTS = 100;
+const CHERRY_SPAWN_INTERVAL = 600; // ~20s @ 30fps
+const CHERRY_LIFETIME = 300; // ~10s visible
 
 const UP: Direction = { name: "up", angle1: 1.75, angle2: 1.25, x: 0, y: -1 };
 const LEFT: Direction = { name: "left", angle1: 1.25, angle2: 0.75, x: -1, y: 0 };
@@ -177,8 +180,10 @@ const PacmanGame = ({ onGameEnd }: PacmanGameProps = {}) => {
     level: 1,
     ghostFrightened: false,
     ghostFrightenedTimer: 240,
-    ghostMode: 0,
-    ghostModeTimer: 200,
+    ghostMode: 1,
+    ghostModeTimer: 650,
+    cherry: null as { x: number; y: number; ticks: number } | null,
+    cherryCooldown: CHERRY_SPAWN_INTERVAL,
   });
 
   const setStatus = useCallback((next: "ready" | "playing" | "win" | "lose") => {
@@ -193,8 +198,8 @@ const PacmanGame = ({ onGameEnd }: PacmanGameProps = {}) => {
     const ghostSpeed = ghostSpeedForLevel(lvl);
     s.ghostFrightened = false;
     s.ghostFrightenedTimer = 240;
-    s.ghostMode = 0;
-    s.ghostModeTimer = 200;
+    s.ghostMode = 1;
+    s.ghostModeTimer = 650;
     s.pac = {
       x: 0,
       y: 6 * CELL,
@@ -229,8 +234,10 @@ const PacmanGame = ({ onGameEnd }: PacmanGameProps = {}) => {
     stateRef.current.level = 1;
     stateRef.current.ghostFrightened = false;
     stateRef.current.ghostFrightenedTimer = 240;
-    stateRef.current.ghostMode = 0;
-    stateRef.current.ghostModeTimer = 200;
+    stateRef.current.ghostMode = 1;
+    stateRef.current.ghostModeTimer = 650;
+    stateRef.current.cherry = null;
+    stateRef.current.cherryCooldown = CHERRY_SPAWN_INTERVAL;
     resetPositions();
     setScore(0);
     setLives(3);
@@ -412,12 +419,10 @@ const PacmanGame = ({ onGameEnd }: PacmanGameProps = {}) => {
         const gx = gridX(ghost);
         const gy = gridY(ghost);
         ghost.stopped = false;
-        if (!ghost.dead && ghost.name === "clyde" && (stateRef.current.level < 4 || stateRef.current.pills > 104 / 3)) {
-          ghost.stopped = true;
-        }
-        if (!ghost.dead && ghost.name === "inky" && (stateRef.current.level < 3 || stateRef.current.pills > 104 - 30)) {
-          ghost.stopped = true;
-        }
+        // Loosened release rules so all 4 ghosts always leave the house every level.
+        const f = stateRef.current.frame;
+        if (!ghost.dead && ghost.name === "inky" && f < 150) ghost.stopped = true;
+        if (!ghost.dead && ghost.name === "clyde" && f < 360) ghost.stopped = true;
         if (gy === 5) {
           if (gx === 7) ghost.dir = RIGHT;
           if (gx === 8 || gx === 9) ghost.dir = UP;
@@ -504,6 +509,32 @@ const PacmanGame = ({ onGameEnd }: PacmanGameProps = {}) => {
       }
     };
 
+    const CHERRY_GRID_X = 8;
+    const CHERRY_GRID_Y = 9;
+
+    const updateCherry = (pac: PacmanEntity) => {
+      const s = stateRef.current;
+      if (s.cherry) {
+        // Pacman eats cherry
+        if (gridX(pac) === CHERRY_GRID_X && gridY(pac) === CHERRY_GRID_Y) {
+          addScore(CHERRY_POINTS * s.level);
+          s.cherry = null;
+          s.cherryCooldown = CHERRY_SPAWN_INTERVAL;
+          return;
+        }
+        s.cherry.ticks--;
+        if (s.cherry.ticks <= 0) {
+          s.cherry = null;
+          s.cherryCooldown = CHERRY_SPAWN_INTERVAL;
+        }
+        return;
+      }
+      s.cherryCooldown--;
+      if (s.cherryCooldown <= 0) {
+        s.cherry = { x: CHERRY_GRID_X, y: CHERRY_GRID_Y, ticks: CHERRY_LIFETIME };
+      }
+    };
+
     const update = () => {
       const s = stateRef.current;
       if (statusRef.current !== "playing" || !s.pac) return;
@@ -522,9 +553,10 @@ const PacmanGame = ({ onGameEnd }: PacmanGameProps = {}) => {
       }
 
       s.ghostModeTimer--;
-      if (s.ghostModeTimer <= 0 && s.level > 1) {
+      if (s.ghostModeTimer <= 0 && !s.ghostFrightened) {
         s.ghostMode = s.ghostMode === 0 ? 1 : 0;
-        s.ghostModeTimer = 200 + s.ghostMode * 450;
+        // Chase phases are long, scatter phases short — keep pressure on Pacman.
+        s.ghostModeTimer = s.ghostMode === 1 ? 650 : 200;
         s.ghosts.forEach((ghost) => {
           ghost.dir = opposite(ghost.dir);
         });
@@ -532,6 +564,7 @@ const PacmanGame = ({ onGameEnd }: PacmanGameProps = {}) => {
 
       movePacman(s.pac);
       eatFood(s.pac);
+      updateCherry(s.pac);
 
       if (s.pac.beastTicks > 0) s.pac.beastTicks--;
 
@@ -549,6 +582,8 @@ const PacmanGame = ({ onGameEnd }: PacmanGameProps = {}) => {
         s.ghostMode = 0;
         s.ghostModeTimer = 200;
         resetPositions();
+        s.cherry = null;
+        s.cherryCooldown = CHERRY_SPAWN_INTERVAL;
         statusRef.current = "ready";
         setStatusState("ready");
         setOverlayVisible(true);
@@ -632,6 +667,7 @@ const PacmanGame = ({ onGameEnd }: PacmanGameProps = {}) => {
     };
 
     const drawGhost = (ghost: GhostEntity) => {
+      // (cherry drawn separately)
       const cx = ghost.x + RADIUS;
       const cy = ghost.y + RADIUS;
 
@@ -674,11 +710,40 @@ const PacmanGame = ({ onGameEnd }: PacmanGameProps = {}) => {
       ctx.fill();
     };
 
+    const drawCherry = () => {
+      const c = stateRef.current.cherry;
+      if (!c) return;
+      const cx = c.x * CELL + RADIUS;
+      const cy = c.y * CELL + RADIUS;
+      // Blink in last 2 seconds
+      if (c.ticks < 60 && Math.floor(c.ticks / 6) % 2 === 0) return;
+      // stem
+      ctx.strokeStyle = "#2e7d32";
+      ctx.lineWidth = 2;
+      ctx.beginPath();
+      ctx.moveTo(cx, cy - 8);
+      ctx.quadraticCurveTo(cx + 4, cy - 12, cx + 7, cy - 9);
+      ctx.stroke();
+      // berries
+      ctx.fillStyle = "#e53935";
+      ctx.beginPath();
+      ctx.arc(cx - 3, cy + 2, 5, 0, Math.PI * 2);
+      ctx.arc(cx + 4, cy + 3, 5, 0, Math.PI * 2);
+      ctx.fill();
+      // shine
+      ctx.fillStyle = "#ffb4b4";
+      ctx.beginPath();
+      ctx.arc(cx - 4, cy + 1, 1.5, 0, Math.PI * 2);
+      ctx.arc(cx + 3, cy + 2, 1.5, 0, Math.PI * 2);
+      ctx.fill();
+    };
+
     const draw = () => {
       ctx.fillStyle = "#000";
       ctx.fillRect(0, 0, W, H);
       drawWalls();
       drawFood();
+      drawCherry();
       stateRef.current.ghosts.forEach(drawGhost);
       drawPacman();
     };
