@@ -518,7 +518,10 @@ const PacmanGame = ({ onGameEnd }: PacmanGameProps = {}) => {
         s.pac.beastTicks--;
         if (s.pac.beastTicks === 0) {
           s.ghosts.forEach((ghost) => {
-            ghost.scared = false;
+            if (!ghost.dead) {
+              ghost.scared = false;
+              changeGhostSpeed(ghost, ghostSpeedForLevel(s.level));
+            }
           });
         }
       }
@@ -533,6 +536,7 @@ const PacmanGame = ({ onGameEnd }: PacmanGameProps = {}) => {
         const newMap = cloneMap();
         s.map = newMap;
         s.food = countFood(newMap);
+        s.pills = countPills(newMap);
         s.ghostMode = 0;
         s.ghostModeTimer = 200;
         resetPositions();
