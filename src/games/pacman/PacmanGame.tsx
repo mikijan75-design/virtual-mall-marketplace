@@ -426,11 +426,11 @@ const PacmanGame = ({ onGameEnd }: PacmanGameProps = {}) => {
       const target = targetForGhost(ghost);
       const reverse = opposite(ghost.dir);
       const choices = DIRECTIONS.filter((dir) => {
-        if (dir.name === reverse.name && !ghost.dead) return false;
+        if (dir.name === reverse.name) return false;
         return nextTileIsOpen(ghost, dir, "ghost", ghost.dead);
       });
       const fallback = choices.length ? choices : DIRECTIONS.filter((dir) => {
-        if (dir.name === reverse.name && !ghost.dead) return false;
+        if (dir.name === reverse.name) return false;
         return nextTileIsOpen(ghost, dir, "ghost", ghost.dead);
       });
       if (!fallback.length) return;
