@@ -154,6 +154,7 @@ const PacmanGame = ({ onGameEnd }: PacmanGameProps = {}) => {
   const [score, setScore] = useState(0);
   const [lives, setLives] = useState(3);
   const [status, setStatusState] = useState<"ready" | "playing" | "win" | "lose">("ready");
+  const [overlayVisible, setOverlayVisible] = useState(true);
 
   const stateRef = useRef({
     map: cloneMap(),
@@ -170,6 +171,7 @@ const PacmanGame = ({ onGameEnd }: PacmanGameProps = {}) => {
   const setStatus = useCallback((next: "ready" | "playing" | "win" | "lose") => {
     statusRef.current = next;
     setStatusState(next);
+    setOverlayVisible(next !== "playing");
   }, []);
 
   const resetPositions = useCallback(() => {
@@ -600,7 +602,7 @@ const PacmanGame = ({ onGameEnd }: PacmanGameProps = {}) => {
       </div>
       <div className="relative rounded-lg overflow-hidden shadow-[0_0_40px_rgba(20,56,196,0.6)] border-2 border-blue-700/60">
         <canvas ref={canvasRef} width={W} height={H} className="block bg-black max-w-full h-auto" />
-        {status !== "playing" && (
+        {overlayVisible && (
           <div className="absolute inset-0 flex flex-col items-center justify-center bg-black/70 text-center px-4">
             <div className="text-yellow-300 font-mono text-3xl md:text-4xl font-bold mb-3">
               {status === "ready" && "PAC-MAN"}
