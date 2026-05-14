@@ -836,11 +836,11 @@ const PacmanGame = ({ onGameEnd }: PacmanGameProps = {}) => {
           ▲
         </button>
         <div />
-        <button onPointerDown={() => queuePacmanDirection(DOWN)} className="h-12 w-12 rounded-md bg-blue-700 text-white text-xl">
-          ▼
-        </button>
         <button onPointerDown={() => queuePacmanDirection(LEFT)} className="h-12 w-12 rounded-md bg-blue-700 text-white text-xl">
           ◀
+        </button>
+        <button onPointerDown={() => queuePacmanDirection(DOWN)} className="h-12 w-12 rounded-md bg-blue-700 text-white text-xl">
+          ▼
         </button>
         <button onPointerDown={() => queuePacmanDirection(RIGHT)} className="h-12 w-12 rounded-md bg-blue-700 text-white text-xl">
           ▶
