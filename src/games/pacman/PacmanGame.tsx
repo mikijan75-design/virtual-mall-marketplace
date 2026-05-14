@@ -419,15 +419,10 @@ const PacmanGame = ({ onGameEnd }: PacmanGameProps = {}) => {
         const gx = gridX(ghost);
         const gy = gridY(ghost);
         ghost.stopped = false;
-        // Loosened release rules so all 4 ghosts always leave the house in every level.
-        const eaten = countFood(stateRef.current.map);
-        const pillsRemaining = stateRef.current.pills;
-        if (!ghost.dead && ghost.name === "inky" && pillsRemaining > 70 && eaten > 70) {
-          ghost.stopped = true;
-        }
-        if (!ghost.dead && ghost.name === "clyde" && pillsRemaining > 50 && eaten > 50) {
-          ghost.stopped = true;
-        }
+        // Loosened release rules so all 4 ghosts always leave the house every level.
+        const f = stateRef.current.frame;
+        if (!ghost.dead && ghost.name === "inky" && f < 150) ghost.stopped = true;
+        if (!ghost.dead && ghost.name === "clyde" && f < 360) ghost.stopped = true;
         if (gy === 5) {
           if (gx === 7) ghost.dir = RIGHT;
           if (gx === 8 || gx === 9) ghost.dir = UP;
