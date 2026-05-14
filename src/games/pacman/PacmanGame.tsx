@@ -404,6 +404,13 @@ const PacmanGame = ({ onGameEnd }: PacmanGameProps = {}) => {
       if (ghost.ghostHouse) {
         const gx = gridX(ghost);
         const gy = gridY(ghost);
+        ghost.stopped = false;
+        if (!ghost.dead && ghost.name === "clyde" && (stateRef.current.level < 4 || stateRef.current.pills > 104 / 3)) {
+          ghost.stopped = true;
+        }
+        if (!ghost.dead && ghost.name === "inky" && (stateRef.current.level < 3 || stateRef.current.pills > 104 - 30)) {
+          ghost.stopped = true;
+        }
         if (gy === 5) {
           if (gx === 7) ghost.dir = RIGHT;
           if (gx === 8 || gx === 9) ghost.dir = UP;
@@ -419,7 +426,10 @@ const PacmanGame = ({ onGameEnd }: PacmanGameProps = {}) => {
         if (dir.name === reverse.name && !ghost.dead) return false;
         return nextTileIsOpen(ghost, dir, "ghost", ghost.dead);
       });
-      const fallback = choices.length ? choices : DIRECTIONS.filter((dir) => nextTileIsOpen(ghost, dir, "ghost", ghost.dead));
+      const fallback = choices.length ? choices : DIRECTIONS.filter((dir) => {
+        if (dir.name === reverse.name && !ghost.dead) return false;
+        return nextTileIsOpen(ghost, dir, "ghost", ghost.dead);
+      });
       if (!fallback.length) return;
 
       fallback.sort((a, b) => {
@@ -432,6 +442,7 @@ const PacmanGame = ({ onGameEnd }: PacmanGameProps = {}) => {
         return ghost.scared ? db - da : da - db;
       });
       ghost.dir = fallback[0];
+      ghost.stopped = false;
     };
 
     const moveGhost = (ghost: GhostEntity) => {
@@ -450,7 +461,7 @@ const PacmanGame = ({ onGameEnd }: PacmanGameProps = {}) => {
         ghost.dead = false;
         ghost.scared = false;
         ghost.ghostHouse = true;
-        ghost.speed = Math.min(2 + (stateRef.current.level - 1) * 0.4, 4);
+        changeGhostSpeed(ghost, ghostSpeedForLevel(stateRef.current.level));
       }
     };
 
