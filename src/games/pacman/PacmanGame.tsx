@@ -598,6 +598,9 @@ const PacmanGame = ({ onGameEnd }: PacmanGameProps = {}) => {
         <div>
           ניקוד: <span className="font-bold">{score}</span>
         </div>
+        <div>
+          שלב: <span className="font-bold">{level}</span>
+        </div>
         <div className="text-2xl tracking-widest">{"●".repeat(Math.max(0, lives))}</div>
       </div>
       <div className="relative rounded-lg overflow-hidden shadow-[0_0_40px_rgba(20,56,196,0.6)] border-2 border-blue-700/60">
@@ -609,6 +612,9 @@ const PacmanGame = ({ onGameEnd }: PacmanGameProps = {}) => {
               {status === "win" && "ניצחת! 🎉"}
               {status === "lose" && "המשחק הסתיים"}
             </div>
+            {levelTransition && status === "ready" && (
+              <div className="text-yellow-200 font-mono text-2xl mb-2">{levelTransition}</div>
+            )}
             <div className="text-white/80 font-heebo text-sm md:text-base mb-4 max-w-xs">
               נווט עם מקשי החיצים או הכפתורים למטה. אכול את כל הכדורים והימנע מהרוחות.
             </div>
@@ -616,11 +622,12 @@ const PacmanGame = ({ onGameEnd }: PacmanGameProps = {}) => {
               type="button"
               onClick={() => {
                 if (status !== "ready") reset();
+                setLevelTransition(null);
                 queuePacmanDirection(RIGHT);
               }}
               className="rounded-full bg-yellow-400 hover:bg-yellow-300 text-black font-bold px-6 py-2 font-mono"
             >
-              {status === "ready" ? "התחל" : "שחק שוב"}
+              {status === "ready" ? (levelTransition ? "המשך" : "התחל") : "שחק שוב"}
             </button>
           </div>
         )}
