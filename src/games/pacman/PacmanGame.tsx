@@ -184,15 +184,17 @@ const PacmanGame = ({ onGameEnd }: PacmanGameProps = {}) => {
   const resetPositions = useCallback(() => {
     const s = stateRef.current;
     const lvl = s.level;
-    const ghostSpeed = Math.min(2 + (lvl - 1) * 0.4, 4);
+    const ghostSpeed = ghostSpeedForLevel(lvl);
     s.pac = {
       x: 0,
       y: 6 * CELL,
       dir: RIGHT,
       next: null,
       speed: 5,
-      mouth: 0,
-      mouthDir: 1,
+      angle1: RIGHT.angle1,
+      angle2: RIGHT.angle2,
+      mouth: 1,
+      stopped: true,
       beastTicks: 0,
     };
     s.ghosts = [
@@ -241,7 +243,10 @@ const PacmanGame = ({ onGameEnd }: PacmanGameProps = {}) => {
 
   const startPlaying = useCallback(() => {
     const pac = stateRef.current.pac;
-    if (pac && pac.dir.name === "none") pac.dir = RIGHT;
+    if (pac) {
+      pac.stopped = false;
+      if (pac.dir.name === "none") pac.dir = RIGHT;
+    }
     if (statusRef.current === "ready") setStatus("playing");
   }, [setStatus]);
 
