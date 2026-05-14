@@ -527,9 +527,10 @@ const PacmanGame = ({ onGameEnd }: PacmanGameProps = {}) => {
       }
 
       s.ghostModeTimer--;
-      if (s.ghostModeTimer <= 0 && s.level > 1) {
+      if (s.ghostModeTimer <= 0 && !s.ghostFrightened) {
         s.ghostMode = s.ghostMode === 0 ? 1 : 0;
-        s.ghostModeTimer = 200 + s.ghostMode * 450;
+        // Chase phases are long, scatter phases short — keep pressure on Pacman.
+        s.ghostModeTimer = s.ghostMode === 1 ? 650 : 200;
         s.ghosts.forEach((ghost) => {
           ghost.dir = opposite(ghost.dir);
         });
@@ -537,6 +538,7 @@ const PacmanGame = ({ onGameEnd }: PacmanGameProps = {}) => {
 
       movePacman(s.pac);
       eatFood(s.pac);
+      updateCherry(s.pac);
 
       if (s.pac.beastTicks > 0) s.pac.beastTicks--;
 
