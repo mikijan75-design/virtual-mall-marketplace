@@ -191,6 +191,10 @@ const PacmanGame = ({ onGameEnd }: PacmanGameProps = {}) => {
     const s = stateRef.current;
     const lvl = s.level;
     const ghostSpeed = ghostSpeedForLevel(lvl);
+    s.ghostFrightened = false;
+    s.ghostFrightenedTimer = 240;
+    s.ghostMode = 0;
+    s.ghostModeTimer = 200;
     s.pac = {
       x: 0,
       y: 6 * CELL,
