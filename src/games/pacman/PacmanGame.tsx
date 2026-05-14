@@ -38,8 +38,10 @@ type PacmanEntity = {
   dir: Direction;
   next: Direction | null;
   speed: number;
-  mouth: number;
-  mouthDir: 1 | -1;
+  angle1: number;
+  angle2: number;
+  mouth: 1 | -1;
+  stopped: boolean;
   beastTicks: number;
 };
 
@@ -77,6 +79,7 @@ const FRAME_MS = 33;
 const PILL_POINTS = 10;
 const POWERPILL_POINTS = 50;
 const GHOST_POINTS = 100;
+const GHOST_SPEED_DAZZLED = 2;
 
 const UP: Direction = { name: "up", angle1: 1.75, angle2: 1.25, x: 0, y: -1 };
 const LEFT: Direction = { name: "left", angle1: 1.25, angle2: 0.75, x: -1, y: 0 };
@@ -86,6 +89,7 @@ const NONE: Direction = { name: "none", angle1: 0.25, angle2: 1.75, x: 0, y: 0 }
 const DIRECTIONS = [UP, DOWN, RIGHT, LEFT];
 
 const cloneMap = (): GameMap => JSON.parse(JSON.stringify(originalPacmanMap));
+const ghostSpeedForLevel = (level: number) => (level > 4 ? 3 : 2);
 
 const mod = (value: number, max: number) => ((value % max) + max) % max;
 const atGrid = (value: number) => Math.abs(value % CELL) < 0.001 || Math.abs((value % CELL) - CELL) < 0.001;
