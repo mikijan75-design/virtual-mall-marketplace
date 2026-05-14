@@ -216,6 +216,7 @@ const PacmanGame = ({ onGameEnd }: PacmanGameProps = {}) => {
     const map = cloneMap();
     stateRef.current.map = map;
     stateRef.current.food = countFood(map);
+    stateRef.current.pills = countPills(map);
     stateRef.current.frame = 0;
     stateRef.current.score = 0;
     stateRef.current.lives = 3;
@@ -366,6 +367,7 @@ const PacmanGame = ({ onGameEnd }: PacmanGameProps = {}) => {
         });
         addScore(POWERPILL_POINTS);
       } else {
+        stateRef.current.pills--;
         addScore(PILL_POINTS);
       }
     };
