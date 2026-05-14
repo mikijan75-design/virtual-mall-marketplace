@@ -120,6 +120,9 @@ const countFood = (map: GameMap) =>
     0,
   );
 
+const countPills = (map: GameMap) =>
+  map.posY.reduce((total, row) => total + row.posX.filter((cell) => cell.type === "pill").length, 0);
+
 const canEnter = (type: CellType, entity: "pacman" | "ghost", dead = false) => {
   if (type === "wall") return false;
   if (type === "door") return entity === "ghost" && dead;
@@ -167,6 +170,7 @@ const PacmanGame = ({ onGameEnd }: PacmanGameProps = {}) => {
     pac: null as PacmanEntity | null,
     ghosts: [] as GhostEntity[],
     food: 0,
+    pills: 0,
     frame: 0,
     score: 0,
     lives: 3,
