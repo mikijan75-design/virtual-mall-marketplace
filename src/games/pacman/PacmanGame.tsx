@@ -380,7 +380,6 @@ const PacmanGame = ({ onGameEnd }: PacmanGameProps = {}) => {
       const gy = gridY(ghost);
 
       if (ghost.dead) return { x: ghost.startX / CELL, y: ghost.startY / CELL };
-      if (ghost.scared) return { x: ghost.baseX, y: ghost.baseY };
       if (stateRef.current.ghostMode === 0) return { x: ghost.baseX, y: ghost.baseY };
 
       if (ghost.name === "pinky") return { x: px + pac.dir.x * 4 - pac.dir.y * 4, y: py + pac.dir.y * 4 - pac.dir.x * 4 };
@@ -439,7 +438,7 @@ const PacmanGame = ({ onGameEnd }: PacmanGameProps = {}) => {
         const by = gridY(ghost) + b.y;
         const da = Math.hypot(ax - target.x, ay - target.y);
         const db = Math.hypot(bx - target.x, by - target.y);
-        return ghost.scared ? db - da : da - db;
+        return da - db;
       });
       ghost.dir = fallback[0];
       ghost.stopped = false;
