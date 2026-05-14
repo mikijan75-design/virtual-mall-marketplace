@@ -126,9 +126,12 @@ const countFood = (map: GameMap) =>
 const countPills = (map: GameMap) =>
   map.posY.reduce((total, row) => total + row.posX.filter((cell) => cell.type === "pill").length, 0);
 
-const canEnter = (type: CellType, entity: "pacman" | "ghost", dead = false) => {
+const canEnter = (type: CellType, entity: "pacman" | "ghost", canUseDoor = false) => {
   if (type === "wall") return false;
-  if (type === "door") return entity === "ghost" && dead;
+  // Original pacman-canvas rule: the ghost-house door blocks Pacman and
+  // normal ghosts, but ghosts inside the house must leave through it and
+  // dead ghosts must use it to return home.
+  if (type === "door") return entity === "ghost" && canUseDoor;
   return true;
 };
 
