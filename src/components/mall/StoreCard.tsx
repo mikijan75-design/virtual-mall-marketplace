@@ -38,6 +38,8 @@ import yardensJewelryImg from "@/assets/stores/yardens-jewelry.png";
 import floor1Shop3Img from "@/assets/stores/floor1-shop3.png";
 import storeFloor2Pos2Img from "@/assets/store-floor2-2.png";
 import storeFloor2Pos2Sign from "@/assets/store-floor2-2-sign.png";
+import pacmanArcadeImg from "@/assets/stores/pacman-arcade.jpg";
+import pacmanMishakiaSign from "@/assets/stores/pacman-mishakia-sign.png";
 
 type BrandStyle = {
   bg: string;
@@ -160,6 +162,16 @@ const idOverrides: Record<string, Partial<BrandStyle & { name: string }>> = {
     image: storeFloor2Pos2Img,
     logo: storeFloor2Pos2Sign,
     subtitle: "יישור שיניים",
+  },
+  s12: {
+    name: "משחקיה",
+    bg: "linear-gradient(135deg, #050615, #0a0d2e)",
+    text: "#ffd400",
+    accent: "#1438c4",
+    font: "font-mono",
+    image: pacmanArcadeImg,
+    logo: pacmanMishakiaSign,
+    subtitle: "ארקייד · PAC-MAN",
   },
 };
 
