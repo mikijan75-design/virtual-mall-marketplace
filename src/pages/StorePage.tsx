@@ -31,6 +31,7 @@ import halenGallery11 from "@/assets/stores/halen-gallery/g11.jpg";
 import halenGallery12 from "@/assets/stores/halen-gallery/g12.jpg";
 import InfrastructureBlueprintScene from "@/components/InfrastructureBlueprintScene";
 import GalleryWallSection from "@/components/mall/GalleryWallSection";
+import ClearAlignersInfoPage from "@/pages/ClearAlignersInfoPage";
 import imProduct1 from "@/assets/stores/im-product-1.png";
 import imProduct2 from "@/assets/stores/im-product-2.png";
 import imProduct3 from "@/assets/stores/im-product-3.png";
@@ -644,6 +645,18 @@ const StorePage = () => {
 
   if (store.id === "s1") {
     return <HalenBinariaStoreView store={store} />;
+  }
+
+  if (store.id === "s8") {
+    return (
+      <div className="min-h-screen bg-background">
+        <MallHeader />
+        <PageTracker storeId={store.id} />
+        <BackButton />
+        <ClearAlignersInfoPage />
+        <MallFooter />
+      </div>
+    );
   }
 
   if (store.id === "s16") {
