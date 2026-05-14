@@ -126,9 +126,12 @@ const countFood = (map: GameMap) =>
 const countPills = (map: GameMap) =>
   map.posY.reduce((total, row) => total + row.posX.filter((cell) => cell.type === "pill").length, 0);
 
-const canEnter = (type: CellType, entity: "pacman" | "ghost", dead = false) => {
+const canEnter = (type: CellType, entity: "pacman" | "ghost", canUseDoor = false) => {
   if (type === "wall") return false;
-  if (type === "door") return entity === "ghost" && dead;
+  // Original pacman-canvas rule: the ghost-house door blocks Pacman and
+  // normal ghosts, but ghosts inside the house must leave through it and
+  // dead ghosts must use it to return home.
+  if (type === "door") return entity === "ghost" && canUseDoor;
   return true;
 };
 
@@ -336,10 +339,10 @@ const PacmanGame = ({ onGameEnd }: PacmanGameProps = {}) => {
       ghost.speed = speed;
     };
 
-    const nextTileIsOpen = (entity: { x: number; y: number }, dir: Direction, kind: "pacman" | "ghost", dead = false) => {
+    const nextTileIsOpen = (entity: { x: number; y: number }, dir: Direction, kind: "pacman" | "ghost", canUseDoor = false) => {
       const x = gridX(entity) + dir.x;
       const y = gridY(entity) + dir.y;
-      return canEnter(getMapContent(stateRef.current.map, x, y), kind, dead);
+      return canEnter(getMapContent(stateRef.current.map, x, y), kind, canUseDoor);
     };
 
     const movePacman = (pac: PacmanEntity) => {
@@ -418,6 +421,7 @@ const PacmanGame = ({ onGameEnd }: PacmanGameProps = {}) => {
     const chooseGhostDirection = (ghost: GhostEntity) => {
       if (!inGrid(ghost)) return;
       snapToGrid(ghost);
+      const canUseDoor = ghost.dead || ghost.ghostHouse;
 
       if (ghost.ghostHouse) {
         const gx = gridX(ghost);
@@ -442,10 +446,10 @@ const PacmanGame = ({ onGameEnd }: PacmanGameProps = {}) => {
       // is the only legal move (dead-end) we must allow it, otherwise the
       // ghost keeps walking and ploughs through walls (scared/eyes mode bug).
       let choices = DIRECTIONS.filter(
-        (dir) => dir.name !== reverse.name && nextTileIsOpen(ghost, dir, "ghost", ghost.dead),
+        (dir) => dir.name !== reverse.name && nextTileIsOpen(ghost, dir, "ghost", canUseDoor),
       );
       if (!choices.length) {
-        choices = DIRECTIONS.filter((dir) => nextTileIsOpen(ghost, dir, "ghost", ghost.dead));
+        choices = DIRECTIONS.filter((dir) => nextTileIsOpen(ghost, dir, "ghost", canUseDoor));
       }
       if (!choices.length) {
         ghost.stopped = true;
@@ -480,7 +484,7 @@ const PacmanGame = ({ onGameEnd }: PacmanGameProps = {}) => {
       // forced mode-switch reverse or a snap to the speed grid. If the
       // current direction is blocked while we're aligned to a cell, snap
       // to the cell and skip the move so the next frame re-chooses.
-      if (inGrid(ghost) && !nextTileIsOpen(ghost, ghost.dir, "ghost", ghost.dead)) {
+      if (inGrid(ghost) && !nextTileIsOpen(ghost, ghost.dir, "ghost", ghost.dead || ghost.ghostHouse)) {
         snapToGrid(ghost);
         return;
       }
