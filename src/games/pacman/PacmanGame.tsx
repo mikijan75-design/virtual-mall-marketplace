@@ -327,8 +327,12 @@ const PacmanGame = ({ onGameEnd }: PacmanGameProps = {}) => {
     };
 
     const changeGhostSpeed = (ghost: GhostEntity, speed: number) => {
-      ghost.x = Math.round(ghost.x / speed) * speed;
-      ghost.y = Math.round(ghost.y / speed) * speed;
+      // Snap to the cell grid (not the speed grid) so the ghost is
+      // immediately re-aligned with the maze and can pick a legal
+      // direction on the next frame — prevents scared/eyes ghosts from
+      // walking through walls after a speed transition.
+      ghost.x = Math.round(ghost.x / CELL) * CELL;
+      ghost.y = Math.round(ghost.y / CELL) * CELL;
       ghost.speed = speed;
     };
 
@@ -570,8 +574,15 @@ const PacmanGame = ({ onGameEnd }: PacmanGameProps = {}) => {
         s.ghostMode = s.ghostMode === 0 ? 1 : 0;
         // Chase phases are long, scatter phases short — keep pressure on Pacman.
         s.ghostModeTimer = s.ghostMode === 1 ? 650 : 200;
+        // Reverse ghosts on mode switch (original behaviour) but only when
+        // the reversed direction is open — otherwise they would clip through
+        // the wall they were just facing away from.
         s.ghosts.forEach((ghost) => {
-          ghost.dir = opposite(ghost.dir);
+          if (ghost.ghostHouse || ghost.dead) return;
+          const back = opposite(ghost.dir);
+          if (nextTileIsOpen(ghost, back, "ghost", ghost.dead)) {
+            ghost.dir = back;
+          }
         });
       }
 
