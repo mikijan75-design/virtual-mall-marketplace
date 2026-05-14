@@ -667,6 +667,7 @@ const PacmanGame = ({ onGameEnd }: PacmanGameProps = {}) => {
     };
 
     const drawGhost = (ghost: GhostEntity) => {
+      // (cherry drawn separately)
       const cx = ghost.x + RADIUS;
       const cy = ghost.y + RADIUS;
 
@@ -706,6 +707,34 @@ const PacmanGame = ({ onGameEnd }: PacmanGameProps = {}) => {
       ctx.beginPath();
       ctx.arc(cx - 5 + ghost.dir.x * 2, cy - 2 + ghost.dir.y * 2, 2, 0, Math.PI * 2);
       ctx.arc(cx + 5 + ghost.dir.x * 2, cy - 2 + ghost.dir.y * 2, 2, 0, Math.PI * 2);
+      ctx.fill();
+    };
+
+    const drawCherry = () => {
+      const c = stateRef.current.cherry;
+      if (!c) return;
+      const cx = c.x * CELL + RADIUS;
+      const cy = c.y * CELL + RADIUS;
+      // Blink in last 2 seconds
+      if (c.ticks < 60 && Math.floor(c.ticks / 6) % 2 === 0) return;
+      // stem
+      ctx.strokeStyle = "#2e7d32";
+      ctx.lineWidth = 2;
+      ctx.beginPath();
+      ctx.moveTo(cx, cy - 8);
+      ctx.quadraticCurveTo(cx + 4, cy - 12, cx + 7, cy - 9);
+      ctx.stroke();
+      // berries
+      ctx.fillStyle = "#e53935";
+      ctx.beginPath();
+      ctx.arc(cx - 3, cy + 2, 5, 0, Math.PI * 2);
+      ctx.arc(cx + 4, cy + 3, 5, 0, Math.PI * 2);
+      ctx.fill();
+      // shine
+      ctx.fillStyle = "#ffb4b4";
+      ctx.beginPath();
+      ctx.arc(cx - 4, cy + 1, 1.5, 0, Math.PI * 2);
+      ctx.arc(cx + 3, cy + 2, 1.5, 0, Math.PI * 2);
       ctx.fill();
     };
 
