@@ -67,7 +67,11 @@ function findSpawn(grid: number[][], val: number) {
   return { x: 1, y: 1 };
 }
 
-const PacmanGame = () => {
+interface PacmanGameProps {
+  onGameEnd?: (score: number) => void;
+}
+
+const PacmanGame = ({ onGameEnd }: PacmanGameProps = {}) => {
   const canvasRef = useRef<HTMLCanvasElement>(null);
   const [score, setScore] = useState(0);
   const [lives, setLives] = useState(3);
@@ -124,6 +128,18 @@ const PacmanGame = () => {
   useEffect(() => {
     reset();
   }, [reset]);
+
+  // Notify parent on end
+  const lastEndRef = useRef<string>("");
+  useEffect(() => {
+    if ((status === "win" || status === "lose") && onGameEnd) {
+      const key = `${status}:${stateRef.current.score}:${Date.now()}`;
+      if (lastEndRef.current !== key) {
+        lastEndRef.current = key;
+        onGameEnd(stateRef.current.score);
+      }
+    }
+  }, [status, onGameEnd]);
 
   // Input
   useEffect(() => {
