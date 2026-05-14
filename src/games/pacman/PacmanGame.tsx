@@ -175,6 +175,8 @@ const PacmanGame = ({ onGameEnd }: PacmanGameProps = {}) => {
     score: 0,
     lives: 3,
     level: 1,
+    ghostFrightened: false,
+    ghostFrightenedTimer: 240,
     ghostMode: 0,
     ghostModeTimer: 200,
   });
@@ -221,6 +223,8 @@ const PacmanGame = ({ onGameEnd }: PacmanGameProps = {}) => {
     stateRef.current.score = 0;
     stateRef.current.lives = 3;
     stateRef.current.level = 1;
+    stateRef.current.ghostFrightened = false;
+    stateRef.current.ghostFrightenedTimer = 240;
     stateRef.current.ghostMode = 0;
     stateRef.current.ghostModeTimer = 200;
     resetPositions();
