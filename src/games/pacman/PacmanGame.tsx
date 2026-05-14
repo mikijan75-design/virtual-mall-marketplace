@@ -332,7 +332,7 @@ const PacmanGame = ({ onGameEnd }: PacmanGameProps = {}) => {
         stateRef.current.ghosts.forEach((ghost) => {
           if (!ghost.dead) {
             ghost.scared = true;
-            ghost.speed = 2;
+            ghost.speed = Math.max(1.5, ghost.speed - 0.5);
           }
         });
         addScore(POWERPILL_POINTS);
@@ -419,7 +419,7 @@ const PacmanGame = ({ onGameEnd }: PacmanGameProps = {}) => {
         ghost.dead = false;
         ghost.scared = false;
         ghost.ghostHouse = true;
-        ghost.speed = 2;
+        ghost.speed = Math.min(2 + (stateRef.current.level - 1) * 0.4, 4);
       }
     };
 
@@ -441,12 +441,13 @@ const PacmanGame = ({ onGameEnd }: PacmanGameProps = {}) => {
       if (!pac) return;
 
       for (const ghost of s.ghosts) {
+        if (ghost.dead) continue;
         if (Math.hypot(ghost.x - pac.x, ghost.y - pac.y) > 18) continue;
-        if (ghost.scared || ghost.dead) {
-          if (!ghost.dead) addScore(GHOST_POINTS);
+        if (ghost.scared) {
+          addScore(GHOST_POINTS);
           ghost.dead = true;
           ghost.scared = false;
-          ghost.speed = 2;
+          ghost.speed = 4;
         } else {
           loseLife();
           break;
@@ -483,7 +484,20 @@ const PacmanGame = ({ onGameEnd }: PacmanGameProps = {}) => {
       s.ghosts.forEach(moveGhost);
       checkGhostCollision();
 
-      if (s.food <= 0 && statusRef.current === "playing") setStatus("win");
+      if (s.food <= 0 && statusRef.current === "playing") {
+        s.level += 1;
+        setLevel(s.level);
+        setLevelTransition(`שלב ${s.level}`);
+        const newMap = cloneMap();
+        s.map = newMap;
+        s.food = countFood(newMap);
+        s.ghostMode = 0;
+        s.ghostModeTimer = 200;
+        resetPositions();
+        statusRef.current = "ready";
+        setStatusState("ready");
+        setOverlayVisible(true);
+      }
     };
 
     const drawWalls = () => {
@@ -538,9 +552,20 @@ const PacmanGame = ({ onGameEnd }: PacmanGameProps = {}) => {
       const pac = stateRef.current.pac;
       if (!pac) return;
 
-      pac.mouth += pac.mouthDir * 0.07;
-      if (pac.mouth > 0.22) pac.mouthDir = -1;
-      if (pac.mouth < 0.02) pac.mouthDir = 1;
+      const moving = pac.dir.x !== 0 || pac.dir.y !== 0;
+      if (moving) {
+        pac.mouth += pac.mouthDir * 0.04;
+        if (pac.mouth >= 0.25) {
+          pac.mouth = 0.25;
+          pac.mouthDir = -1;
+        }
+        if (pac.mouth <= 0) {
+          pac.mouth = 0;
+          pac.mouthDir = 1;
+        }
+      } else {
+        pac.mouth = 0.18;
+      }
 
       const cx = pac.x + RADIUS;
       const cy = pac.y + RADIUS;
@@ -555,8 +580,23 @@ const PacmanGame = ({ onGameEnd }: PacmanGameProps = {}) => {
     const drawGhost = (ghost: GhostEntity) => {
       const cx = ghost.x + RADIUS;
       const cy = ghost.y + RADIUS;
+
+      if (ghost.dead) {
+        ctx.fillStyle = "#fff";
+        ctx.beginPath();
+        ctx.arc(cx - 5, cy - 2, 4, 0, Math.PI * 2);
+        ctx.arc(cx + 5, cy - 2, 4, 0, Math.PI * 2);
+        ctx.fill();
+        ctx.fillStyle = "#1f3bff";
+        ctx.beginPath();
+        ctx.arc(cx - 5 + ghost.dir.x * 2, cy - 2 + ghost.dir.y * 2, 2, 0, Math.PI * 2);
+        ctx.arc(cx + 5 + ghost.dir.x * 2, cy - 2 + ghost.dir.y * 2, 2, 0, Math.PI * 2);
+        ctx.fill();
+        return;
+      }
+
       const flash = ghost.scared && stateRef.current.pac && stateRef.current.pac.beastTicks < 50 && stateRef.current.pac.beastTicks % 8 > 1;
-      ctx.fillStyle = ghost.dead ? "#f8fbff" : ghost.scared ? (flash ? "#f8fbff" : "#1f3bff") : ghost.color;
+      ctx.fillStyle = ghost.scared ? (flash ? "#f8fbff" : "#1f3bff") : ghost.color;
       ctx.beginPath();
       ctx.arc(cx, cy - 1, RADIUS - 2, Math.PI, 0);
       ctx.lineTo(cx + RADIUS - 2, cy + RADIUS - 2);
