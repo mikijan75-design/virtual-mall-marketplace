@@ -579,6 +579,15 @@ const ClearAlignersInfoPage = () => {
                   <InfoPanel key={card.title} card={card} />
                 ))}
               </section>
+
+              <section className="relative z-10 mt-3 grid grid-cols-1 gap-3 sm:grid-cols-2 lg:grid-cols-5">
+                {Array.from({ length: 5 }).map((_, index) => (
+                  <article
+                    key={`empty-${index}`}
+                    className="min-h-[150px] rounded-2xl border border-dashed border-sky-200 bg-gradient-to-b from-sky-50/60 to-white p-4 text-right shadow-[inset_0_1px_0_rgba(255,255,255,0.9),0_10px_22px_rgba(11,96,141,0.06)]"
+                  />
+                ))}
+              </section>
             </div>
           </section>
         </div>
