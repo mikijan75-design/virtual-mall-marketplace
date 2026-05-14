@@ -509,29 +509,31 @@ const PacmanGame = ({ onGameEnd }: PacmanGameProps = {}) => {
       if (statusRef.current !== "playing" || !s.pac) return;
 
       s.frame++;
+      if (s.ghostFrightened) {
+        s.ghostFrightenedTimer--;
+        if (s.ghostFrightenedTimer <= 0) {
+          s.ghostFrightened = false;
+          s.ghostFrightenedTimer = 240;
+          s.ghosts.forEach((ghost) => {
+            if (!ghost.dead) changeGhostSpeed(ghost, ghostSpeedForLevel(s.level));
+            ghost.scared = false;
+          });
+        }
+      }
+
       s.ghostModeTimer--;
-      if (s.ghostModeTimer <= 0) {
+      if (s.ghostModeTimer <= 0 && s.level > 1) {
         s.ghostMode = s.ghostMode === 0 ? 1 : 0;
         s.ghostModeTimer = 200 + s.ghostMode * 450;
         s.ghosts.forEach((ghost) => {
-          if (!ghost.ghostHouse) ghost.dir = opposite(ghost.dir);
+          ghost.dir = opposite(ghost.dir);
         });
       }
 
       movePacman(s.pac);
       eatFood(s.pac);
 
-      if (s.pac.beastTicks > 0) {
-        s.pac.beastTicks--;
-        if (s.pac.beastTicks === 0) {
-          s.ghosts.forEach((ghost) => {
-            if (!ghost.dead) {
-              ghost.scared = false;
-              changeGhostSpeed(ghost, ghostSpeedForLevel(s.level));
-            }
-          });
-        }
-      }
+      if (s.pac.beastTicks > 0) s.pac.beastTicks--;
 
       s.ghosts.forEach(moveGhost);
       checkGhostCollision();
