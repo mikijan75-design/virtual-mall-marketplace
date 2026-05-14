@@ -391,7 +391,7 @@ const PacmanGame = ({ onGameEnd }: PacmanGameProps = {}) => {
         const blinky = stateRef.current.ghosts.find((g) => g.name === "blinky") ?? ghost;
         const leadX = px + pac.dir.x * 2;
         const leadY = py + pac.dir.y * 2;
-        return { x: gridX(blinky) + (leadX - gridX(blinky)) * 2, y: gridY(blinky) + (leadY - gridY(blinky)) * 2 };
+        return { x: Math.abs(gridX(blinky) + (leadX - gridX(blinky)) * 2), y: Math.abs(gridY(blinky) + (leadY - gridY(blinky)) * 2) };
       }
       if (ghost.name === "clyde") {
         const dist = Math.hypot(gx - px, gy - py);
