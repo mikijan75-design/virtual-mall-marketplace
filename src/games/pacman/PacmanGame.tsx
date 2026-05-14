@@ -598,28 +598,27 @@ const PacmanGame = ({ onGameEnd }: PacmanGameProps = {}) => {
       const pac = stateRef.current.pac;
       if (!pac) return;
 
-      const moving = pac.dir.x !== 0 || pac.dir.y !== 0;
-      if (moving) {
-        pac.mouth += pac.mouthDir * 0.04;
-        if (pac.mouth >= 0.25) {
-          pac.mouth = 0.25;
-          pac.mouthDir = -1;
-        }
-        if (pac.mouth <= 0) {
-          pac.mouth = 0;
-          pac.mouthDir = 1;
-        }
-      } else {
-        pac.mouth = 0.18;
+      if (!pac.stopped) {
+        pac.angle1 -= pac.mouth * 0.07;
+        pac.angle2 += pac.mouth * 0.07;
+
+        const limitMax1 = pac.dir.angle1;
+        const limitMax2 = pac.dir.angle2;
+        const limitMin1 = pac.dir.angle1 - 0.21;
+        const limitMin2 = pac.dir.angle2 + 0.21;
+
+        if (pac.angle1 < limitMin1 || pac.angle2 > limitMin2) pac.mouth = -1;
+        if (pac.angle1 >= limitMax1 || pac.angle2 <= limitMax2) pac.mouth = 1;
       }
 
       const cx = pac.x + RADIUS;
       const cy = pac.y + RADIUS;
       ctx.fillStyle = "#ffd400";
+      ctx.strokeStyle = "#ffd400";
       ctx.beginPath();
-      ctx.moveTo(cx, cy);
-      ctx.arc(cx, cy, RADIUS, (pac.dir.angle1 - pac.mouth) * Math.PI, (pac.dir.angle2 + pac.mouth) * Math.PI, true);
-      ctx.closePath();
+      ctx.arc(cx, cy, RADIUS, pac.angle1 * Math.PI, pac.angle2 * Math.PI);
+      ctx.lineTo(cx, cy);
+      ctx.stroke();
       ctx.fill();
     };
 
