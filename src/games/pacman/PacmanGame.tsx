@@ -300,6 +300,18 @@ const PacmanGame = ({ onGameEnd }: PacmanGameProps = {}) => {
       entity.y = Math.round(entity.y / CELL) * CELL;
     };
 
+    const setPacmanDirection = (pac: PacmanEntity, dir: Direction) => {
+      pac.dir = dir;
+      pac.angle1 = dir.angle1;
+      pac.angle2 = dir.angle2;
+    };
+
+    const changeGhostSpeed = (ghost: GhostEntity, speed: number) => {
+      ghost.x = Math.round(ghost.x / speed) * speed;
+      ghost.y = Math.round(ghost.y / speed) * speed;
+      ghost.speed = speed;
+    };
+
     const nextTileIsOpen = (entity: { x: number; y: number }, dir: Direction, kind: "pacman" | "ghost", dead = false) => {
       const x = gridX(entity) + dir.x;
       const y = gridY(entity) + dir.y;
@@ -309,12 +321,16 @@ const PacmanGame = ({ onGameEnd }: PacmanGameProps = {}) => {
     const movePacman = (pac: PacmanEntity) => {
       if (pac.next && inGrid(pac) && nextTileIsOpen(pac, pac.next, "pacman")) {
         snapToGrid(pac);
-        pac.dir = pac.next;
+        setPacmanDirection(pac, pac.next);
+        pac.stopped = false;
         pac.next = null;
       }
 
+      if (pac.stopped) return;
+
       if (inGrid(pac) && !nextTileIsOpen(pac, pac.dir, "pacman")) {
         snapToGrid(pac);
+        pac.stopped = true;
         return;
       }
 
@@ -341,7 +357,7 @@ const PacmanGame = ({ onGameEnd }: PacmanGameProps = {}) => {
         stateRef.current.ghosts.forEach((ghost) => {
           if (!ghost.dead) {
             ghost.scared = true;
-            ghost.speed = Math.max(1.5, ghost.speed - 0.5);
+            changeGhostSpeed(ghost, GHOST_SPEED_DAZZLED);
           }
         });
         addScore(POWERPILL_POINTS);
