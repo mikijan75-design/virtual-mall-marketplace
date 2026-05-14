@@ -38,8 +38,10 @@ type PacmanEntity = {
   dir: Direction;
   next: Direction | null;
   speed: number;
-  mouth: number;
-  mouthDir: 1 | -1;
+  angle1: number;
+  angle2: number;
+  mouth: 1 | -1;
+  stopped: boolean;
   beastTicks: number;
 };
 
@@ -77,6 +79,7 @@ const FRAME_MS = 33;
 const PILL_POINTS = 10;
 const POWERPILL_POINTS = 50;
 const GHOST_POINTS = 100;
+const GHOST_SPEED_DAZZLED = 2;
 
 const UP: Direction = { name: "up", angle1: 1.75, angle2: 1.25, x: 0, y: -1 };
 const LEFT: Direction = { name: "left", angle1: 1.25, angle2: 0.75, x: -1, y: 0 };
@@ -86,6 +89,7 @@ const NONE: Direction = { name: "none", angle1: 0.25, angle2: 1.75, x: 0, y: 0 }
 const DIRECTIONS = [UP, DOWN, RIGHT, LEFT];
 
 const cloneMap = (): GameMap => JSON.parse(JSON.stringify(originalPacmanMap));
+const ghostSpeedForLevel = (level: number) => (level > 4 ? 3 : 2);
 
 const mod = (value: number, max: number) => ((value % max) + max) % max;
 const atGrid = (value: number) => Math.abs(value % CELL) < 0.001 || Math.abs((value % CELL) - CELL) < 0.001;
@@ -115,6 +119,9 @@ const countFood = (map: GameMap) =>
     (total, row) => total + row.posX.filter((cell) => cell.type === "pill" || cell.type === "powerpill").length,
     0,
   );
+
+const countPills = (map: GameMap) =>
+  map.posY.reduce((total, row) => total + row.posX.filter((cell) => cell.type === "pill").length, 0);
 
 const canEnter = (type: CellType, entity: "pacman" | "ghost", dead = false) => {
   if (type === "wall") return false;
@@ -163,6 +170,7 @@ const PacmanGame = ({ onGameEnd }: PacmanGameProps = {}) => {
     pac: null as PacmanEntity | null,
     ghosts: [] as GhostEntity[],
     food: 0,
+    pills: 0,
     frame: 0,
     score: 0,
     lives: 3,
@@ -180,15 +188,17 @@ const PacmanGame = ({ onGameEnd }: PacmanGameProps = {}) => {
   const resetPositions = useCallback(() => {
     const s = stateRef.current;
     const lvl = s.level;
-    const ghostSpeed = Math.min(2 + (lvl - 1) * 0.4, 4);
+    const ghostSpeed = ghostSpeedForLevel(lvl);
     s.pac = {
       x: 0,
       y: 6 * CELL,
       dir: RIGHT,
       next: null,
       speed: 5,
-      mouth: 0,
-      mouthDir: 1,
+      angle1: RIGHT.angle1,
+      angle2: RIGHT.angle2,
+      mouth: 1,
+      stopped: true,
       beastTicks: 0,
     };
     s.ghosts = [
@@ -206,6 +216,7 @@ const PacmanGame = ({ onGameEnd }: PacmanGameProps = {}) => {
     const map = cloneMap();
     stateRef.current.map = map;
     stateRef.current.food = countFood(map);
+    stateRef.current.pills = countPills(map);
     stateRef.current.frame = 0;
     stateRef.current.score = 0;
     stateRef.current.lives = 3;
@@ -237,7 +248,10 @@ const PacmanGame = ({ onGameEnd }: PacmanGameProps = {}) => {
 
   const startPlaying = useCallback(() => {
     const pac = stateRef.current.pac;
-    if (pac && pac.dir.name === "none") pac.dir = RIGHT;
+    if (pac) {
+      pac.stopped = false;
+      if (pac.dir.name === "none") pac.dir = RIGHT;
+    }
     if (statusRef.current === "ready") setStatus("playing");
   }, [setStatus]);
 
@@ -291,6 +305,18 @@ const PacmanGame = ({ onGameEnd }: PacmanGameProps = {}) => {
       entity.y = Math.round(entity.y / CELL) * CELL;
     };
 
+    const setPacmanDirection = (pac: PacmanEntity, dir: Direction) => {
+      pac.dir = dir;
+      pac.angle1 = dir.angle1;
+      pac.angle2 = dir.angle2;
+    };
+
+    const changeGhostSpeed = (ghost: GhostEntity, speed: number) => {
+      ghost.x = Math.round(ghost.x / speed) * speed;
+      ghost.y = Math.round(ghost.y / speed) * speed;
+      ghost.speed = speed;
+    };
+
     const nextTileIsOpen = (entity: { x: number; y: number }, dir: Direction, kind: "pacman" | "ghost", dead = false) => {
       const x = gridX(entity) + dir.x;
       const y = gridY(entity) + dir.y;
@@ -300,12 +326,16 @@ const PacmanGame = ({ onGameEnd }: PacmanGameProps = {}) => {
     const movePacman = (pac: PacmanEntity) => {
       if (pac.next && inGrid(pac) && nextTileIsOpen(pac, pac.next, "pacman")) {
         snapToGrid(pac);
-        pac.dir = pac.next;
+        setPacmanDirection(pac, pac.next);
+        pac.stopped = false;
         pac.next = null;
       }
 
+      if (pac.stopped) return;
+
       if (inGrid(pac) && !nextTileIsOpen(pac, pac.dir, "pacman")) {
         snapToGrid(pac);
+        pac.stopped = true;
         return;
       }
 
@@ -332,11 +362,12 @@ const PacmanGame = ({ onGameEnd }: PacmanGameProps = {}) => {
         stateRef.current.ghosts.forEach((ghost) => {
           if (!ghost.dead) {
             ghost.scared = true;
-            ghost.speed = Math.max(1.5, ghost.speed - 0.5);
+            changeGhostSpeed(ghost, GHOST_SPEED_DAZZLED);
           }
         });
         addScore(POWERPILL_POINTS);
       } else {
+        stateRef.current.pills--;
         addScore(PILL_POINTS);
       }
     };
@@ -349,7 +380,6 @@ const PacmanGame = ({ onGameEnd }: PacmanGameProps = {}) => {
       const gy = gridY(ghost);
 
       if (ghost.dead) return { x: ghost.startX / CELL, y: ghost.startY / CELL };
-      if (ghost.scared) return { x: ghost.baseX, y: ghost.baseY };
       if (stateRef.current.ghostMode === 0) return { x: ghost.baseX, y: ghost.baseY };
 
       if (ghost.name === "pinky") return { x: px + pac.dir.x * 4 - pac.dir.y * 4, y: py + pac.dir.y * 4 - pac.dir.x * 4 };
@@ -373,6 +403,13 @@ const PacmanGame = ({ onGameEnd }: PacmanGameProps = {}) => {
       if (ghost.ghostHouse) {
         const gx = gridX(ghost);
         const gy = gridY(ghost);
+        ghost.stopped = false;
+        if (!ghost.dead && ghost.name === "clyde" && (stateRef.current.level < 4 || stateRef.current.pills > 104 / 3)) {
+          ghost.stopped = true;
+        }
+        if (!ghost.dead && ghost.name === "inky" && (stateRef.current.level < 3 || stateRef.current.pills > 104 - 30)) {
+          ghost.stopped = true;
+        }
         if (gy === 5) {
           if (gx === 7) ghost.dir = RIGHT;
           if (gx === 8 || gx === 9) ghost.dir = UP;
@@ -388,7 +425,10 @@ const PacmanGame = ({ onGameEnd }: PacmanGameProps = {}) => {
         if (dir.name === reverse.name && !ghost.dead) return false;
         return nextTileIsOpen(ghost, dir, "ghost", ghost.dead);
       });
-      const fallback = choices.length ? choices : DIRECTIONS.filter((dir) => nextTileIsOpen(ghost, dir, "ghost", ghost.dead));
+      const fallback = choices.length ? choices : DIRECTIONS.filter((dir) => {
+        if (dir.name === reverse.name && !ghost.dead) return false;
+        return nextTileIsOpen(ghost, dir, "ghost", ghost.dead);
+      });
       if (!fallback.length) return;
 
       fallback.sort((a, b) => {
@@ -398,9 +438,10 @@ const PacmanGame = ({ onGameEnd }: PacmanGameProps = {}) => {
         const by = gridY(ghost) + b.y;
         const da = Math.hypot(ax - target.x, ay - target.y);
         const db = Math.hypot(bx - target.x, by - target.y);
-        return ghost.scared ? db - da : da - db;
+        return da - db;
       });
       ghost.dir = fallback[0];
+      ghost.stopped = false;
     };
 
     const moveGhost = (ghost: GhostEntity) => {
@@ -419,7 +460,7 @@ const PacmanGame = ({ onGameEnd }: PacmanGameProps = {}) => {
         ghost.dead = false;
         ghost.scared = false;
         ghost.ghostHouse = true;
-        ghost.speed = Math.min(2 + (stateRef.current.level - 1) * 0.4, 4);
+        changeGhostSpeed(ghost, ghostSpeedForLevel(stateRef.current.level));
       }
     };
 
@@ -447,7 +488,7 @@ const PacmanGame = ({ onGameEnd }: PacmanGameProps = {}) => {
           addScore(GHOST_POINTS);
           ghost.dead = true;
           ghost.scared = false;
-          ghost.speed = 4;
+          changeGhostSpeed(ghost, ghostSpeedForLevel(s.level));
         } else {
           loseLife();
           break;
@@ -476,7 +517,10 @@ const PacmanGame = ({ onGameEnd }: PacmanGameProps = {}) => {
         s.pac.beastTicks--;
         if (s.pac.beastTicks === 0) {
           s.ghosts.forEach((ghost) => {
-            ghost.scared = false;
+            if (!ghost.dead) {
+              ghost.scared = false;
+              changeGhostSpeed(ghost, ghostSpeedForLevel(s.level));
+            }
           });
         }
       }
@@ -491,6 +535,7 @@ const PacmanGame = ({ onGameEnd }: PacmanGameProps = {}) => {
         const newMap = cloneMap();
         s.map = newMap;
         s.food = countFood(newMap);
+        s.pills = countPills(newMap);
         s.ghostMode = 0;
         s.ghostModeTimer = 200;
         resetPositions();
@@ -552,28 +597,27 @@ const PacmanGame = ({ onGameEnd }: PacmanGameProps = {}) => {
       const pac = stateRef.current.pac;
       if (!pac) return;
 
-      const moving = pac.dir.x !== 0 || pac.dir.y !== 0;
-      if (moving) {
-        pac.mouth += pac.mouthDir * 0.04;
-        if (pac.mouth >= 0.25) {
-          pac.mouth = 0.25;
-          pac.mouthDir = -1;
-        }
-        if (pac.mouth <= 0) {
-          pac.mouth = 0;
-          pac.mouthDir = 1;
-        }
-      } else {
-        pac.mouth = 0.18;
+      if (!pac.stopped) {
+        pac.angle1 -= pac.mouth * 0.07;
+        pac.angle2 += pac.mouth * 0.07;
+
+        const limitMax1 = pac.dir.angle1;
+        const limitMax2 = pac.dir.angle2;
+        const limitMin1 = pac.dir.angle1 - 0.21;
+        const limitMin2 = pac.dir.angle2 + 0.21;
+
+        if (pac.angle1 < limitMin1 || pac.angle2 > limitMin2) pac.mouth = -1;
+        if (pac.angle1 >= limitMax1 || pac.angle2 <= limitMax2) pac.mouth = 1;
       }
 
       const cx = pac.x + RADIUS;
       const cy = pac.y + RADIUS;
       ctx.fillStyle = "#ffd400";
+      ctx.strokeStyle = "#ffd400";
       ctx.beginPath();
-      ctx.moveTo(cx, cy);
-      ctx.arc(cx, cy, RADIUS, (pac.dir.angle1 - pac.mouth) * Math.PI, (pac.dir.angle2 + pac.mouth) * Math.PI, true);
-      ctx.closePath();
+      ctx.arc(cx, cy, RADIUS, pac.angle1 * Math.PI, pac.angle2 * Math.PI);
+      ctx.lineTo(cx, cy);
+      ctx.stroke();
       ctx.fill();
     };
 
