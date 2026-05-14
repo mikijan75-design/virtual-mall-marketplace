@@ -495,7 +495,6 @@ const PacmanGame = ({ onGameEnd }: PacmanGameProps = {}) => {
         if (ghost.scared) {
           addScore(GHOST_POINTS);
           ghost.dead = true;
-          ghost.scared = false;
           changeGhostSpeed(ghost, ghostSpeedForLevel(s.level));
         } else {
           loseLife();
