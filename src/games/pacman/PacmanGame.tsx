@@ -509,6 +509,32 @@ const PacmanGame = ({ onGameEnd }: PacmanGameProps = {}) => {
       }
     };
 
+    const CHERRY_GRID_X = 8;
+    const CHERRY_GRID_Y = 9;
+
+    const updateCherry = (pac: PacmanEntity) => {
+      const s = stateRef.current;
+      if (s.cherry) {
+        // Pacman eats cherry
+        if (gridX(pac) === CHERRY_GRID_X && gridY(pac) === CHERRY_GRID_Y) {
+          addScore(CHERRY_POINTS * s.level);
+          s.cherry = null;
+          s.cherryCooldown = CHERRY_SPAWN_INTERVAL;
+          return;
+        }
+        s.cherry.ticks--;
+        if (s.cherry.ticks <= 0) {
+          s.cherry = null;
+          s.cherryCooldown = CHERRY_SPAWN_INTERVAL;
+        }
+        return;
+      }
+      s.cherryCooldown--;
+      if (s.cherryCooldown <= 0) {
+        s.cherry = { x: CHERRY_GRID_X, y: CHERRY_GRID_Y, ticks: CHERRY_LIFETIME };
+      }
+    };
+
     const update = () => {
       const s = stateRef.current;
       if (statusRef.current !== "playing" || !s.pac) return;
