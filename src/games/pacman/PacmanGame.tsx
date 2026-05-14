@@ -327,8 +327,12 @@ const PacmanGame = ({ onGameEnd }: PacmanGameProps = {}) => {
     };
 
     const changeGhostSpeed = (ghost: GhostEntity, speed: number) => {
-      ghost.x = Math.round(ghost.x / speed) * speed;
-      ghost.y = Math.round(ghost.y / speed) * speed;
+      // Snap to the cell grid (not the speed grid) so the ghost is
+      // immediately re-aligned with the maze and can pick a legal
+      // direction on the next frame — prevents scared/eyes ghosts from
+      // walking through walls after a speed transition.
+      ghost.x = Math.round(ghost.x / CELL) * CELL;
+      ghost.y = Math.round(ghost.y / CELL) * CELL;
       ghost.speed = speed;
     };
 
@@ -434,17 +438,21 @@ const PacmanGame = ({ onGameEnd }: PacmanGameProps = {}) => {
 
       const target = targetForGhost(ghost);
       const reverse = opposite(ghost.dir);
-      const choices = DIRECTIONS.filter((dir) => {
-        if (dir.name === reverse.name) return false;
-        return nextTileIsOpen(ghost, dir, "ghost", ghost.dead);
-      });
-      const fallback = choices.length ? choices : DIRECTIONS.filter((dir) => {
-        if (dir.name === reverse.name) return false;
-        return nextTileIsOpen(ghost, dir, "ghost", ghost.dead);
-      });
-      if (!fallback.length) return;
+      // Original rule: ghosts cannot reverse 180° at intersections — but if it
+      // is the only legal move (dead-end) we must allow it, otherwise the
+      // ghost keeps walking and ploughs through walls (scared/eyes mode bug).
+      let choices = DIRECTIONS.filter(
+        (dir) => dir.name !== reverse.name && nextTileIsOpen(ghost, dir, "ghost", ghost.dead),
+      );
+      if (!choices.length) {
+        choices = DIRECTIONS.filter((dir) => nextTileIsOpen(ghost, dir, "ghost", ghost.dead));
+      }
+      if (!choices.length) {
+        ghost.stopped = true;
+        return;
+      }
 
-      fallback.sort((a, b) => {
+      choices.sort((a, b) => {
         const ax = gridX(ghost) + a.x;
         const ay = gridY(ghost) + a.y;
         const bx = gridX(ghost) + b.x;
@@ -453,7 +461,7 @@ const PacmanGame = ({ onGameEnd }: PacmanGameProps = {}) => {
         const db = Math.hypot(bx - target.x, by - target.y);
         return da - db;
       });
-      ghost.dir = fallback[0];
+      ghost.dir = choices[0];
       ghost.stopped = false;
     };
 
@@ -467,6 +475,15 @@ const PacmanGame = ({ onGameEnd }: PacmanGameProps = {}) => {
 
       chooseGhostDirection(ghost);
       if (ghost.stopped) return;
+
+      // Safety net: never let a ghost step into a wall — even after a
+      // forced mode-switch reverse or a snap to the speed grid. If the
+      // current direction is blocked while we're aligned to a cell, snap
+      // to the cell and skip the move so the next frame re-chooses.
+      if (inGrid(ghost) && !nextTileIsOpen(ghost, ghost.dir, "ghost", ghost.dead)) {
+        snapToGrid(ghost);
+        return;
+      }
 
       ghost.x += ghost.speed * ghost.dir.x;
       ghost.y += ghost.speed * ghost.dir.y;
@@ -557,8 +574,15 @@ const PacmanGame = ({ onGameEnd }: PacmanGameProps = {}) => {
         s.ghostMode = s.ghostMode === 0 ? 1 : 0;
         // Chase phases are long, scatter phases short — keep pressure on Pacman.
         s.ghostModeTimer = s.ghostMode === 1 ? 650 : 200;
+        // Reverse ghosts on mode switch (original behaviour) but only when
+        // the reversed direction is open — otherwise they would clip through
+        // the wall they were just facing away from.
         s.ghosts.forEach((ghost) => {
-          ghost.dir = opposite(ghost.dir);
+          if (ghost.ghostHouse || ghost.dead) return;
+          const back = opposite(ghost.dir);
+          if (nextTileIsOpen(ghost, back, "ghost", ghost.dead)) {
+            ghost.dir = back;
+          }
         });
       }
 
