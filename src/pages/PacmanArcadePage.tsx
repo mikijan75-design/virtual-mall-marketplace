@@ -90,11 +90,17 @@ const PacmanArcadePage = () => {
           חנות 1.2.0 · גלריית הארקייד של הקניון
         </p>
       </header>
-      <PacmanGame onGameEnd={handleGameEnd} />
+      <div
+        dir="rtl"
+        className="max-w-6xl mx-auto px-4 pb-12 flex flex-col lg:flex-row items-start justify-center gap-6"
+      >
+        <div className="flex-1 min-w-0 flex justify-center">
+          <PacmanGame onGameEnd={handleGameEnd} />
+        </div>
 
-      {/* High scores table */}
-      <section dir="rtl" className="max-w-[520px] mx-auto px-4 pb-12 mt-2">
-        <div className="rounded-xl border-2 border-blue-700/60 bg-black/60 backdrop-blur p-4 shadow-[0_0_30px_rgba(20,56,196,0.4)]">
+        {/* High scores table — visually left of the game */}
+        <aside className="w-full lg:w-[320px] lg:sticky lg:top-6 lg:order-last">
+          <div className="rounded-xl border-2 border-blue-700/60 bg-black/60 backdrop-blur p-4 shadow-[0_0_30px_rgba(20,56,196,0.4)]">
           <h2 className="font-mono text-yellow-300 text-xl md:text-2xl tracking-[0.2em] text-center mb-3"
             style={{ textShadow: "0 0 8px rgba(255,212,0,0.5)" }}
           >
@@ -135,8 +141,9 @@ const PacmanArcadePage = () => {
               ))}
             </ol>
           )}
-        </div>
-      </section>
+          </div>
+        </aside>
+      </div>
 
       {/* New high score modal */}
       {pendingScore != null && (
