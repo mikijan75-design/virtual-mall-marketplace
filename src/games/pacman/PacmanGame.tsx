@@ -434,17 +434,21 @@ const PacmanGame = ({ onGameEnd }: PacmanGameProps = {}) => {
 
       const target = targetForGhost(ghost);
       const reverse = opposite(ghost.dir);
-      const choices = DIRECTIONS.filter((dir) => {
-        if (dir.name === reverse.name) return false;
-        return nextTileIsOpen(ghost, dir, "ghost", ghost.dead);
-      });
-      const fallback = choices.length ? choices : DIRECTIONS.filter((dir) => {
-        if (dir.name === reverse.name) return false;
-        return nextTileIsOpen(ghost, dir, "ghost", ghost.dead);
-      });
-      if (!fallback.length) return;
+      // Original rule: ghosts cannot reverse 180° at intersections — but if it
+      // is the only legal move (dead-end) we must allow it, otherwise the
+      // ghost keeps walking and ploughs through walls (scared/eyes mode bug).
+      let choices = DIRECTIONS.filter(
+        (dir) => dir.name !== reverse.name && nextTileIsOpen(ghost, dir, "ghost", ghost.dead),
+      );
+      if (!choices.length) {
+        choices = DIRECTIONS.filter((dir) => nextTileIsOpen(ghost, dir, "ghost", ghost.dead));
+      }
+      if (!choices.length) {
+        ghost.stopped = true;
+        return;
+      }
 
-      fallback.sort((a, b) => {
+      choices.sort((a, b) => {
         const ax = gridX(ghost) + a.x;
         const ay = gridY(ghost) + a.y;
         const bx = gridX(ghost) + b.x;
@@ -453,7 +457,7 @@ const PacmanGame = ({ onGameEnd }: PacmanGameProps = {}) => {
         const db = Math.hypot(bx - target.x, by - target.y);
         return da - db;
       });
-      ghost.dir = fallback[0];
+      ghost.dir = choices[0];
       ghost.stopped = false;
     };
 
@@ -467,6 +471,15 @@ const PacmanGame = ({ onGameEnd }: PacmanGameProps = {}) => {
 
       chooseGhostDirection(ghost);
       if (ghost.stopped) return;
+
+      // Safety net: never let a ghost step into a wall — even after a
+      // forced mode-switch reverse or a snap to the speed grid. If the
+      // current direction is blocked while we're aligned to a cell, snap
+      // to the cell and skip the move so the next frame re-chooses.
+      if (inGrid(ghost) && !nextTileIsOpen(ghost, ghost.dir, "ghost", ghost.dead)) {
+        snapToGrid(ghost);
+        return;
+      }
 
       ghost.x += ghost.speed * ghost.dir.x;
       ghost.y += ghost.speed * ghost.dir.y;
