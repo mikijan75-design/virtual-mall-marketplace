@@ -453,6 +453,13 @@ const PacmanGame = ({ onGameEnd }: PacmanGameProps = {}) => {
     };
 
     const moveGhost = (ghost: GhostEntity) => {
+      if (ghost.dead && gridX(ghost) === ghost.startX / CELL && gridY(ghost) === ghost.startY / CELL && inGrid(ghost)) {
+        ghost.dead = false;
+        ghost.scared = false;
+        ghost.ghostHouse = true;
+        changeGhostSpeed(ghost, ghostSpeedForLevel(stateRef.current.level));
+      }
+
       chooseGhostDirection(ghost);
       if (ghost.stopped) return;
 
@@ -464,12 +471,6 @@ const PacmanGame = ({ onGameEnd }: PacmanGameProps = {}) => {
       if (ghost.y >= H - RADIUS) ghost.y = ghost.speed - RADIUS;
       if (ghost.y <= -RADIUS) ghost.y = H - ghost.speed - RADIUS;
 
-      if (ghost.dead && gridX(ghost) === ghost.startX / CELL && gridY(ghost) === ghost.startY / CELL && inGrid(ghost)) {
-        ghost.dead = false;
-        ghost.scared = false;
-        ghost.ghostHouse = true;
-        changeGhostSpeed(ghost, ghostSpeedForLevel(stateRef.current.level));
-      }
     };
 
     const loseLife = () => {
