@@ -32,6 +32,7 @@ import vintageVillageEntranceImg from "@/assets/stores/vintage-village-entrance.
 import israelMezuzahsImg from "@/assets/stores/israel-mezuzahs.png";
 import floor3Shop4Img from "@/assets/stores/floor3-shop4.png";
 import floor3Shop2Img from "@/assets/stores/floor3-shop2.png";
+import arnonLogo from "@/assets/stores/arnon-logo.png";
 import floor1Shop4Img from "@/assets/stores/floor1-shop4.png";
 import floor1Shop6Img from "@/assets/stores/floor1-shop6.png";
 import danielGlassArtLogo from "@/assets/stores/daniel-glass-art-logo.jpg";
@@ -120,6 +121,7 @@ const idOverrides: Record<string, Partial<BrandStyle & { name: string }>> = {
     name: "גלריה פתוחה",
     subtitle: "ברוכים הבאים!",
     image: floor3Shop2Img,
+    logo: arnonLogo,
   },
   s1: {
     name: "כפר וינטג'",
