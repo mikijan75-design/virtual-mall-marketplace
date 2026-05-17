@@ -42,6 +42,7 @@ import storeFloor2Pos2Img from "@/assets/store-floor2-2.png";
 import storeFloor2Pos2Sign from "@/assets/store-floor2-2-sign.png";
 import pacmanArcadeImg from "@/assets/stores/pacman-arcade.jpg";
 import pacmanMishakiaSign from "@/assets/stores/pacman-mishakia-sign.png";
+import floor1Shop5Img from "@/assets/stores/floor1-shop5.png";
 
 type BrandStyle = {
   bg: string;
@@ -180,6 +181,9 @@ const idOverrides: Record<string, Partial<BrandStyle & { name: string }>> = {
     image: pacmanArcadeImg,
     logo: pacmanMishakiaSign,
     subtitle: "ארקייד · PAC-MAN",
+  },
+  s17: {
+    image: floor1Shop5Img,
   },
 };
 
