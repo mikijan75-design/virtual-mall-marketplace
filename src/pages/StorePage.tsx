@@ -679,6 +679,15 @@ const StorePage = () => {
         <MallHeader />
         <PageTracker storeId={store.id} />
         <BackButton />
+        <div className={`py-8 md:py-12 bg-gradient-to-r ${store.signColor}`}>
+          <div className="container mx-auto text-center text-white">
+            <span className="text-6xl md:text-8xl block mb-4">{store.logoEmoji}</span>
+            <h1 className="text-3xl md:text-5xl font-frank font-bold mb-2">{store.name}</h1>
+            <p className="text-lg opacity-90 font-heebo">
+              {store.category} • קומה {store.floor}
+            </p>
+          </div>
+        </div>
         <main className="flex-1 w-full bg-[#f5f3ee]">
           <img
             src={s5GalleryWall}
