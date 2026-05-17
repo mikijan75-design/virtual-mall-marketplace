@@ -182,7 +182,7 @@ const idOverrides: Record<string, Partial<BrandStyle & { name: string }>> = {
     logo: pacmanMishakiaSign,
     subtitle: "ארקייד · PAC-MAN",
   },
-  s17: {
+  s5: {
     image: floor1Shop5Img,
   },
 };
