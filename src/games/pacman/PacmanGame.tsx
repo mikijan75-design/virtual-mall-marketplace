@@ -1,5 +1,6 @@
 import { useCallback, useEffect, useRef, useState } from "react";
 import originalPacmanMap from "./data/map";
+import { sfx } from "./sounds";
 
 /**
  * Pacman game for the virtual mall (store 1.2.0).
@@ -169,6 +170,7 @@ const PacmanGame = ({ onGameEnd }: PacmanGameProps = {}) => {
   const [level, setLevel] = useState(1);
   const [levelTransition, setLevelTransition] = useState<string | null>(null);
   const [status, setStatusState] = useState<"ready" | "playing" | "win" | "lose">("ready");
+  const [muted, setMuted] = useState(false);
   const [overlayVisible, setOverlayVisible] = useState(true);
 
   const stateRef = useRef({
@@ -390,9 +392,11 @@ const PacmanGame = ({ onGameEnd }: PacmanGameProps = {}) => {
           changeGhostSpeed(ghost, GHOST_SPEED_DAZZLED);
         });
         addScore(POWERPILL_POINTS);
+        sfx.powerPellet();
       } else {
         stateRef.current.pills--;
         addScore(PILL_POINTS);
+        sfx.chomp();
       }
     };
 
@@ -510,8 +514,10 @@ const PacmanGame = ({ onGameEnd }: PacmanGameProps = {}) => {
       const s = stateRef.current;
       s.lives--;
       setLives(s.lives);
+      sfx.death();
       if (s.lives <= 0) {
         setStatus("lose");
+        sfx.gameOver();
         return;
       }
       resetPositions();
@@ -530,6 +536,7 @@ const PacmanGame = ({ onGameEnd }: PacmanGameProps = {}) => {
           addScore(GHOST_POINTS);
           ghost.dead = true;
           changeGhostSpeed(ghost, ghostSpeedForLevel(s.level));
+          sfx.eatGhost();
         } else {
           loseLife();
           break;
@@ -548,6 +555,7 @@ const PacmanGame = ({ onGameEnd }: PacmanGameProps = {}) => {
           addScore(CHERRY_POINTS * s.level);
           s.cherry = null;
           s.cherryCooldown = CHERRY_SPAWN_INTERVAL;
+          sfx.eatCherry();
           return;
         }
         s.cherry.ticks--;
@@ -610,6 +618,7 @@ const PacmanGame = ({ onGameEnd }: PacmanGameProps = {}) => {
         s.level += 1;
         setLevel(s.level);
         setLevelTransition(`שלב ${s.level}`);
+        sfx.levelUp();
         const newMap = cloneMap();
         s.map = newMap;
         s.food = countFood(newMap);
@@ -807,6 +816,19 @@ const PacmanGame = ({ onGameEnd }: PacmanGameProps = {}) => {
           שלב: <span className="font-bold">{level}</span>
         </div>
         <div className="text-2xl tracking-widest">{"●".repeat(Math.max(0, lives))}</div>
+        <button
+          type="button"
+          onClick={() => {
+            const next = !muted;
+            setMuted(next);
+            sfx.setMuted(next);
+            if (!next) sfx.unlock();
+          }}
+          aria-label={muted ? "הפעל צלילים" : "השתק"}
+          className="ml-2 rounded-md border border-yellow-300/60 bg-black/40 px-2 py-1 text-sm font-mono text-yellow-300 hover:bg-blue-900/50"
+        >
+          {muted ? "🔇" : "🔊"}
+        </button>
       </div>
       <div className="relative rounded-lg overflow-hidden shadow-[0_0_40px_rgba(20,56,196,0.6)] border-2 border-blue-700/60">
         <canvas ref={canvasRef} width={W} height={H} className="block bg-black max-w-full h-auto" />
