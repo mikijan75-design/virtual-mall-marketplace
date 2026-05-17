@@ -75,6 +75,7 @@ import type { Store } from "@/data/mallData";
 import jordiStudioProfile from "@/assets/stores/jordi-studio-profile.png";
 import s5GalleryWall from "@/assets/stores/s5-gallery-wall.png";
 import s5HeaderBg from "@/assets/stores/s5-header-bg.png";
+import s5EaselLogo from "@/assets/stores/s5-easel-logo.png";
 import jordiE1 from "@/assets/stores/jordi/e1.png";
 import jordiE2 from "@/assets/stores/jordi/e2.png";
 import jordiE3 from "@/assets/stores/jordi/e3.png";
@@ -685,7 +686,11 @@ const StorePage = () => {
           style={{ backgroundImage: `url(${s5HeaderBg})`, backgroundSize: "auto 100%" }}
         >
           <div className="container mx-auto text-center text-[#3a2a14] drop-shadow-[0_2px_4px_rgba(255,240,210,0.7)]">
-            <span className="text-6xl md:text-8xl block mb-4">{store.logoEmoji}</span>
+            <img
+              src={s5EaselLogo}
+              alt="Easel logo"
+              className="mx-auto mb-4 h-24 md:h-36 w-auto object-contain"
+            />
             <h1 className="text-3xl md:text-5xl font-frank font-bold mb-2">{store.name}</h1>
             <p className="text-lg opacity-90 font-heebo">
               {store.category} • קומה {store.floor}
