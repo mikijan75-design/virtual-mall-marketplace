@@ -816,6 +816,19 @@ const PacmanGame = ({ onGameEnd }: PacmanGameProps = {}) => {
           שלב: <span className="font-bold">{level}</span>
         </div>
         <div className="text-2xl tracking-widest">{"●".repeat(Math.max(0, lives))}</div>
+        <button
+          type="button"
+          onClick={() => {
+            const next = !muted;
+            setMuted(next);
+            sfx.setMuted(next);
+            if (!next) sfx.unlock();
+          }}
+          aria-label={muted ? "הפעל צלילים" : "השתק"}
+          className="ml-2 rounded-md border border-yellow-300/60 bg-black/40 px-2 py-1 text-sm font-mono text-yellow-300 hover:bg-blue-900/50"
+        >
+          {muted ? "🔇" : "🔊"}
+        </button>
       </div>
       <div className="relative rounded-lg overflow-hidden shadow-[0_0_40px_rgba(20,56,196,0.6)] border-2 border-blue-700/60">
         <canvas ref={canvasRef} width={W} height={H} className="block bg-black max-w-full h-auto" />
