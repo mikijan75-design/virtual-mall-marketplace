@@ -73,6 +73,7 @@ import avnerPainting19 from "@/assets/avner-paintings/p19.png";
 import avnerPainting20 from "@/assets/avner-paintings/p20.png";
 import type { Store } from "@/data/mallData";
 import jordiStudioProfile from "@/assets/stores/jordi-studio-profile.png";
+import s5GalleryWall from "@/assets/stores/s5-gallery-wall.png";
 import jordiE1 from "@/assets/stores/jordi/e1.png";
 import jordiE2 from "@/assets/stores/jordi/e2.png";
 import jordiE3 from "@/assets/stores/jordi/e3.png";
@@ -667,6 +668,24 @@ const StorePage = () => {
         <PageTracker storeId={store.id} />
         <BackButton />
         <PacmanArcadePage />
+        <MallFooter />
+      </div>
+    );
+  }
+
+  if (store.id === "s5") {
+    return (
+      <div className="min-h-screen bg-background flex flex-col">
+        <MallHeader />
+        <PageTracker storeId={store.id} />
+        <BackButton />
+        <main className="flex-1 w-full bg-[#f5f3ee]">
+          <img
+            src={s5GalleryWall}
+            alt={store.name}
+            className="block w-full h-full min-h-[calc(100vh-9rem)] object-cover"
+          />
+        </main>
         <MallFooter />
       </div>
     );
