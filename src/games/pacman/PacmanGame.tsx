@@ -514,8 +514,10 @@ const PacmanGame = ({ onGameEnd }: PacmanGameProps = {}) => {
       const s = stateRef.current;
       s.lives--;
       setLives(s.lives);
+      sfx.death();
       if (s.lives <= 0) {
         setStatus("lose");
+        sfx.gameOver();
         return;
       }
       resetPositions();
@@ -616,6 +618,7 @@ const PacmanGame = ({ onGameEnd }: PacmanGameProps = {}) => {
         s.level += 1;
         setLevel(s.level);
         setLevelTransition(`שלב ${s.level}`);
+        sfx.levelUp();
         const newMap = cloneMap();
         s.map = newMap;
         s.food = countFood(newMap);
