@@ -1,5 +1,6 @@
 import { useCallback, useEffect, useRef, useState } from "react";
 import originalPacmanMap from "./data/map";
+import { sfx } from "./sounds";
 
 /**
  * Pacman game for the virtual mall (store 1.2.0).
@@ -169,6 +170,7 @@ const PacmanGame = ({ onGameEnd }: PacmanGameProps = {}) => {
   const [level, setLevel] = useState(1);
   const [levelTransition, setLevelTransition] = useState<string | null>(null);
   const [status, setStatusState] = useState<"ready" | "playing" | "win" | "lose">("ready");
+  const [muted, setMuted] = useState(false);
   const [overlayVisible, setOverlayVisible] = useState(true);
 
   const stateRef = useRef({
@@ -390,9 +392,11 @@ const PacmanGame = ({ onGameEnd }: PacmanGameProps = {}) => {
           changeGhostSpeed(ghost, GHOST_SPEED_DAZZLED);
         });
         addScore(POWERPILL_POINTS);
+        sfx.powerPellet();
       } else {
         stateRef.current.pills--;
         addScore(PILL_POINTS);
+        sfx.chomp();
       }
     };
 
@@ -530,6 +534,7 @@ const PacmanGame = ({ onGameEnd }: PacmanGameProps = {}) => {
           addScore(GHOST_POINTS);
           ghost.dead = true;
           changeGhostSpeed(ghost, ghostSpeedForLevel(s.level));
+          sfx.eatGhost();
         } else {
           loseLife();
           break;
@@ -548,6 +553,7 @@ const PacmanGame = ({ onGameEnd }: PacmanGameProps = {}) => {
           addScore(CHERRY_POINTS * s.level);
           s.cherry = null;
           s.cherryCooldown = CHERRY_SPAWN_INTERVAL;
+          sfx.eatCherry();
           return;
         }
         s.cherry.ticks--;
