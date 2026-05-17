@@ -31,6 +31,7 @@ import VintageVillageStorefrontScene from "@/components/mall/VintageVillageStore
 import vintageVillageEntranceImg from "@/assets/stores/vintage-village-entrance.png";
 import israelMezuzahsImg from "@/assets/stores/israel-mezuzahs.png";
 import floor3Shop4Img from "@/assets/stores/floor3-shop4.png";
+import floor3Shop2Img from "@/assets/stores/floor3-shop2.png";
 import floor1Shop4Img from "@/assets/stores/floor1-shop4.png";
 import floor1Shop6Img from "@/assets/stores/floor1-shop6.png";
 import danielGlassArtLogo from "@/assets/stores/daniel-glass-art-logo.jpg";
@@ -114,6 +115,11 @@ const idOverrides: Record<string, Partial<BrandStyle & { name: string }>> = {
     subtitle: "אמן ציור ישראלי",
     image: floor3Shop4Img,
     codedScene: "avner-ovad-storefront" as any,
+  },
+  s3: {
+    name: "גלריה פתוחה",
+    subtitle: "ברוכים הבאים!",
+    image: floor3Shop2Img,
   },
   s1: {
     name: "כפר וינטג'",
