@@ -709,6 +709,59 @@ const StorePage = () => {
     );
   }
 
+  if (store.id === "s3") {
+    const slotPositions = [
+      { x: 29, y: 72 }, { x: 193, y: 72 }, { x: 356, y: 72 },
+      { x: 519, y: 72 }, { x: 682, y: 72 }, { x: 845, y: 72 },
+      { x: 29, y: 213 }, { x: 193, y: 213 }, { x: 356, y: 213 },
+      { x: 519, y: 213 }, { x: 682, y: 213 }, { x: 845, y: 213 },
+      { x: 29, y: 354 }, { x: 193, y: 354 }, { x: 356, y: 354 },
+      { x: 519, y: 354 }, { x: 682, y: 354 }, { x: 845, y: 354 },
+    ];
+    return (
+      <div className="min-h-screen bg-background flex flex-col">
+        <MallHeader />
+        <PageTracker storeId={store.id} />
+        <BackButton />
+        <div className={`py-8 md:py-12 bg-gradient-to-r ${store.signColor}`}>
+          <div className="container mx-auto text-center text-white">
+            <span className="text-6xl md:text-8xl block mb-4">{store.logoEmoji}</span>
+            <h1 className="text-3xl md:text-5xl font-frank font-bold mb-2">{store.name}</h1>
+            <p className="text-lg opacity-90 font-heebo">
+              {store.category} • קומה {store.floor}
+            </p>
+          </div>
+        </div>
+        <main className="flex-1 w-full bg-white">
+          <svg
+            xmlns="http://www.w3.org/2000/svg"
+            viewBox="0 0 1024 498"
+            role="img"
+            aria-label="Numbered horizontal slot layout"
+            preserveAspectRatio="xMidYMid meet"
+            className="block w-full h-auto"
+          >
+            <defs>
+              <g id="numbered-slot-bar">
+                <rect x="0" y="0" width="150" height="9" rx="1" fill="#ffffff" stroke="#4d4d4d" strokeWidth="4" />
+                <rect x="4" y="3" width="142" height="3" fill="#f7f7f7" />
+              </g>
+            </defs>
+            <g fill="#555555" fontSize="14" textAnchor="middle">
+              {slotPositions.map((p, i) => (
+                <g key={i}>
+                  <use href="#numbered-slot-bar" x={p.x} y={p.y} />
+                  <text x={p.x + 75} y={p.y + 30}>{i + 1}</text>
+                </g>
+              ))}
+            </g>
+          </svg>
+        </main>
+        <MallFooter />
+      </div>
+    );
+  }
+
   if (store.id === "s16") {
     return (
       <div className="min-h-screen bg-background">
