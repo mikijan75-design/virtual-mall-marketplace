@@ -13,6 +13,7 @@ import danielGlassArtLogo from "@/assets/stores/daniel-glass-art-logo.jpg";
 import floor1Shop6Img from "@/assets/stores/floor1-shop6.png";
 import floor3Shop5Gallery from "@/assets/stores/floor3-shop5-gallery.png";
 import floor3Shop5StoneBg from "@/assets/stores/floor3-shop5-stone-bg.png";
+import easelLogo from "@/assets/stores/easel-logo.png";
 import halenModel1 from "@/assets/stores/halen-model-1.png";
 import halenModel2 from "@/assets/stores/halen-model-2.png";
 import halenModel3 from "@/assets/stores/halen-model-3.png";
@@ -755,16 +756,12 @@ const StorePage = () => {
                 className="block mx-auto mb-4 h-28 md:h-36 w-auto object-contain"
               />
             ) : store.id === "s5" ? (
-              <span
-                className="block mb-4 text-6xl md:text-8xl font-frank font-black tracking-wide"
-                style={{
-                  color: "#3a2410",
-                  textShadow: "2px 2px 0 rgba(255,235,200,0.6), 4px 4px 12px rgba(0,0,0,0.45)",
-                  fontFamily: '"Frank Ruhl Libre", "Noto Serif Hebrew", serif',
-                }}
-              >
-                Easel
-              </span>
+              <img
+                src={easelLogo}
+                alt="Easel"
+                className="block mx-auto mb-4 h-28 md:h-40 w-auto object-contain"
+                style={{ filter: "drop-shadow(4px 6px 10px rgba(0,0,0,0.45))" }}
+              />
             ) : (
               <span className="text-6xl md:text-8xl block mb-4">{store.logoEmoji}</span>
             )
