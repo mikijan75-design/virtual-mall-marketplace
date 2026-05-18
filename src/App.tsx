@@ -113,11 +113,11 @@ const GlobalZoomShell = ({ children }: { children: ReactNode }) => {
 const App = () => (
   <QueryClientProvider client={queryClient}>
     <TooltipProvider>
-      <Toaster />
-      <Sonner />
-      <BrowserRouter>
-      <CartProvider>
-        <GlobalZoomShell>
+      <GlobalZoomShell>
+        <Toaster />
+        <Sonner />
+        <BrowserRouter>
+        <CartProvider>
           <Routes>
             <Route path="/" element={<Index />} />
             <Route path="/cart" element={<CartPage />} />
@@ -129,9 +129,9 @@ const App = () => (
             <Route path="/contact" element={<ContactPage />} />
             <Route path="*" element={<NotFound />} />
           </Routes>
-        </GlobalZoomShell>
-      </CartProvider>
-      </BrowserRouter>
+        </CartProvider>
+        </BrowserRouter>
+      </GlobalZoomShell>
     </TooltipProvider>
   </QueryClientProvider>
 );
