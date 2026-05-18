@@ -697,13 +697,11 @@ const StorePage = () => {
             </p>
           </div>
         </div>
-        <main className="w-full overflow-x-auto bg-[#f5f3ee]">
+        <main className="w-full bg-[#f5f3ee]">
           <img
             src={s5GalleryWall}
             alt={store.name}
-            width={1584}
-            height={672}
-            className="block h-auto w-[1584px] max-w-none"
+            className="w-full h-auto block"
           />
         </main>
         <MallFooter />
@@ -734,16 +732,14 @@ const StorePage = () => {
             </p>
           </div>
         </div>
-        <main className="w-full overflow-x-auto bg-white">
+        <main className="w-full bg-white">
           <svg
             xmlns="http://www.w3.org/2000/svg"
-            width="1024"
-            height="498"
             viewBox="0 0 1024 498"
             role="img"
             aria-label="Numbered horizontal slot layout"
             preserveAspectRatio="xMidYMid meet"
-            className="block h-auto w-[1024px] max-w-none"
+            className="w-full h-auto block"
           >
             <defs>
               <g id="numbered-slot-bar">
