@@ -13,7 +13,7 @@ import danielGlassArtLogo from "@/assets/stores/daniel-glass-art-logo.jpg";
 import floor1Shop6Img from "@/assets/stores/floor1-shop6.png";
 import floor3Shop5Gallery from "@/assets/stores/floor3-shop5-gallery.png";
 import floor3Shop5StoneBg from "@/assets/stores/floor3-shop5-stone-bg.png";
-import easelLogo from "@/assets/stores/easel-logo.png";
+import easelMascot from "@/assets/stores/easel-mascot.png";
 import halenModel1 from "@/assets/stores/halen-model-1.png";
 import halenModel2 from "@/assets/stores/halen-model-2.png";
 import halenModel3 from "@/assets/stores/halen-model-3.png";
@@ -713,7 +713,7 @@ const StorePage = () => {
 
       {/* Store banner */}
       <div
-        className={`py-8 md:py-12 ${store.id === "s18" || store.id === "s10" || store.id === "s15" || store.id === "s5" ? "" : `bg-gradient-to-r ${store.signColor}`}`}
+        className={`py-8 md:py-12 ${store.id === "s18" || store.id === "s10" || store.id === "s15" ? "" : `bg-gradient-to-r ${store.signColor}`}`}
         style={
           store.id === "s18"
             ? { background: "linear-gradient(135deg, #1e4a8a, #0f2d5c)" }
@@ -725,13 +725,13 @@ const StorePage = () => {
                   ? {
                       backgroundImage: `url(${floor3Shop5StoneBg})`,
                       backgroundSize: "cover",
-                      backgroundRepeat: "repeat",
                       backgroundPosition: "center",
+                      backgroundRepeat: "repeat",
                     }
                   : undefined
         }
       >
-        <div className={`container mx-auto text-center ${store.id === "s15" ? "text-foreground" : "text-white"}`}>
+        <div className={`container mx-auto text-center ${store.id === "s15" || store.id === "s5" ? "text-foreground" : "text-white"}`}>
           {isIsraelMezuzahs ? (
             <img
               src={imBeadLogo}
@@ -748,19 +748,19 @@ const StorePage = () => {
               alt="Daniel Glass-Art logo"
               className="block mx-auto mb-4 h-24 md:h-32 w-auto object-contain rounded-md bg-white/95 px-3 py-2 shadow-lg"
             />
-          ) : store.id === "s10" ? null : (
+          ) : store.id === "s10" ? null : store.id === "s5" ? (
+            <img
+              src={easelMascot}
+              alt="כן ציור - גלריה לאמנות"
+              className="block mx-auto mb-4 h-32 md:h-40 w-auto object-contain"
+              style={{ filter: "drop-shadow(0 8px 16px rgba(0,0,0,0.35))" }}
+            />
+          ) : (
             store.id === "s15" ? (
               <img
                 src={tuliLogo}
                 alt="טולי לוגו"
                 className="block mx-auto mb-4 h-28 md:h-36 w-auto object-contain"
-              />
-            ) : store.id === "s5" ? (
-              <img
-                src={easelLogo}
-                alt="Easel"
-                className="block mx-auto mb-4 h-28 md:h-40 w-auto object-contain"
-                style={{ filter: "drop-shadow(4px 6px 10px rgba(0,0,0,0.45))" }}
               />
             ) : (
               <span className="text-6xl md:text-8xl block mb-4">{store.logoEmoji}</span>
@@ -792,15 +792,9 @@ const StorePage = () => {
       </div>
 
       {/* Store content placeholder */}
-      <div className={store.id === "s5" ? "w-full" : "container mx-auto py-12 px-4"}>
-        <div className={`${store.id === "s18" ? "max-w-[1400px]" : store.id === "s5" ? "max-w-none w-full" : "max-w-4xl"} mx-auto`}>
-          <div
-            className={
-              store.id === "s5"
-                ? "text-center"
-                : `bg-card border border-border rounded-xl ${store.id === "s18" ? "p-2" : "p-8"} shadow-lg text-center`
-            }
-          >
+      <div className="container mx-auto py-12 px-4">
+        <div className={`${store.id === "s18" ? "max-w-[1400px]" : "max-w-4xl"} mx-auto`}>
+          <div className={`bg-card border border-border rounded-xl ${store.id === "s18" ? "p-2" : "p-8"} shadow-lg text-center`}>
             {isIsraelMezuzahs ? (
               <>
                 {/* Image in center with products on sides */}
@@ -987,7 +981,7 @@ const StorePage = () => {
               <img
                 src={floor3Shop5Gallery}
                 alt="גלריה לאמנות - תצוגת תמונות"
-                className="block w-full h-auto object-contain"
+                className="w-full h-auto rounded-lg shadow-md object-contain"
                 loading="lazy"
               />
             ) : (
