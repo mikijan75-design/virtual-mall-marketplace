@@ -130,13 +130,13 @@ const idOverrides: Record<string, Partial<BrandStyle & { name: string }>> = {
     codedScene: "vintage-village-storefront" as any,
   },
   s16: {
-    name: "BEGGARS",
+    name: "ARIEL'S",
     bg: "linear-gradient(135deg, #1f3a5c, #14253d)",
     text: "#f5e6c8",
     accent: "#c9a96e",
     font: "font-frank",
     image: floor1Shop4Img,
-    subtitle: "אוצרות ישראליים ממוחזרים",
+    subtitle: "ממחזרים נוסטלגיה",
   },
   s18: {
     name: "דוכן ויטראז'",
