@@ -837,7 +837,35 @@ const StorePage = () => {
           <div className={`bg-card border border-border rounded-xl ${store.id === "s18" ? "p-2" : "p-8"} shadow-lg text-center`}>
             {isIsraelMezuzahs ? (
               <>
-                {/* Image in center with products on sides */}
+                {/* Mobile: hero on top, all 8 products in 2-col grid */}
+                <div className="md:hidden">
+                  <img
+                    src={israelMezuzahsAbout}
+                    alt="Rachel & Mauri - יריד האומנים בנחלת בנימין"
+                    className="w-full h-auto rounded-lg shadow-md object-contain mb-4"
+                  />
+                  <div className="grid grid-cols-2 gap-3">
+                    {israelMezuzahsProducts.map((p, i) => (
+                      <Link to={`/store/s2/category/${p.slug}`} key={`m-${i}`} className="bg-muted rounded-lg p-3 border border-border hover:border-mall-gold transition-colors">
+                        <div className="w-full aspect-square bg-secondary rounded-md mb-2 overflow-hidden">
+                          <img src={p.src} alt={p.name} className="w-full h-full object-cover" loading="lazy" />
+                        </div>
+                        <p className="text-xs font-heebo text-foreground text-center">{p.name}</p>
+                      </Link>
+                    ))}
+                  </div>
+                  <div className="mt-4">
+                    <img
+                      src={imCategoriesDisplay}
+                      alt="תצוגת קטגוריות המוצרים של Israel Mezuzahs"
+                      className="w-full h-auto rounded-lg shadow-md object-contain"
+                      loading="lazy"
+                    />
+                  </div>
+                </div>
+
+                {/* Desktop: Image in center with products on sides */}
+                <div className="hidden md:block">
                 <div className="grid grid-cols-1 md:grid-cols-4 gap-4 items-stretch">
                   {/* Left column - 2 products */}
                   <div className="hidden md:flex flex-col gap-4">
@@ -894,11 +922,12 @@ const StorePage = () => {
                     loading="lazy"
                   />
                 </div>
+                </div>
               </>
             ) : store.id === "s18" ? (
               <GalleryWallSection />
             ) : store.id === "s10" ? (
-              <div className="flex flex-row-reverse items-stretch gap-4">
+              <div className="flex flex-col md:flex-row-reverse items-stretch gap-4">
                 <div className="flex-1">
                   <img
                     src={jordiStudioProfile}
@@ -907,11 +936,11 @@ const StorePage = () => {
                     loading="lazy"
                   />
                 </div>
-                <div className="flex flex-col-reverse gap-3 w-[22%] min-w-[120px]">
+                <div className="flex flex-row md:flex-col-reverse gap-3 w-full md:w-[22%] md:min-w-[120px]">
                   {[jordiE1, jordiE2, jordiE3, jordiE4].map((src, i) => (
                     <div
                       key={i}
-                      className="flex-1 rounded-lg overflow-hidden bg-white border border-[#d2b48c]/40 shadow-md"
+                      className="flex-1 aspect-square md:aspect-auto rounded-lg overflow-hidden bg-white border border-[#d2b48c]/40 shadow-md"
                     >
                       <img
                         src={src}
@@ -925,8 +954,8 @@ const StorePage = () => {
               </div>
             ) : store.id === "s15" ? (
               <div className="flex flex-col gap-4" dir="rtl">
-                <div className="grid grid-cols-[3fr_7fr] gap-4 items-stretch">
-                  <div className="aspect-[3/2] rounded-lg bg-muted border border-border overflow-hidden">
+                <div className="grid grid-cols-1 md:grid-cols-[3fr_7fr] gap-4 items-stretch">
+                  <div className="aspect-[3/2] md:aspect-[3/2] rounded-lg bg-muted border border-border overflow-hidden">
                     <img src={tuli1} alt="טולי" className="w-full h-full object-cover object-right-top" />
                   </div>
                   <div className="rounded-lg bg-muted border border-border p-5 text-right">
@@ -938,14 +967,14 @@ const StorePage = () => {
                     </p>
                   </div>
                 </div>
-                <div className="grid grid-cols-[3fr_7fr] gap-4 items-stretch">
+                <div className="grid grid-cols-1 md:grid-cols-[3fr_7fr] gap-4 items-stretch">
                   <div className="rounded-lg bg-muted border border-border p-5 text-right flex flex-col justify-center">
                     <h3 className="text-xl font-frank font-bold text-foreground mb-3">מוצרים</h3>
                     <p className="text-sm text-muted-foreground font-heebo leading-relaxed">
                       כל המוצרים הם פרי יצירתה של טולי וכל אחד מעופיין ובעל תכונות אישיות, היצירה והיזמות הן מעבר למלאכת יד אלה רצון להעניק לכם ערך מוסף וכלים לחיים.
                     </p>
                   </div>
-                   <div className="grid grid-cols-4 gap-3 h-full">
+                   <div className="grid grid-cols-2 md:grid-cols-4 gap-3 h-full">
                      {(() => {
                        const tuliProducts = [
                          { src: tuliP1, name: "לחות" },
@@ -991,14 +1020,14 @@ const StorePage = () => {
                      })()}
                   </div>
                 </div>
-                <div className="grid grid-cols-[3fr_7fr] gap-4 items-stretch">
+                <div className="grid grid-cols-1 md:grid-cols-[3fr_7fr] gap-4 items-stretch">
                   <div className="rounded-lg bg-muted border border-border p-5 text-right flex flex-col justify-center">
                     <h3 className="text-xl font-frank font-bold text-foreground mb-3">סדנאות</h3>
                     <p className="text-sm text-muted-foreground font-heebo leading-relaxed">
                       אתם מוזמנים להשתתף ולקחת חלק בפעילויות חברתיות אשר לכל אחד יש יעוד וכוונה לפי ההרגשה האישית שלכם, עצה רצויה היא כמובן לחוות ולנצל כל אירוע וכל מפגש, מידע ובירורים ימסרו לכל המעוניין.
                     </p>
                   </div>
-                  <div className="grid grid-cols-4 gap-3">
+                  <div className="grid grid-cols-2 md:grid-cols-4 gap-3">
                     {[
                       { src: tuliW1, title: "יצירת קמע קריסטלים אישי" },
                       { src: tuliW2, title: "סדנאת קריסטלים" },
