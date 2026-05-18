@@ -473,6 +473,9 @@ const InfoPanel = ({ card }: { card: InfoCard }) => {
 
 const ClearAlignersInfoPage = () => {
   const [previewUrl, setPreviewUrl] = useState<string | null>(null);
+  const [pickerOpen, setPickerOpen] = useState(false);
+  const galleryInputRef = useMemo(() => ({ current: null as HTMLInputElement | null }), []);
+  const cameraInputRef = useMemo(() => ({ current: null as HTMLInputElement | null }), []);
 
   useEffect(() => {
     return () => {
@@ -495,6 +498,7 @@ const ClearAlignersInfoPage = () => {
       }
       return nextPreview;
     });
+    setPickerOpen(false);
   };
 
   return (
