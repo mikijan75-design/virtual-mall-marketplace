@@ -721,10 +721,17 @@ const StorePage = () => {
               ? { background: "linear-gradient(135deg, #d2b48c, #b8956a)" }
               : store.id === "s15"
                 ? { background: "#f7f1e3" }
-                : undefined
+                : store.id === "s5"
+                  ? {
+                      backgroundImage: `url(${floor3Shop5StoneBg})`,
+                      backgroundSize: "cover",
+                      backgroundPosition: "center",
+                      backgroundRepeat: "repeat",
+                    }
+                  : undefined
         }
       >
-        <div className={`container mx-auto text-center ${store.id === "s15" ? "text-foreground" : "text-white"}`}>
+        <div className={`container mx-auto text-center ${store.id === "s15" || store.id === "s5" ? "text-foreground" : "text-white"}`}>
           {isIsraelMezuzahs ? (
             <img
               src={imBeadLogo}
@@ -741,7 +748,14 @@ const StorePage = () => {
               alt="Daniel Glass-Art logo"
               className="block mx-auto mb-4 h-24 md:h-32 w-auto object-contain rounded-md bg-white/95 px-3 py-2 shadow-lg"
             />
-          ) : store.id === "s10" ? null : (
+          ) : store.id === "s10" ? null : store.id === "s5" ? (
+            <img
+              src={easelMascot}
+              alt="כן ציור - גלריה לאמנות"
+              className="block mx-auto mb-4 h-32 md:h-40 w-auto object-contain"
+              style={{ filter: "drop-shadow(0 8px 16px rgba(0,0,0,0.35))" }}
+            />
+          ) : (
             store.id === "s15" ? (
               <img
                 src={tuliLogo}
