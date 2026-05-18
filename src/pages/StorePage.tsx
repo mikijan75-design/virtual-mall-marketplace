@@ -697,11 +697,11 @@ const StorePage = () => {
             </p>
           </div>
         </div>
-        <main className="flex-1 w-full bg-[#f5f3ee]">
+        <main className="w-full bg-[#f5f3ee]">
           <img
             src={s5GalleryWall}
             alt={store.name}
-            className="block w-full h-full min-h-[calc(100vh-9rem)] object-cover"
+            className="block w-full h-auto"
           />
         </main>
         <MallFooter />
@@ -732,7 +732,7 @@ const StorePage = () => {
             </p>
           </div>
         </div>
-        <main className="flex-1 w-full bg-white">
+        <main className="w-full bg-white">
           <svg
             xmlns="http://www.w3.org/2000/svg"
             viewBox="0 0 1024 498"
