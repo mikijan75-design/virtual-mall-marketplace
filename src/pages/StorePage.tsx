@@ -11,6 +11,7 @@ import imBeadLogo from "@/assets/stores/im-bead-logo.png";
 import beggarsWireframe from "@/assets/stores/beggars-wireframe.png";
 import danielGlassArtLogo from "@/assets/stores/daniel-glass-art-logo.jpg";
 import floor1Shop6Img from "@/assets/stores/floor1-shop6.png";
+import floor3Shop5Gallery from "@/assets/stores/floor3-shop5-gallery.png";
 import halenModel1 from "@/assets/stores/halen-model-1.png";
 import halenModel2 from "@/assets/stores/halen-model-2.png";
 import halenModel3 from "@/assets/stores/halen-model-3.png";
@@ -960,6 +961,13 @@ const StorePage = () => {
                   </div>
                 </div>
               </div>
+            ) : store.id === "s5" ? (
+              <img
+                src={floor3Shop5Gallery}
+                alt="גלריה לאמנות - תצוגת תמונות"
+                className="w-full h-auto rounded-lg shadow-md object-contain"
+                loading="lazy"
+              />
             ) : (
               <>
                 <h2 className="text-2xl font-frank font-bold text-foreground mb-4">
