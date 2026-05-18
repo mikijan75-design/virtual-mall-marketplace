@@ -131,7 +131,32 @@ const HalenBinariaStoreView = ({ store }: { store: Store }) => {
         </p>
       </header>
       <main className="flex-1 w-full bg-[#f3f1ec] relative overflow-hidden">
-        <div className="relative w-full h-[calc(100vh-9rem)]">
+        {/* Mobile: stacked grid */}
+        <div className="md:hidden px-4 py-6">
+          <div className="grid grid-cols-2 gap-3">
+            {[halenModel1, halenModel2, halenModel3, halenModel4, halenModel5].map((img, i) => (
+              <button
+                key={i}
+                type="button"
+                onClick={() => open(i)}
+                className="aspect-square rounded-lg overflow-hidden bg-[#f3f1ec] shadow-lg"
+                aria-label={`מודל בית ${i + 1}`}
+              >
+                <img src={img} alt={`מודל בית ${i + 1}`} className="w-full h-full object-cover" />
+              </button>
+            ))}
+            <button
+              type="button"
+              onClick={() => open(0)}
+              className="aspect-square rounded-lg overflow-hidden bg-[#f3f1ec] shadow-lg"
+              aria-label="פתח גלריית תמונות"
+            >
+              <img src={halenVillage} alt="HALEN BINARIA" className="w-full h-full object-cover" />
+            </button>
+          </div>
+        </div>
+        {/* Desktop: original 3D arrangement */}
+        <div className="hidden md:block relative w-full h-[calc(100vh-9rem)]">
           <div className="absolute inset-0">
             {[
               { left: "10%", top: "55%", rot: -28, img: halenModel1 },
