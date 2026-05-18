@@ -473,6 +473,9 @@ const InfoPanel = ({ card }: { card: InfoCard }) => {
 
 const ClearAlignersInfoPage = () => {
   const [previewUrl, setPreviewUrl] = useState<string | null>(null);
+  const [pickerOpen, setPickerOpen] = useState(false);
+  const galleryInputRef = useMemo(() => ({ current: null as HTMLInputElement | null }), []);
+  const cameraInputRef = useMemo(() => ({ current: null as HTMLInputElement | null }), []);
 
   useEffect(() => {
     return () => {
@@ -495,6 +498,7 @@ const ClearAlignersInfoPage = () => {
       }
       return nextPreview;
     });
+    setPickerOpen(false);
   };
 
   return (
@@ -559,11 +563,49 @@ const ClearAlignersInfoPage = () => {
                         <TeethSketch className="h-20 w-32" />
                       )}
                     </div>
-                    <label className="inline-flex cursor-pointer items-center gap-1.5 rounded-full bg-[#0e83bd] px-3.5 py-2 text-[0.68rem] font-black text-white shadow transition hover:bg-[#096d9e]">
-                      <DesignedIcon name="upload" className="h-5 w-5" />
-                      בחירת קובץ/צילום
-                      <input type="file" accept="image/*" className="hidden" onChange={handleImageChange} />
-                    </label>
+                    <div className="relative">
+                      <button
+                        type="button"
+                        onClick={() => setPickerOpen((o) => !o)}
+                        className="inline-flex cursor-pointer items-center gap-1.5 rounded-full bg-[#0e83bd] px-3.5 py-2 text-[0.68rem] font-black text-white shadow transition hover:bg-[#096d9e]"
+                      >
+                        <DesignedIcon name="upload" className="h-5 w-5" />
+                        בחירת קובץ/צילום
+                      </button>
+                      {pickerOpen && (
+                        <div className="absolute left-1/2 top-full z-30 mt-2 flex w-40 -translate-x-1/2 flex-col overflow-hidden rounded-xl border border-sky-200 bg-white shadow-xl">
+                          <button
+                            type="button"
+                            onClick={() => galleryInputRef.current?.click()}
+                            className="px-3 py-2 text-right text-xs font-bold text-sky-900 hover:bg-sky-50"
+                          >
+                            📁 גלריה
+                          </button>
+                          <button
+                            type="button"
+                            onClick={() => cameraInputRef.current?.click()}
+                            className="border-t border-sky-100 px-3 py-2 text-right text-xs font-bold text-sky-900 hover:bg-sky-50"
+                          >
+                            📷 צילום (מצלמה)
+                          </button>
+                        </div>
+                      )}
+                      <input
+                        ref={(el) => { galleryInputRef.current = el; }}
+                        type="file"
+                        accept="image/*"
+                        className="hidden"
+                        onChange={handleImageChange}
+                      />
+                      <input
+                        ref={(el) => { cameraInputRef.current = el; }}
+                        type="file"
+                        accept="image/*"
+                        capture="environment"
+                        className="hidden"
+                        onChange={handleImageChange}
+                      />
+                    </div>
                   </div>
                 </div>
 
