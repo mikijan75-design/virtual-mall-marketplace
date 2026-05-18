@@ -795,8 +795,8 @@ const StorePage = () => {
       </div>
 
       {/* Store content placeholder */}
-      <div className={`container mx-auto px-4 ${store.id === "s5" ? "py-0" : "py-12"}`}>
-        <div className={`${store.id === "s18" ? "max-w-[1400px]" : store.id === "s5" ? "max-w-none" : "max-w-4xl"} mx-auto`}>
+      <div className={store.id === "s5" ? "w-full" : "container mx-auto py-12 px-4"}>
+        <div className={`${store.id === "s18" ? "max-w-[1400px]" : store.id === "s5" ? "max-w-none w-full" : "max-w-4xl"} mx-auto`}>
           <div
             className={
               store.id === "s5"
@@ -990,7 +990,7 @@ const StorePage = () => {
               <img
                 src={floor3Shop5Gallery}
                 alt="גלריה לאמנות - תצוגת תמונות"
-                className="w-full h-auto rounded-lg shadow-md object-contain"
+                className="block w-full h-auto object-contain"
                 loading="lazy"
               />
             ) : (
