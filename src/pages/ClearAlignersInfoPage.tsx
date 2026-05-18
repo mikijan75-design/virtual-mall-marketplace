@@ -1,5 +1,6 @@
 import { useEffect, useMemo, useState, type ChangeEvent, type ReactNode } from "react";
 import { Link } from "react-router-dom";
+import { toast } from "@/hooks/use-toast";
 
 type IconName =
   | "camera"
@@ -476,6 +477,11 @@ const ClearAlignersInfoPage = () => {
   const [pickerOpen, setPickerOpen] = useState(false);
   const galleryInputRef = useMemo(() => ({ current: null as HTMLInputElement | null }), []);
   const cameraInputRef = useMemo(() => ({ current: null as HTMLInputElement | null }), []);
+  const [uploadedFile, setUploadedFile] = useState<File | null>(null);
+  const [formOpen, setFormOpen] = useState(false);
+  const [formName, setFormName] = useState("");
+  const [formPhone, setFormPhone] = useState("");
+  const [phoneError, setPhoneError] = useState<string | null>(null);
 
   useEffect(() => {
     return () => {
@@ -499,6 +505,26 @@ const ClearAlignersInfoPage = () => {
       return nextPreview;
     });
     setPickerOpen(false);
+    setUploadedFile(file);
+    setFormOpen(true);
+    event.target.value = "";
+  };
+
+  const handleFormSubmit = (event: React.FormEvent<HTMLFormElement>) => {
+    event.preventDefault();
+    const phone = formPhone.trim();
+    if (!/^[0-9+\-\s()]{7,20}$/.test(phone)) {
+      setPhoneError("נא להזין מספר טלפון תקין");
+      return;
+    }
+    setPhoneError(null);
+    toast({
+      title: "הפרטים נשלחו בהצלחה",
+      description: `תודה${formName.trim() ? ` ${formName.trim()}` : ""}! ניצור איתך קשר בקרוב בטלפון ${phone}.`,
+    });
+    setFormOpen(false);
+    setFormName("");
+    setFormPhone("");
   };
 
   return (
