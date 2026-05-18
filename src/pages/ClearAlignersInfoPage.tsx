@@ -1,5 +1,6 @@
 import { useEffect, useMemo, useState, type ChangeEvent, type ReactNode } from "react";
 import { Link } from "react-router-dom";
+import { toast } from "@/hooks/use-toast";
 
 type IconName =
   | "camera"
@@ -476,6 +477,11 @@ const ClearAlignersInfoPage = () => {
   const [pickerOpen, setPickerOpen] = useState(false);
   const galleryInputRef = useMemo(() => ({ current: null as HTMLInputElement | null }), []);
   const cameraInputRef = useMemo(() => ({ current: null as HTMLInputElement | null }), []);
+  const [uploadedFile, setUploadedFile] = useState<File | null>(null);
+  const [formOpen, setFormOpen] = useState(false);
+  const [formName, setFormName] = useState("");
+  const [formPhone, setFormPhone] = useState("");
+  const [phoneError, setPhoneError] = useState<string | null>(null);
 
   useEffect(() => {
     return () => {
@@ -499,9 +505,30 @@ const ClearAlignersInfoPage = () => {
       return nextPreview;
     });
     setPickerOpen(false);
+    setUploadedFile(file);
+    setFormOpen(true);
+    event.target.value = "";
+  };
+
+  const handleFormSubmit = (event: React.FormEvent<HTMLFormElement>) => {
+    event.preventDefault();
+    const phone = formPhone.trim();
+    if (!/^[0-9+\-\s()]{7,20}$/.test(phone)) {
+      setPhoneError("נא להזין מספר טלפון תקין");
+      return;
+    }
+    setPhoneError(null);
+    toast({
+      title: "הפרטים נשלחו בהצלחה",
+      description: `תודה${formName.trim() ? ` ${formName.trim()}` : ""}! ניצור איתך קשר בקרוב בטלפון ${phone}.`,
+    });
+    setFormOpen(false);
+    setFormName("");
+    setFormPhone("");
   };
 
   return (
+    <>
     <main
       dir="rtl"
       className="min-h-screen overflow-hidden bg-[radial-gradient(circle_at_50%_5%,#f7fdff_0%,#dff5ff_38%,#c8ebfa_100%)] px-3 py-5 text-slate-900 sm:px-6 lg:px-10"
@@ -652,6 +679,79 @@ const ClearAlignersInfoPage = () => {
         <AlignerTraySketch className="pointer-events-none fixed bottom-8 right-10 hidden h-20 w-32 opacity-30 blur-[0.2px] lg:block" />
       </div>
     </main>
+    {formOpen && (
+      <div
+        className="fixed inset-0 z-[100] flex items-center justify-center bg-slate-950/70 p-4 backdrop-blur-sm"
+        role="dialog"
+        aria-modal="true"
+        onClick={() => setFormOpen(false)}
+      >
+        <form
+          dir="rtl"
+          onClick={(e) => e.stopPropagation()}
+          onSubmit={handleFormSubmit}
+          className="w-full max-w-md overflow-hidden rounded-3xl border border-mall-gold/50 bg-gradient-to-b from-white to-sky-50 shadow-2xl"
+        >
+          <header className="bg-mall-sign px-5 py-4 text-center">
+            <h2 className="font-frank text-2xl font-black text-mall-gold">פרטי יצירת קשר</h2>
+            <p className="mt-1 text-xs font-heebo text-mall-gold/80">
+              {uploadedFile?.name ? `קובץ: ${uploadedFile.name}` : "השאירו פרטים ונחזור אליכם"}
+            </p>
+          </header>
+          <div className="space-y-4 px-5 py-5 text-right">
+            {previewUrl && (
+              <div className="mx-auto h-24 w-32 overflow-hidden rounded-xl border-2 border-sky-200 shadow">
+                <img src={previewUrl} alt="תצוגה מקדימה" className="h-full w-full object-cover" />
+              </div>
+            )}
+            <label className="block">
+              <span className="mb-1 block font-heebo text-sm font-bold text-slate-800">שם</span>
+              <input
+                type="text"
+                value={formName}
+                onChange={(e) => setFormName(e.target.value)}
+                maxLength={100}
+                placeholder="השם שלך"
+                className="w-full rounded-lg border border-sky-200 bg-white px-3 py-2 text-right font-heebo text-sm shadow-inner focus:border-mall-gold focus:outline-none"
+              />
+            </label>
+            <label className="block">
+              <span className="mb-1 block font-heebo text-sm font-bold text-slate-800">
+                מספר טלפון <span className="text-red-600">*</span>
+              </span>
+              <input
+                type="tel"
+                required
+                value={formPhone}
+                onChange={(e) => setFormPhone(e.target.value)}
+                maxLength={20}
+                placeholder="050-0000000"
+                className="w-full rounded-lg border border-sky-200 bg-white px-3 py-2 text-right font-heebo text-sm shadow-inner focus:border-mall-gold focus:outline-none"
+              />
+              {phoneError && (
+                <span className="mt-1 block text-xs font-bold text-red-600">{phoneError}</span>
+              )}
+            </label>
+          </div>
+          <footer className="flex gap-2 border-t border-sky-100 bg-sky-50/60 px-5 py-4">
+            <button
+              type="button"
+              onClick={() => setFormOpen(false)}
+              className="flex-1 rounded-lg border border-slate-300 bg-white px-4 py-2 font-heebo text-sm font-bold text-slate-700 hover:bg-slate-50"
+            >
+              ביטול
+            </button>
+            <button
+              type="submit"
+              className="flex-1 rounded-lg bg-mall-sign px-4 py-2 font-heebo text-base font-black text-mall-gold shadow hover:bg-mall-gold hover:text-mall-sign transition-colors"
+            >
+              שלח
+            </button>
+          </footer>
+        </form>
+      </div>
+    )}
+    </>
   );
 };
 
