@@ -17,19 +17,10 @@ type BlueprintItem = {
   scale?: number;
 };
 
-import n1 from "@/assets/beggars-new/n1.png";
-import n2 from "@/assets/beggars-new/n2.png";
-import n3 from "@/assets/beggars-new/n3.png";
-import n4 from "@/assets/beggars-new/n4.png";
-import n5 from "@/assets/beggars-new/n5.png";
-import n6 from "@/assets/beggars-new/n6.png";
-import n7 from "@/assets/beggars-new/n7.png";
-import n8 from "@/assets/beggars-new/n8.png";
-import n9 from "@/assets/beggars-new/n9.png";
-import n10 from "@/assets/beggars-new/n10.png";
-import n11 from "@/assets/beggars-new/n11.png";
-import n12 from "@/assets/beggars-new/n12.png";
-import n13 from "@/assets/beggars-new/n13.png";
+import a1 from "@/assets/ariels/p1.png";
+import a2 from "@/assets/ariels/p2.png";
+import a3 from "@/assets/ariels/p3.png";
+import a4 from "@/assets/ariels/p4.png";
 
 import { useRef, useState } from "react";
 
@@ -53,27 +44,23 @@ const counterPanels = [317, 450, 582, 715];
 const cellCenters = [162, 336, 511, 685, 859];
 const blueprintItems: BlueprintItem[] = [];
 
-const STORAGE_KEY = "beggars-product-layout-v3";
+const STORAGE_KEY = "ariels-product-layout-v1";
 const BASE_W = 110;
 const BASE_H = 100;
 
 // Source-of-truth layout (curated manually)
 const productSrcById: Record<string, string> = {
-  "p-0": n1, "p-1": n2, "p-2": n3, "p-3": n4, "p-4": n5,
-  "p-5": n6, "p-6": n7, "p-7": n8, "p-8": n9, "p-9": n10,
-  "p-10": n11, "p-11": n12, "p-12": n13,
+  "p-0": a1,
+  "p-1": a2,
+  "p-2": a3,
+  "p-3": a4,
 };
+// 4 unique products randomly placed across empty cells (decor occupies 1,5,8,12).
 const curatedLayout: Omit<FeaturedProduct, "src">[] = [
-  { id: "p-0",  alt: "ARIEL'S product 1",  x: 345.2127990722656, y: 450.69451904296875, scale: 1.3 },
-  { id: "p-1",  alt: "ARIEL'S product 2",  x: 511,               y: 193,                scale: 1 },
-  { id: "p-2",  alt: "ARIEL'S product 3",  x: 689.4391174316406, y: 468.7197265625,     scale: 1.35 },
-  { id: "p-3",  alt: "ARIEL'S product 4",  x: 859,               y: 440,                scale: 1 },
-  { id: "p-4",  alt: "ARIEL'S product 5",  x: 868.20703125,      y: 191.0193328857422,  scale: 1.5 },
-  { id: "p-5",  alt: "ARIEL'S product 6",  x: 859,               y: 317,                scale: 1 },
-  { id: "p-6",  alt: "ARIEL'S product 7",  x: 154.3713836669922, y: 192.00965881347656, scale: 1 },
-  { id: "p-9",  alt: "ARIEL'S product 10", x: 685,               y: 193,                scale: 1 },
-  { id: "p-10", alt: "ARIEL'S product 11", x: 162,               y: 440,                scale: 1 },
-  { id: "p-12", alt: "ARIEL'S product 13", x: 343.23211669921875, y: 316.2089538574219, scale: 1.15 },
+  { id: "p-0", alt: "חטיף סוגי פאפס", x: cellCenters[4], y: shelfRows[0], scale: 1.1 },
+  { id: "p-1", alt: "חטיף תפוצ'יפס", x: cellCenters[1], y: shelfRows[1], scale: 1.1 },
+  { id: "p-2", alt: "חטיף אבירי הצדק", x: cellCenters[1], y: shelfRows[2], scale: 1.15 },
+  { id: "p-3", alt: "חטיף דובונים", x: cellCenters[3], y: shelfRows[2], scale: 1.1 },
 ];
 const initialProducts: FeaturedProduct[] = curatedLayout.map((p) => ({
   ...p,
