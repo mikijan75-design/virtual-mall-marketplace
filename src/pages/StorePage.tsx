@@ -752,7 +752,7 @@ const StorePage = () => {
             <img
               src={easelMascot}
               alt="כן ציור - גלריה לאמנות"
-              className="block mx-auto mb-4 h-32 md:h-40 w-auto object-contain"
+              className="block mx-auto mb-4 h-20 md:h-24 w-auto object-contain"
               style={{
                 filter:
                   "drop-shadow(0 0 12px rgba(255,255,255,0.9)) drop-shadow(0 10px 18px rgba(0,0,0,0.45))",
