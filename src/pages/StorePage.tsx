@@ -795,9 +795,15 @@ const StorePage = () => {
       </div>
 
       {/* Store content placeholder */}
-      <div className="container mx-auto py-12 px-4">
-        <div className={`${store.id === "s18" ? "max-w-[1400px]" : "max-w-4xl"} mx-auto`}>
-          <div className={`bg-card border border-border rounded-xl ${store.id === "s18" ? "p-2" : "p-8"} shadow-lg text-center`}>
+      <div className={`container mx-auto px-4 ${store.id === "s5" ? "py-0" : "py-12"}`}>
+        <div className={`${store.id === "s18" ? "max-w-[1400px]" : store.id === "s5" ? "max-w-none" : "max-w-4xl"} mx-auto`}>
+          <div
+            className={
+              store.id === "s5"
+                ? "text-center"
+                : `bg-card border border-border rounded-xl ${store.id === "s18" ? "p-2" : "p-8"} shadow-lg text-center`
+            }
+          >
             {isIsraelMezuzahs ? (
               <>
                 {/* Image in center with products on sides */}
