@@ -12,6 +12,7 @@ import beggarsWireframe from "@/assets/stores/beggars-wireframe.png";
 import danielGlassArtLogo from "@/assets/stores/daniel-glass-art-logo.jpg";
 import floor1Shop6Img from "@/assets/stores/floor1-shop6.png";
 import floor3Shop5Gallery from "@/assets/stores/floor3-shop5-gallery.png";
+import floor3Shop5StoneBg from "@/assets/stores/floor3-shop5-stone-bg.png";
 import halenModel1 from "@/assets/stores/halen-model-1.png";
 import halenModel2 from "@/assets/stores/halen-model-2.png";
 import halenModel3 from "@/assets/stores/halen-model-3.png";
@@ -711,7 +712,7 @@ const StorePage = () => {
 
       {/* Store banner */}
       <div
-        className={`py-8 md:py-12 ${store.id === "s18" || store.id === "s10" || store.id === "s15" ? "" : `bg-gradient-to-r ${store.signColor}`}`}
+        className={`py-8 md:py-12 ${store.id === "s18" || store.id === "s10" || store.id === "s15" || store.id === "s5" ? "" : `bg-gradient-to-r ${store.signColor}`}`}
         style={
           store.id === "s18"
             ? { background: "linear-gradient(135deg, #1e4a8a, #0f2d5c)" }
@@ -719,7 +720,14 @@ const StorePage = () => {
               ? { background: "linear-gradient(135deg, #d2b48c, #b8956a)" }
               : store.id === "s15"
                 ? { background: "#f7f1e3" }
-                : undefined
+                : store.id === "s5"
+                  ? {
+                      backgroundImage: `url(${floor3Shop5StoneBg})`,
+                      backgroundSize: "cover",
+                      backgroundRepeat: "repeat",
+                      backgroundPosition: "center",
+                    }
+                  : undefined
         }
       >
         <div className={`container mx-auto text-center ${store.id === "s15" ? "text-foreground" : "text-white"}`}>
@@ -746,6 +754,17 @@ const StorePage = () => {
                 alt="טולי לוגו"
                 className="block mx-auto mb-4 h-28 md:h-36 w-auto object-contain"
               />
+            ) : store.id === "s5" ? (
+              <span
+                className="block mb-4 text-6xl md:text-8xl font-frank font-black tracking-wide"
+                style={{
+                  color: "#3a2410",
+                  textShadow: "2px 2px 0 rgba(255,235,200,0.6), 4px 4px 12px rgba(0,0,0,0.45)",
+                  fontFamily: '"Frank Ruhl Libre", "Noto Serif Hebrew", serif',
+                }}
+              >
+                Easel
+              </span>
             ) : (
               <span className="text-6xl md:text-8xl block mb-4">{store.logoEmoji}</span>
             )
