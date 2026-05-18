@@ -752,8 +752,11 @@ const StorePage = () => {
             <img
               src={easelMascot}
               alt="כן ציור - גלריה לאמנות"
-              className="block mx-auto mb-4 h-32 md:h-40 w-auto object-contain"
-              style={{ filter: "drop-shadow(0 8px 16px rgba(0,0,0,0.35))" }}
+              className="block mx-auto mb-4 h-44 md:h-56 w-auto object-contain"
+              style={{
+                filter:
+                  "drop-shadow(0 0 12px rgba(255,255,255,0.9)) drop-shadow(0 10px 18px rgba(0,0,0,0.45))",
+              }}
             />
           ) : (
             store.id === "s15" ? (
