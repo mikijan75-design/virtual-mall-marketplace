@@ -44,7 +44,7 @@ const counterPanels = [317, 450, 582, 715];
 const cellCenters = [162, 336, 511, 685, 859];
 const blueprintItems: BlueprintItem[] = [];
 
-const STORAGE_KEY = "ariels-product-layout-v1";
+const STORAGE_KEY = "ariels-product-layout-v2";
 const BASE_W = 110;
 const BASE_H = 100;
 
@@ -57,10 +57,10 @@ const productSrcById: Record<string, string> = {
 };
 // 4 unique products randomly placed across empty cells (decor occupies 1,5,8,12).
 const curatedLayout: Omit<FeaturedProduct, "src">[] = [
-  { id: "p-0", alt: "חטיף סוגי פאפס", x: cellCenters[4], y: shelfRows[0], scale: 1.1 },
-  { id: "p-1", alt: "חטיף תפוצ'יפס", x: cellCenters[1], y: shelfRows[1], scale: 1.1 },
-  { id: "p-2", alt: "חטיף אבירי הצדק", x: cellCenters[1], y: shelfRows[2], scale: 1.15 },
-  { id: "p-3", alt: "חטיף דובונים", x: cellCenters[3], y: shelfRows[2], scale: 1.1 },
+  { id: "p-1", alt: "חטיף תפוצ'יפס", x: cellCenters[0], y: shelfRows[0], scale: 1.1 },
+  { id: "p-0", alt: "חטיף סוגי פאפס", x: cellCenters[2], y: shelfRows[0], scale: 1.1 },
+  { id: "p-3", alt: "חטיף דובונים", x: cellCenters[4], y: shelfRows[1], scale: 1.1 },
+  { id: "p-2", alt: "חטיף אבירי הצדק", x: cellCenters[4], y: shelfRows[2], scale: 1.15 },
 ];
 const initialProducts: FeaturedProduct[] = curatedLayout.map((p) => ({
   ...p,
