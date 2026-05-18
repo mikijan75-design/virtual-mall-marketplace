@@ -40,7 +40,7 @@ const PageTracker = ({ floor, storeId, categorySlug, categoryIndex }: PageTracke
   return (
     <div
       dir="ltr"
-      className="fixed top-20 left-3 z-40 flex items-center gap-2 rounded-full bg-mall-sign/95 text-mall-gold px-3 py-1.5 shadow-lg border border-mall-gold/40 font-mono text-sm md:text-base backdrop-blur"
+      className="fixed top-28 md:top-20 left-3 z-40 flex items-center gap-2 rounded-full bg-mall-sign/95 text-mall-gold px-3 py-1.5 shadow-lg border border-mall-gold/40 font-mono text-sm md:text-base backdrop-blur"
       title={label}
       aria-label={`${label}: ${code}`}
     >
