@@ -561,7 +561,7 @@ const ClearAlignersInfoPage = () => {
                     </div>
                     <label className="inline-flex cursor-pointer items-center gap-1.5 rounded-full bg-[#0e83bd] px-3.5 py-2 text-[0.68rem] font-black text-white shadow transition hover:bg-[#096d9e]">
                       <DesignedIcon name="upload" className="h-5 w-5" />
-                      בחירת קובץ
+                      בחירת קובץ/צילום
                       <input type="file" accept="image/*" className="hidden" onChange={handleImageChange} />
                     </label>
                   </div>
