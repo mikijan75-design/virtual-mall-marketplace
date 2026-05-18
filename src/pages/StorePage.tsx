@@ -701,7 +701,7 @@ const StorePage = () => {
           <img
             src={s5GalleryWall}
             alt={store.name}
-            className="block w-full h-auto"
+            className="block w-full h-full min-h-[calc(100vh-9rem)] object-cover"
           />
         </main>
         <MallFooter />
