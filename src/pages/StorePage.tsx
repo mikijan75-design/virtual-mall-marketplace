@@ -505,8 +505,8 @@ const AvnerOvadStoreView = ({ store }: { store: Store }) => {
           </div>
         </header>
 
-        <section className="relative z-10 grid gap-8 px-6 py-8 md:grid-cols-[1.1fr_0.9fr] md:px-10" dir="rtl">
-          <div className="space-y-6 text-right order-2 md:order-1">
+        <section className="relative z-10 grid gap-8 px-6 py-8 md:px-10" dir="rtl">
+          <div className="space-y-6 text-right">
             <section>
               <h2 className="text-[clamp(1.6rem,3vw,2.25rem)] font-black leading-tight">
                 אבנר - אמן ישראלי עם לב פועם.
@@ -528,30 +528,30 @@ const AvnerOvadStoreView = ({ store }: { store: Store }) => {
             </blockquote>
 
           </div>
-
-          <aside className="space-y-6 text-left md:pt-8 order-1 md:order-2" dir="ltr">
-            <div className="flex items-center gap-4">
-              <Heart className="h-9 w-9 fill-[#b3925a] text-[#b3925a]" aria-hidden="true" />
-              <h2 className="text-2xl font-black uppercase leading-tight tracking-wide text-[#30241d]">
-                Meet Avner: an Israeli artist with heart.
-              </h2>
-            </div>
-            <AvnerDivider />
-
-            <div className="rounded-2xl border border-[#c8ae7c]/70 bg-white/35 p-5 text-lg leading-snug shadow-sm">
-              <p className="font-bold">The work is displayed at artist fairs such as Nahalat Binyamin, it is preferable to contact us to arrange arrival.</p>
-              <p className="mt-2 text-[#4d3a2d]">leave us a massage </p>
-            </div>
-
-            <div className="rounded-2xl bg-[#efe4d1]/80 p-5 text-right" dir="rtl">
-              <p className="text-xl font-black">לקבלת מידע רחב השאירו הודעה</p>
-              <p className="mt-2 text-lg">ניתן לראות את העבודות ולהציג אותן לקהל.</p>
-            </div>
-          </aside>
         </section>
         </article>
         </div>
       </div>
+
+      <aside className="mx-auto max-w-[1400px] mt-10 grid gap-6 md:grid-cols-2" dir="ltr">
+        <div className="space-y-4 text-left">
+          <div className="flex items-center gap-4">
+            <Heart className="h-9 w-9 fill-[#b3925a] text-[#b3925a]" aria-hidden="true" />
+            <h2 className="text-2xl font-black uppercase leading-tight tracking-wide text-[#30241d]">
+              Meet Avner: an Israeli artist with heart.
+            </h2>
+          </div>
+          <AvnerDivider />
+          <div className="rounded-2xl border border-[#c8ae7c]/70 bg-white/35 p-5 text-lg leading-snug shadow-sm">
+            <p className="font-bold">The work is displayed at artist fairs such as Nahalat Binyamin, it is preferable to contact us to arrange arrival.</p>
+            <p className="mt-2 text-[#4d3a2d]">leave us a massage </p>
+          </div>
+        </div>
+        <div className="rounded-2xl bg-[#efe4d1]/80 p-5 text-right" dir="rtl">
+          <p className="text-xl font-black">לקבלת מידע רחב השאירו הודעה</p>
+          <p className="mt-2 text-lg">ניתן לראות את העבודות ולהציג אותן לקהל.</p>
+        </div>
+      </aside>
 
       <div className="text-center mt-8">
         <Link
