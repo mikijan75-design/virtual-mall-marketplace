@@ -21,6 +21,11 @@ import a1 from "@/assets/ariels/p1.png";
 import a2 from "@/assets/ariels/p2.png";
 import a3 from "@/assets/ariels/p3.png";
 import a4 from "@/assets/ariels/p4.png";
+import counter1 from "@/assets/ariels/counter1.png";
+import counter2 from "@/assets/ariels/counter2.png";
+import counter3 from "@/assets/ariels/counter3.png";
+import counter4 from "@/assets/ariels/counter4.png";
+import counter5 from "@/assets/ariels/counter5.png";
 
 import { useRef, useState } from "react";
 
@@ -692,6 +697,32 @@ const InfrastructureBlueprintScene = () => {
         ))}
         {/* Counter ground shadow */}
         <rect x="184" y="548" width="664" height="6" fill="#000" opacity="0.18" />
+
+        {/* Counter panel artwork: 5 notebook pairs displayed in the 5 front panels */}
+        {[
+          { src: counter1, x: 250.5, alt: "מחברות יסמין ודובוני אכפת לי" },
+          { src: counter2, x: 383.5, alt: "מחברות סימבה והדרדסים" },
+          { src: counter3, x: 516,   alt: "מחברות שלגיה ופו הדב" },
+          { src: counter4, x: 648.5, alt: "מחברות פיקאצ'ו ואש" },
+          { src: counter5, x: 781.5, alt: "מחברות דובוני אכפת לי ואלאדין" },
+        ].map((img) => {
+          const w = 118;
+          const h = 60;
+          return (
+            <image
+              key={img.alt}
+              href={img.src}
+              x={img.x - w / 2}
+              y={484}
+              width={w}
+              height={h}
+              preserveAspectRatio="xMidYMid meet"
+              pointerEvents="none"
+            >
+              <title>{img.alt}</title>
+            </image>
+          );
+        })}
 
         <g className="blueprint-main">
           <path className="drawn-line" d="M75 70v370M947 70v370M75 440h872" />
