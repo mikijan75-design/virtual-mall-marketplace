@@ -683,8 +683,8 @@ const StorePage = () => {
         <BackButton />
         <main className="px-4 py-8">
           <div className="mx-auto max-w-[1280px]">
-            <h1 className="mb-6 text-center font-frank text-4xl font-black tracking-[0.25em] text-foreground">
-              BEGGARS
+            <h1 className="mb-6 text-center font-frank text-4xl font-black tracking-[0.1em] text-foreground">
+              ARIEL'S
             </h1>
             <InfrastructureBlueprintScene />
           </div>
