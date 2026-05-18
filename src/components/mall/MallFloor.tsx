@@ -20,7 +20,7 @@ const MallFloor = ({ floor, isActive }: MallFloorProps) => {
 
       {/* Stores grid */}
       <div className="max-w-5xl mx-auto px-2">
-        <div className="grid grid-cols-2 md:grid-cols-6 gap-3 md:gap-4">
+        <div className="grid grid-cols-3 md:grid-cols-6 gap-3 md:gap-4">
           {floor.stores.map((store) => (
             <StoreCard key={store.id} store={store} />
           ))}

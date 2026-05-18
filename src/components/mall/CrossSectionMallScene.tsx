@@ -585,14 +585,10 @@ const SceneFloor = ({ floor }: { floor: Floor }) => (
     {floor.id !== 1 && <GlassGuardRail />}
 
     <div className="relative z-30 mx-auto w-full max-w-5xl px-2 pb-16 pt-14 md:pt-16">
-      <div className="grid grid-cols-2 gap-3 md:grid-cols-7 md:gap-4">
+      <div className="grid grid-cols-3 gap-3 md:grid-cols-7 md:gap-4">
         {floor.stores.map((store, storeIndex) => (
           <Fragment key={store.id}>
-            {storeIndex === 3 && (
-              <div className="hidden md:contents">
-                <CenterFeature floorId={floor.id} />
-              </div>
-            )}
+            {storeIndex === 3 && <CenterFeature floorId={floor.id} />}
             <div className="relative">
               <StoreCard store={store} storeIndex={storeIndex} />
               {(storeIndex === 1 || storeIndex === 4) && (
