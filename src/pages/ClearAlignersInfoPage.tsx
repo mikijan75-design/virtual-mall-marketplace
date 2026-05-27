@@ -2,6 +2,7 @@ import { useEffect, useMemo, useState, type ChangeEvent, type ReactNode } from "
 import { Link } from "react-router-dom";
 import { toast } from "@/hooks/use-toast";
 import beforeImage1 from "@/assets/clear-aligners/before-1.jpg";
+import afterImage1 from "@/assets/clear-aligners/after-1.jpg";
 
 type IconName =
   | "camera"
@@ -671,7 +672,15 @@ const ClearAlignersInfoPage = () => {
                     <div className="h-px bg-sky-200" />
                     <div className="flex flex-1 flex-col p-3">
                       <h3 className="text-center text-lg font-black leading-none text-slate-950">אחרי</h3>
-                      <div className="mt-2 flex-1 rounded-xl bg-white/40" />
+                      <div className="mt-2 flex-1 overflow-hidden rounded-xl bg-white/40">
+                        {index === 0 && (
+                          <img
+                            src={afterImage1}
+                            alt="אחרי - תוצאה לאחר טיפול בקשתיות שקופות"
+                            className="h-full w-full object-cover"
+                          />
+                        )}
+                      </div>
                     </div>
                   </article>
                 ))}
