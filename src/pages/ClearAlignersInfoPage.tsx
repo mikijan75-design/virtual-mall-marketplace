@@ -691,14 +691,14 @@ const ClearAlignersInfoPage = () => {
                         )}
                         {index === 3 && (
                           <img
-                            src={beforeImage4}
+                            src={afterImage4}
                             alt="לפני - מצב התחלתי של השיניים"
                             className="h-full w-full object-cover"
                           />
                         )}
                         {index === 4 && (
                           <img
-                            src={beforeImage5}
+                            src={afterImage5}
                             alt="לפני - מצב התחלתי של השיניים"
                             className="h-full w-full object-cover"
                           />
@@ -732,14 +732,14 @@ const ClearAlignersInfoPage = () => {
                         )}
                         {index === 3 && (
                           <img
-                            src={afterImage4}
+                            src={beforeImage4}
                             alt="אחרי - תוצאה לאחר טיפול בקשתיות שקופות"
                             className="h-full w-full object-cover"
                           />
                         )}
                         {index === 4 && (
                           <img
-                            src={afterImage5}
+                            src={beforeImage5}
                             alt="אחרי - תוצאה לאחר טיפול בקשתיות שקופות"
                             className="h-full w-full object-cover"
                           />
