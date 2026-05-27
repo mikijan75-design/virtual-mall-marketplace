@@ -6,6 +6,7 @@ import afterImage1 from "@/assets/clear-aligners/after-1.jpg";
 import beforeImage2 from "@/assets/clear-aligners/before-2.jpg";
 import afterImage2 from "@/assets/clear-aligners/after-2.jpg";
 import beforeImage3 from "@/assets/clear-aligners/before-3.jpg";
+import afterImage3 from "@/assets/clear-aligners/after-3.jpg";
 
 type IconName =
   | "camera"
@@ -700,6 +701,13 @@ const ClearAlignersInfoPage = () => {
                         {index === 1 && (
                           <img
                             src={afterImage2}
+                            alt="אחרי - תוצאה לאחר טיפול בקשתיות שקופות"
+                            className="h-full w-full object-cover"
+                          />
+                        )}
+                        {index === 2 && (
+                          <img
+                            src={afterImage3}
                             alt="אחרי - תוצאה לאחר טיפול בקשתיות שקופות"
                             className="h-full w-full object-cover"
                           />
