@@ -2,6 +2,7 @@ import { useEffect, useMemo, useState, type ChangeEvent, type ReactNode } from "
 import { Link } from "react-router-dom";
 import { toast } from "@/hooks/use-toast";
 import beforeImage1 from "@/assets/clear-aligners/before-1.jpg";
+import afterImage1 from "@/assets/clear-aligners/after-1.jpg";
 
 type IconName =
   | "camera"
