@@ -7,6 +7,8 @@ import beforeImage2 from "@/assets/clear-aligners/before-2.jpg";
 import afterImage2 from "@/assets/clear-aligners/after-2.jpg";
 import beforeImage3 from "@/assets/clear-aligners/before-3.jpg";
 import afterImage3 from "@/assets/clear-aligners/after-3.jpg";
+import beforeImage4 from "@/assets/clear-aligners/before-4.jpg";
+import afterImage4 from "@/assets/clear-aligners/after-4.jpg";
 
 type IconName =
   | "camera"
@@ -685,6 +687,13 @@ const ClearAlignersInfoPage = () => {
                             className="h-full w-full object-cover"
                           />
                         )}
+                        {index === 3 && (
+                          <img
+                            src={beforeImage4}
+                            alt="לפני - מצב התחלתי של השיניים"
+                            className="h-full w-full object-cover"
+                          />
+                        )}
                       </div>
                     </div>
                     <div className="h-px bg-sky-200" />
@@ -708,6 +717,13 @@ const ClearAlignersInfoPage = () => {
                         {index === 2 && (
                           <img
                             src={afterImage3}
+                            alt="אחרי - תוצאה לאחר טיפול בקשתיות שקופות"
+                            className="h-full w-full object-cover"
+                          />
+                        )}
+                        {index === 3 && (
+                          <img
+                            src={afterImage4}
                             alt="אחרי - תוצאה לאחר טיפול בקשתיות שקופות"
                             className="h-full w-full object-cover"
                           />
