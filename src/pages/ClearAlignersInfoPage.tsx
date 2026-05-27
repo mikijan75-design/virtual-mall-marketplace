@@ -3,6 +3,7 @@ import { Link } from "react-router-dom";
 import { toast } from "@/hooks/use-toast";
 import beforeImage1 from "@/assets/clear-aligners/before-1.jpg";
 import afterImage1 from "@/assets/clear-aligners/after-1.jpg";
+import beforeImage2 from "@/assets/clear-aligners/before-2.jpg";
 
 type IconName =
   | "camera"
@@ -663,6 +664,13 @@ const ClearAlignersInfoPage = () => {
                         {index === 0 && (
                           <img
                             src={beforeImage1}
+                            alt="לפני - מצב התחלתי של השיניים"
+                            className="h-full w-full object-cover"
+                          />
+                        )}
+                        {index === 1 && (
+                          <img
+                            src={beforeImage2}
                             alt="לפני - מצב התחלתי של השיניים"
                             className="h-full w-full object-cover"
                           />
