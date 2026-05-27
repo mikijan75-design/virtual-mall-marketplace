@@ -11,6 +11,7 @@ import beforeImage4 from "@/assets/clear-aligners/before-4.jpg";
 import afterImage4 from "@/assets/clear-aligners/after-4.jpg";
 import beforeImage5 from "@/assets/clear-aligners/before-5.jpg";
 import afterImage5 from "@/assets/clear-aligners/after-5.jpg";
+import centerTeethImg from "@/assets/clear-aligners/center-teeth.jpg";
 
 type IconName =
   | "camera"
@@ -597,7 +598,7 @@ const ClearAlignersInfoPage = () => {
                       {previewUrl ? (
                         <img src={previewUrl} alt="תצוגה מקדימה של השיניים שהועלו" className="h-full w-full object-cover" />
                       ) : (
-                        <TeethSketch className="h-20 w-32" />
+                        <img src={centerTeethImg} alt="דוגמת שיניים" className="h-full w-full object-cover" />
                       )}
                     </div>
                     <div className="relative">
