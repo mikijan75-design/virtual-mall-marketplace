@@ -777,59 +777,47 @@ const ClearAlignersInfoPage = () => {
                     {/* ── Geometric outlined "7" that wraps into a circular form ── */}
                     <div className="relative flex h-32 w-32 sm:h-36 sm:w-36 shrink-0 items-center justify-center">
                       <svg viewBox="-50 -50 100 100" className="relative h-full w-full drop-shadow-[0_6px_14px_rgba(11,96,141,0.18)]" aria-hidden="true">
-                        {/*
-                          One continuous outline forms the numeral "7" AND wraps around it
-                          as a rounded circular envelope:
-                          – start at top-left of the 7's top bar
-                          – run across the top bar
-                          – diagonal down-left (the 7's stem)
-                          – arc sweeps from the tip of the stem back up to the start (the "envelope")
-                        */}
+                        {/* circular envelope around the 7 */}
+                        <circle r="44" fill="none" stroke="#0c4a6e" strokeWidth="3" />
+                        <circle r="40" fill="none" stroke="#38bdf8" strokeWidth="1.2" opacity="0.7" />
+
+                        {/* Bubble "7" — thick double outline, hollow interior.
+                            One closed path traces the outer silhouette of the digit;
+                            stroke = sky frame, fill = none (interior empty). */}
                         <path
                           d="
-                            M -28 -30
-                            L 28 -30
-                            L -6 30
-                            A 38 38 0 1 1 -28 -30
+                            M -26 -32
+                            L 26 -32
+                            Q 32 -32 32 -26
+                            L 32 -16
+                            Q 32 -12 30 -8
+                            L 8 32
+                            Q 6 36 0 36
+                            L -6 36
+                            Q -12 36 -10 30
+                            L 10 -12
+                            Q 12 -16 8 -16
+                            L -26 -16
+                            Q -32 -16 -32 -22
+                            L -32 -26
+                            Q -32 -32 -26 -32
                             Z
                           "
                           fill="none"
                           stroke="#0c4a6e"
-                          strokeWidth="5"
+                          strokeWidth="4"
                           strokeLinejoin="round"
-                          strokeLinecap="round"
                         />
-                        {/* lighter inner echo for depth */}
-                        <path
-                          d="
-                            M -24 -26
-                            L 24 -26
-                            L -6 24
-                            A 32 32 0 1 1 -24 -26
-                            Z
-                          "
-                          fill="none"
-                          stroke="#38bdf8"
-                          strokeWidth="1.4"
-                          strokeLinejoin="round"
-                          strokeLinecap="round"
-                          opacity="0.7"
-                        />
-                        {/* amber accent dots at the cardinal points of the wrap */}
-                        {[
-                          { cx: -28, cy: -30 },
-                          { cx: 28, cy: -30 },
-                          { cx: -6, cy: 30 },
-                        ].map((p, i) => (
-                          <circle key={i} cx={p.cx} cy={p.cy} r="2.4" fill="#fbbf24" stroke="#0c4a6e" strokeWidth="1" />
-                        ))}
 
-                        {/* "ימים" — page-heading styling */}
+                        {/* amber accent pip at the digit's terminal */}
+                        <circle cx="-3" cy="36" r="2.6" fill="#fbbf24" stroke="#0c4a6e" strokeWidth="1.1" />
+
+                        {/* "ימים" — page-heading styling, nested in the 7's negative space */}
                         <text
-                          x="6" y="-2" textAnchor="middle"
+                          x="-8" y="8" textAnchor="middle"
                           fontFamily="ui-sans-serif, system-ui, -apple-system, 'Segoe UI', Roboto, sans-serif"
-                          fontWeight="900" fontSize="16"
-                          fill="#0c4a6e" letterSpacing="0.5"
+                          fontWeight="900" fontSize="13"
+                          fill="#0c4a6e" letterSpacing="0.4"
                         >ימים</text>
                       </svg>
                     </div>
