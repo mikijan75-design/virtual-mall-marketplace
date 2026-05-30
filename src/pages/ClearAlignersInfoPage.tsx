@@ -713,14 +713,14 @@ const ClearAlignersInfoPage = () => {
                   ] as const).map((item, idx, arr) => (
                     <div
                       key={`faq-${idx}`}
-                      className={`flex flex-1 flex-col p-3 ${idx < arr.length - 1 ? "border-b border-sky-200" : ""}`}
+                      className={`flex flex-1 flex-col p-1.5 font-heebo ${idx < arr.length - 1 ? "border-b border-sky-200" : ""}`}
                     >
-                      <div className="rounded-lg bg-sky-100/70 px-3 py-2 text-center">
-                        <h3 className="text-sm font-black leading-tight text-slate-950">{item.q}</h3>
+                      <div className="rounded-lg bg-sky-100/70 px-2 py-1 text-center">
+                        <h3 className="font-heebo text-xl font-black leading-tight text-slate-950">{item.q}</h3>
                       </div>
-                      <div className="mt-2 flex-1 rounded-lg bg-white/60 p-2.5">
-                        <p className="text-xs font-bold leading-snug text-slate-900">{item.a}</p>
-                        <p className="mt-1 text-[11px] leading-snug text-slate-700">{item.more}</p>
+                      <div className="mt-1 flex-1 rounded-lg bg-white/60 p-1.5">
+                        <p className="font-heebo text-lg font-bold leading-snug text-slate-900">{item.a}</p>
+                        <p className="mt-1 font-heebo text-base leading-snug text-slate-700">{item.more}</p>
                       </div>
                     </div>
                   ))}
