@@ -4,7 +4,7 @@ import MallHeader from "@/components/mall/MallHeader";
 import MallFooter from "@/components/mall/MallFooter";
 import PageTracker from "@/components/PageTracker";
 import BackButton from "@/components/BackButton";
-import { BookOpen, ChevronLeft, ChevronRight, Heart, Info, Palette, Settings, X } from "lucide-react";
+import { BookOpen, ChevronLeft, ChevronRight, Heart, Info, Lamp, Leaf, Palette, Settings, Sparkles, Sun, X } from "lucide-react";
 import { useState } from "react";
 import israelMezuzahsAbout from "@/assets/stores/israel-mezuzahs-about.png";
 import imBeadLogo from "@/assets/stores/im-bead-logo.png";
@@ -835,7 +835,22 @@ const StorePage = () => {
       {/* Store content placeholder */}
       <div className="container mx-auto py-12 px-4">
         <div className={`${store.id === "s18" || store.id === "s5" ? "max-w-[1400px]" : "max-w-4xl"} mx-auto`}>
-          <div className={`bg-card border border-border rounded-xl ${store.id === "s18" ? "p-2" : store.id === "s5" ? "p-4 md:p-6" : "p-8"} shadow-lg text-center`}>
+          <div
+            className={`${store.id === "s5" ? "border-2 border-[#d9c9a8]" : "bg-card border border-border"} rounded-xl ${store.id === "s18" ? "p-2" : store.id === "s5" ? "p-6 md:p-10" : "p-8"} shadow-lg text-center`}
+            style={
+              store.id === "s5"
+                ? {
+                    backgroundColor: "#f5ecd9",
+                    backgroundImage:
+                      "linear-gradient(135deg, rgba(180,150,90,0.10) 25%, transparent 25%, transparent 75%, rgba(180,150,90,0.10) 75%), linear-gradient(135deg, rgba(180,150,90,0.10) 25%, transparent 25%, transparent 75%, rgba(180,150,90,0.10) 75%), linear-gradient(180deg, rgba(255,250,235,0.6), rgba(245,236,217,0))",
+                    backgroundSize: "32px 32px, 32px 32px, 100% 100%",
+                    backgroundPosition: "0 0, 16px 16px, 0 0",
+                    boxShadow:
+                      "inset 0 0 60px rgba(120,90,40,0.12), 0 10px 30px rgba(60,40,20,0.18)",
+                  }
+                : undefined
+            }
+          >
             {isIsraelMezuzahs ? (
               <>
                 {/* Mobile: hero on top, all 8 products in 2-col grid */}
@@ -1048,55 +1063,140 @@ const StorePage = () => {
                 </div>
               </div>
             ) : store.id === "s5" ? (
-              <div className="grid grid-cols-3 sm:grid-cols-4 md:grid-cols-6 gap-3 md:gap-4" dir="rtl">
-                {guyJanaProducts.map((p, i) => (
-                  <div key={p.id} className="flex flex-col">
-                    <button
-                      type="button"
-                      onClick={() =>
-                        navigate("/sense-pro", {
-                          state: {
-                            mezuzah: {
-                              productId: p.id,
-                              collection: "guy-jana-art",
-                              itemNumber: i + 1,
-                              image: p.image,
-                              name: p.name,
-                              brand: "Guy Jana Art",
-                              unitPrice: p.price,
-                              shippingPerItem: 0,
-                            },
-                          },
-                        })
-                      }
-                      className="group flex flex-col bg-card rounded-lg overflow-hidden border border-border hover:border-mall-gold transition-colors shadow-sm hover:shadow-md text-right"
-                      aria-label={`פתח ${p.name}`}
-                    >
-                      <div className="aspect-square w-full overflow-hidden bg-secondary">
-                        <img
-                          src={p.image}
-                          alt={p.name}
-                          loading="lazy"
-                          className="w-full h-full object-cover group-hover:scale-105 transition-transform duration-300"
-                        />
+              (() => {
+                const cols = 6;
+                const rows: typeof guyJanaProducts[] = [];
+                for (let i = 0; i < guyJanaProducts.length; i += cols) {
+                  rows.push(guyJanaProducts.slice(i, i + cols));
+                }
+                const decoIcons = [Sun, Leaf, Sparkles, Lamp, Leaf, Sparkles];
+                return (
+                  <div dir="rtl" className="flex flex-col gap-10 md:gap-14">
+                    {rows.map((row, rowIdx) => (
+                      <div key={rowIdx}>
+                        {/* Top ambient light strip */}
+                        <div className="relative h-3 md:h-4 mb-2">
+                          <div
+                            className="absolute inset-x-6 top-0 h-1 rounded-full"
+                            style={{
+                              background:
+                                "linear-gradient(90deg, transparent, #f6e3a8 20%, #fff7c2 50%, #f6e3a8 80%, transparent)",
+                              boxShadow:
+                                "0 0 18px rgba(255,220,120,0.7), 0 0 36px rgba(255,200,90,0.35)",
+                            }}
+                          />
+                        </div>
+
+                        {/* Products row */}
+                        <div className="grid grid-cols-3 sm:grid-cols-4 md:grid-cols-6 gap-6 md:gap-10">
+                          {row.map((p, i) => {
+                            const globalIdx = rowIdx * cols + i;
+                            return (
+                              <div key={p.id} className="flex flex-col items-center">
+                                <button
+                                  type="button"
+                                  onClick={() =>
+                                    navigate("/sense-pro", {
+                                      state: {
+                                        mezuzah: {
+                                          productId: p.id,
+                                          collection: "guy-jana-art",
+                                          itemNumber: globalIdx + 1,
+                                          image: p.image,
+                                          name: p.name,
+                                          brand: "Guy Jana Art",
+                                          unitPrice: p.price,
+                                          shippingPerItem: 0,
+                                        },
+                                      },
+                                    })
+                                  }
+                                  className="group relative flex flex-col bg-[#fffaf0] rounded-md overflow-hidden border border-[#e8d8b4] hover:border-[#c9a35e] transition-all shadow-[0_6px_14px_rgba(80,55,20,0.18)] hover:shadow-[0_10px_22px_rgba(80,55,20,0.28)] hover:-translate-y-0.5 text-right w-full"
+                                  aria-label={`פתח ${p.name}`}
+                                >
+                                  <div className="aspect-square w-full overflow-hidden bg-[#f8efd9]">
+                                    <img
+                                      src={p.image}
+                                      alt={p.name}
+                                      loading="lazy"
+                                      className="w-full h-full object-cover group-hover:scale-105 transition-transform duration-300"
+                                    />
+                                  </div>
+                                  <div className="px-2 py-2 text-center font-heebo text-sm md:text-base font-bold text-[#3d2a14]">
+                                    ₪{p.price.toLocaleString("he-IL", { minimumFractionDigits: 2, maximumFractionDigits: 2 })}
+                                  </div>
+                                </button>
+
+                                {/* Light-wood 3D shelf */}
+                                <div className="w-[108%] -mx-[4%] mt-1">
+                                  <div
+                                    className="relative h-3 md:h-3.5 rounded-[2px]"
+                                    style={{
+                                      background:
+                                        "linear-gradient(180deg, #f1d9a8 0%, #e0bf81 45%, #c79b5a 100%)",
+                                      boxShadow:
+                                        "inset 0 1px 0 rgba(255,240,210,0.9), inset 0 -1px 0 rgba(120,80,30,0.5)",
+                                    }}
+                                  >
+                                    {/* wood grain */}
+                                    <div
+                                      className="absolute inset-0 opacity-40 mix-blend-multiply"
+                                      style={{
+                                        backgroundImage:
+                                          "repeating-linear-gradient(90deg, rgba(120,75,25,0.15) 0 2px, transparent 2px 9px), repeating-linear-gradient(90deg, rgba(80,45,10,0.10) 0 1px, transparent 1px 23px)",
+                                      }}
+                                    />
+                                  </div>
+                                  {/* shelf front face (3D depth) */}
+                                  <div
+                                    className="h-2 md:h-2.5 rounded-b-[2px]"
+                                    style={{
+                                      background:
+                                        "linear-gradient(180deg, #a87a3e 0%, #7a5326 100%)",
+                                      boxShadow:
+                                        "0 8px 12px -4px rgba(60,35,10,0.45), inset 0 1px 0 rgba(255,220,170,0.35)",
+                                    }}
+                                  />
+                                  {/* under-shelf glow */}
+                                  <div
+                                    className="mx-3 h-1 rounded-full opacity-60"
+                                    style={{
+                                      background:
+                                        "radial-gradient(ellipse at center, rgba(60,35,10,0.35), transparent 70%)",
+                                    }}
+                                  />
+                                </div>
+                              </div>
+                            );
+                          })}
+                        </div>
+
+                        {/* Decoration strip between rows */}
+                        {rowIdx < rows.length - 1 && (
+                          <div className="mt-8 md:mt-10 flex items-center justify-between gap-4 px-2 opacity-90">
+                            <div className="flex-1 h-px bg-gradient-to-r from-transparent via-[#c9a35e]/60 to-transparent" />
+                            {decoIcons.map((Icon, di) => (
+                              <span
+                                key={di}
+                                className="grid place-items-center h-9 w-9 md:h-10 md:w-10 rounded-full"
+                                style={{
+                                  background:
+                                    "radial-gradient(circle at 30% 30%, #fff7e0, #e8d4a3 70%, #c9a35e)",
+                                  boxShadow:
+                                    "0 3px 8px rgba(80,55,20,0.25), inset 0 1px 0 rgba(255,255,255,0.6)",
+                                }}
+                              >
+                                <Icon className="h-4 w-4 md:h-5 md:w-5 text-[#5b3d18]" />
+                              </span>
+                            ))}
+                            <div className="flex-1 h-px bg-gradient-to-r from-transparent via-[#c9a35e]/60 to-transparent" />
+                          </div>
+                        )}
                       </div>
-                      <div className="px-2 py-2 text-center font-heebo text-sm md:text-base font-bold text-foreground">
-                        ₪{p.price.toLocaleString("he-IL", { minimumFractionDigits: 2, maximumFractionDigits: 2 })}
-                      </div>
-                    </button>
-                    {/* Shelf under product */}
-                    <svg
-                      viewBox="0 0 150 9"
-                      preserveAspectRatio="none"
-                      aria-hidden="true"
-                      className="block w-full h-2 md:h-2.5 mt-1 drop-shadow-[0_3px_3px_rgba(0,0,0,0.18)]"
-                    >
-                      <rect x="0" y="0" width="150" height="9" rx="1" fill="#ffffff" stroke="#4d4d4d" strokeWidth="4" />
-                      <rect x="4" y="3" width="142" height="3" fill="#f7f7f7" />
-                    </svg>
+                    ))}
                   </div>
-                ))}
-              </div>
+                );
+              })()
             ) : (
               <>
                 <h2 className="text-2xl font-frank font-bold text-foreground mb-4">
