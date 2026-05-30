@@ -751,13 +751,17 @@ const ClearAlignersInfoPage = () => {
                 </article>
                 <div
                   dir="rtl"
-                  className="flex-1 min-h-[80px] rounded-2xl border border-sky-200 bg-gradient-to-b from-sky-50/60 to-white p-5 sm:p-6 shadow-[inset_0_1px_0_rgba(255,255,255,0.9),0_10px_22px_rgba(11,96,141,0.06)]"
+                  className="rounded-2xl border border-sky-200 bg-gradient-to-b from-sky-50/60 to-white p-5 sm:p-6 shadow-[inset_0_1px_0_rgba(255,255,255,0.9),0_10px_22px_rgba(11,96,141,0.06)]"
                 >
                   <h2 className="text-2xl sm:text-3xl font-black text-sky-900 mb-3">אודות</h2>
                   <p className="text-base sm:text-[17px] leading-relaxed text-slate-700">
                     אנו חברת DeDentaltech הינה מתחם רופאי שיניים מוסמכים אשר מפעילה את מרכז הייצור שלה בצרפת ויוצרת את הקשתיות השקופות (Clear Aligner) במתחם רפואת השיניים האישית שלנו, שיתוף הפעולה עם מרפאות בפריסה ארצית יוצרת ייצור איכותי ונגישות מעקב וליווי אישי וצמוד של רופא שיניים בכל אזור אשר מתאים לכם ונותן מענה לכל אחד על ידינו והתאמה של צרכיכם האישי, פתרון אסתטי ואקונומי ליישור השיניים ועצמאות מוחלטת לכם לטייל, לעבוד ולבצע שיגרה דינמית בלי תלות עקב התהליך מכיוון שהחלפת הקשתיות היא עצמאית ורופא השיניים מלווה את התהליך בעיקר עם מתן שירות לכל אורך הדרך.
                   </p>
                 </div>
+                <div
+                  aria-hidden="true"
+                  className="flex-1 min-h-[80px] rounded-2xl border border-sky-200 bg-gradient-to-b from-sky-50/60 to-white p-5 sm:p-6 shadow-[inset_0_1px_0_rgba(255,255,255,0.9),0_10px_22px_rgba(11,96,141,0.06)]"
+                />
                 </div>
 
                 {/* Column 2 (middle): before/after squares stacked, adjacent to photos */}
