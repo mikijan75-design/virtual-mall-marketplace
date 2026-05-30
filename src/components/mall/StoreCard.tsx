@@ -45,6 +45,7 @@ import pacmanMishakiaSign from "@/assets/stores/pacman-mishakia-sign.png";
 import floor1Shop5Img from "@/assets/stores/floor1-shop5.png";
 import { guyJanaProducts } from "@/data/guyJanaProducts";
 import floor1Shop5DisplayImg from "@/assets/stores/floor1-shop5-display.png";
+import floor3Shop5Img from "@/assets/floor3-shop5.avif";
 
 type BrandStyle = {
   bg: string;
@@ -185,7 +186,7 @@ const idOverrides: Record<string, Partial<BrandStyle & { name: string }>> = {
     subtitle: "ארקייד · PAC-MAN",
   },
   s5: {
-    image: guyJanaProducts[0].image,
+    image: floor3Shop5Img,
   },
   s17: {
     image: floor1Shop5DisplayImg,
