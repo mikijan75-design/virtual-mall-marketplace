@@ -728,6 +728,25 @@ const ClearAlignersInfoPage = () => {
                       </div>
                     </div>
                   ))}
+                  <div className="border-t border-sky-200 bg-sky-200/70 px-3 py-2 text-center">
+                    <h3 className="font-heebo text-lg font-black leading-tight text-slate-950">מעוניינים לשאול שאלה?</h3>
+                  </div>
+                  <div className="p-2 font-heebo">
+                    <textarea
+                      value={questionText}
+                      onChange={(e) => setQuestionText(e.target.value)}
+                      placeholder="תשלחו לנו כל שאלה ונחזיר לכם תשובה"
+                      maxLength={500}
+                      className="h-20 w-full resize-none rounded-lg border border-sky-200 bg-white/80 p-2 text-right text-xs font-semibold text-slate-950 placeholder:text-slate-500 shadow-inner focus:border-mall-gold focus:outline-none"
+                    />
+                    <button
+                      type="button"
+                      onClick={() => setFormOpen(true)}
+                      className="mt-2 w-full rounded-lg bg-mall-sign px-4 py-2 font-heebo text-sm font-black text-mall-gold shadow hover:bg-mall-gold hover:text-mall-sign transition-colors"
+                    >
+                      שלח
+                    </button>
+                  </div>
                 </article>
 
                 {/* Column 2 (middle): before/after squares stacked, adjacent to photos */}
