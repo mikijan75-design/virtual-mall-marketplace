@@ -498,6 +498,7 @@ const ClearAlignersInfoPage = () => {
   const [formName, setFormName] = useState("");
   const [formPhone, setFormPhone] = useState("");
   const [phoneError, setPhoneError] = useState<string | null>(null);
+  const [questionText, setQuestionText] = useState("");
 
   useEffect(() => {
     return () => {
