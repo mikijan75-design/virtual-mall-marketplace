@@ -761,8 +761,8 @@ const ClearAlignersInfoPage = () => {
                     { before: beforeImage1, after: afterImage1 },
                     { before: beforeImage2, after: afterImage2 },
                     { before: beforeImage3, after: afterImage3 },
-                    { before: beforeImage4, after: afterImage4 },
-                    { before: beforeImage5, after: afterImage5 },
+                    { before: afterImage4, after: beforeImage4 },
+                    { before: afterImage5, after: beforeImage5 },
                   ].map((item, idx) => (
                     <article
                       key={`ba-${idx}`}
