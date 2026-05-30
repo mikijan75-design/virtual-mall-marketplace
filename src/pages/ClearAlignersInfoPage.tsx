@@ -674,14 +674,14 @@ const ClearAlignersInfoPage = () => {
               <div className="relative">
                 <div
                   aria-hidden="true"
-                  className="pointer-events-none absolute inset-y-0 left-[30.303%] hidden w-px bg-gradient-to-b from-sky-300 via-sky-300/70 to-transparent lg:block"
+                  className="pointer-events-none absolute inset-y-0 left-[27.1%] hidden w-px bg-gradient-to-b from-sky-300 via-sky-300/70 to-transparent lg:block"
                 />
                 <div
                   aria-hidden="true"
-                  className="pointer-events-none absolute inset-y-0 left-[60.606%] hidden w-px bg-gradient-to-b from-sky-300 via-sky-300/70 to-transparent lg:block"
+                  className="pointer-events-none absolute inset-y-0 left-[54.2%] hidden w-px bg-gradient-to-b from-sky-300 via-sky-300/70 to-transparent lg:block"
                 />
 
-              <section className="relative z-10 mt-3 grid grid-cols-1 gap-3 sm:grid-cols-2 lg:grid-cols-[1.3fr_1fr_1fr]">
+              <section className="relative z-10 mt-3 grid grid-cols-1 gap-3 sm:grid-cols-2 lg:grid-cols-[1.69fr_1fr_1fr]">
                 {/* Column 1 (rightmost in RTL): single merged FAQ table */}
                 <article className="flex flex-col self-start overflow-hidden rounded-2xl border border-sky-200 bg-gradient-to-b from-sky-50/60 to-white text-right shadow-[inset_0_1px_0_rgba(255,255,255,0.9),0_10px_22px_rgba(11,96,141,0.06)]">
                   <div className="border-b border-sky-200 bg-sky-200/70 px-3 py-2 text-center">
@@ -716,7 +716,7 @@ const ClearAlignersInfoPage = () => {
                   ] as const).map((item, idx, arr) => (
                     <div
                       key={`faq-${idx}`}
-                      className={`flex h-[210px] flex-col p-1.5 font-heebo ${idx < arr.length - 1 ? "border-b border-sky-200" : ""}`}
+                      className={`flex h-[150px] flex-col p-1.5 font-heebo ${idx < arr.length - 1 ? "border-b border-sky-200" : ""}`}
                     >
                       <div className="rounded-lg bg-sky-100/70 px-2 py-1 text-center">
                         <h3 className="font-heebo text-xl font-black leading-tight text-slate-950">{item.q}</h3>
