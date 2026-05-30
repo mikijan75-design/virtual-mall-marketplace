@@ -188,6 +188,8 @@ const idOverrides: Record<string, Partial<BrandStyle & { name: string }>> = {
   s5: {
     image: floor3Shop5Img,
     subtitle: "קרמיקה בעבודת יד",
+    bg: "#ffffff",
+    text: "#2a1f17",
   },
   s17: {
     image: floor1Shop5DisplayImg,
