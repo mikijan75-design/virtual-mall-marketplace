@@ -1069,6 +1069,86 @@ const StorePage = () => {
                 for (let i = 0; i < guyJanaProducts.length; i += cols) {
                   rows.push(guyJanaProducts.slice(i, i + cols));
                 }
+                const ProductCard = ({
+                  p,
+                  globalIdx,
+                }: {
+                  p: (typeof guyJanaProducts)[number];
+                  globalIdx: number;
+                  navigate?: unknown;
+                }) => (
+                  <div className="flex flex-col items-center w-full">
+                    <button
+                      type="button"
+                      onClick={() =>
+                        navigate("/sense-pro", {
+                          state: {
+                            mezuzah: {
+                              productId: p.id,
+                              collection: "guy-jana-art",
+                              itemNumber: globalIdx + 1,
+                              image: p.image,
+                              name: p.name,
+                              brand: "Guy Jana Art",
+                              unitPrice: p.price,
+                              shippingPerItem: 0,
+                            },
+                          },
+                        })
+                      }
+                      className="group relative flex flex-col bg-[#fffaf0] rounded-md overflow-hidden border border-[#e8d8b4] hover:border-[#c9a35e] transition-all shadow-[0_6px_14px_rgba(80,55,20,0.18)] hover:shadow-[0_10px_22px_rgba(80,55,20,0.28)] hover:-translate-y-0.5 text-right w-full"
+                      aria-label={`פתח ${p.name}`}
+                    >
+                      <div className="aspect-square w-full overflow-hidden bg-[#f8efd9]">
+                        <img
+                          src={p.image}
+                          alt={p.name}
+                          loading="lazy"
+                          className="w-full h-full object-cover group-hover:scale-105 transition-transform duration-300"
+                        />
+                      </div>
+                      <div className="px-2 py-2 text-center font-heebo text-sm md:text-base font-bold text-[#3d2a14]">
+                        ₪{p.price.toLocaleString("he-IL", { minimumFractionDigits: 2, maximumFractionDigits: 2 })}
+                      </div>
+                    </button>
+                    {/* Light-wood 3D shelf */}
+                    <div className="w-[108%] -mx-[4%] mt-1">
+                      <div
+                        className="relative h-3 md:h-3.5 rounded-[2px]"
+                        style={{
+                          background:
+                            "linear-gradient(180deg, #f1d9a8 0%, #e0bf81 45%, #c79b5a 100%)",
+                          boxShadow:
+                            "inset 0 1px 0 rgba(255,240,210,0.9), inset 0 -1px 0 rgba(120,80,30,0.5)",
+                        }}
+                      >
+                        <div
+                          className="absolute inset-0 opacity-40 mix-blend-multiply"
+                          style={{
+                            backgroundImage:
+                              "repeating-linear-gradient(90deg, rgba(120,75,25,0.15) 0 2px, transparent 2px 9px), repeating-linear-gradient(90deg, rgba(80,45,10,0.10) 0 1px, transparent 1px 23px)",
+                          }}
+                        />
+                      </div>
+                      <div
+                        className="h-2 md:h-2.5 rounded-b-[2px]"
+                        style={{
+                          background:
+                            "linear-gradient(180deg, #a87a3e 0%, #7a5326 100%)",
+                          boxShadow:
+                            "0 8px 12px -4px rgba(60,35,10,0.45), inset 0 1px 0 rgba(255,220,170,0.35)",
+                        }}
+                      />
+                      <div
+                        className="mx-3 h-1 rounded-full opacity-60"
+                        style={{
+                          background:
+                            "radial-gradient(ellipse at center, rgba(60,35,10,0.35), transparent 70%)",
+                        }}
+                      />
+                    </div>
+                  </div>
+                );
                 const PlantDeco = ({ uid }: { uid: string }) => (
                   <svg viewBox="0 0 40 140" preserveAspectRatio="xMidYMax meet" aria-hidden="true" className="w-7 md:w-9 h-full">
                     <defs>
