@@ -1049,18 +1049,33 @@ const StorePage = () => {
               </div>
             ) : store.id === "s5" ? (
               <div className="grid grid-cols-3 sm:grid-cols-4 md:grid-cols-6 gap-3 md:gap-4" dir="rtl">
-                {guyJanaProducts.map((p) => (
-                  <a
+                {guyJanaProducts.map((p, i) => (
+                  <button
                     key={p.id}
-                    href={p.url}
-                    target="_blank"
-                    rel="noopener noreferrer"
-                    className="group flex flex-col bg-card rounded-lg overflow-hidden border border-border hover:border-mall-gold transition-colors shadow-sm hover:shadow-md"
+                    type="button"
+                    onClick={() =>
+                      navigate("/sense-pro", {
+                        state: {
+                          mezuzah: {
+                            productId: p.id,
+                            collection: "guy-jana-art",
+                            itemNumber: i + 1,
+                            image: p.image,
+                            name: p.name,
+                            brand: "Guy Jana Art",
+                            unitPrice: p.price,
+                            shippingPerItem: 0,
+                          },
+                        },
+                      })
+                    }
+                    className="group flex flex-col bg-card rounded-lg overflow-hidden border border-border hover:border-mall-gold transition-colors shadow-sm hover:shadow-md text-right"
+                    aria-label={`פתח ${p.name}`}
                   >
                     <div className="aspect-square w-full overflow-hidden bg-secondary">
                       <img
                         src={p.image}
-                        alt=""
+                        alt={p.name}
                         loading="lazy"
                         className="w-full h-full object-cover group-hover:scale-105 transition-transform duration-300"
                       />
@@ -1068,7 +1083,7 @@ const StorePage = () => {
                     <div className="px-2 py-2 text-center font-heebo text-sm md:text-base font-bold text-foreground">
                       ₪{p.price.toLocaleString("he-IL", { minimumFractionDigits: 2, maximumFractionDigits: 2 })}
                     </div>
-                  </a>
+                  </button>
                 ))}
               </div>
             ) : (
