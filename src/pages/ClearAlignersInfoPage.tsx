@@ -674,17 +674,17 @@ const ClearAlignersInfoPage = () => {
               <div className="relative">
                 <div
                   aria-hidden="true"
-                  className="pointer-events-none absolute inset-y-0 left-[33.33%] hidden w-px bg-gradient-to-b from-sky-300 via-sky-300/70 to-transparent lg:block"
+                  className="pointer-events-none absolute inset-y-0 left-[30.303%] hidden w-px bg-gradient-to-b from-sky-300 via-sky-300/70 to-transparent lg:block"
                 />
                 <div
                   aria-hidden="true"
-                  className="pointer-events-none absolute inset-y-0 left-[66.66%] hidden w-px bg-gradient-to-b from-sky-300 via-sky-300/70 to-transparent lg:block"
+                  className="pointer-events-none absolute inset-y-0 left-[60.606%] hidden w-px bg-gradient-to-b from-sky-300 via-sky-300/70 to-transparent lg:block"
                 />
 
-              <section className="relative z-10 mt-3 grid grid-cols-1 gap-3 sm:grid-cols-2 lg:grid-cols-3">
-                {/* Column 1 (rightmost in RTL): FAQ cards */}
-                <div className="flex flex-col gap-3">
-                  {[
+              <section className="relative z-10 mt-3 grid grid-cols-1 gap-3 sm:grid-cols-2 lg:grid-cols-[1.3fr_1fr_1fr]">
+                {/* Column 1 (rightmost in RTL): single merged long FAQ table */}
+                <article className="flex flex-col overflow-hidden rounded-2xl border border-sky-200 bg-gradient-to-b from-sky-50/60 to-white text-right shadow-[inset_0_1px_0_rgba(255,255,255,0.9),0_10px_22px_rgba(11,96,141,0.06)]">
+                  {([
                     {
                       q: "כמה זמן לוקח גשר שקוף?",
                       a: "בין 6 ל-18 חודשים בממוצע.",
@@ -710,23 +710,21 @@ const ClearAlignersInfoPage = () => {
                       a: "המלצות חמות מאוד, בעיקר ממבוגרים.",
                       more: "המטופלים משבחים את העובדה שלא רואים את הגשר ושקל לאכול ולצחצח שיניים. ההמלצה הכי חשובה מהרופאים היא לא לזלזל בזמני ההרכבה – מי שלא מרכיב את הפלטה באדיקות, הטיפול שלו ייכשל או יתארך.",
                     },
-                  ].map((item, idx) => (
-                    <article
+                  ] as const).map((item, idx, arr) => (
+                    <div
                       key={`faq-${idx}`}
-                      className="flex h-[280px] flex-col overflow-hidden rounded-2xl border border-sky-200 bg-gradient-to-b from-sky-50/60 to-white text-right shadow-[inset_0_1px_0_rgba(255,255,255,0.9),0_10px_22px_rgba(11,96,141,0.06)]"
+                      className={`flex flex-1 flex-col p-3 ${idx < arr.length - 1 ? "border-b border-sky-200" : ""}`}
                     >
-                      <div className="flex flex-1 flex-col p-2 min-h-0">
-                        <div className="rounded-lg bg-sky-100/70 px-2 py-1.5 text-center">
-                          <h3 className="text-sm font-black leading-tight text-slate-950">{item.q}</h3>
-                        </div>
-                        <div className="mt-1.5 flex-1 overflow-y-auto rounded-lg bg-white/60 p-2">
-                          <p className="text-xs font-bold leading-snug text-slate-900">{item.a}</p>
-                          <p className="mt-1 text-[11px] leading-snug text-slate-700">{item.more}</p>
-                        </div>
+                      <div className="rounded-lg bg-sky-100/70 px-3 py-2 text-center">
+                        <h3 className="text-sm font-black leading-tight text-slate-950">{item.q}</h3>
                       </div>
-                    </article>
+                      <div className="mt-2 flex-1 rounded-lg bg-white/60 p-2.5">
+                        <p className="text-xs font-bold leading-snug text-slate-900">{item.a}</p>
+                        <p className="mt-1 text-[11px] leading-snug text-slate-700">{item.more}</p>
+                      </div>
+                    </div>
                   ))}
-                </div>
+                </article>
 
                 {/* Column 2 (middle): before/after squares stacked, adjacent to photos */}
                 <div className="flex flex-col gap-3">
