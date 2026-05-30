@@ -12,6 +12,11 @@ import afterImage4 from "@/assets/clear-aligners/after-4.jpg";
 import beforeImage5 from "@/assets/clear-aligners/before-5.jpg";
 import afterImage5 from "@/assets/clear-aligners/after-5.jpg";
 import centerTeethImg from "@/assets/clear-aligners/center-teeth.jpg";
+import customer1 from "@/assets/clear-aligners/customer-1.png";
+import customer2 from "@/assets/clear-aligners/customer-2.png";
+import customer3 from "@/assets/clear-aligners/customer-3.png";
+import customer4 from "@/assets/clear-aligners/customer-4.png";
+import customer5 from "@/assets/clear-aligners/customer-5.png";
 
 type IconName =
   | "camera"
@@ -752,13 +757,20 @@ const ClearAlignersInfoPage = () => {
               </section>
 
               <section className="relative z-10 mt-3 grid grid-cols-1 gap-3 sm:grid-cols-2 lg:grid-cols-5">
-                {Array.from({ length: 5 }).map((_, index) => (
+                {[customer1, customer2, customer3, customer4, customer5].map((src, index) => (
                   <article
-                    key={`empty-row2-${index}`}
-                    className="flex min-h-[260px] flex-col overflow-hidden rounded-2xl border border-dashed border-sky-200 bg-gradient-to-b from-sky-50/60 to-white text-right shadow-[inset_0_1px_0_rgba(255,255,255,0.9),0_10px_22px_rgba(11,96,141,0.06)]"
+                    key={`customer-row-${index}`}
+                    className="flex flex-col overflow-hidden rounded-2xl border border-sky-200 bg-gradient-to-b from-sky-50/60 to-white text-right shadow-[inset_0_1px_0_rgba(255,255,255,0.9),0_10px_22px_rgba(11,96,141,0.06)]"
                   >
                     <div className="flex flex-1 flex-col p-3">
-                      <div className="flex-1 overflow-hidden rounded-xl bg-white/40" />
+                      <div className="aspect-[3/4] w-full overflow-hidden rounded-xl bg-white/40">
+                        <img
+                          src={src}
+                          alt={`לקוח/ה ${index + 1} לאחר טיפול בקשתיות שקופות`}
+                          className="h-full w-full object-cover object-center"
+                          loading="lazy"
+                        />
+                      </div>
                     </div>
                   </article>
                 ))}
