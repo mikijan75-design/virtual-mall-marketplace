@@ -682,20 +682,13 @@ const ClearAlignersInfoPage = () => {
                 />
 
               <section className="relative z-10 mt-3 grid grid-cols-1 gap-3 sm:grid-cols-2 lg:grid-cols-3">
-                {/* Column 1 (rightmost in RTL): customer photos stacked */}
+                {/* Column 1 (rightmost in RTL): 5 empty squares */}
                 <div className="flex flex-col gap-3">
-                  {[customer1, customer2, customer3, customer4, customer5].map((src, index) => (
+                  {Array.from({ length: 5 }).map((_, idx) => (
                     <article
-                      key={`customer-stack-${index}`}
-                      className="h-[280px] overflow-hidden rounded-2xl border border-sky-200 bg-gradient-to-b from-sky-50/60 to-white shadow-[inset_0_1px_0_rgba(255,255,255,0.9),0_10px_22px_rgba(11,96,141,0.06)]"
-                    >
-                      <img
-                        src={src}
-                        alt={`לקוח/ה ${index + 1} לאחר טיפול בקשתיות שקופות`}
-                        className="h-full w-full object-cover object-center"
-                        loading="lazy"
-                      />
-                    </article>
+                      key={`empty-parallel-${idx}`}
+                      className="h-[280px] overflow-hidden rounded-2xl border border-dashed border-sky-200 bg-gradient-to-b from-sky-50/60 to-white shadow-[inset_0_1px_0_rgba(255,255,255,0.9),0_10px_22px_rgba(11,96,141,0.06)]"
+                    />
                   ))}
                 </div>
 
@@ -729,13 +722,20 @@ const ClearAlignersInfoPage = () => {
                   ))}
                 </div>
 
-                {/* Column 3 (leftmost): 5 empty squares parallel to before/after */}
+                {/* Column 3 (leftmost): customer photos stacked */}
                 <div className="flex flex-col gap-3">
-                  {Array.from({ length: 5 }).map((_, idx) => (
+                  {[customer1, customer2, customer3, customer4, customer5].map((src, index) => (
                     <article
-                      key={`empty-parallel-${idx}`}
-                      className="h-[280px] overflow-hidden rounded-2xl border border-dashed border-sky-200 bg-gradient-to-b from-sky-50/60 to-white shadow-[inset_0_1px_0_rgba(255,255,255,0.9),0_10px_22px_rgba(11,96,141,0.06)]"
-                    />
+                      key={`customer-stack-${index}`}
+                      className="h-[280px] overflow-hidden rounded-2xl border border-sky-200 bg-gradient-to-b from-sky-50/60 to-white shadow-[inset_0_1px_0_rgba(255,255,255,0.9),0_10px_22px_rgba(11,96,141,0.06)]"
+                    >
+                      <img
+                        src={src}
+                        alt={`לקוח/ה ${index + 1} לאחר טיפול בקשתיות שקופות`}
+                        className="h-full w-full object-cover object-center"
+                        loading="lazy"
+                      />
+                    </article>
                   ))}
                 </div>
               </section>
