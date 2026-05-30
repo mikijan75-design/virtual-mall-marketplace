@@ -774,52 +774,62 @@ const ClearAlignersInfoPage = () => {
                   </svg>
 
                   <div className="relative flex h-full items-center justify-center gap-3 sm:gap-5">
-                    {/* ── "7" as the icon, "ימים" inside, broken ring suggesting a clock face ── */}
+                    {/* ── Geometric outlined "7" that wraps into a circular form ── */}
                     <div className="relative flex h-32 w-32 sm:h-36 sm:w-36 shrink-0 items-center justify-center">
                       <svg viewBox="-50 -50 100 100" className="relative h-full w-full drop-shadow-[0_6px_14px_rgba(11,96,141,0.18)]" aria-hidden="true">
-                        <defs>
-                          <linearGradient id="sevenStroke" x1="0" y1="-1" x2="0" y2="1">
-                            <stop offset="0%" stopColor="#fde68a" />
-                            <stop offset="55%" stopColor="#fbbf24" />
-                            <stop offset="100%" stopColor="#d97706" />
-                          </linearGradient>
-                          <linearGradient id="ringBlue" x1="0" y1="-1" x2="0" y2="1">
-                            <stop offset="0%" stopColor="#38bdf8" />
-                            <stop offset="100%" stopColor="#0c4a6e" />
-                          </linearGradient>
-                        </defs>
-
-                        {/* implied clock face — two broken arcs that suggest a circle */}
+                        {/*
+                          One continuous outline forms the numeral "7" AND wraps around it
+                          as a rounded circular envelope:
+                          – start at top-left of the 7's top bar
+                          – run across the top bar
+                          – diagonal down-left (the 7's stem)
+                          – arc sweeps from the tip of the stem back up to the start (the "envelope")
+                        */}
                         <path
-                          d="M -38 -18 A 42 42 0 0 1 -4 -42"
-                          fill="none" stroke="url(#ringBlue)" strokeWidth="3.2" strokeLinecap="round"
+                          d="
+                            M -28 -30
+                            L 28 -30
+                            L -6 30
+                            A 38 38 0 1 1 -28 -30
+                            Z
+                          "
+                          fill="none"
+                          stroke="#0c4a6e"
+                          strokeWidth="5"
+                          strokeLinejoin="round"
+                          strokeLinecap="round"
                         />
+                        {/* lighter inner echo for depth */}
                         <path
-                          d="M 38 18 A 42 42 0 0 1 4 42"
-                          fill="none" stroke="url(#ringBlue)" strokeWidth="3.2" strokeLinecap="round"
+                          d="
+                            M -24 -26
+                            L 24 -26
+                            L -6 24
+                            A 32 32 0 1 1 -24 -26
+                            Z
+                          "
+                          fill="none"
+                          stroke="#38bdf8"
+                          strokeWidth="1.4"
+                          strokeLinejoin="round"
+                          strokeLinecap="round"
+                          opacity="0.7"
                         />
-                        {/* dashed completion of the circle */}
-                        <circle r="42" fill="none" stroke="#0c4a6e" strokeWidth="0.9" strokeDasharray="1.2 3" opacity="0.45" />
-                        {/* hour pips at 12 / 3 / 6 / 9 */}
-                        {[0, 90, 180, 270].map((deg) => (
-                          <circle key={deg} r="1.6" fill="#fbbf24"
-                            transform={`rotate(${deg}) translate(0 -42)`} />
+                        {/* amber accent dots at the cardinal points of the wrap */}
+                        {[
+                          { cx: -28, cy: -30 },
+                          { cx: 28, cy: -30 },
+                          { cx: -6, cy: 30 },
+                        ].map((p, i) => (
+                          <circle key={i} cx={p.cx} cy={p.cy} r="2.4" fill="#fbbf24" stroke="#0c4a6e" strokeWidth="1" />
                         ))}
 
-                        {/* the numeral 7, drawn as a single bold stroke */}
-                        <path
-                          d="M -24 -28 L 24 -28 L -4 30"
-                          fill="none" stroke="url(#sevenStroke)" strokeWidth="11"
-                          strokeLinecap="round" strokeLinejoin="round"
-                        />
-                        {/* serif cross-bar on the 7's diagonal, classic typographic detail */}
-                        <path d="M -8 4 L 14 4" stroke="#92400e" strokeWidth="3" strokeLinecap="round" opacity="0.85" />
-
-                        {/* "ימים" nested inside the 7's negative space */}
+                        {/* "ימים" — page-heading styling */}
                         <text
-                          x="6" y="-13" textAnchor="middle"
-                          fontFamily="sans-serif" fontWeight="800" fontSize="9"
-                          fill="#0c4a6e" letterSpacing="0.4"
+                          x="6" y="-2" textAnchor="middle"
+                          fontFamily="ui-sans-serif, system-ui, -apple-system, 'Segoe UI', Roboto, sans-serif"
+                          fontWeight="900" fontSize="16"
+                          fill="#0c4a6e" letterSpacing="0.5"
                         >ימים</text>
                       </svg>
                     </div>
@@ -841,86 +851,73 @@ const ClearAlignersInfoPage = () => {
                       </svg>
                     </div>
 
-                    {/* ── Delivery: the FRAME is the truck (silhouette = container) ── */}
+                    {/* ── Soft, rounded delivery truck — light fills, thick sky outline ── */}
                     <div className="relative flex h-32 w-44 sm:h-36 sm:w-48 shrink-0 items-center justify-center">
-                      <svg viewBox="-70 -45 140 90" className="relative h-full w-full drop-shadow-[0_8px_18px_rgba(11,96,141,0.22)]" aria-hidden="true">
-                        <defs>
-                          <linearGradient id="truckBodyGrad" x1="0" y1="-1" x2="0" y2="1">
-                            <stop offset="0%" stopColor="#38bdf8" />
-                            <stop offset="55%" stopColor="#0ea5e9" />
-                            <stop offset="100%" stopColor="#0c4a6e" />
-                          </linearGradient>
-                          <linearGradient id="truckCabGrad" x1="0" y1="-1" x2="0" y2="1">
-                            <stop offset="0%" stopColor="#fde68a" />
-                            <stop offset="100%" stopColor="#d97706" />
-                          </linearGradient>
-                        </defs>
-
-                        {/* motion lines behind the truck (right side = backwards in RTL flow) */}
-                        <g opacity="0.7">
-                          <path d="M 50 -22 h 18" stroke="#38bdf8" strokeWidth="1.6" strokeLinecap="round" />
-                          <path d="M 54 -10 h 14" stroke="#38bdf8" strokeWidth="1.6" strokeLinecap="round" opacity="0.7" />
-                          <path d="M 52 2 h 16" stroke="#38bdf8" strokeWidth="1.6" strokeLinecap="round" opacity="0.5" />
+                      <svg viewBox="-70 -45 140 90" className="relative h-full w-full drop-shadow-[0_8px_18px_rgba(11,96,141,0.18)]" aria-hidden="true">
+                        {/* motion puffs behind the truck */}
+                        <g opacity="0.85" stroke="#38bdf8" strokeWidth="2.4" strokeLinecap="round" fill="none">
+                          <path d="M 52 -20 q 8 -4 14 0" />
+                          <path d="M 54 -8 q 8 -4 14 0" opacity="0.75" />
+                          <path d="M 52 4 q 8 -4 14 0" opacity="0.55" />
                         </g>
 
-                        {/* TRUCK SILHOUETTE = THE FRAME ITSELF
-                            Cab on the left (forward in RTL), cargo box on right.
-                            One continuous outline so the whole thing reads as a single icon. */}
-                        {/* cargo box */}
-                        <rect x="-22" y="-26" width="68" height="48" rx="4"
-                              fill="url(#truckBodyGrad)" stroke="#0c4a6e" strokeWidth="1.6" />
-                        {/* cab (sloped roof, attached to cargo) */}
-                        <path
-                          d="M -22 -8
-                             L -34 -8
-                             L -42 2
-                             L -42 22
-                             L -22 22 Z"
-                          fill="url(#truckCabGrad)" stroke="#0c4a6e" strokeWidth="1.6" strokeLinejoin="round"
+                        {/* cargo box — fully rounded, light sky fill */}
+                        <rect
+                          x="-22" y="-28" width="68" height="50" rx="14" ry="14"
+                          fill="#f0f9ff" stroke="#0c4a6e" strokeWidth="3.2"
                         />
+
+                        {/* cab — bubble-shaped, light amber */}
+                        <path
+                          d="
+                            M -22 -10
+                            Q -22 -16 -28 -16
+                            L -34 -16
+                            Q -42 -16 -44 -6
+                            L -46 6
+                            Q -46 22 -34 22
+                            L -22 22 Z
+                          "
+                          fill="#fffbeb" stroke="#0c4a6e" strokeWidth="3.2" strokeLinejoin="round"
+                        />
+
                         {/* cab window */}
                         <path
-                          d="M -24 -6 L -33 -6 L -39 2 L -24 2 Z"
-                          fill="#e0f2fe" stroke="#0c4a6e" strokeWidth="0.9"
+                          d="M -25 -10 Q -25 -13 -28 -13 L -33 -13 Q -39 -13 -41 -4 L -41 2 Q -41 4 -39 4 L -25 4 Z"
+                          fill="#e0f2fe" stroke="#0c4a6e" strokeWidth="1.8"
                         />
-                        <line x1="-30" y1="-6" x2="-33.5" y2="2" stroke="#0c4a6e" strokeWidth="0.7" />
-                        {/* headlight */}
-                        <rect x="-43" y="10" width="3" height="3" rx="0.6" fill="#fde68a" stroke="#92400e" strokeWidth="0.4" />
-                        {/* bumper */}
-                        <rect x="-44" y="18" width="4" height="4" rx="1" fill="#0c4a6e" />
-                        {/* door seam on cargo */}
-                        <line x1="30" y1="-24" x2="30" y2="20" stroke="#0c4a6e" strokeWidth="0.8" opacity="0.5" />
-                        {/* rivets across the top of cargo */}
-                        {Array.from({ length: 7 }).map((_, i) => (
-                          <circle key={i} cx={-16 + i * 10} cy={-22} r="0.9" fill="#0c4a6e" opacity="0.55" />
-                        ))}
 
-                        {/* label across the cargo — Hebrew, large, owns the silhouette */}
+                        {/* headlight */}
+                        <circle cx="-43" cy="11" r="2.2" fill="#fbbf24" stroke="#0c4a6e" strokeWidth="1.2" />
+
+                        {/* door seam on cargo */}
+                        <line x1="22" y1="-22" x2="22" y2="16" stroke="#0c4a6e" strokeWidth="1.4" opacity="0.45" strokeLinecap="round" />
+                        {/* door handle */}
+                        <circle cx="18" cy="-2" r="1.4" fill="#fbbf24" stroke="#0c4a6e" strokeWidth="0.9" />
+
+                        {/* label across the cargo — page heading styling */}
                         <text
-                          x="10" y="0" textAnchor="middle"
-                          fontFamily="sans-serif" fontWeight="900" fontSize="11.5"
-                          fill="#fffbeb" letterSpacing="0.6"
+                          x="10" y="-3" textAnchor="middle"
+                          fontFamily="ui-sans-serif, system-ui, -apple-system, 'Segoe UI', Roboto, sans-serif"
+                          fontWeight="900" fontSize="12" fill="#0c4a6e" letterSpacing="0.6"
                         >הספקה</text>
                         <text
-                          x="10" y="14" textAnchor="middle"
-                          fontFamily="sans-serif" fontWeight="900" fontSize="11.5"
-                          fill="#fde68a" letterSpacing="0.6"
+                          x="10" y="13" textAnchor="middle"
+                          fontFamily="ui-sans-serif, system-ui, -apple-system, 'Segoe UI', Roboto, sans-serif"
+                          fontWeight="900" fontSize="12" fill="#0c4a6e" letterSpacing="0.6"
                         >מהירה</text>
 
-                        {/* wheels */}
+                        {/* wheels — soft, with amber hubs to match the page accents */}
                         <g>
-                          <circle cx="-30" cy="26" r="7" fill="#0f172a" />
-                          <circle cx="-30" cy="26" r="3.2" fill="#cbd5e1" />
-                          <circle cx="-30" cy="26" r="1.2" fill="#0f172a" />
+                          <circle cx="-32" cy="26" r="8" fill="#0c4a6e" />
+                          <circle cx="-32" cy="26" r="4.2" fill="#fffbeb" stroke="#0c4a6e" strokeWidth="1.2" />
+                          <circle cx="-32" cy="26" r="1.4" fill="#fbbf24" />
                         </g>
                         <g>
-                          <circle cx="30" cy="26" r="7" fill="#0f172a" />
-                          <circle cx="30" cy="26" r="3.2" fill="#cbd5e1" />
-                          <circle cx="30" cy="26" r="1.2" fill="#0f172a" />
+                          <circle cx="32" cy="26" r="8" fill="#0c4a6e" />
+                          <circle cx="32" cy="26" r="4.2" fill="#fffbeb" stroke="#0c4a6e" strokeWidth="1.2" />
+                          <circle cx="32" cy="26" r="1.4" fill="#fbbf24" />
                         </g>
-
-                        {/* tiny ground tick under wheels */}
-                        <line x1="-44" y1="34" x2="46" y2="34" stroke="#0c4a6e" strokeWidth="0.8" strokeDasharray="1.6 1.6" opacity="0.4" />
                       </svg>
                     </div>
                   </div>
