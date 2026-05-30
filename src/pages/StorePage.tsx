@@ -1050,40 +1050,51 @@ const StorePage = () => {
             ) : store.id === "s5" ? (
               <div className="grid grid-cols-3 sm:grid-cols-4 md:grid-cols-6 gap-3 md:gap-4" dir="rtl">
                 {guyJanaProducts.map((p, i) => (
-                  <button
-                    key={p.id}
-                    type="button"
-                    onClick={() =>
-                      navigate("/sense-pro", {
-                        state: {
-                          mezuzah: {
-                            productId: p.id,
-                            collection: "guy-jana-art",
-                            itemNumber: i + 1,
-                            image: p.image,
-                            name: p.name,
-                            brand: "Guy Jana Art",
-                            unitPrice: p.price,
-                            shippingPerItem: 0,
+                  <div key={p.id} className="flex flex-col">
+                    <button
+                      type="button"
+                      onClick={() =>
+                        navigate("/sense-pro", {
+                          state: {
+                            mezuzah: {
+                              productId: p.id,
+                              collection: "guy-jana-art",
+                              itemNumber: i + 1,
+                              image: p.image,
+                              name: p.name,
+                              brand: "Guy Jana Art",
+                              unitPrice: p.price,
+                              shippingPerItem: 0,
+                            },
                           },
-                        },
-                      })
-                    }
-                    className="group flex flex-col bg-card rounded-lg overflow-hidden border border-border hover:border-mall-gold transition-colors shadow-sm hover:shadow-md text-right"
-                    aria-label={`פתח ${p.name}`}
-                  >
-                    <div className="aspect-square w-full overflow-hidden bg-secondary">
-                      <img
-                        src={p.image}
-                        alt={p.name}
-                        loading="lazy"
-                        className="w-full h-full object-cover group-hover:scale-105 transition-transform duration-300"
-                      />
-                    </div>
-                    <div className="px-2 py-2 text-center font-heebo text-sm md:text-base font-bold text-foreground">
-                      ₪{p.price.toLocaleString("he-IL", { minimumFractionDigits: 2, maximumFractionDigits: 2 })}
-                    </div>
-                  </button>
+                        })
+                      }
+                      className="group flex flex-col bg-card rounded-lg overflow-hidden border border-border hover:border-mall-gold transition-colors shadow-sm hover:shadow-md text-right"
+                      aria-label={`פתח ${p.name}`}
+                    >
+                      <div className="aspect-square w-full overflow-hidden bg-secondary">
+                        <img
+                          src={p.image}
+                          alt={p.name}
+                          loading="lazy"
+                          className="w-full h-full object-cover group-hover:scale-105 transition-transform duration-300"
+                        />
+                      </div>
+                      <div className="px-2 py-2 text-center font-heebo text-sm md:text-base font-bold text-foreground">
+                        ₪{p.price.toLocaleString("he-IL", { minimumFractionDigits: 2, maximumFractionDigits: 2 })}
+                      </div>
+                    </button>
+                    {/* Shelf under product */}
+                    <svg
+                      viewBox="0 0 150 9"
+                      preserveAspectRatio="none"
+                      aria-hidden="true"
+                      className="block w-full h-2 md:h-2.5 mt-1 drop-shadow-[0_3px_3px_rgba(0,0,0,0.18)]"
+                    >
+                      <rect x="0" y="0" width="150" height="9" rx="1" fill="#ffffff" stroke="#4d4d4d" strokeWidth="4" />
+                      <rect x="4" y="3" width="142" height="3" fill="#f7f7f7" />
+                    </svg>
+                  </div>
                 ))}
               </div>
             ) : (
