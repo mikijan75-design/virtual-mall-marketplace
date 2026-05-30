@@ -722,8 +722,8 @@ const ClearAlignersInfoPage = () => {
                         <h3 className="font-heebo text-sm font-black leading-tight text-slate-950">{item.q}</h3>
                       </div>
                       <div className="mt-1 flex-1 overflow-hidden rounded-lg bg-white/60 p-1.5">
-                        <p className="font-heebo text-xs font-bold leading-snug text-slate-900">{item.a}</p>
-                        <p className="mt-0.5 font-heebo text-[11px] leading-snug text-slate-700">{item.more}</p>
+                        <p className="text-xs font-black leading-tight text-slate-950">{item.a}</p>
+                        <p className="mt-0.5 text-[11px] font-semibold leading-snug text-slate-700">{item.more}</p>
                       </div>
                     </div>
                   ))}
