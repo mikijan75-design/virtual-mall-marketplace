@@ -671,6 +671,16 @@ const ClearAlignersInfoPage = () => {
                 <span className="h-px flex-1 bg-gradient-to-r from-transparent via-sky-300 to-transparent" />
               </div>
 
+              <div className="relative">
+                <div
+                  aria-hidden="true"
+                  className="pointer-events-none absolute inset-y-0 left-[20%] hidden w-px bg-gradient-to-b from-sky-300 via-sky-300/70 to-transparent lg:block"
+                />
+                <div
+                  aria-hidden="true"
+                  className="pointer-events-none absolute inset-y-0 left-[60%] hidden w-px bg-gradient-to-b from-sky-300 via-sky-300/70 to-transparent lg:block"
+                />
+
               <section className="relative z-10 mt-3 grid grid-cols-1 gap-3 sm:grid-cols-2 lg:grid-cols-5">
                 {Array.from({ length: 5 }).map((_, index) => (
                   <article
@@ -781,6 +791,7 @@ const ClearAlignersInfoPage = () => {
                   </article>
                 ))}
               </section>
+              </div>
             </div>
           </section>
         </div>
