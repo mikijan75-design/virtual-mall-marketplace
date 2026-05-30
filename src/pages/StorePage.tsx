@@ -5,7 +5,7 @@ import MallFooter from "@/components/mall/MallFooter";
 import PageTracker from "@/components/PageTracker";
 import BackButton from "@/components/BackButton";
 import { BookOpen, ChevronLeft, ChevronRight, Heart, Info, Lamp, Leaf, Palette, Settings, Sparkles, Sun, X } from "lucide-react";
-import { useState } from "react";
+import { Fragment, useState } from "react";
 import israelMezuzahsAbout from "@/assets/stores/israel-mezuzahs-about.png";
 import imBeadLogo from "@/assets/stores/im-bead-logo.png";
 import beggarsWireframe from "@/assets/stores/beggars-wireframe.png";
