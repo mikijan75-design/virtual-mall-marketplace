@@ -674,111 +674,21 @@ const ClearAlignersInfoPage = () => {
               <div className="relative">
                 <div
                   aria-hidden="true"
-                  className="pointer-events-none absolute inset-y-0 left-[20%] hidden w-px bg-gradient-to-b from-sky-300 via-sky-300/70 to-transparent lg:block"
+                  className="pointer-events-none absolute inset-y-0 left-[40%] hidden w-px bg-gradient-to-b from-sky-300 via-sky-300/70 to-transparent lg:block"
                 />
                 <div
                   aria-hidden="true"
-                  className="pointer-events-none absolute inset-y-0 left-[60%] hidden w-px bg-gradient-to-b from-sky-300 via-sky-300/70 to-transparent lg:block"
+                  className="pointer-events-none absolute inset-y-0 left-[80%] hidden w-px bg-gradient-to-b from-sky-300 via-sky-300/70 to-transparent lg:block"
                 />
 
               <section className="relative z-10 mt-3 grid grid-cols-1 gap-3 sm:grid-cols-2 lg:grid-cols-5">
-                {Array.from({ length: 5 }).map((_, index) => (
-                  <article
-                    key={`empty-${index}`}
-                    className="flex min-h-[260px] flex-col overflow-hidden rounded-2xl border border-dashed border-sky-200 bg-gradient-to-b from-sky-50/60 to-white text-right shadow-[inset_0_1px_0_rgba(255,255,255,0.9),0_10px_22px_rgba(11,96,141,0.06)]"
-                  >
-                    <div className="flex flex-1 flex-col p-3">
-                      <h3 className="text-center text-lg font-black leading-none text-slate-950">לפני</h3>
-                      <div className="mt-2 flex-1 overflow-hidden rounded-xl bg-white/40">
-                        {index === 0 && (
-                          <img
-                            src={beforeImage1}
-                            alt="לפני - מצב התחלתי של השיניים"
-                            className="h-full w-full object-cover"
-                          />
-                        )}
-                        {index === 1 && (
-                          <img
-                            src={beforeImage2}
-                            alt="לפני - מצב התחלתי של השיניים"
-                            className="h-full w-full object-cover"
-                          />
-                        )}
-                        {index === 2 && (
-                          <img
-                            src={beforeImage3}
-                            alt="לפני - מצב התחלתי של השיניים"
-                            className="h-full w-full object-cover"
-                          />
-                        )}
-                        {index === 3 && (
-                          <img
-                            src={afterImage4}
-                            alt="לפני - מצב התחלתי של השיניים"
-                            className="h-full w-full object-cover"
-                          />
-                        )}
-                        {index === 4 && (
-                          <img
-                            src={afterImage5}
-                            alt="לפני - מצב התחלתי של השיניים"
-                            className="h-full w-full object-cover"
-                          />
-                        )}
-                      </div>
-                    </div>
-                    <div className="h-px bg-sky-200" />
-                    <div className="flex flex-1 flex-col p-3">
-                      <h3 className="text-center text-lg font-black leading-none text-slate-950">אחרי</h3>
-                      <div className="mt-2 flex-1 overflow-hidden rounded-xl bg-white/40">
-                        {index === 0 && (
-                          <img
-                            src={afterImage1}
-                            alt="אחרי - תוצאה לאחר טיפול בקשתיות שקופות"
-                            className="h-full w-full object-cover"
-                          />
-                        )}
-                        {index === 1 && (
-                          <img
-                            src={afterImage2}
-                            alt="אחרי - תוצאה לאחר טיפול בקשתיות שקופות"
-                            className="h-full w-full object-cover"
-                          />
-                        )}
-                        {index === 2 && (
-                          <img
-                            src={afterImage3}
-                            alt="אחרי - תוצאה לאחר טיפול בקשתיות שקופות"
-                            className="h-full w-full object-cover"
-                          />
-                        )}
-                        {index === 3 && (
-                          <img
-                            src={beforeImage4}
-                            alt="אחרי - תוצאה לאחר טיפול בקשתיות שקופות"
-                            className="h-full w-full object-cover"
-                          />
-                        )}
-                        {index === 4 && (
-                          <img
-                            src={beforeImage5}
-                            alt="אחרי - תוצאה לאחר טיפול בקשתיות שקופות"
-                            className="h-full w-full object-cover"
-                          />
-                        )}
-                      </div>
-                    </div>
-                  </article>
-                ))}
-              </section>
-
-              <section className="relative z-10 mt-3 grid grid-cols-1 gap-3 sm:grid-cols-2 lg:grid-cols-5">
-                {[customer1, customer2, customer3, customer4, customer5].map((src, index) => (
-                  <article
-                    key={`customer-row-${index}`}
-                    className="flex flex-col overflow-hidden rounded-2xl border border-sky-200 bg-gradient-to-b from-sky-50/60 to-white text-right shadow-[inset_0_1px_0_rgba(255,255,255,0.9),0_10px_22px_rgba(11,96,141,0.06)]"
-                  >
-                    <div className="flex flex-1 flex-col p-3">
+                {/* Column 1 (rightmost in RTL): customer photos stacked */}
+                <div className="flex flex-col gap-3">
+                  {[customer1, customer2, customer3, customer4, customer5].map((src, index) => (
+                    <article
+                      key={`customer-stack-${index}`}
+                      className="flex flex-col overflow-hidden rounded-2xl border border-sky-200 bg-gradient-to-b from-sky-50/60 to-white text-right shadow-[inset_0_1px_0_rgba(255,255,255,0.9),0_10px_22px_rgba(11,96,141,0.06)]"
+                    >
                       <div className="aspect-[3/4] w-full overflow-hidden rounded-xl bg-white/40">
                         <img
                           src={src}
@@ -787,8 +697,56 @@ const ClearAlignersInfoPage = () => {
                           loading="lazy"
                         />
                       </div>
-                    </div>
-                  </article>
+                    </article>
+                  ))}
+                </div>
+
+                {/* Columns 2-3 from right: before/after squares stacked */}
+                {[
+                  [
+                    { before: beforeImage1, after: afterImage1 },
+                    { before: beforeImage2, after: afterImage2 },
+                    { before: beforeImage3, after: afterImage3 },
+                  ],
+                  [
+                    { before: beforeImage4, after: afterImage4 },
+                    { before: beforeImage5, after: afterImage5 },
+                  ],
+                ].map((columnItems, colIdx) => (
+                  <div key={`ba-col-${colIdx}`} className="flex flex-col gap-3">
+                    {columnItems.map((item, idx) => (
+                      <article
+                        key={`ba-${colIdx}-${idx}`}
+                        className="flex min-h-[260px] flex-col overflow-hidden rounded-2xl border border-sky-200 bg-gradient-to-b from-sky-50/60 to-white text-right shadow-[inset_0_1px_0_rgba(255,255,255,0.9),0_10px_22px_rgba(11,96,141,0.06)]"
+                      >
+                        <div className="flex flex-1 flex-col p-3">
+                          <h3 className="text-center text-lg font-black leading-none text-slate-950">לפני</h3>
+                          <div className="mt-2 flex-1 overflow-hidden rounded-xl bg-white/40">
+                            <img src={item.before} alt="לפני - מצב התחלתי של השיניים" className="h-full w-full object-cover" />
+                          </div>
+                        </div>
+                        <div className="h-px bg-sky-200" />
+                        <div className="flex flex-1 flex-col p-3">
+                          <h3 className="text-center text-lg font-black leading-none text-slate-950">אחרי</h3>
+                          <div className="mt-2 flex-1 overflow-hidden rounded-xl bg-white/40">
+                            <img src={item.after} alt="אחרי - תוצאה לאחר טיפול בקשתיות שקופות" className="h-full w-full object-cover" />
+                          </div>
+                        </div>
+                      </article>
+                    ))}
+                  </div>
+                ))}
+
+                {/* Columns 4-5: new empty placeholder squares */}
+                {[0, 1].map((colIdx) => (
+                  <div key={`new-col-${colIdx}`} className="flex flex-col gap-3">
+                    {Array.from({ length: colIdx === 0 ? 3 : 2 }).map((_, idx) => (
+                      <article
+                        key={`new-${colIdx}-${idx}`}
+                        className="flex min-h-[260px] flex-col overflow-hidden rounded-2xl border border-dashed border-sky-200 bg-gradient-to-b from-sky-50/60 to-white text-right shadow-[inset_0_1px_0_rgba(255,255,255,0.9),0_10px_22px_rgba(11,96,141,0.06)]"
+                      />
+                    ))}
+                  </div>
                 ))}
               </section>
               </div>
