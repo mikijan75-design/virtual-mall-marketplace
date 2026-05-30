@@ -682,13 +682,49 @@ const ClearAlignersInfoPage = () => {
                 />
 
               <section className="relative z-10 mt-3 grid grid-cols-1 gap-3 sm:grid-cols-2 lg:grid-cols-3">
-                {/* Column 1 (rightmost in RTL): 5 empty squares */}
+                {/* Column 1 (rightmost in RTL): FAQ cards */}
                 <div className="flex flex-col gap-3">
-                  {Array.from({ length: 5 }).map((_, idx) => (
+                  {[
+                    {
+                      q: "כמה זמן לוקח גשר שקוף?",
+                      a: "בין 6 ל-18 חודשים בממוצע.",
+                      more: "משך הטיפול תלוי במורכבות המקרה. מקרים קלים (רווחים קטנים או צפיפות קלה) לוקחים כ-4 עד 9 חודשים, בעוד מקרים מורכבים יותר יכולים להימשך שנה וחצי ואף מעבר לכך.",
+                    },
+                    {
+                      q: "גשר שקוף לפני ואחרי",
+                      a: "שינוי אסתטי ובריאותי מלא.",
+                      more: "לפני: שיניים צפופות, עקומות או רווחים בולטים. אחרי: חיוך ישר, סגר שיניים תקין ושיפור משמעותי בביטחון העצמי ובבריאות הפה. התוצאה נשמרת באמצעות קיבוע בסוף הטיפול.",
+                    },
+                    {
+                      q: "כאבים בגשר שקוף",
+                      a: "לחץ ואי-נוחות קלה בלבד.",
+                      more: "הטיפול לא כרוך בכאב חזק. מרגישים בעיקר לחץ ורגישות ביומיים הראשונים לאחר החלפת כל פלטה (קשתית) חדשה, מכיוון שהשיניים זזות. מדובר בפתרון נוח בהרבה מגשר רגיל שעלול לפצוע את הלחיים.",
+                    },
+                    {
+                      q: "גשר שקוף או סמכים רגילים (מה עדיף?)",
+                      a: "תלוי במקרה ובמשמעת העצמית.",
+                      more: "גשר שקוף: עדיף מבחינה אסתטית, נוח לניקוי (כי הוא נשלף), ומחייב הרכבה של 22 שעות ביממה. סמכים רגילים (ברזלים): קבועים בפה, בולטים לעין, אך עדיפים ויעילים יותר במקרים רפואיים קשים ומורכבים במיוחד.",
+                    },
+                    {
+                      q: "יישור שיניים שקוף חוות דעת / המלצות",
+                      a: "המלצות חמות מאוד, בעיקר ממבוגרים.",
+                      more: "המטופלים משבחים את העובדה שלא רואים את הגשר ושקל לאכול ולצחצח שיניים. ההמלצה הכי חשובה מהרופאים היא לא לזלזל בזמני ההרכבה – מי שלא מרכיב את הפלטה באדיקות, הטיפול שלו ייכשל או יתארך.",
+                    },
+                  ].map((item, idx) => (
                     <article
-                      key={`empty-parallel-${idx}`}
-                      className="h-[280px] overflow-hidden rounded-2xl border border-dashed border-sky-200 bg-gradient-to-b from-sky-50/60 to-white shadow-[inset_0_1px_0_rgba(255,255,255,0.9),0_10px_22px_rgba(11,96,141,0.06)]"
-                    />
+                      key={`faq-${idx}`}
+                      className="flex h-[280px] flex-col overflow-hidden rounded-2xl border border-sky-200 bg-gradient-to-b from-sky-50/60 to-white text-right shadow-[inset_0_1px_0_rgba(255,255,255,0.9),0_10px_22px_rgba(11,96,141,0.06)]"
+                    >
+                      <div className="flex flex-1 flex-col p-2 min-h-0">
+                        <div className="rounded-lg bg-sky-100/70 px-2 py-1.5 text-center">
+                          <h3 className="text-sm font-black leading-tight text-slate-950">{item.q}</h3>
+                        </div>
+                        <div className="mt-1.5 flex-1 overflow-y-auto rounded-lg bg-white/60 p-2">
+                          <p className="text-xs font-bold leading-snug text-slate-900">{item.a}</p>
+                          <p className="mt-1 text-[11px] leading-snug text-slate-700">{item.more}</p>
+                        </div>
+                      </div>
+                    </article>
                   ))}
                 </div>
 
