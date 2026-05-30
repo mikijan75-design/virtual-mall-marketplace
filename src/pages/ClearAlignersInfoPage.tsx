@@ -665,6 +665,12 @@ const ClearAlignersInfoPage = () => {
                 ))}
               </section>
 
+              <div className="relative z-10 mt-10 mb-6 flex items-center gap-4" aria-hidden="true">
+                <span className="h-px flex-1 bg-gradient-to-l from-transparent via-sky-300 to-transparent" />
+                <span className="inline-flex h-2.5 w-2.5 rotate-45 rounded-sm bg-sky-400 shadow-[0_0_0_4px_rgba(125,211,252,0.25)]" />
+                <span className="h-px flex-1 bg-gradient-to-r from-transparent via-sky-300 to-transparent" />
+              </div>
+
               <section className="relative z-10 mt-3 grid grid-cols-1 gap-3 sm:grid-cols-2 lg:grid-cols-5">
                 {Array.from({ length: 5 }).map((_, index) => (
                   <article
