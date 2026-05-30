@@ -760,8 +760,68 @@ const ClearAlignersInfoPage = () => {
                 </div>
                 <div
                   aria-hidden="true"
-                  className="flex-1 min-h-[80px] rounded-2xl border border-sky-200 bg-gradient-to-b from-sky-50/60 to-white p-5 sm:p-6 shadow-[inset_0_1px_0_rgba(255,255,255,0.9),0_10px_22px_rgba(11,96,141,0.06)]"
-                />
+                  className="flex-1 min-h-[160px] rounded-2xl border border-sky-200 bg-gradient-to-br from-amber-50 via-white to-sky-50 p-5 sm:p-6 shadow-[inset_0_1px_0_rgba(255,255,255,0.9),0_10px_22px_rgba(11,96,141,0.06)] overflow-hidden"
+                  dir="rtl"
+                >
+                  <div className="flex h-full items-center justify-center gap-3 sm:gap-4">
+                    {/* Clock badge — 7 ימים */}
+                    <div className="relative flex h-28 w-28 sm:h-32 sm:w-32 shrink-0 items-center justify-center">
+                      <span className="absolute inset-0 rounded-full bg-gradient-to-br from-sky-200 to-sky-400 blur-md opacity-60" />
+                      <div className="relative flex h-full w-full items-center justify-center rounded-full bg-gradient-to-br from-white to-sky-50 border-[3px] border-sky-500 shadow-[0_8px_18px_rgba(11,96,141,0.18)]">
+                        {/* tick marks */}
+                        {[0, 1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11].map((i) => (
+                          <span
+                            key={i}
+                            className="absolute left-1/2 top-1.5 h-1.5 w-0.5 -translate-x-1/2 rounded-full bg-sky-500"
+                            style={{ transform: `translateX(-50%) rotate(${i * 30}deg)`, transformOrigin: "50% 3.2rem" }}
+                          />
+                        ))}
+                        <div className="flex flex-col items-center leading-none">
+                          <span className="text-xl sm:text-2xl font-black text-sky-900">7</span>
+                          <span className="text-[11px] sm:text-xs font-bold text-sky-700 mt-0.5">ימים</span>
+                        </div>
+                      </div>
+                      <span className="absolute -top-1 -right-1 text-lg">✨</span>
+                    </div>
+
+                    {/* Plus */}
+                    <div className="flex h-9 w-9 sm:h-10 sm:w-10 shrink-0 items-center justify-center rounded-full bg-gradient-to-br from-amber-300 to-amber-500 text-white text-2xl font-black shadow-[0_6px_14px_rgba(217,119,6,0.35)]">
+                      +
+                    </div>
+
+                    {/* Delivery badge — הספקה מהירה */}
+                    <div className="relative flex h-28 w-28 sm:h-32 sm:w-32 shrink-0 items-center justify-center">
+                      <span className="absolute inset-0 rounded-full bg-gradient-to-br from-amber-200 to-sky-300 blur-md opacity-60" />
+                      <div className="relative flex h-full w-full flex-col items-center justify-center rounded-full bg-gradient-to-br from-white to-amber-50 border-[3px] border-sky-500 shadow-[0_8px_18px_rgba(11,96,141,0.18)]">
+                        <svg viewBox="0 0 64 40" className="h-10 sm:h-11 w-auto -mb-0.5" aria-hidden="true">
+                          <defs>
+                            <linearGradient id="truckBody" x1="0" y1="0" x2="0" y2="1">
+                              <stop offset="0%" stopColor="#0ea5e9" />
+                              <stop offset="100%" stopColor="#0369a1" />
+                            </linearGradient>
+                          </defs>
+                          {/* cargo box */}
+                          <rect x="2" y="8" width="34" height="22" rx="3" fill="url(#truckBody)" />
+                          {/* cab */}
+                          <path d="M36 14 L52 14 L60 22 L60 30 L36 30 Z" fill="#fbbf24" stroke="#0369a1" strokeWidth="1.5" strokeLinejoin="round" />
+                          <rect x="40" y="17" width="10" height="6" rx="1" fill="#e0f2fe" />
+                          {/* speed lines */}
+                          <line x1="0" y1="14" x2="6" y2="14" stroke="#0ea5e9" strokeWidth="1.5" strokeLinecap="round" />
+                          <line x1="0" y1="20" x2="8" y2="20" stroke="#0ea5e9" strokeWidth="1.5" strokeLinecap="round" />
+                          {/* wheels */}
+                          <circle cx="12" cy="32" r="4" fill="#0f172a" />
+                          <circle cx="12" cy="32" r="1.5" fill="#fbbf24" />
+                          <circle cx="48" cy="32" r="4" fill="#0f172a" />
+                          <circle cx="48" cy="32" r="1.5" fill="#fbbf24" />
+                        </svg>
+                        <span className="text-[10px] sm:text-[11px] font-bold text-sky-700 leading-tight text-center px-1">
+                          הספקה<br />מהירה
+                        </span>
+                      </div>
+                      <span className="absolute -top-1 -left-1 text-lg">⚡</span>
+                    </div>
+                  </div>
+                </div>
                 </div>
 
                 {/* Column 2 (middle): before/after squares stacked, adjacent to photos */}
