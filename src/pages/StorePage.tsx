@@ -834,8 +834,8 @@ const StorePage = () => {
 
       {/* Store content placeholder */}
       <div className="container mx-auto py-12 px-4">
-        <div className={`${store.id === "s18" ? "max-w-[1400px]" : "max-w-4xl"} mx-auto`}>
-          <div className={`bg-card border border-border rounded-xl ${store.id === "s18" ? "p-2" : "p-8"} shadow-lg text-center`}>
+        <div className={`${store.id === "s18" || store.id === "s5" ? "max-w-[1400px]" : "max-w-4xl"} mx-auto`}>
+          <div className={`bg-card border border-border rounded-xl ${store.id === "s18" ? "p-2" : store.id === "s5" ? "p-4 md:p-6" : "p-8"} shadow-lg text-center`}>
             {isIsraelMezuzahs ? (
               <>
                 {/* Mobile: hero on top, all 8 products in 2-col grid */}
