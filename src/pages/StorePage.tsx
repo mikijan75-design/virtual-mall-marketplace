@@ -14,6 +14,7 @@ import floor1Shop6Img from "@/assets/stores/floor1-shop6.png";
 import floor3Shop5Gallery from "@/assets/stores/floor3-shop5-gallery.png";
 import floor3Shop5StoneBg from "@/assets/stores/floor3-shop5-stone-bg.png";
 import easelMascot from "@/assets/stores/easel-mascot.png";
+import { guyJanaProducts } from "@/data/guyJanaProducts";
 import halenModel1 from "@/assets/stores/halen-model-1.png";
 import halenModel2 from "@/assets/stores/halen-model-2.png";
 import halenModel3 from "@/assets/stores/halen-model-3.png";
