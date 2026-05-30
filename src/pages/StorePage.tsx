@@ -1246,20 +1246,19 @@ const StorePage = () => {
                             const globalIdx = rowIdx * cols + i;
                             const Deco = decoTypes[i % decoTypes.length];
                             return (
-                              <>
-                                <div key={p.id} className="flex-1 min-w-0">
+                              <React.Fragment key={p.id}>
+                                <div className="flex-1 min-w-0">
                                   <ProductCard p={p} globalIdx={globalIdx} navigate={navigate} />
                                 </div>
                                 {i < row.length - 1 && (
                                   <div
-                                    key={`d-${rowIdx}-${i}`}
                                     className="self-stretch flex items-end pb-2 flex-shrink-0"
                                     aria-hidden="true"
                                   >
                                     <Deco uid={`r${rowIdx}c${i}`} />
                                   </div>
                                 )}
-                              </>
+                              </React.Fragment>
                             );
                           })}
                         </div>
