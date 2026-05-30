@@ -760,65 +760,190 @@ const ClearAlignersInfoPage = () => {
                 </div>
                 <div
                   aria-hidden="true"
-                  className="flex-1 min-h-[160px] rounded-2xl border border-sky-200 bg-gradient-to-br from-amber-50 via-white to-sky-50 p-5 sm:p-6 shadow-[inset_0_1px_0_rgba(255,255,255,0.9),0_10px_22px_rgba(11,96,141,0.06)] overflow-hidden"
+                  className="relative flex-1 min-h-[180px] rounded-2xl border border-sky-200 bg-gradient-to-br from-amber-50 via-white to-sky-50 p-5 sm:p-6 shadow-[inset_0_1px_0_rgba(255,255,255,0.9),0_10px_22px_rgba(11,96,141,0.06)] overflow-hidden"
                   dir="rtl"
                 >
-                  <div className="flex h-full items-center justify-center gap-3 sm:gap-4">
-                    {/* Clock badge — 7 ימים */}
-                    <div className="relative flex h-28 w-28 sm:h-32 sm:w-32 shrink-0 items-center justify-center">
-                      <span className="absolute inset-0 rounded-full bg-gradient-to-br from-sky-200 to-sky-400 blur-md opacity-60" />
-                      <div className="relative flex h-full w-full items-center justify-center rounded-full bg-gradient-to-br from-white to-sky-50 border-[3px] border-sky-500 shadow-[0_8px_18px_rgba(11,96,141,0.18)]">
-                        {/* tick marks */}
-                        {[0, 1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11].map((i) => (
-                          <span
+                  {/* decorative dotted grid */}
+                  <svg className="pointer-events-none absolute inset-0 h-full w-full opacity-[0.18]" aria-hidden="true">
+                    <defs>
+                      <pattern id="abtDots" width="14" height="14" patternUnits="userSpaceOnUse">
+                        <circle cx="1.2" cy="1.2" r="1.1" fill="#0ea5e9" />
+                      </pattern>
+                    </defs>
+                    <rect width="100%" height="100%" fill="url(#abtDots)" />
+                  </svg>
+
+                  <div className="relative flex h-full items-center justify-center gap-3 sm:gap-5">
+                    {/* ── Clock medallion — 7 ימים ───────────────── */}
+                    <div className="relative flex h-32 w-32 sm:h-36 sm:w-36 shrink-0 items-center justify-center">
+                      {/* sunburst rays */}
+                      <svg viewBox="-60 -60 120 120" className="absolute inset-0 h-full w-full" aria-hidden="true">
+                        {Array.from({ length: 16 }).map((_, i) => (
+                          <line
                             key={i}
-                            className="absolute left-1/2 top-1.5 h-1.5 w-0.5 -translate-x-1/2 rounded-full bg-sky-500"
-                            style={{ transform: `translateX(-50%) rotate(${i * 30}deg)`, transformOrigin: "50% 3.2rem" }}
+                            x1="0" y1="-56" x2="0" y2="-50"
+                            stroke="#fbbf24" strokeWidth="1.6" strokeLinecap="round"
+                            transform={`rotate(${i * 22.5})`}
+                            opacity={i % 2 === 0 ? 0.95 : 0.5}
                           />
                         ))}
-                        <div className="flex flex-col items-center leading-none">
-                          <span className="text-xl sm:text-2xl font-black text-sky-900">7</span>
-                          <span className="text-[11px] sm:text-xs font-bold text-sky-700 mt-0.5">ימים</span>
-                        </div>
-                      </div>
-                      <span className="absolute -top-1 -right-1 text-lg">✨</span>
+                      </svg>
+
+                      <svg viewBox="-50 -50 100 100" className="relative h-full w-full" aria-hidden="true">
+                        <defs>
+                          <radialGradient id="clockFace" cx="35%" cy="30%" r="80%">
+                            <stop offset="0%" stopColor="#ffffff" />
+                            <stop offset="60%" stopColor="#f0f9ff" />
+                            <stop offset="100%" stopColor="#dbeafe" />
+                          </radialGradient>
+                          <linearGradient id="clockBezel" x1="0" y1="-1" x2="0" y2="1">
+                            <stop offset="0%" stopColor="#38bdf8" />
+                            <stop offset="100%" stopColor="#0c4a6e" />
+                          </linearGradient>
+                        </defs>
+                        {/* outer bezel */}
+                        <circle r="46" fill="url(#clockBezel)" />
+                        <circle r="42" fill="url(#clockFace)" />
+                        {/* inner guilloché ring */}
+                        <circle r="36" fill="none" stroke="#bae6fd" strokeWidth="0.6" strokeDasharray="0.6 2.4" />
+                        {/* hour ticks (12), bolder every 3rd */}
+                        {Array.from({ length: 60 }).map((_, i) => {
+                          const isHour = i % 5 === 0;
+                          const isQuarter = i % 15 === 0;
+                          return (
+                            <line
+                              key={i}
+                              x1="0" y1={isQuarter ? -40 : -39} x2="0" y2={isHour ? -34 : -37}
+                              stroke={isQuarter ? "#0c4a6e" : isHour ? "#0369a1" : "#7dd3fc"}
+                              strokeWidth={isQuarter ? 1.6 : isHour ? 1.1 : 0.5}
+                              strokeLinecap="round"
+                              transform={`rotate(${i * 6})`}
+                            />
+                          );
+                        })}
+                        {/* highlighted "7-day" arc */}
+                        <path
+                          d="M 0 -34 A 34 34 0 0 1 32.34 -10.51"
+                          fill="none" stroke="#fbbf24" strokeWidth="3" strokeLinecap="round" opacity="0.9"
+                        />
+                        {/* hands frozen at ~7 o'clock */}
+                        <line x1="0" y1="0" x2="-16" y2="9" stroke="#0c4a6e" strokeWidth="2.6" strokeLinecap="round" />
+                        <line x1="0" y1="0" x2="0" y2="-26" stroke="#0369a1" strokeWidth="1.6" strokeLinecap="round" />
+                        {/* center text plate */}
+                        <circle r="13" fill="#ffffff" stroke="#fbbf24" strokeWidth="1.2" />
+                        <text x="0" y="-1" textAnchor="middle" fontFamily="serif" fontWeight="900" fontSize="11" fill="#0c4a6e">7</text>
+                        <text x="0" y="8" textAnchor="middle" fontFamily="sans-serif" fontWeight="700" fontSize="4.4" fill="#0369a1" letterSpacing="0.3">ימים</text>
+                        {/* center pin */}
+                        <circle r="1.6" fill="#fbbf24" />
+                      </svg>
                     </div>
 
-                    {/* Plus */}
-                    <div className="flex h-9 w-9 sm:h-10 sm:w-10 shrink-0 items-center justify-center rounded-full bg-gradient-to-br from-amber-300 to-amber-500 text-white text-2xl font-black shadow-[0_6px_14px_rgba(217,119,6,0.35)]">
-                      +
+                    {/* ── Plus junction ────────────────────────── */}
+                    <div className="relative flex h-12 w-12 shrink-0 items-center justify-center">
+                      <span className="absolute inset-0 rounded-full bg-amber-300/50 blur-md" />
+                      <svg viewBox="-20 -20 40 40" className="relative h-12 w-12" aria-hidden="true">
+                        <defs>
+                          <linearGradient id="plusGrad" x1="0" y1="-1" x2="0" y2="1">
+                            <stop offset="0%" stopColor="#fde68a" />
+                            <stop offset="60%" stopColor="#fbbf24" />
+                            <stop offset="100%" stopColor="#d97706" />
+                          </linearGradient>
+                        </defs>
+                        <circle r="17" fill="url(#plusGrad)" stroke="#92400e" strokeWidth="0.8" />
+                        <circle r="14" fill="none" stroke="#fffbeb" strokeWidth="0.6" strokeDasharray="1 1.5" />
+                        <path d="M-7 0 H7 M0 -7 V7" stroke="#ffffff" strokeWidth="3.2" strokeLinecap="round" />
+                      </svg>
                     </div>
 
-                    {/* Delivery badge — הספקה מהירה */}
-                    <div className="relative flex h-28 w-28 sm:h-32 sm:w-32 shrink-0 items-center justify-center">
-                      <span className="absolute inset-0 rounded-full bg-gradient-to-br from-amber-200 to-sky-300 blur-md opacity-60" />
-                      <div className="relative flex h-full w-full flex-col items-center justify-center rounded-full bg-gradient-to-br from-white to-amber-50 border-[3px] border-sky-500 shadow-[0_8px_18px_rgba(11,96,141,0.18)]">
-                        <svg viewBox="0 0 64 40" className="h-10 sm:h-11 w-auto -mb-0.5" aria-hidden="true">
-                          <defs>
-                            <linearGradient id="truckBody" x1="0" y1="0" x2="0" y2="1">
-                              <stop offset="0%" stopColor="#0ea5e9" />
-                              <stop offset="100%" stopColor="#0369a1" />
-                            </linearGradient>
-                          </defs>
-                          {/* cargo box */}
-                          <rect x="2" y="8" width="34" height="22" rx="3" fill="url(#truckBody)" />
-                          {/* cab */}
-                          <path d="M36 14 L52 14 L60 22 L60 30 L36 30 Z" fill="#fbbf24" stroke="#0369a1" strokeWidth="1.5" strokeLinejoin="round" />
-                          <rect x="40" y="17" width="10" height="6" rx="1" fill="#e0f2fe" />
-                          {/* speed lines */}
-                          <line x1="0" y1="14" x2="6" y2="14" stroke="#0ea5e9" strokeWidth="1.5" strokeLinecap="round" />
-                          <line x1="0" y1="20" x2="8" y2="20" stroke="#0ea5e9" strokeWidth="1.5" strokeLinecap="round" />
+                    {/* ── Delivery medallion — הספקה מהירה ───── */}
+                    <div className="relative flex h-32 w-32 sm:h-36 sm:w-36 shrink-0 items-center justify-center">
+                      {/* speed arc rays */}
+                      <svg viewBox="-60 -60 120 120" className="absolute inset-0 h-full w-full" aria-hidden="true">
+                        {[...Array(6)].map((_, i) => (
+                          <path
+                            key={i}
+                            d={`M -56 ${-20 + i * 8} q 12 -4 24 0`}
+                            fill="none" stroke="#38bdf8" strokeWidth="1.4" strokeLinecap="round"
+                            opacity={0.25 + i * 0.08}
+                          />
+                        ))}
+                      </svg>
+
+                      <svg viewBox="-50 -50 100 100" className="relative h-full w-full" aria-hidden="true">
+                        <defs>
+                          <radialGradient id="delFace" cx="35%" cy="30%" r="85%">
+                            <stop offset="0%" stopColor="#ffffff" />
+                            <stop offset="60%" stopColor="#fffbeb" />
+                            <stop offset="100%" stopColor="#fde68a" />
+                          </radialGradient>
+                          <linearGradient id="delBezel" x1="0" y1="-1" x2="0" y2="1">
+                            <stop offset="0%" stopColor="#38bdf8" />
+                            <stop offset="100%" stopColor="#0c4a6e" />
+                          </linearGradient>
+                          <linearGradient id="truckCargo" x1="0" y1="-1" x2="0" y2="1">
+                            <stop offset="0%" stopColor="#38bdf8" />
+                            <stop offset="100%" stopColor="#0369a1" />
+                          </linearGradient>
+                          <linearGradient id="truckCab" x1="0" y1="-1" x2="0" y2="1">
+                            <stop offset="0%" stopColor="#fde68a" />
+                            <stop offset="100%" stopColor="#f59e0b" />
+                          </linearGradient>
+                        </defs>
+
+                        <circle r="46" fill="url(#delBezel)" />
+                        <circle r="42" fill="url(#delFace)" />
+                        <circle r="36" fill="none" stroke="#fde68a" strokeWidth="0.6" strokeDasharray="0.6 2.4" />
+
+                        {/* ground line */}
+                        <line x1="-30" y1="18" x2="30" y2="18" stroke="#0c4a6e" strokeWidth="0.8" strokeDasharray="1.4 1.4" opacity="0.55" />
+
+                        {/* speed swooshes inside medallion */}
+                        <path d="M -32 -2 q 8 -3 16 0" fill="none" stroke="#38bdf8" strokeWidth="1.6" strokeLinecap="round" opacity="0.7" />
+                        <path d="M -34 6 q 10 -3 20 0" fill="none" stroke="#38bdf8" strokeWidth="1.6" strokeLinecap="round" opacity="0.55" />
+
+                        {/* truck — facing left (RTL forward) */}
+                        {/* cargo box (right side) */}
+                        <g transform="translate(-2 -2)">
+                          <rect x="-2" y="-12" width="28" height="22" rx="2.5" fill="url(#truckCargo)" stroke="#0c4a6e" strokeWidth="0.8" />
+                          {/* door lines */}
+                          <line x1="12" y1="-10" x2="12" y2="8" stroke="#0c4a6e" strokeWidth="0.5" opacity="0.4" />
+                          {/* dental cross emblem on cargo */}
+                          <circle cx="6" cy="-1" r="5" fill="#ffffff" opacity="0.95" />
+                          <path d="M3.5 -1 H8.5 M6 -3.5 V1.5" stroke="#0369a1" strokeWidth="1.4" strokeLinecap="round" />
+                          {/* cab (left, leading) */}
+                          <path d="M -2 -5 L -16 -5 L -22 2 L -22 10 L -2 10 Z" fill="url(#truckCab)" stroke="#0c4a6e" strokeWidth="0.8" strokeLinejoin="round" />
+                          {/* window */}
+                          <path d="M -4 -3 L -15 -3 L -19 1.5 L -4 1.5 Z" fill="#e0f2fe" stroke="#0c4a6e" strokeWidth="0.5" />
+                          <line x1="-10" y1="-3" x2="-12.5" y2="1.5" stroke="#0c4a6e" strokeWidth="0.4" />
+                          {/* headlight */}
+                          <circle cx="-21" cy="5" r="1" fill="#fde68a" stroke="#92400e" strokeWidth="0.3" />
+                          {/* bumper */}
+                          <rect x="-22.5" y="9" width="3" height="2" rx="0.5" fill="#0c4a6e" />
                           {/* wheels */}
-                          <circle cx="12" cy="32" r="4" fill="#0f172a" />
-                          <circle cx="12" cy="32" r="1.5" fill="#fbbf24" />
-                          <circle cx="48" cy="32" r="4" fill="#0f172a" />
-                          <circle cx="48" cy="32" r="1.5" fill="#fbbf24" />
-                        </svg>
-                        <span className="text-[10px] sm:text-[11px] font-bold text-sky-700 leading-tight text-center px-1">
-                          הספקה<br />מהירה
-                        </span>
-                      </div>
-                      <span className="absolute -top-1 -left-1 text-lg">⚡</span>
+                          <g>
+                            <circle cx="-14" cy="12" r="3.6" fill="#0f172a" />
+                            <circle cx="-14" cy="12" r="1.6" fill="#cbd5e1" />
+                            <circle cx="-14" cy="12" r="0.6" fill="#0f172a" />
+                          </g>
+                          <g>
+                            <circle cx="18" cy="12" r="3.6" fill="#0f172a" />
+                            <circle cx="18" cy="12" r="1.6" fill="#cbd5e1" />
+                            <circle cx="18" cy="12" r="0.6" fill="#0f172a" />
+                          </g>
+                        </g>
+
+                        {/* speed lines in front of cab */}
+                        <path d="M -36 -6 h 6" stroke="#0ea5e9" strokeWidth="1.4" strokeLinecap="round" />
+                        <path d="M -40 12 h 8" stroke="#0ea5e9" strokeWidth="1.4" strokeLinecap="round" />
+
+                        {/* ribbon label */}
+                        <g transform="translate(0 30)">
+                          <rect x="-26" y="-6" width="52" height="12" rx="2" fill="#0c4a6e" />
+                          <path d="M -26 -6 l -3 6 l 3 6 z" fill="#0c4a6e" />
+                          <path d="M 26 -6 l 3 6 l -3 6 z" fill="#0c4a6e" />
+                          <text x="0" y="2.4" textAnchor="middle" fontFamily="sans-serif" fontWeight="800" fontSize="6" fill="#fde68a" letterSpacing="0.4">הספקה מהירה</text>
+                        </g>
+                      </svg>
                     </div>
                   </div>
                 </div>
