@@ -835,7 +835,22 @@ const StorePage = () => {
       {/* Store content placeholder */}
       <div className="container mx-auto py-12 px-4">
         <div className={`${store.id === "s18" || store.id === "s5" ? "max-w-[1400px]" : "max-w-4xl"} mx-auto`}>
-          <div className={`bg-card border border-border rounded-xl ${store.id === "s18" ? "p-2" : store.id === "s5" ? "p-4 md:p-6" : "p-8"} shadow-lg text-center`}>
+          <div
+            className={`${store.id === "s5" ? "border-2 border-[#d9c9a8]" : "bg-card border border-border"} rounded-xl ${store.id === "s18" ? "p-2" : store.id === "s5" ? "p-6 md:p-10" : "p-8"} shadow-lg text-center`}
+            style={
+              store.id === "s5"
+                ? {
+                    backgroundColor: "#f5ecd9",
+                    backgroundImage:
+                      "linear-gradient(135deg, rgba(180,150,90,0.10) 25%, transparent 25%, transparent 75%, rgba(180,150,90,0.10) 75%), linear-gradient(135deg, rgba(180,150,90,0.10) 25%, transparent 25%, transparent 75%, rgba(180,150,90,0.10) 75%), linear-gradient(180deg, rgba(255,250,235,0.6), rgba(245,236,217,0))",
+                    backgroundSize: "32px 32px, 32px 32px, 100% 100%",
+                    backgroundPosition: "0 0, 16px 16px, 0 0",
+                    boxShadow:
+                      "inset 0 0 60px rgba(120,90,40,0.12), 0 10px 30px rgba(60,40,20,0.18)",
+                  }
+                : undefined
+            }
+          >
             {isIsraelMezuzahs ? (
               <>
                 {/* Mobile: hero on top, all 8 products in 2-col grid */}
