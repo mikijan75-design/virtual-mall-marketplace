@@ -774,67 +774,53 @@ const ClearAlignersInfoPage = () => {
                   </svg>
 
                   <div className="relative flex h-full items-center justify-center gap-3 sm:gap-5">
-                    {/* ── Clock medallion — 7 ימים ───────────────── */}
+                    {/* ── "7" as the icon, "ימים" inside, broken ring suggesting a clock face ── */}
                     <div className="relative flex h-32 w-32 sm:h-36 sm:w-36 shrink-0 items-center justify-center">
-                      {/* sunburst rays */}
-                      <svg viewBox="-60 -60 120 120" className="absolute inset-0 h-full w-full" aria-hidden="true">
-                        {Array.from({ length: 16 }).map((_, i) => (
-                          <line
-                            key={i}
-                            x1="0" y1="-56" x2="0" y2="-50"
-                            stroke="#fbbf24" strokeWidth="1.6" strokeLinecap="round"
-                            transform={`rotate(${i * 22.5})`}
-                            opacity={i % 2 === 0 ? 0.95 : 0.5}
-                          />
-                        ))}
-                      </svg>
-
-                      <svg viewBox="-50 -50 100 100" className="relative h-full w-full" aria-hidden="true">
+                      <svg viewBox="-50 -50 100 100" className="relative h-full w-full drop-shadow-[0_6px_14px_rgba(11,96,141,0.18)]" aria-hidden="true">
                         <defs>
-                          <radialGradient id="clockFace" cx="35%" cy="30%" r="80%">
-                            <stop offset="0%" stopColor="#ffffff" />
-                            <stop offset="60%" stopColor="#f0f9ff" />
-                            <stop offset="100%" stopColor="#dbeafe" />
-                          </radialGradient>
-                          <linearGradient id="clockBezel" x1="0" y1="-1" x2="0" y2="1">
+                          <linearGradient id="sevenStroke" x1="0" y1="-1" x2="0" y2="1">
+                            <stop offset="0%" stopColor="#fde68a" />
+                            <stop offset="55%" stopColor="#fbbf24" />
+                            <stop offset="100%" stopColor="#d97706" />
+                          </linearGradient>
+                          <linearGradient id="ringBlue" x1="0" y1="-1" x2="0" y2="1">
                             <stop offset="0%" stopColor="#38bdf8" />
                             <stop offset="100%" stopColor="#0c4a6e" />
                           </linearGradient>
                         </defs>
-                        {/* outer bezel */}
-                        <circle r="46" fill="url(#clockBezel)" />
-                        <circle r="42" fill="url(#clockFace)" />
-                        {/* inner guilloché ring */}
-                        <circle r="36" fill="none" stroke="#bae6fd" strokeWidth="0.6" strokeDasharray="0.6 2.4" />
-                        {/* hour ticks (12), bolder every 3rd */}
-                        {Array.from({ length: 60 }).map((_, i) => {
-                          const isHour = i % 5 === 0;
-                          const isQuarter = i % 15 === 0;
-                          return (
-                            <line
-                              key={i}
-                              x1="0" y1={isQuarter ? -40 : -39} x2="0" y2={isHour ? -34 : -37}
-                              stroke={isQuarter ? "#0c4a6e" : isHour ? "#0369a1" : "#7dd3fc"}
-                              strokeWidth={isQuarter ? 1.6 : isHour ? 1.1 : 0.5}
-                              strokeLinecap="round"
-                              transform={`rotate(${i * 6})`}
-                            />
-                          );
-                        })}
-                        {/* highlighted "7-day" arc */}
+
+                        {/* implied clock face — two broken arcs that suggest a circle */}
                         <path
-                          d="M 0 -34 A 34 34 0 0 1 32.34 -10.51"
-                          fill="none" stroke="#fbbf24" strokeWidth="3" strokeLinecap="round" opacity="0.9"
+                          d="M -38 -18 A 42 42 0 0 1 -4 -42"
+                          fill="none" stroke="url(#ringBlue)" strokeWidth="3.2" strokeLinecap="round"
                         />
-                        {/* hands frozen at ~7 o'clock */}
-                        <line x1="0" y1="0" x2="-16" y2="9" stroke="#0c4a6e" strokeWidth="2.6" strokeLinecap="round" />
-                        <line x1="0" y1="0" x2="0" y2="-26" stroke="#0369a1" strokeWidth="1.6" strokeLinecap="round" />
-                        {/* center text plate */}
-                        <circle r="13" fill="#ffffff" stroke="#fbbf24" strokeWidth="1.2" />
-                        <text x="0" y="-1" textAnchor="middle" fontFamily="serif" fontWeight="900" fontSize="11" fill="#0c4a6e">7</text>
-                        <text x="0" y="8" textAnchor="middle" fontFamily="sans-serif" fontWeight="700" fontSize="4.4" fill="#0369a1" letterSpacing="0.3">ימים</text>
-                        {/* center pin */}
-                        <circle r="1.6" fill="#fbbf24" />
+                        <path
+                          d="M 38 18 A 42 42 0 0 1 4 42"
+                          fill="none" stroke="url(#ringBlue)" strokeWidth="3.2" strokeLinecap="round"
+                        />
+                        {/* dashed completion of the circle */}
+                        <circle r="42" fill="none" stroke="#0c4a6e" strokeWidth="0.9" strokeDasharray="1.2 3" opacity="0.45" />
+                        {/* hour pips at 12 / 3 / 6 / 9 */}
+                        {[0, 90, 180, 270].map((deg) => (
+                          <circle key={deg} r="1.6" fill="#fbbf24"
+                            transform={`rotate(${deg}) translate(0 -42)`} />
+                        ))}
+
+                        {/* the numeral 7, drawn as a single bold stroke */}
+                        <path
+                          d="M -24 -28 L 24 -28 L -4 30"
+                          fill="none" stroke="url(#sevenStroke)" strokeWidth="11"
+                          strokeLinecap="round" strokeLinejoin="round"
+                        />
+                        {/* serif cross-bar on the 7's diagonal, classic typographic detail */}
+                        <path d="M -8 4 L 14 4" stroke="#92400e" strokeWidth="3" strokeLinecap="round" opacity="0.85" />
+
+                        {/* "ימים" nested inside the 7's negative space */}
+                        <text
+                          x="6" y="-13" textAnchor="middle"
+                          fontFamily="sans-serif" fontWeight="800" fontSize="9"
+                          fill="#0c4a6e" letterSpacing="0.4"
+                        >ימים</text>
                       </svg>
                     </div>
 
@@ -855,94 +841,86 @@ const ClearAlignersInfoPage = () => {
                       </svg>
                     </div>
 
-                    {/* ── Delivery medallion — הספקה מהירה ───── */}
-                    <div className="relative flex h-32 w-32 sm:h-36 sm:w-36 shrink-0 items-center justify-center">
-                      {/* speed arc rays */}
-                      <svg viewBox="-60 -60 120 120" className="absolute inset-0 h-full w-full" aria-hidden="true">
-                        {[...Array(6)].map((_, i) => (
-                          <path
-                            key={i}
-                            d={`M -56 ${-20 + i * 8} q 12 -4 24 0`}
-                            fill="none" stroke="#38bdf8" strokeWidth="1.4" strokeLinecap="round"
-                            opacity={0.25 + i * 0.08}
-                          />
-                        ))}
-                      </svg>
-
-                      <svg viewBox="-50 -50 100 100" className="relative h-full w-full" aria-hidden="true">
+                    {/* ── Delivery: the FRAME is the truck (silhouette = container) ── */}
+                    <div className="relative flex h-32 w-44 sm:h-36 sm:w-48 shrink-0 items-center justify-center">
+                      <svg viewBox="-70 -45 140 90" className="relative h-full w-full drop-shadow-[0_8px_18px_rgba(11,96,141,0.22)]" aria-hidden="true">
                         <defs>
-                          <radialGradient id="delFace" cx="35%" cy="30%" r="85%">
-                            <stop offset="0%" stopColor="#ffffff" />
-                            <stop offset="60%" stopColor="#fffbeb" />
-                            <stop offset="100%" stopColor="#fde68a" />
-                          </radialGradient>
-                          <linearGradient id="delBezel" x1="0" y1="-1" x2="0" y2="1">
+                          <linearGradient id="truckBodyGrad" x1="0" y1="-1" x2="0" y2="1">
                             <stop offset="0%" stopColor="#38bdf8" />
+                            <stop offset="55%" stopColor="#0ea5e9" />
                             <stop offset="100%" stopColor="#0c4a6e" />
                           </linearGradient>
-                          <linearGradient id="truckCargo" x1="0" y1="-1" x2="0" y2="1">
-                            <stop offset="0%" stopColor="#38bdf8" />
-                            <stop offset="100%" stopColor="#0369a1" />
-                          </linearGradient>
-                          <linearGradient id="truckCab" x1="0" y1="-1" x2="0" y2="1">
+                          <linearGradient id="truckCabGrad" x1="0" y1="-1" x2="0" y2="1">
                             <stop offset="0%" stopColor="#fde68a" />
-                            <stop offset="100%" stopColor="#f59e0b" />
+                            <stop offset="100%" stopColor="#d97706" />
                           </linearGradient>
                         </defs>
 
-                        <circle r="46" fill="url(#delBezel)" />
-                        <circle r="42" fill="url(#delFace)" />
-                        <circle r="36" fill="none" stroke="#fde68a" strokeWidth="0.6" strokeDasharray="0.6 2.4" />
-
-                        {/* ground line */}
-                        <line x1="-30" y1="18" x2="30" y2="18" stroke="#0c4a6e" strokeWidth="0.8" strokeDasharray="1.4 1.4" opacity="0.55" />
-
-                        {/* speed swooshes inside medallion */}
-                        <path d="M -32 -2 q 8 -3 16 0" fill="none" stroke="#38bdf8" strokeWidth="1.6" strokeLinecap="round" opacity="0.7" />
-                        <path d="M -34 6 q 10 -3 20 0" fill="none" stroke="#38bdf8" strokeWidth="1.6" strokeLinecap="round" opacity="0.55" />
-
-                        {/* truck — facing left (RTL forward) */}
-                        {/* cargo box (right side) */}
-                        <g transform="translate(-2 -2)">
-                          <rect x="-2" y="-12" width="28" height="22" rx="2.5" fill="url(#truckCargo)" stroke="#0c4a6e" strokeWidth="0.8" />
-                          {/* door lines */}
-                          <line x1="12" y1="-10" x2="12" y2="8" stroke="#0c4a6e" strokeWidth="0.5" opacity="0.4" />
-                          {/* dental cross emblem on cargo */}
-                          <circle cx="6" cy="-1" r="5" fill="#ffffff" opacity="0.95" />
-                          <path d="M3.5 -1 H8.5 M6 -3.5 V1.5" stroke="#0369a1" strokeWidth="1.4" strokeLinecap="round" />
-                          {/* cab (left, leading) */}
-                          <path d="M -2 -5 L -16 -5 L -22 2 L -22 10 L -2 10 Z" fill="url(#truckCab)" stroke="#0c4a6e" strokeWidth="0.8" strokeLinejoin="round" />
-                          {/* window */}
-                          <path d="M -4 -3 L -15 -3 L -19 1.5 L -4 1.5 Z" fill="#e0f2fe" stroke="#0c4a6e" strokeWidth="0.5" />
-                          <line x1="-10" y1="-3" x2="-12.5" y2="1.5" stroke="#0c4a6e" strokeWidth="0.4" />
-                          {/* headlight */}
-                          <circle cx="-21" cy="5" r="1" fill="#fde68a" stroke="#92400e" strokeWidth="0.3" />
-                          {/* bumper */}
-                          <rect x="-22.5" y="9" width="3" height="2" rx="0.5" fill="#0c4a6e" />
-                          {/* wheels */}
-                          <g>
-                            <circle cx="-14" cy="12" r="3.6" fill="#0f172a" />
-                            <circle cx="-14" cy="12" r="1.6" fill="#cbd5e1" />
-                            <circle cx="-14" cy="12" r="0.6" fill="#0f172a" />
-                          </g>
-                          <g>
-                            <circle cx="18" cy="12" r="3.6" fill="#0f172a" />
-                            <circle cx="18" cy="12" r="1.6" fill="#cbd5e1" />
-                            <circle cx="18" cy="12" r="0.6" fill="#0f172a" />
-                          </g>
+                        {/* motion lines behind the truck (right side = backwards in RTL flow) */}
+                        <g opacity="0.7">
+                          <path d="M 50 -22 h 18" stroke="#38bdf8" strokeWidth="1.6" strokeLinecap="round" />
+                          <path d="M 54 -10 h 14" stroke="#38bdf8" strokeWidth="1.6" strokeLinecap="round" opacity="0.7" />
+                          <path d="M 52 2 h 16" stroke="#38bdf8" strokeWidth="1.6" strokeLinecap="round" opacity="0.5" />
                         </g>
 
-                        {/* speed lines in front of cab */}
-                        <path d="M -36 -6 h 6" stroke="#0ea5e9" strokeWidth="1.4" strokeLinecap="round" />
-                        <path d="M -40 12 h 8" stroke="#0ea5e9" strokeWidth="1.4" strokeLinecap="round" />
+                        {/* TRUCK SILHOUETTE = THE FRAME ITSELF
+                            Cab on the left (forward in RTL), cargo box on right.
+                            One continuous outline so the whole thing reads as a single icon. */}
+                        {/* cargo box */}
+                        <rect x="-22" y="-26" width="68" height="48" rx="4"
+                              fill="url(#truckBodyGrad)" stroke="#0c4a6e" strokeWidth="1.6" />
+                        {/* cab (sloped roof, attached to cargo) */}
+                        <path
+                          d="M -22 -8
+                             L -34 -8
+                             L -42 2
+                             L -42 22
+                             L -22 22 Z"
+                          fill="url(#truckCabGrad)" stroke="#0c4a6e" strokeWidth="1.6" strokeLinejoin="round"
+                        />
+                        {/* cab window */}
+                        <path
+                          d="M -24 -6 L -33 -6 L -39 2 L -24 2 Z"
+                          fill="#e0f2fe" stroke="#0c4a6e" strokeWidth="0.9"
+                        />
+                        <line x1="-30" y1="-6" x2="-33.5" y2="2" stroke="#0c4a6e" strokeWidth="0.7" />
+                        {/* headlight */}
+                        <rect x="-43" y="10" width="3" height="3" rx="0.6" fill="#fde68a" stroke="#92400e" strokeWidth="0.4" />
+                        {/* bumper */}
+                        <rect x="-44" y="18" width="4" height="4" rx="1" fill="#0c4a6e" />
+                        {/* door seam on cargo */}
+                        <line x1="30" y1="-24" x2="30" y2="20" stroke="#0c4a6e" strokeWidth="0.8" opacity="0.5" />
+                        {/* rivets across the top of cargo */}
+                        {Array.from({ length: 7 }).map((_, i) => (
+                          <circle key={i} cx={-16 + i * 10} cy={-22} r="0.9" fill="#0c4a6e" opacity="0.55" />
+                        ))}
 
-                        {/* ribbon label */}
-                        <g transform="translate(0 30)">
-                          <rect x="-26" y="-6" width="52" height="12" rx="2" fill="#0c4a6e" />
-                          <path d="M -26 -6 l -3 6 l 3 6 z" fill="#0c4a6e" />
-                          <path d="M 26 -6 l 3 6 l -3 6 z" fill="#0c4a6e" />
-                          <text x="0" y="2.4" textAnchor="middle" fontFamily="sans-serif" fontWeight="800" fontSize="6" fill="#fde68a" letterSpacing="0.4">הספקה מהירה</text>
+                        {/* label across the cargo — Hebrew, large, owns the silhouette */}
+                        <text
+                          x="10" y="0" textAnchor="middle"
+                          fontFamily="sans-serif" fontWeight="900" fontSize="11.5"
+                          fill="#fffbeb" letterSpacing="0.6"
+                        >הספקה</text>
+                        <text
+                          x="10" y="14" textAnchor="middle"
+                          fontFamily="sans-serif" fontWeight="900" fontSize="11.5"
+                          fill="#fde68a" letterSpacing="0.6"
+                        >מהירה</text>
+
+                        {/* wheels */}
+                        <g>
+                          <circle cx="-30" cy="26" r="7" fill="#0f172a" />
+                          <circle cx="-30" cy="26" r="3.2" fill="#cbd5e1" />
+                          <circle cx="-30" cy="26" r="1.2" fill="#0f172a" />
                         </g>
+                        <g>
+                          <circle cx="30" cy="26" r="7" fill="#0f172a" />
+                          <circle cx="30" cy="26" r="3.2" fill="#cbd5e1" />
+                          <circle cx="30" cy="26" r="1.2" fill="#0f172a" />
+                        </g>
+
+                        {/* tiny ground tick under wheels */}
+                        <line x1="-44" y1="34" x2="46" y2="34" stroke="#0c4a6e" strokeWidth="0.8" strokeDasharray="1.6 1.6" opacity="0.4" />
                       </svg>
                     </div>
                   </div>
