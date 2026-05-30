@@ -1069,129 +1069,120 @@ const StorePage = () => {
                 for (let i = 0; i < guyJanaProducts.length; i += cols) {
                   rows.push(guyJanaProducts.slice(i, i + cols));
                 }
-                const decoIcons = [Sun, Leaf, Sparkles, Lamp, Leaf, Sparkles];
+                const PlantDeco = ({ uid }: { uid: string }) => (
+                  <svg viewBox="0 0 40 140" preserveAspectRatio="xMidYMax meet" aria-hidden="true" className="w-7 md:w-9 h-full">
+                    <defs>
+                      <linearGradient id={`pot-${uid}`} x1="0" y1="0" x2="0" y2="1">
+                        <stop offset="0" stopColor="#b8783f" />
+                        <stop offset="1" stopColor="#7a4a1f" />
+                      </linearGradient>
+                    </defs>
+                    {/* leaves */}
+                    <ellipse cx="20" cy="70" rx="6" ry="24" fill="#4d7a3a" transform="rotate(-35 20 70)" />
+                    <ellipse cx="20" cy="65" rx="6" ry="26" fill="#6ba052" />
+                    <ellipse cx="20" cy="70" rx="6" ry="24" fill="#4d7a3a" transform="rotate(35 20 70)" />
+                    <ellipse cx="14" cy="80" rx="5" ry="18" fill="#3f6a30" transform="rotate(-55 14 80)" />
+                    <ellipse cx="26" cy="80" rx="5" ry="18" fill="#3f6a30" transform="rotate(55 26 80)" />
+                    <ellipse cx="20" cy="55" rx="4" ry="14" fill="#7fb55f" />
+                    {/* pot rim */}
+                    <rect x="8" y="98" width="24" height="6" rx="1" fill="#5b3416" />
+                    {/* pot body */}
+                    <path d="M10 104 L30 104 L27 132 L13 132 Z" fill={`url(#pot-${uid})`} />
+                    <path d="M12 108 L28 108" stroke="rgba(255,255,255,0.15)" strokeWidth="0.6" />
+                  </svg>
+                );
+                const LampDeco = ({ uid }: { uid: string }) => (
+                  <svg viewBox="0 0 40 140" preserveAspectRatio="xMidYMax meet" aria-hidden="true" className="w-7 md:w-9 h-full">
+                    <defs>
+                      <linearGradient id={`shade-${uid}`} x1="0" y1="0" x2="0" y2="1">
+                        <stop offset="0" stopColor="#3d2a14" />
+                        <stop offset="1" stopColor="#8a5e2c" />
+                      </linearGradient>
+                      <radialGradient id={`glow-${uid}`} cx="0.5" cy="0.5" r="0.5">
+                        <stop offset="0" stopColor="#fff3b0" stopOpacity="0.85" />
+                        <stop offset="1" stopColor="#fff3b0" stopOpacity="0" />
+                      </radialGradient>
+                    </defs>
+                    {/* cord */}
+                    <line x1="20" y1="0" x2="20" y2="44" stroke="#3d2a14" strokeWidth="1.4" />
+                    <circle cx="20" cy="44" r="2" fill="#3d2a14" />
+                    {/* shade */}
+                    <path d="M8 46 L32 46 L28 78 L12 78 Z" fill={`url(#shade-${uid})`} />
+                    <ellipse cx="20" cy="46" rx="12" ry="2" fill="#2a1c0c" />
+                    <ellipse cx="20" cy="78" rx="8" ry="1.8" fill="#1a1208" />
+                    {/* glow */}
+                    <circle cx="20" cy="96" r="24" fill={`url(#glow-${uid})`} />
+                    <circle cx="20" cy="84" r="3.5" fill="#fff7c2" />
+                  </svg>
+                );
+                const LanternDeco = ({ uid }: { uid: string }) => (
+                  <svg viewBox="0 0 40 140" preserveAspectRatio="xMidYMax meet" aria-hidden="true" className="w-7 md:w-9 h-full">
+                    <defs>
+                      <linearGradient id={`lant-${uid}`} x1="0" y1="0" x2="0" y2="1">
+                        <stop offset="0" stopColor="#fff7c2" />
+                        <stop offset="1" stopColor="#f0b94a" />
+                      </linearGradient>
+                    </defs>
+                    {/* chain */}
+                    <line x1="20" y1="0" x2="20" y2="34" stroke="#5b3d18" strokeWidth="1" />
+                    <circle cx="20" cy="6" r="1.5" fill="none" stroke="#5b3d18" strokeWidth="0.6" />
+                    <circle cx="20" cy="14" r="1.5" fill="none" stroke="#5b3d18" strokeWidth="0.6" />
+                    <circle cx="20" cy="22" r="1.5" fill="none" stroke="#5b3d18" strokeWidth="0.6" />
+                    {/* cap */}
+                    <path d="M13 34 L27 34 L29 40 L11 40 Z" fill="#7a5326" />
+                    {/* glass body */}
+                    <rect x="12" y="40" width="16" height="30" rx="2" fill={`url(#lant-${uid})`} stroke="#5b3d18" strokeWidth="1.2" />
+                    <line x1="12" y1="55" x2="28" y2="55" stroke="#5b3d18" strokeWidth="0.6" />
+                    <line x1="20" y1="40" x2="20" y2="70" stroke="#5b3d18" strokeWidth="0.6" opacity="0.5" />
+                    {/* base */}
+                    <path d="M10 70 L30 70 L27 78 L13 78 Z" fill="#7a5326" />
+                    {/* halo */}
+                    <circle cx="20" cy="55" r="20" fill="#fff3b0" opacity="0.18" />
+                  </svg>
+                );
+                const decoTypes = [PlantDeco, LampDeco, LanternDeco, PlantDeco, LanternDeco];
                 return (
-                  <div dir="rtl" className="flex flex-col gap-10 md:gap-14">
+                  <div dir="rtl" className="flex flex-col gap-4 md:gap-5">
                     {rows.map((row, rowIdx) => (
                       <div key={rowIdx}>
-                        {/* Top ambient light strip */}
-                        <div className="relative h-3 md:h-4 mb-2">
-                          <div
-                            className="absolute inset-x-6 top-0 h-1 rounded-full"
-                            style={{
-                              background:
-                                "linear-gradient(90deg, transparent, #f6e3a8 20%, #fff7c2 50%, #f6e3a8 80%, transparent)",
-                              boxShadow:
-                                "0 0 18px rgba(255,220,120,0.7), 0 0 36px rgba(255,200,90,0.35)",
-                            }}
-                          />
-                        </div>
-
-                        {/* Products row */}
-                        <div className="grid grid-cols-3 sm:grid-cols-4 md:grid-cols-6 gap-6 md:gap-10">
+                        {/* Mobile: simple grid (no inline decorations) */}
+                        <div className="md:hidden grid grid-cols-3 sm:grid-cols-4 gap-4">
                           {row.map((p, i) => {
                             const globalIdx = rowIdx * cols + i;
                             return (
-                              <div key={p.id} className="flex flex-col items-center">
-                                <button
-                                  type="button"
-                                  onClick={() =>
-                                    navigate("/sense-pro", {
-                                      state: {
-                                        mezuzah: {
-                                          productId: p.id,
-                                          collection: "guy-jana-art",
-                                          itemNumber: globalIdx + 1,
-                                          image: p.image,
-                                          name: p.name,
-                                          brand: "Guy Jana Art",
-                                          unitPrice: p.price,
-                                          shippingPerItem: 0,
-                                        },
-                                      },
-                                    })
-                                  }
-                                  className="group relative flex flex-col bg-[#fffaf0] rounded-md overflow-hidden border border-[#e8d8b4] hover:border-[#c9a35e] transition-all shadow-[0_6px_14px_rgba(80,55,20,0.18)] hover:shadow-[0_10px_22px_rgba(80,55,20,0.28)] hover:-translate-y-0.5 text-right w-full"
-                                  aria-label={`פתח ${p.name}`}
-                                >
-                                  <div className="aspect-square w-full overflow-hidden bg-[#f8efd9]">
-                                    <img
-                                      src={p.image}
-                                      alt={p.name}
-                                      loading="lazy"
-                                      className="w-full h-full object-cover group-hover:scale-105 transition-transform duration-300"
-                                    />
-                                  </div>
-                                  <div className="px-2 py-2 text-center font-heebo text-sm md:text-base font-bold text-[#3d2a14]">
-                                    ₪{p.price.toLocaleString("he-IL", { minimumFractionDigits: 2, maximumFractionDigits: 2 })}
-                                  </div>
-                                </button>
-
-                                {/* Light-wood 3D shelf */}
-                                <div className="w-[108%] -mx-[4%] mt-1">
-                                  <div
-                                    className="relative h-3 md:h-3.5 rounded-[2px]"
-                                    style={{
-                                      background:
-                                        "linear-gradient(180deg, #f1d9a8 0%, #e0bf81 45%, #c79b5a 100%)",
-                                      boxShadow:
-                                        "inset 0 1px 0 rgba(255,240,210,0.9), inset 0 -1px 0 rgba(120,80,30,0.5)",
-                                    }}
-                                  >
-                                    {/* wood grain */}
-                                    <div
-                                      className="absolute inset-0 opacity-40 mix-blend-multiply"
-                                      style={{
-                                        backgroundImage:
-                                          "repeating-linear-gradient(90deg, rgba(120,75,25,0.15) 0 2px, transparent 2px 9px), repeating-linear-gradient(90deg, rgba(80,45,10,0.10) 0 1px, transparent 1px 23px)",
-                                      }}
-                                    />
-                                  </div>
-                                  {/* shelf front face (3D depth) */}
-                                  <div
-                                    className="h-2 md:h-2.5 rounded-b-[2px]"
-                                    style={{
-                                      background:
-                                        "linear-gradient(180deg, #a87a3e 0%, #7a5326 100%)",
-                                      boxShadow:
-                                        "0 8px 12px -4px rgba(60,35,10,0.45), inset 0 1px 0 rgba(255,220,170,0.35)",
-                                    }}
-                                  />
-                                  {/* under-shelf glow */}
-                                  <div
-                                    className="mx-3 h-1 rounded-full opacity-60"
-                                    style={{
-                                      background:
-                                        "radial-gradient(ellipse at center, rgba(60,35,10,0.35), transparent 70%)",
-                                    }}
-                                  />
-                                </div>
-                              </div>
+                              <ProductCard
+                                key={p.id}
+                                p={p}
+                                globalIdx={globalIdx}
+                                navigate={navigate}
+                              />
                             );
                           })}
                         </div>
 
-                        {/* Decoration strip between rows */}
-                        {rowIdx < rows.length - 1 && (
-                          <div className="mt-8 md:mt-10 flex items-center justify-between gap-4 px-2 opacity-90">
-                            <div className="flex-1 h-px bg-gradient-to-r from-transparent via-[#c9a35e]/60 to-transparent" />
-                            {decoIcons.map((Icon, di) => (
-                              <span
-                                key={di}
-                                className="grid place-items-center h-9 w-9 md:h-10 md:w-10 rounded-full"
-                                style={{
-                                  background:
-                                    "radial-gradient(circle at 30% 30%, #fff7e0, #e8d4a3 70%, #c9a35e)",
-                                  boxShadow:
-                                    "0 3px 8px rgba(80,55,20,0.25), inset 0 1px 0 rgba(255,255,255,0.6)",
-                                }}
-                              >
-                                <Icon className="h-4 w-4 md:h-5 md:w-5 text-[#5b3d18]" />
-                              </span>
-                            ))}
-                            <div className="flex-1 h-px bg-gradient-to-r from-transparent via-[#c9a35e]/60 to-transparent" />
-                          </div>
-                        )}
+                        {/* Desktop: products interleaved with tangible decorations between columns */}
+                        <div className="hidden md:flex items-end gap-3">
+                          {row.map((p, i) => {
+                            const globalIdx = rowIdx * cols + i;
+                            const Deco = decoTypes[i % decoTypes.length];
+                            return (
+                              <>
+                                <div key={p.id} className="flex-1 min-w-0">
+                                  <ProductCard p={p} globalIdx={globalIdx} navigate={navigate} />
+                                </div>
+                                {i < row.length - 1 && (
+                                  <div
+                                    key={`d-${rowIdx}-${i}`}
+                                    className="self-stretch flex items-end pb-2 flex-shrink-0"
+                                    aria-hidden="true"
+                                  >
+                                    <Deco uid={`r${rowIdx}c${i}`} />
+                                  </div>
+                                )}
+                              </>
+                            );
+                          })}
+                        </div>
                       </div>
                     ))}
                   </div>
