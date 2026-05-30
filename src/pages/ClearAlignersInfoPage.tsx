@@ -684,7 +684,8 @@ const ClearAlignersInfoPage = () => {
 
               <section className="relative z-10 mt-3 grid grid-cols-1 gap-3 sm:grid-cols-2 lg:grid-cols-[3.2955fr_1fr_1fr]">
                 {/* Column 1 (rightmost in RTL): single merged FAQ table */}
-                <article className="flex flex-col self-start overflow-hidden rounded-2xl border border-sky-200 bg-gradient-to-b from-sky-50/60 to-white text-right shadow-[inset_0_1px_0_rgba(255,255,255,0.9),0_10px_22px_rgba(11,96,141,0.06)]">
+                <div className="flex h-full flex-col gap-3">
+                <article className="flex flex-col overflow-hidden rounded-2xl border border-sky-200 bg-gradient-to-b from-sky-50/60 to-white text-right shadow-[inset_0_1px_0_rgba(255,255,255,0.9),0_10px_22px_rgba(11,96,141,0.06)]">
                   <div className="border-b border-sky-200 bg-sky-200/70 px-3 py-2 text-center">
                     <h2 className="font-heebo text-2xl font-black leading-tight text-slate-950">שאלות תשובות</h2>
                   </div>
@@ -748,6 +749,11 @@ const ClearAlignersInfoPage = () => {
                     </button>
                   </div>
                 </article>
+                <div
+                  aria-hidden="true"
+                  className="flex-1 min-h-[80px] rounded-2xl border border-sky-200 bg-gradient-to-b from-sky-50/60 to-white shadow-[inset_0_1px_0_rgba(255,255,255,0.9),0_10px_22px_rgba(11,96,141,0.06)]"
+                />
+                </div>
 
                 {/* Column 2 (middle): before/after squares stacked, adjacent to photos */}
                 <div className="flex flex-col gap-3">
