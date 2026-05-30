@@ -14,6 +14,7 @@ import floor1Shop6Img from "@/assets/stores/floor1-shop6.png";
 import floor3Shop5Gallery from "@/assets/stores/floor3-shop5-gallery.png";
 import floor3Shop5StoneBg from "@/assets/stores/floor3-shop5-stone-bg.png";
 import easelMascot from "@/assets/stores/easel-mascot.png";
+import { guyJanaProducts } from "@/data/guyJanaProducts";
 import halenModel1 from "@/assets/stores/halen-model-1.png";
 import halenModel2 from "@/assets/stores/halen-model-2.png";
 import halenModel3 from "@/assets/stores/halen-model-3.png";
@@ -833,8 +834,8 @@ const StorePage = () => {
 
       {/* Store content placeholder */}
       <div className="container mx-auto py-12 px-4">
-        <div className={`${store.id === "s18" ? "max-w-[1400px]" : "max-w-4xl"} mx-auto`}>
-          <div className={`bg-card border border-border rounded-xl ${store.id === "s18" ? "p-2" : "p-8"} shadow-lg text-center`}>
+        <div className={`${store.id === "s18" || store.id === "s5" ? "max-w-[1400px]" : "max-w-4xl"} mx-auto`}>
+          <div className={`bg-card border border-border rounded-xl ${store.id === "s18" ? "p-2" : store.id === "s5" ? "p-4 md:p-6" : "p-8"} shadow-lg text-center`}>
             {isIsraelMezuzahs ? (
               <>
                 {/* Mobile: hero on top, all 8 products in 2-col grid */}
@@ -1047,12 +1048,29 @@ const StorePage = () => {
                 </div>
               </div>
             ) : store.id === "s5" ? (
-              <img
-                src={floor3Shop5Gallery}
-                alt="גלריה לאמנות - תצוגת תמונות"
-                className="w-full h-auto rounded-lg shadow-md object-contain"
-                loading="lazy"
-              />
+              <div className="grid grid-cols-3 sm:grid-cols-4 md:grid-cols-6 gap-3 md:gap-4" dir="rtl">
+                {guyJanaProducts.map((p) => (
+                  <a
+                    key={p.id}
+                    href={p.url}
+                    target="_blank"
+                    rel="noopener noreferrer"
+                    className="group flex flex-col bg-card rounded-lg overflow-hidden border border-border hover:border-mall-gold transition-colors shadow-sm hover:shadow-md"
+                  >
+                    <div className="aspect-square w-full overflow-hidden bg-secondary">
+                      <img
+                        src={p.image}
+                        alt=""
+                        loading="lazy"
+                        className="w-full h-full object-cover group-hover:scale-105 transition-transform duration-300"
+                      />
+                    </div>
+                    <div className="px-2 py-2 text-center font-heebo text-sm md:text-base font-bold text-foreground">
+                      ₪{p.price.toLocaleString("he-IL", { minimumFractionDigits: 2, maximumFractionDigits: 2 })}
+                    </div>
+                  </a>
+                ))}
+              </div>
             ) : (
               <>
                 <h2 className="text-2xl font-frank font-bold text-foreground mb-4">
