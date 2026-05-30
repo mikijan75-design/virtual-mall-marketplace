@@ -842,9 +842,9 @@ const StorePage = () => {
                 ? {
                     backgroundColor: "#f5ecd9",
                     backgroundImage:
-                      "linear-gradient(135deg, rgba(180,150,90,0.10) 25%, transparent 25%, transparent 75%, rgba(180,150,90,0.10) 75%), linear-gradient(135deg, rgba(180,150,90,0.10) 25%, transparent 25%, transparent 75%, rgba(180,150,90,0.10) 75%), linear-gradient(180deg, rgba(255,250,235,0.6), rgba(245,236,217,0))",
-                    backgroundSize: "32px 32px, 32px 32px, 100% 100%",
-                    backgroundPosition: "0 0, 16px 16px, 0 0",
+                      "repeating-linear-gradient(90deg, #f5ecd9 0 28px, #e8d8b4 28px 56px), linear-gradient(180deg, rgba(255,250,235,0.55), rgba(245,236,217,0))",
+                    backgroundSize: "56px 100%, 100% 100%",
+                    backgroundPosition: "0 0, 0 0",
                     boxShadow:
                       "inset 0 0 60px rgba(120,90,40,0.12), 0 10px 30px rgba(60,40,20,0.18)",
                   }
