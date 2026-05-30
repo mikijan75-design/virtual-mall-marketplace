@@ -1246,7 +1246,7 @@ const StorePage = () => {
                             const globalIdx = rowIdx * cols + i;
                             const Deco = decoTypes[i % decoTypes.length];
                             return (
-                              <React.Fragment key={p.id}>
+                              <Fragment key={p.id}>
                                 <div className="flex-1 min-w-0">
                                   <ProductCard p={p} globalIdx={globalIdx} navigate={navigate} />
                                 </div>
@@ -1258,7 +1258,7 @@ const StorePage = () => {
                                     <Deco uid={`r${rowIdx}c${i}`} />
                                   </div>
                                 )}
-                              </React.Fragment>
+                              </Fragment>
                             );
                           })}
                         </div>
