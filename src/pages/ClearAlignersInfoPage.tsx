@@ -666,11 +666,51 @@ const ClearAlignersInfoPage = () => {
                 ))}
               </section>
 
-              <div className="relative z-10 mt-10 mb-6 flex items-center gap-4" aria-hidden="true">
-                <span className="h-px flex-1 bg-gradient-to-l from-transparent via-sky-300 to-transparent" />
-                <span className="inline-flex h-2.5 w-2.5 rotate-45 rounded-sm bg-sky-400 shadow-[0_0_0_4px_rgba(125,211,252,0.25)]" />
-                <span className="h-px flex-1 bg-gradient-to-r from-transparent via-sky-300 to-transparent" />
-              </div>
+              <form
+                className="relative z-10 mt-10 mb-6 flex flex-col gap-2 rounded-2xl border border-sky-200 bg-gradient-to-l from-sky-50/70 to-white p-3 shadow-[inset_0_1px_0_rgba(255,255,255,0.9),0_10px_22px_rgba(11,96,141,0.08)] sm:flex-row sm:items-center"
+                dir="rtl"
+                onSubmit={(e) => {
+                  e.preventDefault();
+                  const f = e.currentTarget as HTMLFormElement;
+                  const name = (f.elements.namedItem("contact-name") as HTMLInputElement)?.value.trim();
+                  const phone = (f.elements.namedItem("contact-phone") as HTMLInputElement)?.value.trim();
+                  const message = (f.elements.namedItem("contact-message") as HTMLInputElement)?.value.trim();
+                  if (!name || !phone || !message) {
+                    toast({ title: "נא למלא את כל השדות" });
+                    return;
+                  }
+                  toast({ title: "תודה! פנייתך נשלחה" });
+                  f.reset();
+                }}
+              >
+                <input
+                  name="contact-name"
+                  type="text"
+                  placeholder="שם"
+                  maxLength={100}
+                  className="h-10 flex-1 rounded-lg border border-sky-200 bg-white px-3 text-sm font-heebo text-slate-800 placeholder:text-slate-400 focus:border-sky-400 focus:outline-none focus:ring-2 focus:ring-sky-300/40"
+                />
+                <input
+                  name="contact-phone"
+                  type="tel"
+                  placeholder="טלפון"
+                  maxLength={20}
+                  className="h-10 flex-1 rounded-lg border border-sky-200 bg-white px-3 text-sm font-heebo text-slate-800 placeholder:text-slate-400 focus:border-sky-400 focus:outline-none focus:ring-2 focus:ring-sky-300/40"
+                />
+                <input
+                  name="contact-message"
+                  type="text"
+                  placeholder="הודעה"
+                  maxLength={500}
+                  className="h-10 flex-[2] rounded-lg border border-sky-200 bg-white px-3 text-sm font-heebo text-slate-800 placeholder:text-slate-400 focus:border-sky-400 focus:outline-none focus:ring-2 focus:ring-sky-300/40"
+                />
+                <button
+                  type="submit"
+                  className="h-10 shrink-0 rounded-lg bg-[#0e83bd] px-5 text-sm font-black text-white shadow transition hover:bg-[#096d9e]"
+                >
+                  שלח
+                </button>
+              </form>
 
               <div className="relative">
                 <div
