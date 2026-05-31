@@ -751,6 +751,13 @@ const StorePage = () => {
       <BackButton />
 
       {/* Store banner */}
+      {store.id === "s5" ? (
+        <img
+          src={guyJanaBanner}
+          alt="גיא ג'אנה - GUY JANA - אמן קרמיקה, רוויזם יצירתי"
+          className="block w-full h-auto"
+        />
+      ) : (
       <div
         className={`py-8 md:py-12 ${store.id === "s18" || store.id === "s10" || store.id === "s15" ? "" : `bg-gradient-to-r ${store.signColor}`}`}
         style={
@@ -760,17 +767,10 @@ const StorePage = () => {
               ? { background: "linear-gradient(135deg, #d2b48c, #b8956a)" }
               : store.id === "s15"
                 ? { background: "#f7f1e3" }
-                : store.id === "s5"
-                  ? {
-                      backgroundImage: `url(${floor3Shop5StoneBg})`,
-                      backgroundSize: "cover",
-                      backgroundPosition: "center",
-                      backgroundRepeat: "repeat",
-                    }
-                  : undefined
+                : undefined
         }
       >
-        <div className={`container mx-auto text-center ${store.id === "s15" || store.id === "s5" ? "text-foreground" : "text-white"}`}>
+        <div className={`container mx-auto text-center ${store.id === "s15" ? "text-foreground" : "text-white"}`}>
           {isIsraelMezuzahs ? (
             <img
               src={imBeadLogo}
@@ -787,17 +787,7 @@ const StorePage = () => {
               alt="Daniel Glass-Art logo"
               className="block mx-auto mb-4 h-24 md:h-32 w-auto object-contain rounded-md bg-white/95 px-3 py-2 shadow-lg"
             />
-          ) : store.id === "s10" ? null : store.id === "s5" ? (
-            <img
-              src={easelMascot}
-              alt="כן ציור - גלריה לאמנות"
-              className="block mx-auto mb-4 h-20 md:h-24 w-auto object-contain"
-              style={{
-                filter:
-                  "drop-shadow(0 0 12px rgba(255,255,255,0.9)) drop-shadow(0 10px 18px rgba(0,0,0,0.45))",
-              }}
-            />
-          ) : (
+          ) : store.id === "s10" ? null : (
             store.id === "s15" ? (
               <img
                 src={tuliLogo}
@@ -832,6 +822,7 @@ const StorePage = () => {
           </span>
         </div>
       </div>
+      )}
 
       {/* Store content placeholder */}
       <div className="container mx-auto py-12 px-4">
