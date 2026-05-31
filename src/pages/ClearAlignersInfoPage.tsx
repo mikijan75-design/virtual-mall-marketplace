@@ -1017,6 +1017,10 @@ const ClearAlignersInfoPage = () => {
           </section>
         </div>
 
+        <div className="mx-auto mt-6 max-w-[1100px]">
+          <LeadRowForm />
+        </div>
+
         <section
           dir="rtl"
           className="mx-auto mt-6 max-w-[1100px] rounded-3xl border border-sky-200 bg-white/80 p-6 text-right shadow-[0_10px_30px_rgba(11,96,141,0.08)] sm:p-8"
