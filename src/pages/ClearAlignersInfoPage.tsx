@@ -612,6 +612,7 @@ const ClearAlignersInfoPage = () => {
     <>
     <main
       dir="rtl"
+      translate="no"
       className="min-h-screen overflow-hidden bg-[radial-gradient(circle_at_50%_5%,#f7fdff_0%,#dff5ff_38%,#c8ebfa_100%)] px-3 py-5 text-slate-900 sm:px-6 lg:px-10"
     >
       <div className="mx-auto max-w-[1180px]">
