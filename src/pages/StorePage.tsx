@@ -1103,87 +1103,48 @@ const StorePage = () => {
                         ₪{p.price.toLocaleString("he-IL", { minimumFractionDigits: 2, maximumFractionDigits: 2 })}
                       </div>
                     </button>
-                    {/* Carved wooden shelf */}
+                    {/* Realistic solid wood shelf */}
                     <div className="w-[110%] -mx-[5%] mt-1">
-                      {/* Top bullnose edge highlight */}
                       <div
-                        className="h-[3px] md:h-1 rounded-t-[3px]"
+                        className="relative h-6 md:h-7 rounded-[3px] overflow-hidden"
                         style={{
                           background:
-                            "linear-gradient(180deg, #fff1cf 0%, #e9c98a 100%)",
-                        }}
-                      />
-                      {/* Main wood plank with grain + knots */}
-                      <div
-                        className="relative h-5 md:h-6 overflow-hidden"
-                        style={{
-                          background:
-                            "linear-gradient(180deg, #e8c084 0%, #c8965a 50%, #9a6a35 100%)",
+                            "linear-gradient(180deg, #d9a35f 0%, #b87a3a 35%, #8a5421 78%, #5e3713 100%)",
                           boxShadow:
-                            "inset 0 1px 0 rgba(255,240,210,0.9), inset 0 -2px 3px rgba(60,30,5,0.45)",
+                            "inset 0 1px 0 rgba(255,235,200,0.85), inset 0 -2px 4px rgba(40,20,5,0.55), 0 12px 18px -6px rgba(40,20,5,0.55)",
                         }}
                       >
-                        {/* long grain streaks */}
+                        {/* organic flowing wood grain */}
                         <div
-                          className="absolute inset-0 opacity-70 mix-blend-multiply"
+                          className="absolute inset-0 opacity-60 mix-blend-multiply"
                           style={{
                             backgroundImage:
-                              "repeating-linear-gradient(90deg, rgba(90,55,15,0.22) 0 1px, transparent 1px 7px), repeating-linear-gradient(90deg, rgba(60,30,5,0.18) 0 1px, transparent 1px 19px), repeating-linear-gradient(90deg, rgba(255,225,180,0.25) 0 1px, transparent 1px 31px)",
+                              "radial-gradient(ellipse 120% 18% at 30% 35%, rgba(70,38,12,0.55), transparent 60%), radial-gradient(ellipse 90% 12% at 70% 70%, rgba(60,30,8,0.45), transparent 65%), radial-gradient(ellipse 60% 8% at 15% 80%, rgba(80,45,15,0.4), transparent 70%), radial-gradient(ellipse 140% 10% at 50% 20%, rgba(255,220,170,0.35), transparent 60%)",
                           }}
                         />
-                        {/* knot 1 */}
+                        {/* natural knot */}
                         <div
-                          className="absolute top-1/2 left-[18%] -translate-y-1/2 w-2.5 h-1.5 rounded-full opacity-80"
+                          className="absolute top-[55%] left-[22%] -translate-y-1/2 w-3 h-2 rounded-full opacity-75"
                           style={{
                             background:
-                              "radial-gradient(ellipse at center, #4a2a0e 0%, #7a4a1f 55%, transparent 80%)",
+                              "radial-gradient(ellipse at 40% 40%, #2e1808 0%, #5a3413 50%, transparent 85%)",
                           }}
                         />
-                        {/* knot 2 */}
+                        {/* top satin highlight */}
                         <div
-                          className="absolute top-[40%] right-[24%] w-2 h-1 rounded-full opacity-70"
+                          className="absolute inset-x-0 top-0 h-1/2"
                           style={{
                             background:
-                              "radial-gradient(ellipse at center, #3b210b 0%, #6e421c 60%, transparent 85%)",
-                          }}
-                        />
-                        {/* subtle highlight sweep */}
-                        <div
-                          className="absolute inset-x-0 top-0 h-1/3"
-                          style={{
-                            background:
-                              "linear-gradient(180deg, rgba(255,240,210,0.45), transparent)",
+                              "linear-gradient(180deg, rgba(255,235,200,0.4), transparent)",
                           }}
                         />
                       </div>
-                      {/* Carved decorative trim */}
+                      {/* soft cast shadow */}
                       <div
-                        className="h-1.5 md:h-2"
+                        className="mx-2 h-1.5 rounded-full opacity-50"
                         style={{
                           background:
-                            "linear-gradient(180deg, #8a5a28 0%, #5a3814 100%)",
-                          backgroundImage:
-                            "repeating-linear-gradient(90deg, rgba(0,0,0,0.35) 0 2px, transparent 2px 8px), linear-gradient(180deg, #8a5a28 0%, #5a3814 100%)",
-                          boxShadow:
-                            "inset 0 1px 0 rgba(255,210,160,0.4), inset 0 -1px 0 rgba(0,0,0,0.5)",
-                        }}
-                      />
-                      {/* Front fascia */}
-                      <div
-                        className="h-2.5 md:h-3 rounded-b-[3px]"
-                        style={{
-                          background:
-                            "linear-gradient(180deg, #a87a3e 0%, #6a4520 100%)",
-                          boxShadow:
-                            "0 10px 14px -5px rgba(50,28,5,0.55), inset 0 1px 0 rgba(255,220,170,0.4)",
-                        }}
-                      />
-                      {/* cast shadow */}
-                      <div
-                        className="mx-3 h-1.5 rounded-full opacity-60"
-                        style={{
-                          background:
-                            "radial-gradient(ellipse at center, rgba(50,28,5,0.45), transparent 70%)",
+                            "radial-gradient(ellipse at center, rgba(40,20,5,0.5), transparent 70%)",
                         }}
                       />
                     </div>
