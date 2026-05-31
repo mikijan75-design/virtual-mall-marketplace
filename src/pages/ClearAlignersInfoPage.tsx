@@ -472,10 +472,16 @@ const LeadRowForm = ({ className = "" }: { className?: string }) => {
     f.reset();
   };
   return (
-    <form
+    <div className={className}>
+      <div className="relative z-10 rounded-t-2xl bg-gradient-to-l from-[#06395a] via-[#0d5e8f] to-[#06395a] px-4 py-2 text-center shadow-[0_4px_10px_rgba(7,86,129,0.25)]">
+        <h2 className="font-heebo text-base font-black tracking-tight text-white sm:text-lg">
+          השאירו פרטים ונחזור אליכם
+        </h2>
+      </div>
+      <form
       dir="rtl"
       onSubmit={handleSubmit}
-      className={`relative z-10 flex flex-col gap-2 rounded-2xl border border-sky-200 bg-gradient-to-l from-sky-50/70 to-white p-3 shadow-[inset_0_1px_0_rgba(255,255,255,0.9),0_10px_22px_rgba(11,96,141,0.08)] sm:flex-row sm:items-center ${className}`}
+      className="relative z-10 flex flex-col gap-2 rounded-b-2xl border border-t-0 border-sky-200 bg-gradient-to-l from-sky-50/70 to-white p-3 shadow-[inset_0_1px_0_rgba(255,255,255,0.9),0_10px_22px_rgba(11,96,141,0.08)] sm:flex-row sm:items-center"
     >
       <input
         name="contact-name"
@@ -506,7 +512,8 @@ const LeadRowForm = ({ className = "" }: { className?: string }) => {
       >
         שלח
       </button>
-    </form>
+      </form>
+    </div>
   );
 };
 
