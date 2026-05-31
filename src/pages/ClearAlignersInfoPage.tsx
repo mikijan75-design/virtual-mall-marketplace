@@ -596,8 +596,8 @@ const ClearAlignersInfoPage = () => {
                     </div>
                   ))}
 
-                  <div className="absolute left-1/2 top-1/2 z-20 flex h-[58%] w-[58%] -translate-x-1/2 -translate-y-1/2 flex-col items-center justify-center rounded-full border-[6px] border-[#0d6799] bg-gradient-to-b from-sky-100 to-white p-5 text-center shadow-[inset_0_8px_18px_rgba(255,255,255,0.9),0_10px_28px_rgba(7,86,129,0.28)]">
-                    <p className="mb-2 max-w-[14rem] text-[0.78rem] font-black leading-tight text-slate-800">
+                  <div className="absolute left-1/2 top-1/2 z-20 flex h-[74%] w-[74%] -translate-x-1/2 -translate-y-1/2 flex-col items-center justify-center rounded-full border-[6px] border-[#0d6799] bg-gradient-to-b from-sky-100 to-white p-6 text-center shadow-[inset_0_8px_18px_rgba(255,255,255,0.9),0_10px_28px_rgba(7,86,129,0.28)]">
+                    <p className="mb-3 max-w-[16rem] text-[0.9rem] font-black leading-tight text-slate-800">
                       העלה כאן תמונה של השיניים שלך למתן מידע מקצועי ראשוני
                     </p>
                     <div className="relative mb-2 flex h-24 w-36 items-center justify-center overflow-hidden rounded-xl border-4 border-white bg-slate-100 shadow-inner">
