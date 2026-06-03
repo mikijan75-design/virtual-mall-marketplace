@@ -1,52 +1,30 @@
-import { Lock, Wrench, ShoppingBag, Hammer, ShieldCheck, RotateCcw, Truck } from "lucide-react";
 import MallHeader from "@/components/mall/MallHeader";
 import MallFooter from "@/components/mall/MallFooter";
 import PageTracker from "@/components/PageTracker";
 import BackButton from "@/components/BackButton";
 import type { Store } from "@/data/mallData";
+import iconLock from "@/assets/stores/bnei-icons/lock.png";
+import iconSafeWrench from "@/assets/stores/bnei-icons/safe-wrench.png";
+import iconSafesStack from "@/assets/stores/bnei-icons/safes-stack.png";
+import iconSafeDrill from "@/assets/stores/bnei-icons/safe-drill.png";
+import iconPoliceBadge from "@/assets/stores/bnei-icons/police-badge.png";
+import iconUsedSafe from "@/assets/stores/bnei-icons/used-safe.png";
+import iconCraneTruck from "@/assets/stores/bnei-icons/crane-truck.png";
 
 type Category = {
-  Icon: typeof Lock;
+  icon: string;
   title: string;
   desc: string;
 };
 
 const categories: Category[] = [
-  {
-    Icon: Lock,
-    title: "פריצת מנעולים",
-    desc: "פתרון מהיר ומקצועי לכל סוגי המנעולים ללא נזק.",
-  },
-  {
-    Icon: Wrench,
-    title: "תיקון ושיפוץ כספות",
-    desc: "שירותי תיקון מקיפים, שיקום מנגנונים מכניים ואלקטרוניים.",
-  },
-  {
-    Icon: ShoppingBag,
-    title: "מכירת כספות",
-    desc: "מבחר כספות חדשות ומתקדמות לעסקים ופרטיים, כולל ייעוץ.",
-  },
-  {
-    Icon: Hammer,
-    title: "פריצת כספות",
-    desc: "פריצה מוסמכת לכספות חסומות או תקולות, שמירה על התכולה.",
-  },
-  {
-    Icon: ShieldCheck,
-    title: "ספק משטרת ישראל",
-    desc: "ספק מורשה ומאושר של מנעולים וכספות עבור כוחות הביטחון.",
-  },
-  {
-    Icon: RotateCcw,
-    title: "מכירת כספות יד שנייה",
-    desc: "כספות משומשות ואמינות שעברו שיפוץ, מחירים אטרקטיביים.",
-  },
-  {
-    Icon: Truck,
-    title: "שינוע והובלת כספות",
-    desc: "הובלה מקצועית ומאובטחת של כספות כבדות ומורכבות.",
-  },
+  { icon: iconLock,        title: "פריצת מנעולים",      desc: "פתרון מהיר ומקצועי לכל סוגי המנעולים ללא נזק." },
+  { icon: iconSafeWrench,  title: "תיקון ושיפוץ כספות", desc: "שירותי תיקון מקיפים, שיקום מנגנונים מכניים ואלקטרוניים." },
+  { icon: iconSafesStack,  title: "מכירת כספות",         desc: "מבחר כספות חדשות ומתקדמות לעסקים ופרטיים, כולל ייעוץ." },
+  { icon: iconSafeDrill,   title: "פריצת כספות",         desc: "פריצה מוסמכת לכספות חסומות או תקולות, שמירה על התכולה." },
+  { icon: iconPoliceBadge, title: "ספק משטרת ישראל",     desc: "ספק מורשה ומאושר של מנעולים וכספות עבור כוחות הביטחון." },
+  { icon: iconUsedSafe,    title: "מכירת כספות יד שנייה", desc: "כספות משומשות ואמינות שעברו שיפוץ, מחירים אטרקטיביים." },
+  { icon: iconCraneTruck,  title: "שינוע והובלת כספות",   desc: "הובלה מקצועית ומאובטחת של כספות כבדות ומורכבות." },
 ];
 
 const BneiKasafotStoreView = ({ store }: { store: Store }) => {
@@ -107,7 +85,7 @@ const BneiKasafotStoreView = ({ store }: { store: Store }) => {
         />
 
         <div className="relative mx-auto max-w-3xl px-5 py-12 md:py-16 space-y-10 md:space-y-14">
-          {categories.map(({ Icon, title, desc }, i) => {
+          {categories.map(({ icon, title, desc }, i) => {
             const reverse = i % 2 === 1;
             return (
               <section
@@ -117,21 +95,17 @@ const BneiKasafotStoreView = ({ store }: { store: Store }) => {
                 }`}
               >
                 <div className="icon-container shrink-0">
-                  <div
-                    className="floating-icon relative grid place-items-center h-20 w-20 md:h-28 md:w-28 rounded-full"
+                  <img
+                    src={icon}
+                    alt={title}
+                    className="floating-icon h-24 w-24 md:h-32 md:w-32 object-contain"
                     style={{
-                      background:
-                        "radial-gradient(circle at 30% 30%, #7dd3fc 0%, #38bdf8 45%, #0284c7 100%)",
-                      boxShadow:
-                        "0 0 30px rgba(56,189,248,0.45), inset 0 -6px 12px rgba(2,6,23,0.35), inset 0 4px 8px rgba(255,255,255,0.25)",
+                      filter:
+                        "drop-shadow(0 0 18px rgba(56,189,248,0.45))",
                       animation: `floaty 4s ease-in-out ${i * 0.3}s infinite`,
                     }}
-                  >
-                    <Icon
-                      className="h-9 w-9 md:h-12 md:w-12 text-[#0c1326]"
-                      strokeWidth={2.2}
-                    />
-                  </div>
+                    loading="lazy"
+                  />
                 </div>
                 <div
                   className={`text-content flex-1 ${
