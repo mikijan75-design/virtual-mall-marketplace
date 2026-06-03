@@ -46,6 +46,7 @@ import floor1Shop5Img from "@/assets/stores/floor1-shop5.png";
 import { guyJanaProducts } from "@/data/guyJanaProducts";
 import floor1Shop5DisplayImg from "@/assets/stores/floor1-shop5-display.png";
 import floor3Shop5Img from "@/assets/floor3-shop5.png";
+import bneiKasafotImg from "@/assets/stores/bnei-kasafot.png";
 
 type BrandStyle = {
   bg: string;
@@ -152,13 +153,13 @@ const idOverrides: Record<string, Partial<BrandStyle & { name: string }>> = {
     logo: danielGlassArtLogo,
   },
   s10: {
-    name: "ירדנ'ס ג'ולרי",
-    bg: "linear-gradient(135deg, #f5ede0, #ebe0cc)",
-    text: "#3a2a20",
-    accent: "#c9a96e",
+    name: "בני כספות",
+    bg: "linear-gradient(135deg, #2c2c2c, #1a1a1a)",
+    text: "#e8e8e8",
+    accent: "#9e9e9e",
     font: "font-frank",
-    image: yardensJewelryImg,
-    subtitle: "",
+    image: bneiKasafotImg,
+    subtitle: "כספות ואבטחה",
   },
   s15: {
     name: "רוקחות טבעית",
