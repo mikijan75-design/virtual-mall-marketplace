@@ -218,7 +218,6 @@ const StoreCard = ({ store, storeIndex }: StoreCardProps) => {
   const displayName = override?.name ?? store.name;
   const isAvnerOvad = store.id === "s4";
   const isVintageVillage = store.id === "s1";
-  const isBneiKasafot = store.id === "s10";
 
   if (isVintageVillage) {
     return (
@@ -279,12 +278,6 @@ const StoreCard = ({ store, storeIndex }: StoreCardProps) => {
         style={
           isAvnerOvad
             ? { boxShadow: "0 6px 24px rgba(0,0,0,0.12)" }
-            : isBneiKasafot
-            ? {
-                backgroundColor: "#0a0a0a",
-                border: "2px solid #0a0a0a",
-                boxShadow: "0 6px 24px rgba(0,0,0,0.35)",
-              }
             : {
                 border: "2px solid hsl(40,25%,72%)",
                 boxShadow: "0 6px 24px rgba(0,0,0,0.12), inset 0 0 0 1px hsl(40,20%,85%)",
@@ -292,7 +285,7 @@ const StoreCard = ({ store, storeIndex }: StoreCardProps) => {
         }
       >
         {/* Top gold trim */}
-        {!isAvnerOvad && !isBneiKasafot && (
+        {!isAvnerOvad && (
           <div
             className="h-[3px]"
             style={{ background: "linear-gradient(90deg, hsl(40,15%,65%), hsl(43,45%,70%), hsl(40,15%,65%))" }}
@@ -433,10 +426,7 @@ const StoreCard = ({ store, storeIndex }: StoreCardProps) => {
 
         {/* Realistic store image */}
         {style.image ? (
-          <div
-            className={`relative overflow-hidden ${style.subtitle || style.subtitleLogo || style.codedSubtitle ? IMAGE_AREA_CLASS : "flex-1 min-h-0"}`}
-            style={store.id === "s10" ? { backgroundColor: "#0a0a0a" } : undefined}
-          >
+          <div className={`relative overflow-hidden ${style.subtitle || style.subtitleLogo || style.codedSubtitle ? IMAGE_AREA_CLASS : "flex-1 min-h-0"}`}>
             <img
               src={style.image}
               alt={store.name}
@@ -448,18 +438,14 @@ const StoreCard = ({ store, storeIndex }: StoreCardProps) => {
             {/* Glass reflection overlay */}
             <div
               className="absolute inset-0 pointer-events-none"
-              style={store.id === "s10" ? {
-                background: "linear-gradient(155deg, rgba(255,255,255,0.08) 0%, transparent 35%, transparent 60%, rgba(255,255,255,0.03) 100%)",
-              } : {
+              style={{
                 background: "linear-gradient(155deg, rgba(255,255,255,0.18) 0%, transparent 35%, transparent 60%, rgba(255,255,255,0.06) 100%)",
               }}
             />
             {/* Hover warm glow */}
             <div
               className="absolute inset-0 opacity-0 group-hover:opacity-100 transition-opacity duration-500 pointer-events-none"
-              style={store.id === "s10" ? {
-                background: "radial-gradient(ellipse at center, rgba(255,255,230,0.08) 0%, transparent 70%)",
-              } : {
+              style={{
                 background: "radial-gradient(ellipse at center, rgba(255,230,180,0.15) 0%, transparent 70%)",
               }}
             />
@@ -474,7 +460,7 @@ const StoreCard = ({ store, storeIndex }: StoreCardProps) => {
         )}
 
         {/* Bottom gold trim */}
-        {!isAvnerOvad && !isBneiKasafot && (
+        {!isAvnerOvad && (
           <div
             className="h-[3px]"
             style={{ background: "linear-gradient(90deg, hsl(40,15%,65%), hsl(43,45%,70%), hsl(40,15%,65%))" }}
