@@ -426,7 +426,10 @@ const StoreCard = ({ store, storeIndex }: StoreCardProps) => {
 
         {/* Realistic store image */}
         {style.image ? (
-          <div className={`relative overflow-hidden ${style.subtitle || style.subtitleLogo || style.codedSubtitle ? IMAGE_AREA_CLASS : "flex-1 min-h-0"}`}>
+          <div
+            className={`relative overflow-hidden ${style.subtitle || style.subtitleLogo || style.codedSubtitle ? IMAGE_AREA_CLASS : "flex-1 min-h-0"}`}
+            style={store.id === "s10" ? { backgroundColor: "#0a0a0a" } : undefined}
+          >
             <img
               src={style.image}
               alt={store.name}
@@ -438,14 +441,18 @@ const StoreCard = ({ store, storeIndex }: StoreCardProps) => {
             {/* Glass reflection overlay */}
             <div
               className="absolute inset-0 pointer-events-none"
-              style={{
+              style={store.id === "s10" ? {
+                background: "linear-gradient(155deg, rgba(255,255,255,0.08) 0%, transparent 35%, transparent 60%, rgba(255,255,255,0.03) 100%)",
+              } : {
                 background: "linear-gradient(155deg, rgba(255,255,255,0.18) 0%, transparent 35%, transparent 60%, rgba(255,255,255,0.06) 100%)",
               }}
             />
             {/* Hover warm glow */}
             <div
               className="absolute inset-0 opacity-0 group-hover:opacity-100 transition-opacity duration-500 pointer-events-none"
-              style={{
+              style={store.id === "s10" ? {
+                background: "radial-gradient(ellipse at center, rgba(255,255,230,0.08) 0%, transparent 70%)",
+              } : {
                 background: "radial-gradient(ellipse at center, rgba(255,230,180,0.15) 0%, transparent 70%)",
               }}
             />
