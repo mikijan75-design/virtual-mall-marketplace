@@ -13,8 +13,8 @@ const MallHeader = () => {
   const { totalCount } = useCart();
   return (
     <header className="bg-mall-sign text-primary-foreground shadow-lg sticky top-0 z-50">
-      <div className="container mx-auto grid grid-cols-3 items-center py-3 px-4">
-        <div className="flex justify-start">
+      <div className="container mx-auto flex items-center justify-between gap-4 py-3 px-4">
+        <div className="flex items-center gap-3 md:gap-5">
           <Link to="/" aria-label="חזרה לדף הבית" className="inline-flex">
             <img
               src={logo}
@@ -22,12 +22,12 @@ const MallHeader = () => {
               className="h-12 md:h-16 w-auto rounded-full bg-background/95 p-1 shadow-md hover:opacity-90 transition-opacity cursor-pointer"
             />
           </Link>
+          <h1 className="text-2xl md:text-4xl font-bubble font-semibold text-mall-gold tracking-wide drop-shadow-[0_2px_0_rgba(0,0,0,0.4)] whitespace-nowrap">
+            <Link to="/" aria-label="חזרה לדף הבית" className="hover:opacity-90 transition-opacity cursor-pointer">
+              הקניון הווירטואלי
+            </Link>
+          </h1>
         </div>
-        <h1 className="text-center text-3xl md:text-5xl font-bubble font-semibold text-mall-gold tracking-wide drop-shadow-[0_2px_0_rgba(0,0,0,0.4)]">
-          <Link to="/" aria-label="חזרה לדף הבית" className="hover:opacity-90 transition-opacity cursor-pointer">
-            הקניון הווירטואלי
-          </Link>
-        </h1>
         <nav className="flex justify-end gap-1 md:gap-6 text-sm md:text-base font-heebo">
           <Link to="/" className="px-3 py-1 rounded hover:bg-mall-gold/20 transition-colors">דף הבית</Link>
           <Link to="/" className="px-3 py-1 rounded hover:bg-mall-gold/20 transition-colors">חנויות</Link>
