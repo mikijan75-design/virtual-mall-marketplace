@@ -218,6 +218,7 @@ const StoreCard = ({ store, storeIndex }: StoreCardProps) => {
   const displayName = override?.name ?? store.name;
   const isAvnerOvad = store.id === "s4";
   const isVintageVillage = store.id === "s1";
+  const isBneiKasafot = store.id === "s10";
 
   if (isVintageVillage) {
     return (
@@ -278,6 +279,12 @@ const StoreCard = ({ store, storeIndex }: StoreCardProps) => {
         style={
           isAvnerOvad
             ? { boxShadow: "0 6px 24px rgba(0,0,0,0.12)" }
+            : isBneiKasafot
+            ? {
+                backgroundColor: "#0a0a0a",
+                border: "2px solid #0a0a0a",
+                boxShadow: "0 6px 24px rgba(0,0,0,0.35)",
+              }
             : {
                 border: "2px solid hsl(40,25%,72%)",
                 boxShadow: "0 6px 24px rgba(0,0,0,0.12), inset 0 0 0 1px hsl(40,20%,85%)",
@@ -285,7 +292,7 @@ const StoreCard = ({ store, storeIndex }: StoreCardProps) => {
         }
       >
         {/* Top gold trim */}
-        {!isAvnerOvad && (
+        {!isAvnerOvad && !isBneiKasafot && (
           <div
             className="h-[3px]"
             style={{ background: "linear-gradient(90deg, hsl(40,15%,65%), hsl(43,45%,70%), hsl(40,15%,65%))" }}
@@ -467,7 +474,7 @@ const StoreCard = ({ store, storeIndex }: StoreCardProps) => {
         )}
 
         {/* Bottom gold trim */}
-        {!isAvnerOvad && (
+        {!isAvnerOvad && !isBneiKasafot && (
           <div
             className="h-[3px]"
             style={{ background: "linear-gradient(90deg, hsl(40,15%,65%), hsl(43,45%,70%), hsl(40,15%,65%))" }}
