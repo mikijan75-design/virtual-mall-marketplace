@@ -691,6 +691,10 @@ const StorePage = () => {
     return <HalenBinariaStoreView store={store} />;
   }
 
+  if (store.id === "s10") {
+    return <BneiKasafotStoreView store={store} />;
+  }
+
   if (store.id === "s8") {
     return (
       <div className="min-h-screen bg-background">
