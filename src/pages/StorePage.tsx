@@ -38,6 +38,7 @@ import InfrastructureBlueprintScene from "@/components/InfrastructureBlueprintSc
 import GalleryWallSection from "@/components/mall/GalleryWallSection";
 import ClearAlignersInfoPage from "@/pages/ClearAlignersInfoPage";
 import PacmanArcadePage from "@/pages/PacmanArcadePage";
+import BneiKasafotStoreView from "@/components/mall/BneiKasafotStoreView";
 import imProduct1 from "@/assets/stores/im-product-1.png";
 import imProduct2 from "@/assets/stores/im-product-2.png";
 import imProduct3 from "@/assets/stores/im-product-3.png";
