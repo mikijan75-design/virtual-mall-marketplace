@@ -119,7 +119,7 @@ const BneiKasafotStoreView = ({ store }: { store: Store }) => {
                   }`}
                 >
                   <h2
-                    className="text-2xl md:text-4xl text-white mb-1.5 md:mb-2 tracking-tight"
+                    className="text-2xl md:text-4xl text-[#7dd3fc] mb-1.5 md:mb-2 tracking-tight"
                     style={{ fontWeight: 900 }}
                   >
                     {title}
