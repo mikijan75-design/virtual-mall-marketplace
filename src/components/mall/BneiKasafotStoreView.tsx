@@ -29,7 +29,10 @@ const categories: Category[] = [
 
 const BneiKasafotStoreView = ({ store }: { store: Store }) => {
   return (
-    <div className="min-h-screen flex flex-col bg-[#020617]">
+    <div
+      className="min-h-screen flex flex-col bg-[#020617]"
+      style={{ fontFamily: '"Rubik", "Noto Sans Hebrew", system-ui, sans-serif' }}
+    >
       <MallHeader />
       <PageTracker storeId={store.id} />
       <BackButton />
@@ -54,13 +57,16 @@ const BneiKasafotStoreView = ({ store }: { store: Store }) => {
           }}
         />
         <div className="relative">
-          <h1 className="font-frank text-3xl md:text-5xl font-black tracking-wide text-[#e0f2fe] drop-shadow-[0_2px_10px_rgba(56,189,248,0.5)]">
+          <h1
+            className="text-3xl md:text-5xl font-black tracking-wide text-white drop-shadow-[0_2px_10px_rgba(56,189,248,0.5)]"
+            style={{ fontWeight: 900 }}
+          >
             בני כספות
           </h1>
-          <p className="mt-3 font-heebo text-base md:text-xl text-[#7dd3fc]">
+          <p className="mt-3 text-base md:text-xl text-[#bae6fd]" style={{ fontWeight: 500 }}>
             שירותי מנעולנות וכספות מתקדמים
           </p>
-          <span className="inline-block mt-4 bg-[#0c4a6e]/60 text-[#bae6fd] border border-[#38bdf8]/30 px-4 py-1 rounded-full text-sm font-heebo">
+          <span className="inline-block mt-4 bg-[#0c4a6e]/60 text-[#bae6fd] border border-[#38bdf8]/30 px-4 py-1 rounded-full text-sm">
             {store.category} • קומה {store.floor}
           </span>
         </div>
@@ -112,10 +118,16 @@ const BneiKasafotStoreView = ({ store }: { store: Store }) => {
                     reverse ? "text-left" : "text-right"
                   }`}
                 >
-                  <h2 className="font-frank text-xl md:text-3xl font-extrabold text-[#e0f2fe] mb-1.5 md:mb-2">
+                  <h2
+                    className="text-2xl md:text-4xl text-white mb-1.5 md:mb-2 tracking-tight"
+                    style={{ fontWeight: 900 }}
+                  >
                     {title}
                   </h2>
-                  <p className="font-heebo text-sm md:text-base leading-relaxed text-[#94a3b8]">
+                  <p
+                    className="text-sm md:text-base leading-relaxed text-[#cbd5e1]"
+                    style={{ fontWeight: 500 }}
+                  >
                     {desc}
                   </p>
                 </div>
@@ -123,7 +135,7 @@ const BneiKasafotStoreView = ({ store }: { store: Store }) => {
             );
           })}
 
-          <footer className="pt-8 mt-6 border-t border-[#1e3a5f] text-center font-heebo text-[#7dd3fc] text-sm md:text-base">
+          <footer className="pt-8 mt-6 border-t border-[#1e3a5f] text-center text-[#bae6fd] text-sm md:text-base">
             לפרטים נוספים:{" "}
             <span dir="ltr" className="tracking-wide">
               050-XXXXXXX
