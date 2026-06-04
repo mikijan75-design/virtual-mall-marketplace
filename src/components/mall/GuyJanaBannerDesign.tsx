@@ -1,16 +1,8 @@
 import type { CSSProperties, ReactNode } from "react";
 import guyJanaPortrait from "@/assets/stores/guy-jana-portrait.png";
+import { GUY_JANA_BANNER_DESIGN } from "@/components/mall/GuyJanaBannerDesign.design";
 
-/** Sampled from guy-jana-banner.png */
-export const GUY_JANA_BANNER_COLORS = {
-  background: "#EDEEE6",
-  backgroundDeep: "#CDCBC3",
-  text: "#1F1E1B",
-  ceramic: "#B4B0A4",
-  ceramicShadow: "#6D7074",
-  blueAccent: "#607487",
-  highlight: "#F0F0F0",
-} as const;
+export const GUY_JANA_BANNER_COLORS = GUY_JANA_BANNER_DESIGN.colors;
 
 type Section = {
   id: string;
@@ -165,13 +157,11 @@ const GuyJanaBannerDesign = () => (
           />
         </div>
         <h1 className="font-frank text-[1.35rem] font-bold leading-tight tracking-wide sm:text-[1.65rem] md:text-[1.85rem]">
-          <span dir="ltr" className="inline-block">
-            GUY JANA //
-          </span>{" "}
-          גיא ג&apos;אנה
+          <span dir="ltr" className="inline-block">{GUY_JANA_BANNER_DESIGN.header.nameEn}</span>{" "}
+          {GUY_JANA_BANNER_DESIGN.header.nameHe}
         </h1>
         <p className="mt-1 text-sm font-medium text-[#1F1E1B]/90 sm:text-base">
-          אמן קרמיקה, קדר ומרצה
+          {GUY_JANA_BANNER_DESIGN.header.subtitle}
         </p>
       </header>
 
