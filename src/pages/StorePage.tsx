@@ -758,11 +758,13 @@ const StorePage = () => {
 
       {/* Store banner */}
       {store.id === "s5" ? (
-        <img
-          src={guyJanaBanner}
-          alt="גיא ג'אנה - GUY JANA - אמן קרמיקה, קדר ומרצה"
-          className="block w-full h-auto"
-        />
+        <div className="container mx-auto px-4 pt-4">
+          <img
+            src={guyJanaBanner}
+            alt="גיא ג'אנה - GUY JANA - אמן קרמיקה, קדר ומרצה"
+            className="block w-full h-auto rounded-t-xl"
+          />
+        </div>
       ) : (
       <div
         className={`py-8 md:py-12 ${store.id === "s18" || store.id === "s10" || store.id === "s15" ? "" : `bg-gradient-to-r ${store.signColor}`}`}
