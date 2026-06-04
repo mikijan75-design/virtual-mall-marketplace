@@ -836,7 +836,7 @@ const StorePage = () => {
       <div
         className={
           store.id === "s5"
-            ? "container mx-auto py-6 px-4 flex flex-col lg:flex-row gap-6 items-start"
+            ? "container mx-auto pt-0 pb-6 px-4 flex flex-col lg:flex-row gap-6 items-start"
             : "container mx-auto py-12 px-4"
         }
         dir={store.id === "s5" ? "rtl" : undefined}
