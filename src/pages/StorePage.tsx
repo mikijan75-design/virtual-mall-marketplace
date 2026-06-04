@@ -758,11 +758,13 @@ const StorePage = () => {
 
       {/* Store banner */}
       {store.id === "s5" ? (
-        <img
-          src={guyJanaBanner}
-          alt="גיא ג'אנה - GUY JANA - אמן קרמיקה, קדר ומרצה"
-          className="block w-full h-auto"
-        />
+        <div className="container mx-auto px-4 pt-4">
+          <img
+            src={guyJanaBanner}
+            alt="גיא ג'אנה - GUY JANA - אמן קרמיקה, קדר ומרצה"
+            className="block w-full h-auto rounded-t-xl"
+          />
+        </div>
       ) : (
       <div
         className={`py-8 md:py-12 ${store.id === "s18" || store.id === "s10" || store.id === "s15" ? "" : `bg-gradient-to-r ${store.signColor}`}`}
@@ -834,7 +836,7 @@ const StorePage = () => {
       <div
         className={
           store.id === "s5"
-            ? "container mx-auto py-6 px-4 flex flex-col lg:flex-row gap-6 items-start"
+            ? "container mx-auto pt-0 pb-6 px-4 flex flex-col lg:flex-row gap-6 items-start"
             : "container mx-auto py-12 px-4"
         }
         dir={store.id === "s5" ? "rtl" : undefined}
