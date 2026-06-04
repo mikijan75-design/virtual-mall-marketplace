@@ -15,6 +15,7 @@ import floor3Shop5Gallery from "@/assets/stores/floor3-shop5-gallery.png";
 import floor3Shop5StoneBg from "@/assets/stores/floor3-shop5-stone-bg.png";
 import easelMascot from "@/assets/stores/easel-mascot.png";
 import GuyJanaBannerDesign from "@/components/mall/GuyJanaBannerDesign";
+import guyJanaBanner from "@/assets/stores/guy-jana-banner.png";
 import { guyJanaProducts } from "@/data/guyJanaProducts";
 import halenModel1 from "@/assets/stores/halen-model-1.png";
 import halenModel2 from "@/assets/stores/halen-model-2.png";
@@ -756,7 +757,13 @@ const StorePage = () => {
       <BackButton />
 
       {/* Store banner */}
-      {store.id !== "s5" && (
+      {store.id === "s5" ? (
+        <img
+          src={guyJanaBanner}
+          alt="גיא ג'אנה - GUY JANA - אמן קרמיקה, קדר ומרצה"
+          className="block w-full h-auto"
+        />
+      ) : (
       <div
         className={`py-8 md:py-12 ${store.id === "s18" || store.id === "s10" || store.id === "s15" ? "" : `bg-gradient-to-r ${store.signColor}`}`}
         style={
