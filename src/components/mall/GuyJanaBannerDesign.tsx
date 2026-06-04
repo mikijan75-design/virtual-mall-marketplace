@@ -1,5 +1,4 @@
-import { useEffect, useRef, useState, type CSSProperties, type HTMLAttributes, type ReactNode } from "react";
-import { Check, Pencil, RotateCcw } from "lucide-react";
+import type { CSSProperties, ReactNode } from "react";
 import guyJanaPortrait from "@/assets/stores/guy-jana-portrait.png";
 import guyJanaDecorTl from "@/assets/stores/guy-jana-decor-tl.png";
 import guyJanaDecorBr from "@/assets/stores/guy-jana-decor-br.png";
