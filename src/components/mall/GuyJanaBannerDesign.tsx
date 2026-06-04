@@ -1,5 +1,4 @@
-import { useEffect, useState, type CSSProperties, type HTMLAttributes, type ReactNode } from "react";
-import { Pencil, RotateCcw, Check } from "lucide-react";
+import type { CSSProperties, ReactNode } from "react";
 import guyJanaPortrait from "@/assets/stores/guy-jana-portrait.png";
 import guyJanaDecorTl from "@/assets/stores/guy-jana-decor-tl.png";
 import guyJanaDecorBr from "@/assets/stores/guy-jana-decor-br.png";
@@ -84,101 +83,13 @@ const SECTIONS: Section[] = GUY_JANA_BANNER_CONTENT.sections.map((s) => ({
   icon: ICONS[s.id],
 }));
 
-const STORAGE_KEY = "guy-jana-banner-edits-v1";
-
-type EditableContent = {
-  nameEn: string;
-  nameHe: string;
-  subtitle: string;
-  sections: { id: string; title: string; body: string }[];
-};
-
-const defaultContent: EditableContent = {
-  nameEn: GUY_JANA_BANNER_CONTENT.header.nameEn,
-  nameHe: GUY_JANA_BANNER_CONTENT.header.nameHe,
-  subtitle: GUY_JANA_BANNER_CONTENT.header.subtitle,
-  sections: SECTIONS.map((s) => ({ id: s.id, title: s.title, body: s.body })),
-};
-
-const loadContent = (): EditableContent => {
-  if (typeof window === "undefined") return defaultContent;
-  try {
-    const raw = localStorage.getItem(STORAGE_KEY);
-    if (!raw) return defaultContent;
-    const parsed = JSON.parse(raw) as Partial<EditableContent>;
-    return {
-      nameEn: parsed.nameEn ?? defaultContent.nameEn,
-      nameHe: parsed.nameHe ?? defaultContent.nameHe,
-      subtitle: parsed.subtitle ?? defaultContent.subtitle,
-      sections: defaultContent.sections.map((s) => {
-        const found = parsed.sections?.find((p) => p.id === s.id);
-        return found ? { id: s.id, title: found.title ?? s.title, body: found.body ?? s.body } : s;
-      }),
-    };
-  } catch {
-    return defaultContent;
-  }
-};
-
-const GuyJanaBannerDesign = () => {
-  const [editing, setEditing] = useState(false);
-  const [content, setContent] = useState<EditableContent>(loadContent);
-
-  useEffect(() => {
-    try {
-      localStorage.setItem(STORAGE_KEY, JSON.stringify(content));
-    } catch {
-      /* ignore */
-    }
-  }, [content]);
-
-  const reset = () => setContent(defaultContent);
-
-  const editableProps = (value: string, onChange: (v: string) => void): HTMLAttributes<HTMLElement> =>
-    editing
-      ? {
-          contentEditable: true,
-          suppressContentEditableWarning: true,
-          onBlur: (e) => onChange((e.target as HTMLElement).innerText),
-          className: "focus:outline focus:outline-2 focus:outline-sky-500 rounded-sm px-0.5 bg-white/40",
-        }
-      : {};
-
-  const updateSection = (id: string, patch: Partial<{ title: string; body: string }>) =>
-    setContent((c) => ({
-      ...c,
-      sections: c.sections.map((s) => (s.id === id ? { ...s, ...patch } : s)),
-    }));
-
-  return (
+const GuyJanaBannerDesign = () => (
   <section
     className="relative w-full overflow-hidden font-heebo text-black"
     dir="rtl"
-    aria-label={`${content.nameHe} — ${content.subtitle}`}
+    aria-label={`${GUY_JANA_BANNER_CONTENT.header.nameHe} — ${GUY_JANA_BANNER_CONTENT.header.subtitle}`}
     style={BANNER_STYLE}
   >
-    <div className="absolute left-2 top-2 z-10 flex gap-1.5">
-      <button
-        type="button"
-        onClick={() => setEditing((v) => !v)}
-        className="flex items-center gap-1 rounded-full border border-black/30 bg-white/85 px-2.5 py-1 text-[11px] font-bold text-black shadow-sm backdrop-blur transition hover:bg-white"
-        aria-pressed={editing}
-      >
-        {editing ? <Check className="h-3 w-3" /> : <Pencil className="h-3 w-3" />}
-        {editing ? "סיום עריכה" : "עריכה ידנית"}
-      </button>
-      {editing && (
-        <button
-          type="button"
-          onClick={reset}
-          className="flex items-center gap-1 rounded-full border border-black/30 bg-white/85 px-2.5 py-1 text-[11px] font-bold text-black shadow-sm backdrop-blur transition hover:bg-white"
-          title="איפוס לתוכן המקורי"
-        >
-          <RotateCcw className="h-3 w-3" /> איפוס
-        </button>
-      )}
-    </div>
-
     {/* Scanned corner artwork from flyer */}
     <img
       src={guyJanaDecorTl}
@@ -204,54 +115,42 @@ const GuyJanaBannerDesign = () => {
         <div className="relative mb-3 h-[92px] w-[92px] overflow-hidden rounded-full border-[3px] border-black bg-[#E8E6DF] shadow-[0_4px_12px_rgba(0,0,0,0.12)] sm:h-[108px] sm:w-[108px] md:h-[120px] md:w-[120px]">
           <img
             src={guyJanaPortrait}
-            alt={content.nameHe}
+            alt={GUY_JANA_BANNER_CONTENT.header.nameHe}
             className="h-full w-full object-cover object-[50%_12%] scale-[1.42]"
             loading="eager"
           />
         </div>
         <h1 className="font-frank text-[1.4rem] font-bold leading-tight tracking-wide text-black sm:text-[1.7rem] md:text-[1.9rem]">
-          <span dir="ltr" className="inline-block" {...editableProps(content.nameEn, (v) => setContent((c) => ({ ...c, nameEn: v })))}>
-            {content.nameEn}
+          <span dir="ltr" className="inline-block">
+            {GUY_JANA_BANNER_CONTENT.header.nameEn}
           </span>{" "}
-          <span {...editableProps(content.nameHe, (v) => setContent((c) => ({ ...c, nameHe: v })))}>{content.nameHe}</span>
+          {GUY_JANA_BANNER_CONTENT.header.nameHe}
         </h1>
-        <p
-          className="mt-1 text-sm font-medium text-black/90 sm:text-base"
-          {...editableProps(content.subtitle, (v) => setContent((c) => ({ ...c, subtitle: v })))}
-        >
-          {content.subtitle}
+        <p className="mt-1 text-sm font-medium text-black/90 sm:text-base">
+          {GUY_JANA_BANNER_CONTENT.header.subtitle}
         </p>
       </header>
 
       <div className="grid gap-3 sm:gap-3.5 md:gap-4">
-        {content.sections.map((section) => {
-          const icon = ICONS[section.id];
-          return (
-            <article key={section.id} className="flex items-start gap-3 sm:gap-4">
-              <IconFrame>{icon}</IconFrame>
-              <div className="min-w-0 flex-1 pt-0.5 text-right">
-                <h2 className="font-frank text-base font-bold leading-snug text-black sm:text-lg md:text-xl">
-                  <span className="me-1.5" aria-hidden="true">
-                    ■
-                  </span>
-                  <span {...editableProps(section.title, (v) => updateSection(section.id, { title: v }))}>
-                    {section.title}
-                  </span>
-                </h2>
-                <p
-                  className="mt-1 text-[0.8rem] leading-[1.65] text-black/88 sm:text-sm md:text-[0.95rem]"
-                  {...editableProps(section.body, (v) => updateSection(section.id, { body: v }))}
-                >
-                  {section.body}
-                </p>
-              </div>
-            </article>
-          );
-        })}
+        {SECTIONS.map((section) => (
+          <article key={section.id} className="flex items-start gap-3 sm:gap-4">
+            <IconFrame>{section.icon}</IconFrame>
+            <div className="min-w-0 flex-1 pt-0.5 text-right">
+              <h2 className="font-frank text-base font-bold leading-snug text-black sm:text-lg md:text-xl">
+                <span className="me-1.5" aria-hidden="true">
+                  ■
+                </span>
+                {section.title}
+              </h2>
+              <p className="mt-1 text-[0.8rem] leading-[1.65] text-black/88 sm:text-sm md:text-[0.95rem]">
+                {section.body}
+              </p>
+            </div>
+          </article>
+        ))}
       </div>
     </div>
   </section>
-  );
-};
+);
 
 export default GuyJanaBannerDesign;
