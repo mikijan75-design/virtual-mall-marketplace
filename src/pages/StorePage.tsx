@@ -14,7 +14,7 @@ import floor1Shop6Img from "@/assets/stores/floor1-shop6.png";
 import floor3Shop5Gallery from "@/assets/stores/floor3-shop5-gallery.png";
 import floor3Shop5StoneBg from "@/assets/stores/floor3-shop5-stone-bg.png";
 import easelMascot from "@/assets/stores/easel-mascot.png";
-import guyJanaBanner from "@/assets/stores/guy-jana-banner.png";
+import GuyJanaBannerDesign from "@/components/mall/GuyJanaBannerDesign";
 import { guyJanaProducts } from "@/data/guyJanaProducts";
 import halenModel1 from "@/assets/stores/halen-model-1.png";
 import halenModel2 from "@/assets/stores/halen-model-2.png";
@@ -756,13 +756,7 @@ const StorePage = () => {
       <BackButton />
 
       {/* Store banner */}
-      {store.id === "s5" ? (
-        <img
-          src={guyJanaBanner}
-          alt="גיא ג'אנה - GUY JANA - אמן קרמיקה, רוויזם יצירתי"
-          className="block w-full h-auto"
-        />
-      ) : (
+      {store.id !== "s5" && (
       <div
         className={`py-8 md:py-12 ${store.id === "s18" || store.id === "s10" || store.id === "s15" ? "" : `bg-gradient-to-r ${store.signColor}`}`}
         style={
@@ -830,6 +824,33 @@ const StorePage = () => {
       )}
 
       {/* Store content placeholder */}
+      {store.id === "s5" ? (
+      <div className="container mx-auto py-6 px-4" dir="rtl">
+        <div className="flex flex-col-reverse lg:flex-row gap-6 items-start">
+          <div className="w-full lg:w-[70%]">
+            <div className="py-6">
+      <div className={`${store.id === "s18" || store.id === "s5" ? "max-w-[1400px]" : "max-w-4xl"} mx-auto`}>
+        <div
+          className={`${store.id === "s5" ? "border-2 border-[#d9c9a8]" : "bg-card border border-border"} rounded-xl ${store.id === "s18" ? "p-2" : store.id === "s5" ? "p-6 md:p-10" : "p-8"} shadow-lg text-center`}
+          style={
+            store.id === "s5"
+              ? {
+                  backgroundColor: "#f5ecd9",
+                }
+              : undefined
+          }
+        >
+          {/* original s5 content rendered below via the shared block */}
+        </div>
+      </div>
+            </div>
+          </div>
+          <aside className="w-full lg:w-[30%] lg:sticky lg:top-4 self-start">
+            <GuyJanaBannerDesign />
+          </aside>
+        </div>
+      </div>
+      ) : (
       <div className="container mx-auto py-12 px-4">
         <div className={`${store.id === "s18" || store.id === "s5" ? "max-w-[1400px]" : "max-w-4xl"} mx-auto`}>
           <div
