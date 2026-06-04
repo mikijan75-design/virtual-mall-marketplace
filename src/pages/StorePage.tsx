@@ -824,35 +824,26 @@ const StorePage = () => {
       )}
 
       {/* Store content placeholder */}
-      {store.id === "s5" ? (
-      <div className="container mx-auto py-6 px-4" dir="rtl">
-        <div className="flex flex-col-reverse lg:flex-row gap-6 items-start">
-          <div className="w-full lg:w-[70%]">
-            <div className="py-6">
-      <div className={`${store.id === "s18" || store.id === "s5" ? "max-w-[1400px]" : "max-w-4xl"} mx-auto`}>
-        <div
-          className={`${store.id === "s5" ? "border-2 border-[#d9c9a8]" : "bg-card border border-border"} rounded-xl ${store.id === "s18" ? "p-2" : store.id === "s5" ? "p-6 md:p-10" : "p-8"} shadow-lg text-center`}
-          style={
-            store.id === "s5"
-              ? {
-                  backgroundColor: "#f5ecd9",
-                }
-              : undefined
-          }
-        >
-          {/* original s5 content rendered below via the shared block */}
-        </div>
-      </div>
-            </div>
-          </div>
+      <div
+        className={
+          store.id === "s5"
+            ? "container mx-auto py-6 px-4 flex flex-col-reverse lg:flex-row gap-6 items-start"
+            : "container mx-auto py-12 px-4"
+        }
+        dir={store.id === "s5" ? "rtl" : undefined}
+      >
+        {store.id === "s5" && (
           <aside className="w-full lg:w-[30%] lg:sticky lg:top-4 self-start">
             <GuyJanaBannerDesign />
           </aside>
-        </div>
-      </div>
-      ) : (
-      <div className="container mx-auto py-12 px-4">
-        <div className={`${store.id === "s18" || store.id === "s5" ? "max-w-[1400px]" : "max-w-4xl"} mx-auto`}>
+        )}
+        <div
+          className={
+            store.id === "s5"
+              ? "w-full lg:w-[70%]"
+              : `${store.id === "s18" ? "max-w-[1400px]" : "max-w-4xl"} mx-auto`
+          }
+        >
           <div
             className={`${store.id === "s5" ? "border-2 border-[#d9c9a8]" : "bg-card border border-border"} rounded-xl ${store.id === "s18" ? "p-2" : store.id === "s5" ? "p-6 md:p-10" : "p-8"} shadow-lg text-center`}
             style={
