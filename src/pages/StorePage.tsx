@@ -757,11 +757,7 @@ const StorePage = () => {
 
       {/* Store banner */}
       {store.id === "s5" ? (
-        <img
-          src={guyJanaBanner}
-          alt="גיא ג'אנה - GUY JANA - אמן קרמיקה, רוויזם יצירתי"
-          className="block w-full h-auto"
-        />
+        <GuyJanaBannerDesign />
       ) : (
       <div
         className={`py-8 md:py-12 ${store.id === "s18" || store.id === "s10" || store.id === "s15" ? "" : `bg-gradient-to-r ${store.signColor}`}`}
