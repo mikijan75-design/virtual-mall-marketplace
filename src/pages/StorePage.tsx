@@ -713,7 +713,14 @@ const StorePage = () => {
       <div className="min-h-screen bg-background">
         <MallHeader />
         <PageTracker storeId={store.id} />
-        <BackButton />
+        <Link
+          to="/"
+          aria-label="חזרה לדף הבית"
+          className="fixed top-28 md:top-20 right-3 z-40 flex items-center gap-2 rounded-full bg-mall-sign/95 text-mall-gold px-3 py-1.5 shadow-lg border border-mall-gold/40 font-heebo text-sm md:text-base backdrop-blur hover:bg-mall-sign transition-colors"
+        >
+          <ChevronRight className="h-4 w-4" />
+          <span>חזור</span>
+        </Link>
         <PacmanArcadePage />
         <MallFooter />
       </div>
