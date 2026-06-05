@@ -36,6 +36,7 @@ import arnonLogo from "@/assets/stores/arnon-logo.png";
 import floor1Shop4Img from "@/assets/stores/floor1-shop4.png";
 import floor1Shop6Img from "@/assets/stores/floor1-shop6.png";
 import danielGlassArtLogo from "@/assets/stores/daniel-glass-art-logo.jpg";
+import rahitiGaatonLogo from "@/assets/stores/rahiti-gaaton-logo.png";
 import yardensJewelryImg from "@/assets/stores/yardens-jewelry.png";
 import floor1Shop3Img from "@/assets/stores/floor1-shop3.png";
 import storeFloor2Pos2Img from "@/assets/store-floor2-2.png";
@@ -143,14 +144,14 @@ const idOverrides: Record<string, Partial<BrandStyle & { name: string }>> = {
     subtitle: "ממחזרים נוסטלגיה",
   },
   s18: {
-    name: "דוכן ויטראז'",
-    bg: "linear-gradient(135deg, #1e4a8a, #0f2d5c)",
-    text: "#f5f5f5",
-    accent: "#c9a96e",
+    name: "רהיטי געתון",
+    bg: "#ffffff",
+    text: "#7a6f63",
+    accent: "#b8a994",
     font: "font-frank",
     image: floor1Shop6Img,
-    subtitle: "אמנות ויטראז' בעבודת יד",
-    logo: danielGlassArtLogo,
+    subtitle: "רהיטים בעבודת יד",
+    logo: rahitiGaatonLogo,
   },
   s10: {
     name: "בני כספות",
