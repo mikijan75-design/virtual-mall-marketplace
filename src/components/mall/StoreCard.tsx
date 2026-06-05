@@ -37,6 +37,7 @@ import floor1Shop4Img from "@/assets/stores/floor1-shop4.png";
 import floor1Shop6Img from "@/assets/stores/floor1-shop6.png";
 import danielGlassArtLogo from "@/assets/stores/daniel-glass-art-logo.jpg";
 import rahitiGaatonLogo from "@/assets/stores/rahiti-gaaton-logo.png";
+import rahitiGaatonKitchen from "@/assets/stores/rahiti-gaaton-kitchen.png";
 import yardensJewelryImg from "@/assets/stores/yardens-jewelry.png";
 import floor1Shop3Img from "@/assets/stores/floor1-shop3.png";
 import storeFloor2Pos2Img from "@/assets/store-floor2-2.png";
@@ -149,7 +150,7 @@ const idOverrides: Record<string, Partial<BrandStyle & { name: string }>> = {
     text: "#7a6f63",
     accent: "#b8a994",
     font: "font-frank",
-    image: floor1Shop6Img,
+    image: rahitiGaatonKitchen,
     subtitle: "אמנות ויטראז' בעבודת יד",
     logo: rahitiGaatonLogo,
   },
