@@ -150,7 +150,7 @@ const idOverrides: Record<string, Partial<BrandStyle & { name: string }>> = {
     accent: "#b8a994",
     font: "font-frank",
     image: floor1Shop6Img,
-    subtitle: "רהיטים בעבודת יד",
+    subtitle: "אמנות ויטראז' בעבודת יד",
     logo: rahitiGaatonLogo,
   },
   s10: {
@@ -362,7 +362,7 @@ const StoreCard = ({ store, storeIndex }: StoreCardProps) => {
             <img
               src={style.logo}
               alt={store.name}
-              className="h-full w-full object-cover"
+              className={`h-full w-full ${store.id === "s18" ? "object-contain p-1" : "object-cover"}`}
               style={store.id === "s8" ? { objectPosition: "center top" } : undefined}
             />
           </div>
