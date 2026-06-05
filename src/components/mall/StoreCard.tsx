@@ -151,7 +151,7 @@ const idOverrides: Record<string, Partial<BrandStyle & { name: string }>> = {
     accent: "#b8a994",
     font: "font-frank",
     image: rahitiGaatonKitchen,
-    subtitle: "אמנות ויטראז' בעבודת יד",
+    subtitle: "נגרות בהתאמה אישית",
     logo: rahitiGaatonLogo,
   },
   s10: {
