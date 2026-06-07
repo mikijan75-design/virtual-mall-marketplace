@@ -375,7 +375,7 @@ const StoreCard = ({ store, storeIndex }: StoreCardProps) => {
             <img
               src={style.logo}
               alt={store.name}
-              className={`h-full w-full ${store.id === "s18" ? "object-contain p-1" : store.id === "s3" ? "object-fill" : "object-cover"}`}
+              className={`h-full w-full ${store.id === "s18" ? "object-contain p-1" : store.id === "s4" ? "object-fill" : "object-cover"}`}
               style={store.id === "s8" ? { objectPosition: "center top" } : undefined}
             />
           </div>

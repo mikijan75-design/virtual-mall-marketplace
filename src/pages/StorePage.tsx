@@ -682,7 +682,7 @@ const StorePage = () => {
   }
 
   const isIsraelMezuzahs = store.id === "s2";
-  const isAvnerOvad = store.id === "s4";
+  const isAvnerOvad = AVNER_STORE_ID !== null && store.id === AVNER_STORE_ID;
 
   if (isAvnerOvad) {
     return <AvnerOvadStoreView store={store} />;
