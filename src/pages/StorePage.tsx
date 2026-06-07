@@ -843,6 +843,23 @@ const StorePage = () => {
       </div>
       )}
 
+      {/* Picolo category bar */}
+      {store.id === "s4" && (
+        <div className="border-y border-[#c19a6b]/40" style={{ background: "#f4e6d2" }} dir="rtl">
+          <div className="container mx-auto px-4 py-3 flex flex-wrap items-center justify-center gap-2 md:gap-3">
+            {["PIANO", "גיטרות", "קלידים", "תופים", "מוצרים נוספים"].map((cat) => (
+              <button
+                key={cat}
+                type="button"
+                className="px-4 py-2 rounded-full font-heebo text-sm md:text-base font-bold text-[#5a3a1b] bg-white/70 hover:bg-white border border-[#c19a6b]/50 shadow-sm transition-colors"
+              >
+                {cat}
+              </button>
+            ))}
+          </div>
+        </div>
+      )}
+
       {/* Store content placeholder */}
       <div
         className={
