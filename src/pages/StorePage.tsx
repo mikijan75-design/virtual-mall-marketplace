@@ -1332,17 +1332,17 @@ const StorePage = () => {
               })()
             ) : (
               <>
-                <h2 className="text-2xl font-frank font-bold text-foreground mb-4">
-                  ברוכים הבאים ל{store.name}
-                </h2>
+                {store.id !== "s4" && (
+                  <h2 className="text-2xl font-frank font-bold text-foreground mb-4">
+                    ברוכים הבאים ל{store.name}
+                  </h2>
+                )}
                 {store.id === "s4" ? (
-                  <div className="mx-auto max-w-3xl">
-                    <img
-                      src={picoloShopDisplay}
-                      alt="פיקולו - תצוגת חנות כלי נגינה"
-                      className="w-full h-auto rounded-lg shadow-md object-contain"
-                    />
-                  </div>
+                  <img
+                    src={picoloShopDisplay}
+                    alt="פיקולו - תצוגת חנות כלי נגינה"
+                    className="block w-full h-auto"
+                  />
                 ) : (
                   <>
                     <p className="text-muted-foreground font-heebo mb-8">
