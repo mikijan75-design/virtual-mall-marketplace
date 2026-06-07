@@ -195,6 +195,22 @@ const idOverrides: Record<string, Partial<BrandStyle & { name: string }>> = {
   },
 };
 
+// 🗄️ ARCHIVED: "אבנר" store template.
+// Applied only when AVNER_STORE_ID (src/config/avnerStore.ts) is set.
+const avnerOverride: Partial<BrandStyle & { name: string }> = {
+  name: "אבנר עובד",
+  accent: "#b3925a",
+  subtitle: "אמן ציור ישראלי",
+  image: floor3Shop4Img,
+  codedScene: "avner-ovad-storefront" as any,
+};
+if (AVNER_STORE_ID) {
+  idOverrides[AVNER_STORE_ID] = {
+    ...(idOverrides[AVNER_STORE_ID] ?? {}),
+    ...avnerOverride,
+  };
+}
+
 const defaultStyle: BrandStyle = { bg: "linear-gradient(135deg, #f5f0e8, #ede4d8)", text: "#3a2a20", accent: "#c9a96e", font: "font-frank", image: "", subtitle: "", logo: undefined, subtitleLogo: undefined };
 
 const romanNumerals = ["I", "II", "III", "IV", "V", "VI"];
@@ -214,7 +230,7 @@ const StoreCard = ({ store, storeIndex }: StoreCardProps) => {
   const override = idOverrides[store.id];
   const style = override ? { ...baseStyle, ...override } : baseStyle;
   const displayName = override?.name ?? store.name;
-  const isAvnerOvad = store.id === "s3";
+  const isAvnerOvad = AVNER_STORE_ID !== null && store.id === AVNER_STORE_ID;
   const isVintageVillage = store.id === "s1";
 
   if (isVintageVillage) {
