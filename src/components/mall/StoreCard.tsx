@@ -33,6 +33,7 @@ import israelMezuzahsImg from "@/assets/stores/israel-mezuzahs.png";
 import floor3Shop4Img from "@/assets/stores/floor3-shop4.png";
 import floor3Shop2Img from "@/assets/stores/floor3-shop2.png";
 import floor3Shop2MusicImg from "@/assets/stores/floor3-shop2-music.png";
+import floor3Shop2PicoloSign from "@/assets/stores/floor3-shop2-picolo-sign.png";
 import arnonLogo from "@/assets/stores/arnon-logo.png";
 import floor1Shop4Img from "@/assets/stores/floor1-shop4.png";
 import floor1Shop6Img from "@/assets/stores/floor1-shop6.png";
@@ -129,7 +130,7 @@ const idOverrides: Record<string, Partial<BrandStyle & { name: string }>> = {
     name: "גלריה פתוחה",
     subtitle: "ברוכים הבאים!",
     image: floor3Shop2MusicImg,
-    logo: arnonLogo,
+    logo: floor3Shop2PicoloSign,
   },
   s1: {
     name: "כפר וינטג'",
@@ -364,7 +365,7 @@ const StoreCard = ({ store, storeIndex }: StoreCardProps) => {
             <img
               src={style.logo}
               alt={store.name}
-              className={`h-full w-full ${store.id === "s18" ? "object-contain p-1" : "object-cover"}`}
+              className={`h-full w-full ${store.id === "s18" ? "object-contain p-1" : store.id === "s3" ? "object-fill" : "object-cover"}`}
               style={store.id === "s8" ? { objectPosition: "center top" } : undefined}
             />
           </div>
