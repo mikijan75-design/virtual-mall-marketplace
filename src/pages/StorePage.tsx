@@ -6,7 +6,7 @@ import MallFooter from "@/components/mall/MallFooter";
 import PageTracker from "@/components/PageTracker";
 import BackButton from "@/components/BackButton";
 import { BookOpen, ChevronLeft, ChevronRight, Heart, Info, Lamp, Leaf, Palette, Settings, Sparkles, Sun, X } from "lucide-react";
-import { Fragment, useState } from "react";
+import { Fragment, useEffect, useRef, useState } from "react";
 import israelMezuzahsAbout from "@/assets/stores/israel-mezuzahs-about.png";
 import imBeadLogo from "@/assets/stores/im-bead-logo.png";
 import beggarsWireframe from "@/assets/stores/beggars-wireframe.png";
@@ -661,6 +661,91 @@ const israelMezuzahsProducts = [
   { src: imHanukkiahsCategory, name: "חנוכיות", slug: "hanukkiahs" },
 ];
 
+const PicoloStoreView = ({ store }: { store: Store }) => {
+  const zoomRef = useRef<HTMLDivElement | null>(null);
+  const [scale, setScale] = useState(1);
+
+  useEffect(() => {
+    const el = zoomRef.current;
+    if (!el) return;
+    const handleWheel = (e: WheelEvent) => {
+      if (!e.ctrlKey && !e.metaKey) return;
+      e.preventDefault();
+      setScale((s) => {
+        const next = s - e.deltaY * 0.0015;
+        return Math.min(2.5, Math.max(0.5, next));
+      });
+    };
+    el.addEventListener("wheel", handleWheel, { passive: false });
+    return () => el.removeEventListener("wheel", handleWheel);
+  }, []);
+
+  return (
+    <div className="min-h-screen bg-background">
+      <MallHeader />
+      <PageTracker storeId={store.id} />
+      <BackButton />
+
+      <div ref={zoomRef} className="overflow-hidden">
+        <div
+          style={{
+            transform: `scale(${scale})`,
+            transformOrigin: "top center",
+            transition: "transform 0.15s ease-out",
+          }}
+        >
+          {/* Header */}
+          <div
+            className="py-8 md:py-12"
+            style={{ background: "linear-gradient(135deg, #d9b88a, #c19a6b)" }}
+          >
+            <div className="container mx-auto text-center text-foreground">
+              <span className="text-6xl md:text-8xl block mb-4">{store.logoEmoji}</span>
+              <h1 className="text-3xl md:text-5xl font-frank font-bold mb-2">{store.name}</h1>
+              <p className="text-lg opacity-90 font-heebo">{store.description}</p>
+              <span className="inline-block mt-3 bg-white/40 px-4 py-1 rounded-full text-sm font-heebo">
+                {store.category} • קומה {store.floor}
+              </span>
+            </div>
+          </div>
+
+          {/* Category bar */}
+          <div className="border-y border-[#c19a6b]/40" style={{ background: "#f4e6d2" }} dir="rtl">
+            <div className="container mx-auto px-4 py-3 flex flex-wrap items-center justify-center gap-2 md:gap-3">
+              {["PIANO", "גיטרות", "קלידים", "תופים", "מוצרים נוספים"].map((cat) => (
+                <button
+                  key={cat}
+                  type="button"
+                  className="px-4 py-2 rounded-full font-heebo text-sm md:text-base font-bold text-[#5a3a1b] bg-white/70 hover:bg-white border border-[#c19a6b]/50 shadow-sm transition-colors"
+                >
+                  {cat}
+                </button>
+              ))}
+            </div>
+          </div>
+
+          {/* Full-width image */}
+          <img
+            src={picoloShopDisplay}
+            alt="פיקולו - תצוגת חנות כלי נגינה"
+            className="block w-full h-auto"
+          />
+        </div>
+      </div>
+
+      <div className="text-center my-8">
+        <Link
+          to="/"
+          className="inline-block bg-mall-sign text-mall-gold font-heebo font-bold px-6 py-3 rounded-lg hover:bg-mall-gold hover:text-mall-sign transition-colors shadow-md"
+        >
+          ← חזרה לקניון
+        </Link>
+      </div>
+      <MallFooter />
+    </div>
+  );
+};
+
 const StorePage = () => {
   const { storeId } = useParams<{ storeId: string }>();
   const navigate = useNavigate();
@@ -696,6 +781,10 @@ const StorePage = () => {
 
   if (store.id === "s10") {
     return <BneiKasafotStoreView store={store} />;
+  }
+
+  if (store.id === "s4") {
+    return <PicoloStoreView store={store} />;
   }
 
   if (store.id === "s8") {
