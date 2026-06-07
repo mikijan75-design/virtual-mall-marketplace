@@ -1327,22 +1327,32 @@ const StorePage = () => {
                 <h2 className="text-2xl font-frank font-bold text-foreground mb-4">
                   ברוכים הבאים ל{store.name}
                 </h2>
-                <p className="text-muted-foreground font-heebo mb-8">
-                  כאן יוצגו המוצרים של החנות. בעל העסק יוכל להתאים אישית את העמוד הזה עם המוצרים שלו.
-                </p>
-
-                {/* Sample product grid */}
-                <div className="grid grid-cols-2 md:grid-cols-3 gap-4">
-                  {[1, 2, 3, 4, 5, 6].map((i) => (
-                    <div key={i} className="bg-muted rounded-lg p-4 border border-border">
-                      <div className="w-full aspect-square bg-secondary rounded-md mb-3 flex items-center justify-center text-3xl">
-                        {store.logoEmoji}
-                      </div>
-                      <div className="h-3 bg-border rounded w-3/4 mx-auto mb-2" />
-                      <div className="h-3 bg-mall-gold/30 rounded w-1/2 mx-auto" />
+                {store.id === "s4" ? (
+                  <div className="mx-auto max-w-3xl">
+                    <img
+                      src={picoloShopDisplay}
+                      alt="פיקולו - תצוגת חנות כלי נגינה"
+                      className="w-full h-auto rounded-lg shadow-md object-contain"
+                    />
+                  </div>
+                ) : (
+                  <>
+                    <p className="text-muted-foreground font-heebo mb-8">
+                      כאן יוצגו המוצרים של החנות. בעל העסק יוכל להתאים אישית את העמוד הזה עם המוצרים שלו.
+                    </p>
+                    <div className="grid grid-cols-2 md:grid-cols-3 gap-4">
+                      {[1, 2, 3, 4, 5, 6].map((i) => (
+                        <div key={i} className="bg-muted rounded-lg p-4 border border-border">
+                          <div className="w-full aspect-square bg-secondary rounded-md mb-3 flex items-center justify-center text-3xl">
+                            {store.logoEmoji}
+                          </div>
+                          <div className="h-3 bg-border rounded w-3/4 mx-auto mb-2" />
+                          <div className="h-3 bg-mall-gold/30 rounded w-1/2 mx-auto" />
+                        </div>
+                      ))}
                     </div>
-                  ))}
-                </div>
+                  </>
+                )}
               </>
             )}
           </div>
