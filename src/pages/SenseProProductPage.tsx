@@ -217,7 +217,7 @@ const SenseProProductPage = () => {
       }
     : initialMezuzah;
 
-  const mezuzah = baseMezuzah
+  const resolvedMezuzah = baseMezuzah
     ? selectedProduct
       ? {
           ...baseMezuzah,
@@ -229,6 +229,7 @@ const SenseProProductPage = () => {
         }
       : baseMezuzah
     : undefined;
+  const mezuzah = resolvedMezuzah ?? demoMezuzah;
 
   // Other products to show as thumbnails (excluding the currently selected one)
   const otherProducts = selectedProduct
