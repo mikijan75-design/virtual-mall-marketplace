@@ -120,17 +120,17 @@ const idOverrides: Record<string, Partial<BrandStyle & { name: string }>> = {
     image: israelMezuzahsImg,
   },
   s4: {
+    name: "גלריה פתוחה",
+    subtitle: "ברוכים הבאים!",
+    image: floor3Shop2MusicImg,
+    logo: floor3Shop2PicoloSign,
+  },
+  s3: {
     name: "אבנר עובד",
     accent: "#b3925a",
     subtitle: "אמן ציור ישראלי",
     image: floor3Shop4Img,
     codedScene: "avner-ovad-storefront" as any,
-  },
-  s3: {
-    name: "גלריה פתוחה",
-    subtitle: "ברוכים הבאים!",
-    image: floor3Shop2MusicImg,
-    logo: floor3Shop2PicoloSign,
   },
   s1: {
     name: "כפר וינטג'",
