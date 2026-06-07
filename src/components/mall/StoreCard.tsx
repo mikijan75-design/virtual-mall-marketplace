@@ -121,8 +121,8 @@ const idOverrides: Record<string, Partial<BrandStyle & { name: string }>> = {
     image: israelMezuzahsImg,
   },
   s4: {
-    name: "גלריה פתוחה",
-    subtitle: "ברוכים הבאים!",
+    name: "פיקולו",
+    subtitle: "כלי נגינה",
     image: floor3Shop2MusicImg,
     logo: floor3Shop2PicoloSign,
   },
