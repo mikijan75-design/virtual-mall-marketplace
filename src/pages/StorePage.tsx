@@ -1,5 +1,6 @@
 import { useParams, Link, useNavigate } from "react-router-dom";
 import { mallFloors } from "@/data/mallData";
+import { AVNER_STORE_ID } from "@/config/avnerStore";
 import MallHeader from "@/components/mall/MallHeader";
 import MallFooter from "@/components/mall/MallFooter";
 import PageTracker from "@/components/PageTracker";
@@ -682,7 +683,7 @@ const StorePage = () => {
   }
 
   const isIsraelMezuzahs = store.id === "s2";
-  const isAvnerOvad = store.id === "s4";
+  const isAvnerOvad = AVNER_STORE_ID !== null && store.id === AVNER_STORE_ID;
 
   if (isAvnerOvad) {
     return <AvnerOvadStoreView store={store} />;

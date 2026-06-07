@@ -1,5 +1,6 @@
 import { useNavigate } from "react-router-dom";
 import type { Store } from "@/data/mallData";
+import { AVNER_STORE_ID } from "@/config/avnerStore";
 
 import fashionImg from "@/assets/stores/fashion.jpg";
 import techImg from "@/assets/stores/tech.jpg";
@@ -125,13 +126,6 @@ const idOverrides: Record<string, Partial<BrandStyle & { name: string }>> = {
     image: floor3Shop2MusicImg,
     logo: floor3Shop2PicoloSign,
   },
-  s3: {
-    name: "אבנר עובד",
-    accent: "#b3925a",
-    subtitle: "אמן ציור ישראלי",
-    image: floor3Shop4Img,
-    codedScene: "avner-ovad-storefront" as any,
-  },
   s1: {
     name: "כפר וינטג'",
     accent: "#8a5a32",
@@ -201,6 +195,22 @@ const idOverrides: Record<string, Partial<BrandStyle & { name: string }>> = {
   },
 };
 
+// 🗄️ ARCHIVED: "אבנר" store template.
+// Applied only when AVNER_STORE_ID (src/config/avnerStore.ts) is set.
+const avnerOverride: Partial<BrandStyle & { name: string }> = {
+  name: "אבנר עובד",
+  accent: "#b3925a",
+  subtitle: "אמן ציור ישראלי",
+  image: floor3Shop4Img,
+  codedScene: "avner-ovad-storefront" as any,
+};
+if (AVNER_STORE_ID) {
+  idOverrides[AVNER_STORE_ID] = {
+    ...(idOverrides[AVNER_STORE_ID] ?? {}),
+    ...avnerOverride,
+  };
+}
+
 const defaultStyle: BrandStyle = { bg: "linear-gradient(135deg, #f5f0e8, #ede4d8)", text: "#3a2a20", accent: "#c9a96e", font: "font-frank", image: "", subtitle: "", logo: undefined, subtitleLogo: undefined };
 
 const romanNumerals = ["I", "II", "III", "IV", "V", "VI"];
@@ -220,7 +230,7 @@ const StoreCard = ({ store, storeIndex }: StoreCardProps) => {
   const override = idOverrides[store.id];
   const style = override ? { ...baseStyle, ...override } : baseStyle;
   const displayName = override?.name ?? store.name;
-  const isAvnerOvad = store.id === "s3";
+  const isAvnerOvad = AVNER_STORE_ID !== null && store.id === AVNER_STORE_ID;
   const isVintageVillage = store.id === "s1";
 
   if (isVintageVillage) {
@@ -365,7 +375,7 @@ const StoreCard = ({ store, storeIndex }: StoreCardProps) => {
             <img
               src={style.logo}
               alt={store.name}
-              className={`h-full w-full ${store.id === "s18" ? "object-contain p-1" : store.id === "s3" ? "object-fill" : "object-cover"}`}
+              className={`h-full w-full ${store.id === "s18" ? "object-contain p-1" : store.id === "s4" ? "object-fill" : "object-cover"}`}
               style={store.id === "s8" ? { objectPosition: "center top" } : undefined}
             />
           </div>
