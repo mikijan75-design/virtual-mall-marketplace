@@ -698,6 +698,10 @@ const StorePage = () => {
     return <BneiKasafotStoreView store={store} />;
   }
 
+  if (store.id === "s4") {
+    return <PicoloStoreView store={store} />;
+  }
+
   if (store.id === "s8") {
     return (
       <div className="min-h-screen bg-background">
