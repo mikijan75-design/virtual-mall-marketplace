@@ -865,7 +865,9 @@ const StorePage = () => {
         className={
           store.id === "s5"
             ? "container mx-auto pt-0 pb-6 px-4 flex flex-col lg:flex-row gap-6 items-start"
-            : "container mx-auto py-12 px-4"
+            : store.id === "s4"
+              ? "w-full"
+              : "container mx-auto py-12 px-4"
         }
         dir={store.id === "s5" ? "rtl" : undefined}
       >
@@ -878,11 +880,17 @@ const StorePage = () => {
           className={
             store.id === "s5"
               ? "w-full lg:w-[70%]"
-              : `${store.id === "s18" ? "max-w-[1400px]" : "max-w-4xl"} mx-auto`
+              : store.id === "s4"
+                ? "w-full"
+                : `${store.id === "s18" ? "max-w-[1400px]" : "max-w-4xl"} mx-auto`
           }
         >
           <div
-            className={`${store.id === "s5" ? "border-2 border-[#d9c9a8]" : "bg-card border border-border"} rounded-xl ${store.id === "s18" ? "p-2" : store.id === "s5" ? "p-6 md:p-10" : "p-8"} shadow-lg text-center`}
+            className={
+              store.id === "s4"
+                ? "w-full text-center"
+                : `${store.id === "s5" ? "border-2 border-[#d9c9a8]" : "bg-card border border-border"} rounded-xl ${store.id === "s18" ? "p-2" : store.id === "s5" ? "p-6 md:p-10" : "p-8"} shadow-lg text-center`
+            }
             style={
               store.id === "s5"
                 ? {
@@ -1324,17 +1332,17 @@ const StorePage = () => {
               })()
             ) : (
               <>
-                <h2 className="text-2xl font-frank font-bold text-foreground mb-4">
-                  ברוכים הבאים ל{store.name}
-                </h2>
+                {store.id !== "s4" && (
+                  <h2 className="text-2xl font-frank font-bold text-foreground mb-4">
+                    ברוכים הבאים ל{store.name}
+                  </h2>
+                )}
                 {store.id === "s4" ? (
-                  <div className="mx-auto max-w-3xl">
-                    <img
-                      src={picoloShopDisplay}
-                      alt="פיקולו - תצוגת חנות כלי נגינה"
-                      className="w-full h-auto rounded-lg shadow-md object-contain"
-                    />
-                  </div>
+                  <img
+                    src={picoloShopDisplay}
+                    alt="פיקולו - תצוגת חנות כלי נגינה"
+                    className="block w-full h-auto"
+                  />
                 ) : (
                   <>
                     <p className="text-muted-foreground font-heebo mb-8">
