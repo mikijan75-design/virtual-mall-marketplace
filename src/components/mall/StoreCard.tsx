@@ -220,7 +220,7 @@ const StoreCard = ({ store, storeIndex }: StoreCardProps) => {
   const override = idOverrides[store.id];
   const style = override ? { ...baseStyle, ...override } : baseStyle;
   const displayName = override?.name ?? store.name;
-  const isAvnerOvad = store.id === "s4";
+  const isAvnerOvad = store.id === "s3";
   const isVintageVillage = store.id === "s1";
 
   if (isVintageVillage) {
