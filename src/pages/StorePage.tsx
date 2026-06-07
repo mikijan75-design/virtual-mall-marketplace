@@ -82,6 +82,7 @@ import avnerPainting20 from "@/assets/avner-paintings/p20.png";
 import type { Store } from "@/data/mallData";
 import jordiStudioProfile from "@/assets/stores/jordi-studio-profile.png";
 import picoloShopDisplay from "@/assets/stores/picolo-shop-display.png";
+import picoloLogoAsset from "@/assets/picolo-logo.jpg.asset.json";
 import jordiE1 from "@/assets/stores/jordi/e1.png";
 import jordiE2 from "@/assets/stores/jordi/e2.png";
 import jordiE3 from "@/assets/stores/jordi/e3.png";
@@ -724,12 +725,19 @@ const PicoloStoreView = ({ store }: { store: Store }) => {
             </div>
           </div>
 
-          {/* Full-width image */}
-          <img
-            src={picoloShopDisplay}
-            alt="פיקולו - תצוגת חנות כלי נגינה"
-            className="block w-full h-auto"
-          />
+          {/* Full-width image with logo overlay */}
+          <div className="relative">
+            <img
+              src={picoloShopDisplay}
+              alt="פיקולו - תצוגת חנות כלי נגינה"
+              className="block w-full h-auto"
+            />
+            <img
+              src={picoloLogoAsset.url}
+              alt="פיקולו לוגו"
+              className="absolute bottom-3 right-3 md:bottom-5 md:right-5 w-[18%] max-w-[220px] h-auto rounded-full shadow-2xl ring-2 ring-white/70"
+            />
+          </div>
         </div>
       </div>
 
