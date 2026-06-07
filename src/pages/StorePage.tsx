@@ -81,6 +81,7 @@ import avnerPainting19 from "@/assets/avner-paintings/p19.png";
 import avnerPainting20 from "@/assets/avner-paintings/p20.png";
 import type { Store } from "@/data/mallData";
 import jordiStudioProfile from "@/assets/stores/jordi-studio-profile.png";
+import picoloShopDisplay from "@/assets/stores/picolo-shop-display.png";
 import jordiE1 from "@/assets/stores/jordi/e1.png";
 import jordiE2 from "@/assets/stores/jordi/e2.png";
 import jordiE3 from "@/assets/stores/jordi/e3.png";
@@ -775,7 +776,7 @@ const StorePage = () => {
         </div>
       ) : (
       <div
-        className={`py-8 md:py-12 ${store.id === "s18" || store.id === "s10" || store.id === "s15" ? "" : `bg-gradient-to-r ${store.signColor}`}`}
+        className={`py-8 md:py-12 ${store.id === "s18" || store.id === "s10" || store.id === "s15" || store.id === "s4" ? "" : `bg-gradient-to-r ${store.signColor}`}`}
         style={
           store.id === "s18"
             ? { background: "linear-gradient(135deg, #1e4a8a, #0f2d5c)" }
@@ -783,10 +784,12 @@ const StorePage = () => {
               ? { background: "linear-gradient(135deg, #d2b48c, #b8956a)" }
               : store.id === "s15"
                 ? { background: "#f7f1e3" }
-                : undefined
+                : store.id === "s4"
+                  ? { background: "linear-gradient(135deg, #d9b88a, #c19a6b)" }
+                  : undefined
         }
       >
-        <div className={`container mx-auto text-center ${store.id === "s15" ? "text-foreground" : "text-white"}`}>
+        <div className={`container mx-auto text-center ${store.id === "s15" || store.id === "s4" ? "text-foreground" : "text-white"}`}>
           {isIsraelMezuzahs ? (
             <img
               src={imBeadLogo}
@@ -838,6 +841,23 @@ const StorePage = () => {
           </span>
         </div>
       </div>
+      )}
+
+      {/* Picolo category bar */}
+      {store.id === "s4" && (
+        <div className="border-y border-[#c19a6b]/40" style={{ background: "#f4e6d2" }} dir="rtl">
+          <div className="container mx-auto px-4 py-3 flex flex-wrap items-center justify-center gap-2 md:gap-3">
+            {["PIANO", "גיטרות", "קלידים", "תופים", "מוצרים נוספים"].map((cat) => (
+              <button
+                key={cat}
+                type="button"
+                className="px-4 py-2 rounded-full font-heebo text-sm md:text-base font-bold text-[#5a3a1b] bg-white/70 hover:bg-white border border-[#c19a6b]/50 shadow-sm transition-colors"
+              >
+                {cat}
+              </button>
+            ))}
+          </div>
+        </div>
       )}
 
       {/* Store content placeholder */}
@@ -1307,22 +1327,32 @@ const StorePage = () => {
                 <h2 className="text-2xl font-frank font-bold text-foreground mb-4">
                   ברוכים הבאים ל{store.name}
                 </h2>
-                <p className="text-muted-foreground font-heebo mb-8">
-                  כאן יוצגו המוצרים של החנות. בעל העסק יוכל להתאים אישית את העמוד הזה עם המוצרים שלו.
-                </p>
-
-                {/* Sample product grid */}
-                <div className="grid grid-cols-2 md:grid-cols-3 gap-4">
-                  {[1, 2, 3, 4, 5, 6].map((i) => (
-                    <div key={i} className="bg-muted rounded-lg p-4 border border-border">
-                      <div className="w-full aspect-square bg-secondary rounded-md mb-3 flex items-center justify-center text-3xl">
-                        {store.logoEmoji}
-                      </div>
-                      <div className="h-3 bg-border rounded w-3/4 mx-auto mb-2" />
-                      <div className="h-3 bg-mall-gold/30 rounded w-1/2 mx-auto" />
+                {store.id === "s4" ? (
+                  <div className="mx-auto max-w-3xl">
+                    <img
+                      src={picoloShopDisplay}
+                      alt="פיקולו - תצוגת חנות כלי נגינה"
+                      className="w-full h-auto rounded-lg shadow-md object-contain"
+                    />
+                  </div>
+                ) : (
+                  <>
+                    <p className="text-muted-foreground font-heebo mb-8">
+                      כאן יוצגו המוצרים של החנות. בעל העסק יוכל להתאים אישית את העמוד הזה עם המוצרים שלו.
+                    </p>
+                    <div className="grid grid-cols-2 md:grid-cols-3 gap-4">
+                      {[1, 2, 3, 4, 5, 6].map((i) => (
+                        <div key={i} className="bg-muted rounded-lg p-4 border border-border">
+                          <div className="w-full aspect-square bg-secondary rounded-md mb-3 flex items-center justify-center text-3xl">
+                            {store.logoEmoji}
+                          </div>
+                          <div className="h-3 bg-border rounded w-3/4 mx-auto mb-2" />
+                          <div className="h-3 bg-mall-gold/30 rounded w-1/2 mx-auto" />
+                        </div>
+                      ))}
                     </div>
-                  ))}
-                </div>
+                  </>
+                )}
               </>
             )}
           </div>
