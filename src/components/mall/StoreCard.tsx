@@ -1,5 +1,6 @@
 import { useNavigate } from "react-router-dom";
 import type { Store } from "@/data/mallData";
+import { AVNER_STORE_ID } from "@/config/avnerStore";
 
 import fashionImg from "@/assets/stores/fashion.jpg";
 import techImg from "@/assets/stores/tech.jpg";
@@ -124,13 +125,6 @@ const idOverrides: Record<string, Partial<BrandStyle & { name: string }>> = {
     subtitle: "ברוכים הבאים!",
     image: floor3Shop2MusicImg,
     logo: floor3Shop2PicoloSign,
-  },
-  s3: {
-    name: "אבנר עובד",
-    accent: "#b3925a",
-    subtitle: "אמן ציור ישראלי",
-    image: floor3Shop4Img,
-    codedScene: "avner-ovad-storefront" as any,
   },
   s1: {
     name: "כפר וינטג'",
