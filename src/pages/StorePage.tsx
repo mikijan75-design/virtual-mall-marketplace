@@ -81,6 +81,7 @@ import avnerPainting19 from "@/assets/avner-paintings/p19.png";
 import avnerPainting20 from "@/assets/avner-paintings/p20.png";
 import type { Store } from "@/data/mallData";
 import jordiStudioProfile from "@/assets/stores/jordi-studio-profile.png";
+import picoloShopDisplay from "@/assets/stores/picolo-shop-display.png";
 import jordiE1 from "@/assets/stores/jordi/e1.png";
 import jordiE2 from "@/assets/stores/jordi/e2.png";
 import jordiE3 from "@/assets/stores/jordi/e3.png";
