@@ -141,6 +141,16 @@ const SenseProProductPage = () => {
     | undefined;
   const { addItem: addToCart } = useCart();
 
+  // Demo product (guitar) — temporary, remove when no longer needed
+  const demoMezuzah = {
+    itemNumber: 1,
+    image: "https://images.unsplash.com/photo-1510915361894-db8b60106cb1?w=800&q=80",
+    name: "גיטרה אקוסטית",
+    brand: "פיקולו",
+    unitPrice: 700,
+    shippingPerItem: 25,
+  } as any;
+
   const [mainImage, setMainImage] = useState<string | null>(null);
   const [thumbs, setThumbs] = useState<(string | null)[]>([null, null, null, null]);
   const mainInputRef = useRef<HTMLInputElement>(null);
@@ -207,7 +217,7 @@ const SenseProProductPage = () => {
       }
     : initialMezuzah;
 
-  const mezuzah = baseMezuzah
+  const resolvedMezuzah = baseMezuzah
     ? selectedProduct
       ? {
           ...baseMezuzah,
@@ -219,6 +229,7 @@ const SenseProProductPage = () => {
         }
       : baseMezuzah
     : undefined;
+  const mezuzah = resolvedMezuzah ?? demoMezuzah;
 
   // Other products to show as thumbnails (excluding the currently selected one)
   const otherProducts = selectedProduct
