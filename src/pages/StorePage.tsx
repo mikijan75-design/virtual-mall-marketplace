@@ -776,7 +776,7 @@ const StorePage = () => {
         </div>
       ) : (
       <div
-        className={`py-8 md:py-12 ${store.id === "s18" || store.id === "s10" || store.id === "s15" ? "" : `bg-gradient-to-r ${store.signColor}`}`}
+        className={`py-8 md:py-12 ${store.id === "s18" || store.id === "s10" || store.id === "s15" || store.id === "s4" ? "" : `bg-gradient-to-r ${store.signColor}`}`}
         style={
           store.id === "s18"
             ? { background: "linear-gradient(135deg, #1e4a8a, #0f2d5c)" }
@@ -784,10 +784,12 @@ const StorePage = () => {
               ? { background: "linear-gradient(135deg, #d2b48c, #b8956a)" }
               : store.id === "s15"
                 ? { background: "#f7f1e3" }
-                : undefined
+                : store.id === "s4"
+                  ? { background: "linear-gradient(135deg, #d9b88a, #c19a6b)" }
+                  : undefined
         }
       >
-        <div className={`container mx-auto text-center ${store.id === "s15" ? "text-foreground" : "text-white"}`}>
+        <div className={`container mx-auto text-center ${store.id === "s15" || store.id === "s4" ? "text-foreground" : "text-white"}`}>
           {isIsraelMezuzahs ? (
             <img
               src={imBeadLogo}
