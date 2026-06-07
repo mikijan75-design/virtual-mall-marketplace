@@ -1,5 +1,6 @@
 import { useParams, Link, useNavigate } from "react-router-dom";
 import { mallFloors } from "@/data/mallData";
+import { AVNER_STORE_ID } from "@/config/avnerStore";
 import MallHeader from "@/components/mall/MallHeader";
 import MallFooter from "@/components/mall/MallFooter";
 import PageTracker from "@/components/PageTracker";
