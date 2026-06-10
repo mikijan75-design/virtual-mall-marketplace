@@ -581,6 +581,24 @@ function LivePreview({ answers, counts, setCounts }: PreviewProps) {
         );
       }
 
+      // Horizontal split line for tall closet units at 160cm (upper door division)
+      if (b.kind === "tall" && !isKitchen && counts.centerUpper > 0) {
+        const splitY = 160;
+        const h1 = frontFaceIsZ
+          ? iso(b.x, splitY, b.z + b.d)
+          : iso(b.x + b.w, splitY, b.z);
+        const h2 = frontFaceIsZ
+          ? iso(b.x + b.w, splitY, b.z + b.d)
+          : iso(b.x + b.w, splitY, b.z + b.d);
+        details.push(
+          <line
+            key={`hsplit-${key}`}
+            x1={h1[0]} y1={h1[1]} x2={h2[0]} y2={h2[1]}
+            stroke={F.edge} strokeWidth="0.8" opacity="0.55"
+          />
+        );
+      }
+
       // Handles (only on base / closet, not on upper)
       if (handles && handles !== "ללא ידיות") {
         const handleY = b.kind === "upper" ? y0 + b.h * 0.15 : y0 + b.h * 0.78;
