@@ -732,7 +732,7 @@ function LivePreview({ answers, counts, setCounts }: PreviewProps) {
             {hasType
               ? `${type ?? ""}${layout ? " · " + layout : ""}${material ? " · " + material : ""}${
                   !isKitchen && layout
-                    ? ` · ${counts.centerBase * 80} ס"מ רוחב × 240 ס"מ גובה`
+                    ? ` · ${counts.centerBase * 80} ס"מ רוחב × ${closetTotal} ס"מ גובה`
                     : ""
                 }`
               : "ההדמייה מתעדכנת לפי הבחירות שלכם"}
