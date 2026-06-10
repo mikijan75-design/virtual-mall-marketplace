@@ -4,7 +4,7 @@ import MallHeader from "@/components/mall/MallHeader";
 import MallFooter from "@/components/mall/MallFooter";
 import PageTracker from "@/components/PageTracker";
 import BackButton from "@/components/BackButton";
-import rahitigaatonLogoAsset from "@/assets/rahitigaaton-logo.png.asset.json";
+import rahitigaatonLogoAsset from "@/assets/rahitigaaton-logo-white.png.asset.json";
 import type { Store } from "@/data/mallData";
 
 type Answers = {
@@ -92,6 +92,7 @@ const RahitiGaatonStoreView = ({ store }: { store: Store }) => {
             src={rahitigaatonLogoAsset.url}
             alt="רהיטיגעתון - ברוכים הבאים למשפחה"
             className="mx-auto h-32 md:h-44 w-auto object-contain drop-shadow-[0_8px_24px_rgba(0,0,0,0.5)]"
+            style={{ filter: "brightness(0) invert(1) drop-shadow(0 6px 18px rgba(0,0,0,0.45))" }}
           />
         </div>
       </section>
