@@ -804,16 +804,29 @@ function LivePreview({ answers, counts, setCounts }: PreviewProps) {
               {(answers.height ?? 240) > 160 && (
                 <ArmStepper
                   label="דלתות עליונות"
-                  value={counts.centerUpper}
-                  min={isSliding ? 2 : 0}
-                  onChange={(n) => setCounts((c) => ({ ...c, centerUpper: n }))}
+                  value={counts.centerUpper > 0 ? 1 : 0}
+                  min={0}
+                  max={1}
+                  onChange={(n) =>
+                    setCounts((c) => ({
+                      ...c,
+                      centerUpper: n > 0 ? c.centerBase : 0,
+                    }))
+                  }
                 />
               )}
               <ArmStepper
                 label={isSliding ? "דלתות הזזה" : "יחידות (2 דלתות)"}
                 value={counts.centerBase}
                 min={isSliding ? 2 : 1}
-                onChange={(n) => setCounts((c) => ({ ...c, centerBase: n }))}
+                max={10}
+                onChange={(n) =>
+                  setCounts((c) => ({
+                    ...c,
+                    centerBase: n,
+                    centerUpper: c.centerUpper > 0 ? n : 0,
+                  }))
+                }
               />
             </div>
           )}
