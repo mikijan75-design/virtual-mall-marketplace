@@ -699,7 +699,11 @@ function LivePreview({ answers, counts, setCounts }: PreviewProps) {
         <g fontFamily="'Heebo', sans-serif" fontSize="14" fill="#5a4126">
           <text x={VB_W / 2} y={VB_H - 18} textAnchor="middle" opacity="0.75">
             {hasType
-              ? `${type ?? ""}${layout ? " · " + layout : ""}${material ? " · " + material : ""}`
+              ? `${type ?? ""}${layout ? " · " + layout : ""}${material ? " · " + material : ""}${
+                  !isKitchen && layout
+                    ? ` · ${counts.centerBase * 80} ס"מ רוחב × 240 ס"מ גובה`
+                    : ""
+                }`
               : "ההדמייה מתעדכנת לפי הבחירות שלכם"}
           </text>
         </g>
