@@ -468,8 +468,9 @@ function LivePreview({ answers, counts, setCounts }: PreviewProps) {
   const UY = 130;                  // kitchen upper Y start
   const isSliding = !isKitchen && layout === "דלתות הזזה";
 
+  const matKey = answers.designCategory && material ? `${answers.designCategory}:${material}` : "";
   const mat =
-    MATERIAL_COLORS[material ?? ""] ?? { fill: "#d8c29b", grain: "#a07a44", edge: "#7a5a32" };
+    MATERIAL_COLORS[matKey] ?? { fill: "#d8c29b", grain: "#a07a44", edge: "#7a5a32" };
   // Shading variants for the 3 visible faces
   const FACE = {
     front: mat.fill,
