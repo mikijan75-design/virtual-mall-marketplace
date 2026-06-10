@@ -573,19 +573,22 @@ function LivePreview({ answers, counts, setCounts }: PreviewProps) {
     const details: JSX.Element[] = [];
     if (b.kind !== "counter") {
       // Door split line: a vertical line down the middle of the front face
-      const midTop = frontFaceIsZ
-        ? iso(b.x + b.w / 2, y1, b.z + b.d)
-        : iso(b.x + b.w, y1, b.z + b.d / 2);
-      const midBot = frontFaceIsZ
-        ? iso(b.x + b.w / 2, y0, b.z + b.d)
-        : iso(b.x + b.w, y0, b.z + b.d / 2);
-      details.push(
-        <line
-          key={`split-${key}`}
-          x1={midTop[0]} y1={midTop[1]} x2={midBot[0]} y2={midBot[1]}
-          stroke={F.edge} strokeWidth="0.8" opacity="0.55"
-        />
-      );
+      // (skip on sliding-door closet — each unit is one sliding door)
+      if (!isSliding) {
+        const midTop = frontFaceIsZ
+          ? iso(b.x + b.w / 2, y1, b.z + b.d)
+          : iso(b.x + b.w, y1, b.z + b.d / 2);
+        const midBot = frontFaceIsZ
+          ? iso(b.x + b.w / 2, y0, b.z + b.d)
+          : iso(b.x + b.w, y0, b.z + b.d / 2);
+        details.push(
+          <line
+            key={`split-${key}`}
+            x1={midTop[0]} y1={midTop[1]} x2={midBot[0]} y2={midBot[1]}
+            stroke={F.edge} strokeWidth="0.8" opacity="0.55"
+          />
+        );
+      }
 
       // Handles (only on base / closet, not on upper)
       if (handles && handles !== "ללא ידיות") {
