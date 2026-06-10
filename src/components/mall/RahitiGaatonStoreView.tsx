@@ -493,20 +493,11 @@ function LivePreview({ answers, counts, setCounts }: PreviewProps) {
         }
       }
     } else {
-      // Closet: lower units + connected upper section (no gap, same depth).
-      const n = Math.max(1, counts.centerBase);
-      const nU = Math.max(0, counts.centerUpper);
+      // Closet: tall single units (full height), optional horizontal split at 160cm for upper doors.
+      const n = Math.max(isSliding ? 2 : 1, counts.centerBase);
       const totalW = n * W;
       for (let i = 0; i < n; i++) {
-        boxes.push({ x: i * W, z: 0, w: W, d: D, h: H, kind: "base" });
-      }
-      // Upper section is divided independently into nU doors-units,
-      // each spanning the full closet width / nU.
-      if (nU > 0 && UH > 0) {
-        const uw = totalW / nU;
-        for (let i = 0; i < nU; i++) {
-          boxes.push({ x: i * uw, z: 0, w: uw, d: UD, h: UH, y0: H, kind: "upper" });
-        }
+        boxes.push({ x: i * W, z: 0, w: W, d: D, h: closetTotal, kind: "tall" });
       }
     }
   }
@@ -585,6 +576,24 @@ function LivePreview({ answers, counts, setCounts }: PreviewProps) {
           <line
             key={`split-${key}`}
             x1={midTop[0]} y1={midTop[1]} x2={midBot[0]} y2={midBot[1]}
+            stroke={F.edge} strokeWidth="0.8" opacity="0.55"
+          />
+        );
+      }
+
+      // Horizontal split line for tall closet units at 160cm (upper door division)
+      if (b.kind === "tall" && !isKitchen && counts.centerUpper > 0) {
+        const splitY = 160;
+        const h1 = frontFaceIsZ
+          ? iso(b.x, splitY, b.z + b.d)
+          : iso(b.x + b.w, splitY, b.z);
+        const h2 = frontFaceIsZ
+          ? iso(b.x + b.w, splitY, b.z + b.d)
+          : iso(b.x + b.w, splitY, b.z + b.d);
+        details.push(
+          <line
+            key={`hsplit-${key}`}
+            x1={h1[0]} y1={h1[1]} x2={h2[0]} y2={h2[1]}
             stroke={F.edge} strokeWidth="0.8" opacity="0.55"
           />
         );
@@ -795,16 +804,29 @@ function LivePreview({ answers, counts, setCounts }: PreviewProps) {
               {(answers.height ?? 240) > 160 && (
                 <ArmStepper
                   label="דלתות עליונות"
-                  value={counts.centerUpper}
-                  min={isSliding ? 2 : 0}
-                  onChange={(n) => setCounts((c) => ({ ...c, centerUpper: n }))}
+                  value={counts.centerUpper > 0 ? 1 : 0}
+                  min={0}
+                  max={1}
+                  onChange={(n) =>
+                    setCounts((c) => ({
+                      ...c,
+                      centerUpper: n > 0 ? c.centerBase : 0,
+                    }))
+                  }
                 />
               )}
               <ArmStepper
                 label={isSliding ? "דלתות הזזה" : "יחידות (2 דלתות)"}
                 value={counts.centerBase}
                 min={isSliding ? 2 : 1}
-                onChange={(n) => setCounts((c) => ({ ...c, centerBase: n }))}
+                max={10}
+                onChange={(n) =>
+                  setCounts((c) => ({
+                    ...c,
+                    centerBase: n,
+                    centerUpper: c.centerUpper > 0 ? n : 0,
+                  }))
+                }
               />
             </div>
           )}
@@ -824,11 +846,13 @@ function ArmStepper({
   value,
   onChange,
   min = 1,
+  max = 10,
 }: {
   label: string;
   value: number;
   onChange: (n: number) => void;
   min?: number;
+  max?: number;
 }) {
   return (
     <div className="inline-flex items-center gap-1.5 rounded-full bg-[#f8efd9] border border-[#c9a06a]/60 px-1.5 py-0.5 font-heebo text-xs text-[#3b2918]">
@@ -846,7 +870,7 @@ function ArmStepper({
       <button
         type="button"
         aria-label={`הוסף יחידה ל${label}`}
-        onClick={() => onChange(Math.min(10, value + 1))}
+        onClick={() => onChange(Math.min(max, value + 1))}
         className="w-6 h-6 rounded-full bg-[#3b2918] text-[#f7e9cf] hover:bg-[#5a3d20] border border-[#3b2918] flex items-center justify-center font-bold text-base leading-none"
       >
         +
