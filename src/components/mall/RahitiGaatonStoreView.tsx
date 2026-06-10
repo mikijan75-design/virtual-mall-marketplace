@@ -758,13 +758,13 @@ function LivePreview({ answers, counts, setCounts }: PreviewProps) {
           ) : (
             <div className="rounded-2xl bg-white/90 backdrop-blur border border-[#c9a06a]/60 shadow px-2.5 py-2.5 pointer-events-auto flex flex-col gap-2">
               <ArmStepper
-                label="עליון"
+                label="דלתות עליונות"
                 value={counts.centerUpper}
                 min={0}
                 onChange={(n) => setCounts((c) => ({ ...c, centerUpper: n }))}
               />
               <ArmStepper
-                label="דלתות"
+                label="יחידות (2 דלתות)"
                 value={counts.centerBase}
                 onChange={(n) => setCounts((c) => ({ ...c, centerBase: n }))}
               />
