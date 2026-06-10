@@ -10,6 +10,7 @@ import type { Store } from "@/data/mallData";
 type Answers = {
   type?: "ארון" | "מטבח";
   layout?: string;       // for kitchen: ישר / L / U ; for closet: 2 דלתות / 3 / 4
+  height?: number;       // closet total height in cm (160/200/220/240)
   material?: "אלון" | "אגוז" | "אורן" | "לבן מט";
   handles?: "ידיות מוט" | "ידיות כפתור" | "ללא ידיות";
   extras?: string;       // kitchen: כיריים+תנור / מקרר / שיש עליון ; closet: מגירות / מדפים / תלייה
@@ -23,24 +24,35 @@ type StepDef = {
   options: string[] | ((a: Answers) => string[]);
 };
 
-const STEPS: StepDef[] = [
-  { key: "type", question: "מה תרצה לבנות?", options: ["ארון", "מטבח"] },
-  {
-    key: "layout",
-    question: "איך לסדר את היחידות?",
-    options: (a) => (a.type === "מטבח" ? ["ישר", "L", "U"] : ["2 דלתות", "3 דלתות", "4 דלתות"]),
-  },
-  { key: "material", question: "איזה חומר/גוון?", options: ["אלון", "אגוז", "אורן", "לבן מט"] },
-  { key: "handles", question: "סוג ידיות?", options: ["ידיות מוט", "ידיות כפתור", "ללא ידיות"] },
-  {
-    key: "extras",
-    question: "מה להוסיף?",
-    options: (a) =>
-      a.type === "מטבח"
+const getSteps = (a: Answers): StepDef[] => {
+  const isCloset = a.type === "ארון";
+  return [
+    { key: "type", question: "מה תרצה לבנות?", options: ["ארון", "מטבח"] },
+    {
+      key: "layout",
+      question: isCloset ? "סוג פתיחת דלתות?" : "איך לסדר את היחידות?",
+      options: a.type === "מטבח"
+        ? ["ישר", "L", "U"]
+        : ["דלתות נפתחות", "דלתות הזזה"],
+    },
+    ...(isCloset
+      ? [{
+          key: "height" as StepKey,
+          question: "מה הגובה?",
+          options: ["160 ס\"מ", "200 ס\"מ", "220 ס\"מ", "240 ס\"מ"],
+        }]
+      : []),
+    { key: "material", question: "איזה חומר/גוון?", options: ["אלון", "אגוז", "אורן", "לבן מט"] },
+    { key: "handles", question: "סוג ידיות?", options: ["ידיות מוט", "ידיות כפתור", "ללא ידיות"] },
+    {
+      key: "extras",
+      question: "מה להוסיף?",
+      options: a.type === "מטבח"
         ? ["כיריים + תנור", "מקרר משולב", "שיש עליון"]
         : ["מגירות", "מדפים", "מוט תלייה"],
-  },
-];
+    },
+  ];
+};
 
 const MATERIAL_COLORS: Record<string, { fill: string; grain: string; edge: string }> = {
   "אלון":    { fill: "#c9a06a", grain: "#a07a44", edge: "#7a5a32" },
@@ -66,11 +78,13 @@ const RahitiGaatonStoreView = ({ store }: { store: Store }) => {
     rightUpper: 2,
   });
 
-  const step = STEPS[stepIdx];
+  const steps = useMemo(() => getSteps(answers), [answers]);
+  const safeIdx = Math.min(stepIdx, steps.length - 1);
+  const step = steps[safeIdx];
   const stepOptions = typeof step.options === "function" ? step.options(answers) : step.options;
   const progress = useMemo(
-    () => Math.round(((done ? STEPS.length : stepIdx) / STEPS.length) * 100),
-    [stepIdx, done]
+    () => Math.round(((done ? steps.length : safeIdx) / steps.length) * 100),
+    [safeIdx, done, steps.length]
   );
 
   const pick = (value: string) => {
@@ -79,6 +93,12 @@ const RahitiGaatonStoreView = ({ store }: { store: Store }) => {
     if (step.key === "type" && answers.type && answers.type !== value) {
       next.layout = undefined;
       next.extras = undefined;
+      next.height = undefined;
+    }
+    // Parse closet height (e.g. "200 ס\"מ" -> 200)
+    if (step.key === "height") {
+      const h = parseInt(value, 10);
+      next.height = isNaN(h) ? 240 : h;
     }
     // Initialise unit counts when layout chosen
     if (step.key === "layout") {
@@ -89,7 +109,8 @@ const RahitiGaatonStoreView = ({ store }: { store: Store }) => {
           rightBase: 2, rightUpper: 2,
         });
       } else {
-        const n = value === "2 דלתות" ? 2 : value === "4 דלתות" ? 4 : 3;
+        // 2 default units (sliding => 2 sliding doors, hinged => 2 units of 2 doors)
+        const n = 2;
         setCounts({
           centerBase: n, centerUpper: n,
           leftBase: 0, leftUpper: 0,
@@ -98,8 +119,10 @@ const RahitiGaatonStoreView = ({ store }: { store: Store }) => {
       }
     }
     setAnswers(next);
-    if (stepIdx + 1 < STEPS.length) {
-      setTimeout(() => setStepIdx(stepIdx + 1), 220);
+    // Recompute steps with the new answers so dynamic insertion (height for closet) is respected
+    const nextSteps = getSteps(next);
+    if (safeIdx + 1 < nextSteps.length) {
+      setTimeout(() => setStepIdx(safeIdx + 1), 220);
     } else {
       setTimeout(() => setDone(true), 220);
     }
@@ -193,7 +216,7 @@ const RahitiGaatonStoreView = ({ store }: { store: Store }) => {
           {/* progress */}
           <div className="mb-8">
             <div className="flex items-center justify-between mb-2 font-heebo text-sm md:text-base text-[#5a4126]">
-              <span>שאלה {Math.min(stepIdx + 1, STEPS.length)} מתוך {STEPS.length}</span>
+              <span>שאלה {Math.min(safeIdx + 1, steps.length)} מתוך {steps.length}</span>
               <span>{progress}%</span>
             </div>
             <div className="h-2 w-full rounded-full bg-[#e0cda6] overflow-hidden shadow-inner">
@@ -346,6 +369,7 @@ const RahitiGaatonStoreView = ({ store }: { store: Store }) => {
 const LABEL: Record<StepKey, string> = {
   type: "סוג רהיט",
   layout: "סידור",
+  height: "גובה",
   material: "חומר",
   handles: "ידיות",
   extras: "תוספות",
@@ -401,10 +425,14 @@ function LivePreview({ answers, counts, setCounts }: PreviewProps) {
   // (lower body 160cm + upper section 80cm, connected, same 60cm depth).
   const W = isKitchen ? 70 : 80;   // module width along arm
   const D = 60;                    // depth (same for closet upper & lower)
+  // Closet: lower body fixed 160, upper section = chosen total height - 160
+  const closetTotal = answers.height ?? 240;
+  const closetUpperH = Math.max(0, closetTotal - 160);
   const H = isKitchen ? 95 : 160;  // base / closet lower body height
-  const UH = 80;                   // upper section height (kitchen & closet)
+  const UH = isKitchen ? 80 : closetUpperH; // upper section height
   const UD = isKitchen ? 38 : D;   // closet upper keeps full depth (connected)
   const UY = 130;                  // kitchen upper Y start
+  const isSliding = !isKitchen && layout === "דלתות הזזה";
 
   const mat =
     MATERIAL_COLORS[material ?? ""] ?? { fill: "#d8c29b", grain: "#a07a44", edge: "#7a5a32" };
@@ -474,7 +502,7 @@ function LivePreview({ answers, counts, setCounts }: PreviewProps) {
       }
       // Upper section is divided independently into nU doors-units,
       // each spanning the full closet width / nU.
-      if (nU > 0) {
+      if (nU > 0 && UH > 0) {
         const uw = totalW / nU;
         for (let i = 0; i < nU; i++) {
           boxes.push({ x: i * uw, z: 0, w: uw, d: UD, h: UH, y0: H, kind: "upper" });
@@ -545,19 +573,22 @@ function LivePreview({ answers, counts, setCounts }: PreviewProps) {
     const details: JSX.Element[] = [];
     if (b.kind !== "counter") {
       // Door split line: a vertical line down the middle of the front face
-      const midTop = frontFaceIsZ
-        ? iso(b.x + b.w / 2, y1, b.z + b.d)
-        : iso(b.x + b.w, y1, b.z + b.d / 2);
-      const midBot = frontFaceIsZ
-        ? iso(b.x + b.w / 2, y0, b.z + b.d)
-        : iso(b.x + b.w, y0, b.z + b.d / 2);
-      details.push(
-        <line
-          key={`split-${key}`}
-          x1={midTop[0]} y1={midTop[1]} x2={midBot[0]} y2={midBot[1]}
-          stroke={F.edge} strokeWidth="0.8" opacity="0.55"
-        />
-      );
+      // (skip on sliding-door closet — each unit is one sliding door)
+      if (!isSliding) {
+        const midTop = frontFaceIsZ
+          ? iso(b.x + b.w / 2, y1, b.z + b.d)
+          : iso(b.x + b.w, y1, b.z + b.d / 2);
+        const midBot = frontFaceIsZ
+          ? iso(b.x + b.w / 2, y0, b.z + b.d)
+          : iso(b.x + b.w, y0, b.z + b.d / 2);
+        details.push(
+          <line
+            key={`split-${key}`}
+            x1={midTop[0]} y1={midTop[1]} x2={midBot[0]} y2={midBot[1]}
+            stroke={F.edge} strokeWidth="0.8" opacity="0.55"
+          />
+        );
+      }
 
       // Handles (only on base / closet, not on upper)
       if (handles && handles !== "ללא ידיות") {
@@ -701,7 +732,7 @@ function LivePreview({ answers, counts, setCounts }: PreviewProps) {
             {hasType
               ? `${type ?? ""}${layout ? " · " + layout : ""}${material ? " · " + material : ""}${
                   !isKitchen && layout
-                    ? ` · ${counts.centerBase * 80} ס"מ רוחב × 240 ס"מ גובה`
+                    ? ` · ${counts.centerBase * 80} ס"מ רוחב × ${closetTotal} ס"מ גובה`
                     : ""
                 }`
               : "ההדמייה מתעדכנת לפי הבחירות שלכם"}
@@ -761,15 +792,18 @@ function LivePreview({ answers, counts, setCounts }: PreviewProps) {
             </div>
           ) : (
             <div className="rounded-2xl bg-white/90 backdrop-blur border border-[#c9a06a]/60 shadow px-2.5 py-2.5 pointer-events-auto flex flex-col gap-2">
+              {(answers.height ?? 240) > 160 && (
+                <ArmStepper
+                  label="דלתות עליונות"
+                  value={counts.centerUpper}
+                  min={isSliding ? 2 : 0}
+                  onChange={(n) => setCounts((c) => ({ ...c, centerUpper: n }))}
+                />
+              )}
               <ArmStepper
-                label="דלתות עליונות"
-                value={counts.centerUpper}
-                min={0}
-                onChange={(n) => setCounts((c) => ({ ...c, centerUpper: n }))}
-              />
-              <ArmStepper
-                label="יחידות (2 דלתות)"
+                label={isSliding ? "דלתות הזזה" : "יחידות (2 דלתות)"}
                 value={counts.centerBase}
+                min={isSliding ? 2 : 1}
                 onChange={(n) => setCounts((c) => ({ ...c, centerBase: n }))}
               />
             </div>
