@@ -294,6 +294,19 @@ const RahitiGaatonStoreView = ({ store }: { store: Store }) => {
               </div>
             </div>
           )}
+
+          {/* Live preview below the questions */}
+          <div className="mt-10 md:mt-14">
+            <div className="text-center mb-4">
+              <h3 className="font-frank font-bold text-[#3b2918] text-xl md:text-2xl">
+                ההדמייה החיה שלכם
+              </h3>
+              <p className="font-heebo text-sm text-[#7a5a36]">
+                מתעדכנת בזמן אמת לפי כל בחירה
+              </p>
+            </div>
+            <LivePreview answers={answers} />
+          </div>
         </div>
       </section>
 
