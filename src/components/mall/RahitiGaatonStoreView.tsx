@@ -121,6 +121,16 @@ const RahitiGaatonStoreView = ({ store }: { store: Store }) => {
       next.layout = undefined;
       next.extras = undefined;
       next.height = undefined;
+      next.designCategory = undefined;
+      next.material = undefined;
+    }
+    // Reset material when category changes
+    if (step.key === "designCategory" && answers.designCategory !== value) {
+      next.material = undefined;
+    }
+    // Store material with category prefix so colour lookup is unambiguous
+    if (step.key === "material" && next.designCategory) {
+      next.material = `${next.designCategory}:${value}`;
     }
     // Parse closet height (e.g. "200 ס\"מ" -> 200)
     if (step.key === "height") {
