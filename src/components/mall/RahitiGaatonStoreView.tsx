@@ -57,6 +57,11 @@ const RahitiGaatonStoreView = ({ store }: { store: Store }) => {
   const [stepIdx, setStepIdx] = useState(0);
   const [answers, setAnswers] = useState<Answers>({});
   const [done, setDone] = useState(false);
+  const [counts, setCounts] = useState<{ main: number; arm2: number; arm3: number }>({
+    main: 4,
+    arm2: 2,
+    arm3: 2,
+  });
 
   const step = STEPS[stepIdx];
   const stepOptions = typeof step.options === "function" ? step.options(answers) : step.options;
@@ -72,6 +77,15 @@ const RahitiGaatonStoreView = ({ store }: { store: Store }) => {
       next.layout = undefined;
       next.extras = undefined;
     }
+    // Initialise unit counts when layout chosen
+    if (step.key === "layout") {
+      if (next.type === "מטבח") {
+        setCounts({ main: 4, arm2: 2, arm3: 2 });
+      } else {
+        const n = value === "2 דלתות" ? 2 : value === "4 דלתות" ? 4 : 3;
+        setCounts({ main: n, arm2: 0, arm3: 0 });
+      }
+    }
     setAnswers(next);
     if (stepIdx + 1 < STEPS.length) {
       setTimeout(() => setStepIdx(stepIdx + 1), 220);
@@ -84,6 +98,7 @@ const RahitiGaatonStoreView = ({ store }: { store: Store }) => {
     setAnswers({});
     setStepIdx(0);
     setDone(false);
+    setCounts({ main: 4, arm2: 2, arm3: 2 });
   };
 
   return (
