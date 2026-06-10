@@ -41,6 +41,7 @@ import GalleryWallSection from "@/components/mall/GalleryWallSection";
 import ClearAlignersInfoPage from "@/pages/ClearAlignersInfoPage";
 import PacmanArcadePage from "@/pages/PacmanArcadePage";
 import BneiKasafotStoreView from "@/components/mall/BneiKasafotStoreView";
+import RahitiGaatonStoreView from "@/components/mall/RahitiGaatonStoreView";
 import imProduct1 from "@/assets/stores/im-product-1.png";
 import imProduct2 from "@/assets/stores/im-product-2.png";
 import imProduct3 from "@/assets/stores/im-product-3.png";
@@ -785,6 +786,10 @@ const StorePage = () => {
 
   if (store.id === "s10") {
     return <BneiKasafotStoreView store={store} />;
+  }
+
+  if (store.id === "s18") {
+    return <RahitiGaatonStoreView store={store} />;
   }
 
   if (store.id === "s4") {
