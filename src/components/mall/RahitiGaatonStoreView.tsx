@@ -792,15 +792,18 @@ function LivePreview({ answers, counts, setCounts }: PreviewProps) {
             </div>
           ) : (
             <div className="rounded-2xl bg-white/90 backdrop-blur border border-[#c9a06a]/60 shadow px-2.5 py-2.5 pointer-events-auto flex flex-col gap-2">
+              {(answers.height ?? 240) > 160 && (
+                <ArmStepper
+                  label="דלתות עליונות"
+                  value={counts.centerUpper}
+                  min={isSliding ? 2 : 0}
+                  onChange={(n) => setCounts((c) => ({ ...c, centerUpper: n }))}
+                />
+              )}
               <ArmStepper
-                label="דלתות עליונות"
-                value={counts.centerUpper}
-                min={0}
-                onChange={(n) => setCounts((c) => ({ ...c, centerUpper: n }))}
-              />
-              <ArmStepper
-                label="יחידות (2 דלתות)"
+                label={isSliding ? "דלתות הזזה" : "יחידות (2 דלתות)"}
                 value={counts.centerBase}
+                min={isSliding ? 2 : 1}
                 onChange={(n) => setCounts((c) => ({ ...c, centerBase: n }))}
               />
             </div>
