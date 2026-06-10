@@ -582,7 +582,7 @@ function LivePreview({ answers, counts, setCounts }: PreviewProps) {
       }
 
       // Horizontal split line for tall closet units at 160cm (upper door division)
-      if (b.kind === "tall" && !isKitchen && counts.centerUpper > 0) {
+      if (b.kind === "tall" && !isKitchen && !isSliding && closetTotal > 160) {
         const splitY = 160;
         const h1 = frontFaceIsZ
           ? iso(b.x, splitY, b.z + b.d)
