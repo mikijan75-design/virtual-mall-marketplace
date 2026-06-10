@@ -493,20 +493,11 @@ function LivePreview({ answers, counts, setCounts }: PreviewProps) {
         }
       }
     } else {
-      // Closet: lower units + connected upper section (no gap, same depth).
-      const n = Math.max(1, counts.centerBase);
-      const nU = Math.max(0, counts.centerUpper);
+      // Closet: tall single units (full height), optional horizontal split at 160cm for upper doors.
+      const n = Math.max(isSliding ? 2 : 1, counts.centerBase);
       const totalW = n * W;
       for (let i = 0; i < n; i++) {
-        boxes.push({ x: i * W, z: 0, w: W, d: D, h: H, kind: "base" });
-      }
-      // Upper section is divided independently into nU doors-units,
-      // each spanning the full closet width / nU.
-      if (nU > 0 && UH > 0) {
-        const uw = totalW / nU;
-        for (let i = 0; i < nU; i++) {
-          boxes.push({ x: i * uw, z: 0, w: uw, d: UD, h: UH, y0: H, kind: "upper" });
-        }
+        boxes.push({ x: i * W, z: 0, w: W, d: D, h: closetTotal, kind: "tall" });
       }
     }
   }
