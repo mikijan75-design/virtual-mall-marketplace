@@ -10,7 +10,6 @@ import type { Store } from "@/data/mallData";
 type Answers = {
   type?: "ארון" | "מטבח";
   layout?: string;       // for kitchen: ישר / L / U ; for closet: 2 דלתות / 3 / 4
-  size?: "קטן" | "בינוני" | "גדול";
   material?: "אלון" | "אגוז" | "אורן" | "לבן מט";
   handles?: "ידיות מוט" | "ידיות כפתור" | "ללא ידיות";
   extras?: string;       // kitchen: כיריים+תנור / מקרר / שיש עליון ; closet: מגירות / מדפים / תלייה
@@ -31,7 +30,6 @@ const STEPS: StepDef[] = [
     question: "איך לסדר את היחידות?",
     options: (a) => (a.type === "מטבח" ? ["ישר", "L", "U"] : ["2 דלתות", "3 דלתות", "4 דלתות"]),
   },
-  { key: "size", question: "מה הגודל המבוקש?", options: ["קטן", "בינוני", "גדול"] },
   { key: "material", question: "איזה חומר/גוון?", options: ["אלון", "אגוז", "אורן", "לבן מט"] },
   { key: "handles", question: "סוג ידיות?", options: ["ידיות מוט", "ידיות כפתור", "ללא ידיות"] },
   {
