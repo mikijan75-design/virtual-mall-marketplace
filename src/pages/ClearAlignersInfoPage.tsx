@@ -17,6 +17,7 @@ import customer2 from "@/assets/clear-aligners/customer-2.png";
 import customer3 from "@/assets/clear-aligners/customer-3.png";
 import customer4 from "@/assets/clear-aligners/customer-4.png";
 import customer5 from "@/assets/clear-aligners/customer-5.png";
+import alignsFastDelivery from "@/assets/aligns-fast-delivery.png.asset.json";
 
 type IconName =
   | "camera"
