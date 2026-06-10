@@ -128,10 +128,6 @@ const RahitiGaatonStoreView = ({ store }: { store: Store }) => {
     if (step.key === "designCategory" && answers.designCategory !== value) {
       next.material = undefined;
     }
-    // Store material with category prefix so colour lookup is unambiguous
-    if (step.key === "material" && next.designCategory) {
-      next.material = `${next.designCategory}:${value}`;
-    }
     // Parse closet height (e.g. "200 ס\"מ" -> 200)
     if (step.key === "height") {
       const h = parseInt(value, 10);
