@@ -426,33 +426,49 @@ function LivePreview({ answers, counts, setCounts }: PreviewProps) {
 
   if (hasType && layout) {
     if (isKitchen) {
-      const nMain = Math.max(1, counts.main);
-      const nArm2 = Math.max(1, counts.arm2);
-      const nArm3 = Math.max(1, counts.arm3);
+      const nC = Math.max(1, counts.centerBase);
+      const nCU = Math.max(0, counts.centerUpper);
+      const nR = Math.max(1, counts.rightBase);
+      const nRU = Math.max(0, counts.rightUpper);
+      const nL = Math.max(1, counts.leftBase);
+      const nLU = Math.max(0, counts.leftUpper);
 
-      // Arm 1: along +x at z = 0..D, x = 0..nMain*W
-      for (let i = 0; i < nMain; i++) {
+      // Center arm: along +x at z = 0
+      for (let i = 0; i < nC; i++) {
         boxes.push({ x: i * W, z: 0, w: W, d: D, h: H, kind: "base" });
+      }
+      for (let i = 0; i < nCU; i++) {
         boxes.push({ x: i * W, z: 0, w: W, d: UD, h: UH, y0: UY, kind: "upper" });
       }
 
+      // Right arm (L or U) — at right end of center, extending +z
       if (layout === "L" || layout === "U") {
-        for (let i = 0; i < nArm2; i++) {
+        const xR = nC * W - D;
+        for (let i = 0; i < nR; i++) {
+          boxes.push({ x: xR, z: D + i * W, w: D, d: W, h: H, kind: "base", facingX: true });
+        }
+        for (let i = 0; i < nRU; i++) {
+          boxes.push({ x: xR, z: D + i * W, w: UD, d: W, h: UH, y0: UY, kind: "upper", facingX: true });
+        }
+      }
+      // Left arm (U only) — at left end of center, extending +z
+      if (layout === "U") {
+        for (let i = 0; i < nL; i++) {
           boxes.push({ x: 0, z: D + i * W, w: D, d: W, h: H, kind: "base", facingX: true });
+        }
+        for (let i = 0; i < nLU; i++) {
           boxes.push({ x: 0, z: D + i * W, w: UD, d: W, h: UH, y0: UY, kind: "upper", facingX: true });
         }
       }
-      if (layout === "U") {
-        const x3 = nMain * W - D;
-        for (let i = 0; i < nArm3; i++) {
-          boxes.push({ x: x3, z: D + i * W, w: D, d: W, h: H, kind: "base", facingX: true });
-          boxes.push({ x: x3, z: D + i * W, w: UD, d: W, h: UH, y0: UY, kind: "upper", facingX: true });
-        }
-      }
     } else {
-      const n = Math.max(1, counts.main);
+      const n = Math.max(1, counts.centerBase);
+      const nU = Math.max(0, counts.centerUpper);
       for (let i = 0; i < n; i++) {
         boxes.push({ x: i * W, z: 0, w: W, d: D, h: H, kind: "base" });
+      }
+      // Upper closet section (e.g. אנטרסול)
+      for (let i = 0; i < nU; i++) {
+        boxes.push({ x: i * W, z: 0, w: W, d: UD, h: UH, y0: H + 10, kind: "upper" });
       }
     }
   }
