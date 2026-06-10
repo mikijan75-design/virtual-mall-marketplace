@@ -395,12 +395,16 @@ function LivePreview({ answers, counts, setCounts }: PreviewProps) {
   ];
   const pt = (x: number, y: number, z: number) => iso(x, y, z).join(",");
 
-  const W = 70; // module width along arm
-  const D = 60; // depth
-  const H = isKitchen ? 95 : 200; // base/closet body height
-  const UH = 80; // upper kitchen cabinet height
-  const UD = 38; // upper cabinet depth
-  const UY = 130; // y where upper cabinet starts
+  // Real-world centimetres mapped 1:1 into SVG units.
+  // Kitchen: standard base 60×60×90 with 38cm upper at 130cm.
+  // Closet: each unit 80cm wide (2 doors), total height 240cm
+  // (lower body 160cm + upper section 80cm, connected, same 60cm depth).
+  const W = isKitchen ? 70 : 80;   // module width along arm
+  const D = 60;                    // depth (same for closet upper & lower)
+  const H = isKitchen ? 95 : 160;  // base / closet lower body height
+  const UH = 80;                   // upper section height (kitchen & closet)
+  const UD = isKitchen ? 38 : D;   // closet upper keeps full depth (connected)
+  const UY = 130;                  // kitchen upper Y start
 
   const mat =
     MATERIAL_COLORS[material ?? ""] ?? { fill: "#d8c29b", grain: "#a07a44", edge: "#7a5a32" };
@@ -461,14 +465,20 @@ function LivePreview({ answers, counts, setCounts }: PreviewProps) {
         }
       }
     } else {
+      // Closet: lower units + connected upper section (no gap, same depth).
       const n = Math.max(1, counts.centerBase);
       const nU = Math.max(0, counts.centerUpper);
+      const totalW = n * W;
       for (let i = 0; i < n; i++) {
         boxes.push({ x: i * W, z: 0, w: W, d: D, h: H, kind: "base" });
       }
-      // Upper closet section (e.g. אנטרסול)
-      for (let i = 0; i < nU; i++) {
-        boxes.push({ x: i * W, z: 0, w: W, d: UD, h: UH, y0: H + 10, kind: "upper" });
+      // Upper section is divided independently into nU doors-units,
+      // each spanning the full closet width / nU.
+      if (nU > 0) {
+        const uw = totalW / nU;
+        for (let i = 0; i < nU; i++) {
+          boxes.push({ x: i * uw, z: 0, w: uw, d: UD, h: UH, y0: H, kind: "upper" });
+        }
       }
     }
   }
@@ -689,7 +699,11 @@ function LivePreview({ answers, counts, setCounts }: PreviewProps) {
         <g fontFamily="'Heebo', sans-serif" fontSize="14" fill="#5a4126">
           <text x={VB_W / 2} y={VB_H - 18} textAnchor="middle" opacity="0.75">
             {hasType
-              ? `${type ?? ""}${layout ? " · " + layout : ""}${material ? " · " + material : ""}`
+              ? `${type ?? ""}${layout ? " · " + layout : ""}${material ? " · " + material : ""}${
+                  !isKitchen && layout
+                    ? ` · ${counts.centerBase * 80} ס"מ רוחב × 240 ס"מ גובה`
+                    : ""
+                }`
               : "ההדמייה מתעדכנת לפי הבחירות שלכם"}
           </text>
         </g>
@@ -748,13 +762,13 @@ function LivePreview({ answers, counts, setCounts }: PreviewProps) {
           ) : (
             <div className="rounded-2xl bg-white/90 backdrop-blur border border-[#c9a06a]/60 shadow px-2.5 py-2.5 pointer-events-auto flex flex-col gap-2">
               <ArmStepper
-                label="עליון"
+                label="דלתות עליונות"
                 value={counts.centerUpper}
                 min={0}
                 onChange={(n) => setCounts((c) => ({ ...c, centerUpper: n }))}
               />
               <ArmStepper
-                label="דלתות"
+                label="יחידות (2 דלתות)"
                 value={counts.centerBase}
                 onChange={(n) => setCounts((c) => ({ ...c, centerBase: n }))}
               />
