@@ -216,7 +216,7 @@ const RahitiGaatonStoreView = ({ store }: { store: Store }) => {
           {/* progress */}
           <div className="mb-8">
             <div className="flex items-center justify-between mb-2 font-heebo text-sm md:text-base text-[#5a4126]">
-              <span>שאלה {Math.min(stepIdx + 1, STEPS.length)} מתוך {STEPS.length}</span>
+              <span>שאלה {Math.min(safeIdx + 1, steps.length)} מתוך {steps.length}</span>
               <span>{progress}%</span>
             </div>
             <div className="h-2 w-full rounded-full bg-[#e0cda6] overflow-hidden shadow-inner">
@@ -369,6 +369,7 @@ const RahitiGaatonStoreView = ({ store }: { store: Store }) => {
 const LABEL: Record<StepKey, string> = {
   type: "סוג רהיט",
   layout: "סידור",
+  height: "גובה",
   material: "חומר",
   handles: "ידיות",
   extras: "תוספות",
