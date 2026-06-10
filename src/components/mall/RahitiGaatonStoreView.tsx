@@ -11,7 +11,8 @@ type Answers = {
   type?: "ארון" | "מטבח";
   layout?: string;       // for kitchen: ישר / L / U ; for closet: 2 דלתות / 3 / 4
   height?: number;       // closet total height in cm (160/200/220/240)
-  material?: "אלון" | "אגוז" | "אורן" | "לבן מט";
+  designCategory?: "עץ" | "בד" | "מלא";
+  material?: string;
   handles?: "ידיות מוט" | "ידיות כפתור" | "ללא ידיות";
   extras?: string;       // kitchen: כיריים+תנור / מקרר / שיש עליון ; closet: מגירות / מדפים / תלייה
 };
@@ -44,7 +45,19 @@ const getSteps = (a: Answers): StepDef[] => {
             : ["160 ס\"מ", "180 ס\"מ", "200 ס\"מ", "220 ס\"מ", "240 ס\"מ"],
         }]
       : []),
-    { key: "material", question: "איזה חומר/גוון?", options: ["אלון", "אגוז", "אורן", "לבן מט"] },
+    { key: "designCategory", question: "איזה עיצוב אתם מעוניינים?", options: ["עץ", "בד", "מלא"] },
+    {
+      key: "material",
+      question: "איזה גוון?",
+      options: (ans: Answers) => {
+        if (ans.designCategory === "עץ") return ["אלון", "אגוז", "אורן"];
+        if (ans.designCategory === "בד")
+          return ["תכלת בהיר מאוד", "לבן", "אפור בהיר", "אפור כהה"];
+        if (ans.designCategory === "מלא")
+          return ["לבן", "קרם בהיר", "נס", "תכלת בהיר מאוד", "ורוד בהיר מאוד", "אפרסק בהיר מאוד"];
+        return [];
+      },
+    },
     { key: "handles", question: "סוג ידיות?", options: ["ידיות מוט", "ידיות כפתור", "ללא ידיות"] },
     {
       key: "extras",
@@ -57,10 +70,22 @@ const getSteps = (a: Answers): StepDef[] => {
 };
 
 const MATERIAL_COLORS: Record<string, { fill: string; grain: string; edge: string }> = {
-  "אלון":    { fill: "#c9a06a", grain: "#a07a44", edge: "#7a5a32" },
-  "אגוז":    { fill: "#6b4525", grain: "#4a2e16", edge: "#2e1c0d" },
-  "אורן":    { fill: "#e7c79a", grain: "#c69b6a", edge: "#9c7344" },
-  "לבן מט":  { fill: "#f3ede2", grain: "#dcd2c0", edge: "#a8a090" },
+  // עץ
+  "עץ:אלון":              { fill: "#c9a06a", grain: "#a07a44", edge: "#7a5a32" },
+  "עץ:אגוז":              { fill: "#6b4525", grain: "#4a2e16", edge: "#2e1c0d" },
+  "עץ:אורן":              { fill: "#e7c79a", grain: "#c69b6a", edge: "#9c7344" },
+  // בד (פשתן) — גוונים רכים
+  "בד:תכלת בהיר מאוד":    { fill: "#dff0fb", grain: "#b9d8ec", edge: "#8fb4cc" },
+  "בד:לבן":               { fill: "#f6f1e7", grain: "#e2d9c7", edge: "#b6ad9a" },
+  "בד:אפור בהיר":         { fill: "#d9d9d4", grain: "#bcbcb5", edge: "#8d8d86" },
+  "בד:אפור כהה":          { fill: "#5e5e5a", grain: "#464643", edge: "#2c2c2a" },
+  // מלא
+  "מלא:לבן":              { fill: "#fafafa", grain: "#ececec", edge: "#bdbdbd" },
+  "מלא:קרם בהיר":         { fill: "#f4ead6", grain: "#e4d6b6", edge: "#b09c72" },
+  "מלא:נס":               { fill: "#efe1cf", grain: "#dcc7ad", edge: "#a98a64" },
+  "מלא:תכלת בהיר מאוד":   { fill: "#e3f1fb", grain: "#c2dcef", edge: "#92b7ce" },
+  "מלא:ורוד בהיר מאוד":   { fill: "#fbe4ea", grain: "#f0c5d1", edge: "#c389a0" },
+  "מלא:אפרסק בהיר מאוד":  { fill: "#fde2cf", grain: "#f5c4a3", edge: "#c98c5e" },
 };
 
 const WOOD_BG =
@@ -96,6 +121,12 @@ const RahitiGaatonStoreView = ({ store }: { store: Store }) => {
       next.layout = undefined;
       next.extras = undefined;
       next.height = undefined;
+      next.designCategory = undefined;
+      next.material = undefined;
+    }
+    // Reset material when category changes
+    if (step.key === "designCategory" && answers.designCategory !== value) {
+      next.material = undefined;
     }
     // Parse closet height (e.g. "200 ס\"מ" -> 200)
     if (step.key === "height") {
@@ -372,6 +403,7 @@ const LABEL: Record<StepKey, string> = {
   type: "סוג רהיט",
   layout: "סידור",
   height: "גובה",
+  designCategory: "עיצוב",
   material: "חומר",
   handles: "ידיות",
   extras: "תוספות",
@@ -436,8 +468,9 @@ function LivePreview({ answers, counts, setCounts }: PreviewProps) {
   const UY = 130;                  // kitchen upper Y start
   const isSliding = !isKitchen && layout === "דלתות הזזה";
 
+  const matKey = answers.designCategory && material ? `${answers.designCategory}:${material}` : "";
   const mat =
-    MATERIAL_COLORS[material ?? ""] ?? { fill: "#d8c29b", grain: "#a07a44", edge: "#7a5a32" };
+    MATERIAL_COLORS[matKey] ?? { fill: "#d8c29b", grain: "#a07a44", edge: "#7a5a32" };
   // Shading variants for the 3 visible faces
   const FACE = {
     front: mat.fill,
