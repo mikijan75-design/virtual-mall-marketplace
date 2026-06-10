@@ -9,19 +9,47 @@ import type { Store } from "@/data/mallData";
 
 type Answers = {
   type?: "ארון" | "מטבח";
-  style?: "מודרני" | "קלאסי" | "כפרי";
+  layout?: string;       // for kitchen: ישר / L / U ; for closet: 2 דלתות / 3 / 4
   size?: "קטן" | "בינוני" | "גדול";
-  material?: "אלון" | "אגוז" | "אורן" | "MDF צבוע";
+  material?: "אלון" | "אגוז" | "אורן" | "לבן מט";
+  handles?: "ידיות מוט" | "ידיות כפתור" | "ללא ידיות";
+  extras?: string;       // kitchen: כיריים+תנור / מקרר / שיש עליון ; closet: מגירות / מדפים / תלייה
 };
 
 type StepKey = keyof Answers;
 
-const STEPS: { key: StepKey; question: string; options: string[] }[] = [
+type StepDef = {
+  key: StepKey;
+  question: string;
+  options: string[] | ((a: Answers) => string[]);
+};
+
+const STEPS: StepDef[] = [
   { key: "type", question: "מה תרצה לבנות?", options: ["ארון", "מטבח"] },
-  { key: "style", question: "באיזה סגנון?", options: ["מודרני", "קלאסי", "כפרי"] },
+  {
+    key: "layout",
+    question: "איך לסדר את היחידות?",
+    options: (a) => (a.type === "מטבח" ? ["ישר", "L", "U"] : ["2 דלתות", "3 דלתות", "4 דלתות"]),
+  },
   { key: "size", question: "מה הגודל המבוקש?", options: ["קטן", "בינוני", "גדול"] },
-  { key: "material", question: "איזה חומר תעדיף?", options: ["אלון", "אגוז", "אורן", "MDF צבוע"] },
+  { key: "material", question: "איזה חומר/גוון?", options: ["אלון", "אגוז", "אורן", "לבן מט"] },
+  { key: "handles", question: "סוג ידיות?", options: ["ידיות מוט", "ידיות כפתור", "ללא ידיות"] },
+  {
+    key: "extras",
+    question: "מה להוסיף?",
+    options: (a) =>
+      a.type === "מטבח"
+        ? ["כיריים + תנור", "מקרר משולב", "שיש עליון"]
+        : ["מגירות", "מדפים", "מוט תלייה"],
+  },
 ];
+
+const MATERIAL_COLORS: Record<string, { fill: string; grain: string; edge: string }> = {
+  "אלון":    { fill: "#c9a06a", grain: "#a07a44", edge: "#7a5a32" },
+  "אגוז":    { fill: "#6b4525", grain: "#4a2e16", edge: "#2e1c0d" },
+  "אורן":    { fill: "#e7c79a", grain: "#c69b6a", edge: "#9c7344" },
+  "לבן מט":  { fill: "#f3ede2", grain: "#dcd2c0", edge: "#a8a090" },
+};
 
 const WOOD_BG =
   "repeating-linear-gradient(92deg, #f6ecdc 0 6px, #efe1c8 6px 13px, #f3e6d0 13px 22px, #ead8b8 22px 34px)";
@@ -33,13 +61,19 @@ const RahitiGaatonStoreView = ({ store }: { store: Store }) => {
   const [done, setDone] = useState(false);
 
   const step = STEPS[stepIdx];
+  const stepOptions = typeof step.options === "function" ? step.options(answers) : step.options;
   const progress = useMemo(
     () => Math.round(((done ? STEPS.length : stepIdx) / STEPS.length) * 100),
     [stepIdx, done]
   );
 
   const pick = (value: string) => {
-    const next = { ...answers, [step.key]: value as Answers[StepKey] };
+    const next: Answers = { ...answers, [step.key]: value as Answers[StepKey] };
+    // Reset dependent fields if `type` changes
+    if (step.key === "type" && answers.type && answers.type !== value) {
+      next.layout = undefined;
+      next.extras = undefined;
+    }
     setAnswers(next);
     if (stepIdx + 1 < STEPS.length) {
       setTimeout(() => setStepIdx(stepIdx + 1), 220);
@@ -160,14 +194,14 @@ const RahitiGaatonStoreView = ({ store }: { store: Store }) => {
 
               <div
                 className={`mt-8 grid gap-4 md:gap-5 ${
-                  step.options.length <= 2
+                  stepOptions.length <= 2
                     ? "grid-cols-2"
-                    : step.options.length === 3
+                    : stepOptions.length === 3
                       ? "grid-cols-1 sm:grid-cols-3"
                       : "grid-cols-2 md:grid-cols-4"
                 }`}
               >
-                {step.options.map((opt) => {
+                {stepOptions.map((opt) => {
                   const selected = answers[step.key] === opt;
                   return (
                     <button
