@@ -17,6 +17,7 @@ import customer2 from "@/assets/clear-aligners/customer-2.png";
 import customer3 from "@/assets/clear-aligners/customer-3.png";
 import customer4 from "@/assets/clear-aligners/customer-4.png";
 import customer5 from "@/assets/clear-aligners/customer-5.png";
+import alignsFastDelivery from "@/assets/aligns-fast-delivery.png.asset.json";
 
 type IconName =
   | "camera"
@@ -937,152 +938,12 @@ const ClearAlignersInfoPage = () => {
                   className="relative flex-1 min-h-[180px] rounded-2xl border border-sky-200 bg-gradient-to-br from-amber-50 via-white to-sky-50 p-5 sm:p-6 shadow-[inset_0_1px_0_rgba(255,255,255,0.9),0_10px_22px_rgba(11,96,141,0.06)] overflow-hidden"
                   dir="rtl"
                 >
-                  {/* decorative dotted grid */}
-                  <svg className="pointer-events-none absolute inset-0 h-full w-full opacity-[0.18]" aria-hidden="true">
-                    <defs>
-                      <pattern id="abtDots" width="14" height="14" patternUnits="userSpaceOnUse">
-                        <circle cx="1.2" cy="1.2" r="1.1" fill="#0ea5e9" />
-                      </pattern>
-                    </defs>
-                    <rect width="100%" height="100%" fill="url(#abtDots)" />
-                  </svg>
-
-                  <div className="relative flex h-full items-center justify-center gap-3 sm:gap-5">
-                    {/* ── Geometric outlined "7" that wraps into a circular form ── */}
-                    <div className="relative flex h-32 w-32 sm:h-36 sm:w-36 shrink-0 items-center justify-center">
-                      <svg viewBox="-50 -50 100 100" className="relative h-full w-full drop-shadow-[0_6px_14px_rgba(11,96,141,0.18)]" aria-hidden="true">
-                        {/* circular envelope around the 7 */}
-                        <circle r="44" fill="none" stroke="#0c4a6e" strokeWidth="3" />
-                        <circle r="40" fill="none" stroke="#38bdf8" strokeWidth="1.2" opacity="0.7" />
-
-                        {/* Bubble "7" — thick double outline, hollow interior.
-                            One closed path traces the outer silhouette of the digit;
-                            stroke = sky frame, fill = none (interior empty). */}
-                        <path
-                          d="
-                            M -26 -32
-                            L 26 -32
-                            Q 32 -32 32 -26
-                            L 32 -16
-                            Q 32 -12 30 -8
-                            L 8 32
-                            Q 6 36 0 36
-                            L -6 36
-                            Q -12 36 -10 30
-                            L 10 -12
-                            Q 12 -16 8 -16
-                            L -26 -16
-                            Q -32 -16 -32 -22
-                            L -32 -26
-                            Q -32 -32 -26 -32
-                            Z
-                          "
-                          fill="none"
-                          stroke="#0c4a6e"
-                          strokeWidth="4"
-                          strokeLinejoin="round"
-                        />
-
-                        {/* amber accent pip at the digit's terminal */}
-                        <circle cx="-3" cy="36" r="2.6" fill="#fbbf24" stroke="#0c4a6e" strokeWidth="1.1" />
-
-                        {/* "ימים" — page-heading styling, nested in the 7's negative space */}
-                        <text
-                          x="-8" y="8" textAnchor="middle"
-                          fontFamily="ui-sans-serif, system-ui, -apple-system, 'Segoe UI', Roboto, sans-serif"
-                          fontWeight="900" fontSize="13"
-                          fill="#0c4a6e" letterSpacing="0.4"
-                        >ימים</text>
-                      </svg>
-                    </div>
-
-                    {/* ── Plus junction ────────────────────────── */}
-                    <div className="relative flex h-12 w-12 shrink-0 items-center justify-center">
-                      <span className="absolute inset-0 rounded-full bg-amber-300/50 blur-md" />
-                      <svg viewBox="-20 -20 40 40" className="relative h-12 w-12" aria-hidden="true">
-                        <defs>
-                          <linearGradient id="plusGrad" x1="0" y1="-1" x2="0" y2="1">
-                            <stop offset="0%" stopColor="#fde68a" />
-                            <stop offset="60%" stopColor="#fbbf24" />
-                            <stop offset="100%" stopColor="#d97706" />
-                          </linearGradient>
-                        </defs>
-                        <circle r="17" fill="url(#plusGrad)" stroke="#92400e" strokeWidth="0.8" />
-                        <circle r="14" fill="none" stroke="#fffbeb" strokeWidth="0.6" strokeDasharray="1 1.5" />
-                        <path d="M-7 0 H7 M0 -7 V7" stroke="#ffffff" strokeWidth="3.2" strokeLinecap="round" />
-                      </svg>
-                    </div>
-
-                    {/* ── Soft, rounded delivery truck — light fills, thick sky outline ── */}
-                    <div className="relative flex h-32 w-44 sm:h-36 sm:w-48 shrink-0 items-center justify-center">
-                      <svg viewBox="-70 -45 140 90" className="relative h-full w-full drop-shadow-[0_8px_18px_rgba(11,96,141,0.18)]" aria-hidden="true">
-                        {/* motion puffs behind the truck */}
-                        <g opacity="0.85" stroke="#38bdf8" strokeWidth="2.4" strokeLinecap="round" fill="none">
-                          <path d="M 52 -20 q 8 -4 14 0" />
-                          <path d="M 54 -8 q 8 -4 14 0" opacity="0.75" />
-                          <path d="M 52 4 q 8 -4 14 0" opacity="0.55" />
-                        </g>
-
-                        {/* cargo box — fully rounded, light sky fill */}
-                        <rect
-                          x="-22" y="-28" width="68" height="50" rx="14" ry="14"
-                          fill="#f0f9ff" stroke="#0c4a6e" strokeWidth="3.2"
-                        />
-
-                        {/* cab — bubble-shaped, light amber */}
-                        <path
-                          d="
-                            M -22 -10
-                            Q -22 -16 -28 -16
-                            L -34 -16
-                            Q -42 -16 -44 -6
-                            L -46 6
-                            Q -46 22 -34 22
-                            L -22 22 Z
-                          "
-                          fill="#fffbeb" stroke="#0c4a6e" strokeWidth="3.2" strokeLinejoin="round"
-                        />
-
-                        {/* cab window */}
-                        <path
-                          d="M -25 -10 Q -25 -13 -28 -13 L -33 -13 Q -39 -13 -41 -4 L -41 2 Q -41 4 -39 4 L -25 4 Z"
-                          fill="#e0f2fe" stroke="#0c4a6e" strokeWidth="1.8"
-                        />
-
-                        {/* headlight */}
-                        <circle cx="-43" cy="11" r="2.2" fill="#fbbf24" stroke="#0c4a6e" strokeWidth="1.2" />
-
-                        {/* door seam on cargo */}
-                        <line x1="22" y1="-22" x2="22" y2="16" stroke="#0c4a6e" strokeWidth="1.4" opacity="0.45" strokeLinecap="round" />
-                        {/* door handle */}
-                        <circle cx="18" cy="-2" r="1.4" fill="#fbbf24" stroke="#0c4a6e" strokeWidth="0.9" />
-
-                        {/* label across the cargo — page heading styling */}
-                        <text
-                          x="10" y="-3" textAnchor="middle"
-                          fontFamily="ui-sans-serif, system-ui, -apple-system, 'Segoe UI', Roboto, sans-serif"
-                          fontWeight="900" fontSize="12" fill="#0c4a6e" letterSpacing="0.6"
-                        >הספקה</text>
-                        <text
-                          x="10" y="13" textAnchor="middle"
-                          fontFamily="ui-sans-serif, system-ui, -apple-system, 'Segoe UI', Roboto, sans-serif"
-                          fontWeight="900" fontSize="12" fill="#0c4a6e" letterSpacing="0.6"
-                        >מהירה</text>
-
-                        {/* wheels — soft, with amber hubs to match the page accents */}
-                        <g>
-                          <circle cx="-32" cy="26" r="8" fill="#0c4a6e" />
-                          <circle cx="-32" cy="26" r="4.2" fill="#fffbeb" stroke="#0c4a6e" strokeWidth="1.2" />
-                          <circle cx="-32" cy="26" r="1.4" fill="#fbbf24" />
-                        </g>
-                        <g>
-                          <circle cx="32" cy="26" r="8" fill="#0c4a6e" />
-                          <circle cx="32" cy="26" r="4.2" fill="#fffbeb" stroke="#0c4a6e" strokeWidth="1.2" />
-                          <circle cx="32" cy="26" r="1.4" fill="#fbbf24" />
-                        </g>
-                      </svg>
-                    </div>
-                  </div>
+                  <img
+                    src={alignsFastDelivery.url}
+                    alt="ALIGNS - יישור שיניים מהיר - 7 ימי הספקה"
+                    className="block w-full h-auto rounded-2xl"
+                    loading="lazy"
+                  />
                 </div>
                 </div>
 
