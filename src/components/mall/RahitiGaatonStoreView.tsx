@@ -360,7 +360,14 @@ export default RahitiGaatonStoreView;
    axonometric projection lets the user see L / U layouts and depth.
    ========================================================================= */
 
-type Counts = { main: number; arm2: number; arm3: number };
+type Counts = {
+  centerBase: number;
+  centerUpper: number;
+  leftBase: number;
+  leftUpper: number;
+  rightBase: number;
+  rightUpper: number;
+};
 type PreviewProps = {
   answers: Answers;
   counts: Counts;
