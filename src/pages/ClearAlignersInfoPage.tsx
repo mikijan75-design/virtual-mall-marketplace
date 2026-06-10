@@ -638,9 +638,33 @@ const ClearAlignersInfoPage = () => {
 
               <section className="relative z-10 grid items-center gap-4 lg:grid-cols-[1.03fr_minmax(390px,0.92fr)_1.03fr]">
                 <div className="space-y-5">
-                  {calloutsRight.map((callout) => (
-                    <CalloutCard key={callout.title} callout={callout} />
-                  ))}
+                  <article className="group flex items-center gap-3 rounded-2xl border border-sky-100/80 bg-white/85 p-3 text-right shadow-[0_10px_24px_rgba(14,100,145,0.12)] backdrop-blur transition hover:-translate-y-0.5 hover:shadow-[0_16px_30px_rgba(14,100,145,0.18)]">
+                    <div className="flex h-16 w-16 shrink-0 items-center justify-center rounded-2xl bg-gradient-to-br from-sky-100 to-cyan-50 text-sky-700 ring-1 ring-sky-200/80">
+                      <DesignedIcon name="camera" className="h-12 w-12" />
+                    </div>
+                    <div>
+                      <h2 className="text-xl font-black leading-tight text-slate-950">צילום ראשוני</h2>
+                      <p className="mt-1 text-[0.82rem] font-semibold leading-snug text-slate-700">צילום עצמי של השיניים לסינון מקדים וקבלת הצעה ראשונית.</p>
+                    </div>
+                  </article>
+                  <article className="group flex items-center gap-3 rounded-2xl border border-sky-100/80 bg-white/85 p-3 text-right shadow-[0_10px_24px_rgba(14,100,145,0.12)] backdrop-blur transition hover:-translate-y-0.5 hover:shadow-[0_16px_30px_rgba(14,100,145,0.18)]">
+                    <div className="flex h-16 w-16 shrink-0 items-center justify-center rounded-2xl bg-gradient-to-br from-sky-100 to-cyan-50 text-sky-700 ring-1 ring-sky-200/80">
+                      <DesignedIcon name="engineering" className="h-12 w-12" />
+                    </div>
+                    <div>
+                      <h2 className="text-xl font-black leading-tight text-slate-950">הנדסת התהליך</h2>
+                      <p className="mt-1 text-[0.82rem] font-semibold leading-snug text-slate-700">תכנון דיגיטלי מותאם אישית של תנועת השיניים והיעד הרצוי.</p>
+                    </div>
+                  </article>
+                  <article className="group flex items-center gap-3 rounded-2xl border border-sky-100/80 bg-white/85 p-3 text-right shadow-[0_10px_24px_rgba(14,100,145,0.12)] backdrop-blur transition hover:-translate-y-0.5 hover:shadow-[0_16px_30px_rgba(14,100,145,0.18)]">
+                    <div className="flex h-16 w-16 shrink-0 items-center justify-center rounded-2xl bg-gradient-to-br from-sky-100 to-cyan-50 text-sky-700 ring-1 ring-sky-200/80">
+                      <DesignedIcon name="package" className="h-12 w-12" />
+                    </div>
+                    <div>
+                      <h2 className="text-xl font-black leading-tight text-slate-950">הזמנת הקשתיות</h2>
+                      <p className="mt-1 text-[0.82rem] font-semibold leading-snug text-slate-700">ייצור סדרת קשתיות שקופות לפי התוכנית הדיגיטלית.</p>
+                    </div>
+                  </article>
                 </div>
 
                 <div className="relative mx-auto aspect-square w-full max-w-[540px]">
@@ -720,16 +744,104 @@ const ClearAlignersInfoPage = () => {
                 </div>
 
                 <div className="space-y-5">
-                  {calloutsLeft.map((callout) => (
-                    <CalloutCard key={callout.title} callout={callout} />
-                  ))}
+                  <article className="group flex items-center gap-3 rounded-2xl border border-sky-100/80 bg-white/85 p-3 text-right shadow-[0_10px_24px_rgba(14,100,145,0.12)] backdrop-blur transition hover:-translate-y-0.5 hover:shadow-[0_16px_30px_rgba(14,100,145,0.18)]">
+                    <div className="flex h-16 w-16 shrink-0 items-center justify-center rounded-2xl bg-gradient-to-br from-sky-100 to-cyan-50 text-sky-700 ring-1 ring-sky-200/80">
+                      <DesignedIcon name="doctor" className="h-12 w-12" />
+                    </div>
+                    <div>
+                      <h2 className="text-xl font-black leading-tight text-slate-950">ליווי לכל אורך התהליך</h2>
+                      <p className="mt-1 text-[0.82rem] font-semibold leading-snug text-slate-700">מעקב והכוונה מקצועית מרופא בכל שלב חשוב.</p>
+                    </div>
+                  </article>
+                  <article className="group flex items-center gap-3 rounded-2xl border border-sky-100/80 bg-white/85 p-3 text-right shadow-[0_10px_24px_rgba(14,100,145,0.12)] backdrop-blur transition hover:-translate-y-0.5 hover:shadow-[0_16px_30px_rgba(14,100,145,0.18)]">
+                    <div className="flex h-16 w-16 shrink-0 items-center justify-center rounded-2xl bg-gradient-to-br from-sky-100 to-cyan-50 text-sky-700 ring-1 ring-sky-200/80">
+                      <DesignedIcon name="cycle" className="h-12 w-12" />
+                    </div>
+                    <div>
+                      <h2 className="text-xl font-black leading-tight text-slate-950">תהליך עצמאי</h2>
+                      <p className="mt-1 text-[0.82rem] font-semibold leading-snug text-slate-700"> החלפת קשתיות עצמאית בבית לפי הנחיות התוכנית אחת לשבועיים.</p>
+                    </div>
+                  </article>
+                  <article className="group flex items-center gap-3 rounded-2xl border border-sky-100/80 bg-white/85 p-3 text-right shadow-[0_10px_24px_rgba(14,100,145,0.12)] backdrop-blur transition hover:-translate-y-0.5 hover:shadow-[0_16px_30px_rgba(14,100,145,0.18)]">
+                    <div className="flex h-16 w-16 shrink-0 items-center justify-center rounded-2xl bg-gradient-to-br from-sky-100 to-cyan-50 text-sky-700 ring-1 ring-sky-200/80">
+                      <DesignedIcon name="toothCheck" className="h-12 w-12" />
+                    </div>
+                    <div>
+                      <h2 className="text-xl font-black leading-tight text-slate-950">התאמה של קוביות</h2>
+                      <p className="mt-1 text-[0.82rem] font-semibold leading-snug text-slate-700">הלבשה של קוביות בצבע השן לצורך מראה אסתטי.</p>
+                    </div>
+                  </article>
                 </div>
               </section>
 
               <section className="relative z-10 mt-6 grid grid-cols-1 gap-3 sm:grid-cols-2 lg:grid-cols-5">
-                {infoCards.map((card) => (
-                  <InfoPanel key={card.title} card={card} />
-                ))}
+                <article className="min-h-[150px] rounded-2xl border border-sky-100 bg-gradient-to-b from-sky-50 to-white p-4 text-right shadow-[inset_0_1px_0_rgba(255,255,255,0.9),0_10px_22px_rgba(11,96,141,0.1)]">
+                  <div className="mb-2 flex items-center justify-center">
+                    <span className="flex h-12 w-12 items-center justify-center rounded-2xl bg-white text-sky-700 shadow ring-1 ring-sky-100">
+                      <DesignedIcon name="clock" className="h-10 w-10" />
+                    </span>
+                  </div>
+                  <h3 className="text-center text-lg font-black leading-none text-slate-950">תזרים זמנים</h3>
+                  <ul className="mt-3 space-y-1.5 text-[0.72rem] font-bold leading-tight text-slate-700">
+                    <li className="flex gap-1.5"><span className="mt-1.5 h-1.5 w-1.5 shrink-0 rounded-full bg-sky-500" aria-hidden="true" /><span>צילום ותכנון ראשוני</span></li>
+                    <li className="flex gap-1.5"><span className="mt-1.5 h-1.5 w-1.5 shrink-0 rounded-full bg-sky-500" aria-hidden="true" /><span>ייצור קשתיות לאחר אישור</span></li>
+                    <li className="flex gap-1.5"><span className="mt-1.5 h-1.5 w-1.5 shrink-0 rounded-full bg-sky-500" aria-hidden="true" /><span>החלפה עצמאית כל 14 יום</span></li>
+                    <li className="flex gap-1.5"><span className="mt-1.5 h-1.5 w-1.5 shrink-0 rounded-full bg-sky-500" aria-hidden="true" /><span>ביקורת ומעקב לאורך התהליך</span></li>
+                  </ul>
+                </article>
+                <article className="min-h-[150px] rounded-2xl border border-sky-100 bg-gradient-to-b from-sky-50 to-white p-4 text-right shadow-[inset_0_1px_0_rgba(255,255,255,0.9),0_10px_22px_rgba(11,96,141,0.1)]">
+                  <div className="mb-2 flex items-center justify-center">
+                    <span className="flex h-12 w-12 items-center justify-center rounded-2xl bg-white text-sky-700 shadow ring-1 ring-sky-100">
+                      <DesignedIcon name="methods" className="h-10 w-10" />
+                    </span>
+                  </div>
+                  <h3 className="text-center text-lg font-black leading-none text-slate-950">שיטות</h3>
+                  <ul className="mt-3 space-y-1.5 text-[0.72rem] font-bold leading-tight text-slate-700">
+                    <li className="flex gap-1.5"><span className="mt-1.5 h-1.5 w-1.5 shrink-0 rounded-full bg-sky-500" aria-hidden="true" /><span>קשתיות שקופות נשלפות</span></li>
+                    <li className="flex gap-1.5"><span className="mt-1.5 h-1.5 w-1.5 shrink-0 rounded-full bg-sky-500" aria-hidden="true" /><span>קוביות לבנות במידת הצורך</span></li>
+                    <li className="flex gap-1.5"><span className="mt-1.5 h-1.5 w-1.5 shrink-0 rounded-full bg-sky-500" aria-hidden="true" /><span>שילוב פתרונות לפי מצב השיניים</span></li>
+                  </ul>
+                </article>
+                <article className="min-h-[150px] rounded-2xl border border-sky-100 bg-gradient-to-b from-sky-50 to-white p-4 text-right shadow-[inset_0_1px_0_rgba(255,255,255,0.9),0_10px_22px_rgba(11,96,141,0.1)]">
+                  <div className="mb-2 flex items-center justify-center">
+                    <span className="flex h-12 w-12 items-center justify-center rounded-2xl bg-white text-sky-700 shadow ring-1 ring-sky-100">
+                      <DesignedIcon name="benefits" className="h-10 w-10" />
+                    </span>
+                  </div>
+                  <h3 className="text-center text-lg font-black leading-none text-slate-950">יתרונות</h3>
+                  <ul className="mt-3 space-y-1.5 text-[0.72rem] font-bold leading-tight text-slate-700">
+                    <li className="flex gap-1.5"><span className="mt-1.5 h-1.5 w-1.5 shrink-0 rounded-full bg-sky-500" aria-hidden="true" /><span>נראות אסתטית ועדינה</span></li>
+                    <li className="flex gap-1.5"><span className="mt-1.5 h-1.5 w-1.5 shrink-0 rounded-full bg-sky-500" aria-hidden="true" /><span>עצמאות גבוהה בהחלפות</span></li>
+                    <li className="flex gap-1.5"><span className="mt-1.5 h-1.5 w-1.5 shrink-0 rounded-full bg-sky-500" aria-hidden="true" /><span>תכנון מראש והבנת היעד</span></li>
+                    <li className="flex gap-1.5"><span className="mt-1.5 h-1.5 w-1.5 shrink-0 rounded-full bg-sky-500" aria-hidden="true" /><span>מתאים לשגרה, נסיעות וחופשות</span></li>
+                  </ul>
+                </article>
+                <article className="min-h-[150px] rounded-2xl border border-sky-100 bg-gradient-to-b from-sky-50 to-white p-4 text-right shadow-[inset_0_1px_0_rgba(255,255,255,0.9),0_10px_22px_rgba(11,96,141,0.1)]">
+                  <div className="mb-2 flex items-center justify-center">
+                    <span className="flex h-12 w-12 items-center justify-center rounded-2xl bg-white text-sky-700 shadow ring-1 ring-sky-100">
+                      <DesignedIcon name="aesthetic" className="h-10 w-10" />
+                    </span>
+                  </div>
+                  <h3 className="text-center text-lg font-black leading-none text-slate-950">אסתטיקה</h3>
+                  <ul className="mt-3 space-y-1.5 text-[0.72rem] font-bold leading-tight text-slate-700">
+                    <li className="flex gap-1.5"><span className="mt-1.5 h-1.5 w-1.5 shrink-0 rounded-full bg-sky-500" aria-hidden="true" /><span>קשתיות כמעט בלתי מורגשות</span></li>
+                    <li className="flex gap-1.5"><span className="mt-1.5 h-1.5 w-1.5 shrink-0 rounded-full bg-sky-500" aria-hidden="true" /><span>קוביות בצבע השן</span></li>
+                    <li className="flex gap-1.5"><span className="mt-1.5 h-1.5 w-1.5 shrink-0 rounded-full bg-sky-500" aria-hidden="true" /><span>חיוך טבעי גם בזמן טיפול</span></li>
+                  </ul>
+                </article>
+                <article className="min-h-[150px] rounded-2xl border border-sky-100 bg-gradient-to-b from-sky-50 to-white p-4 text-right shadow-[inset_0_1px_0_rgba(255,255,255,0.9),0_10px_22px_rgba(11,96,141,0.1)]">
+                  <div className="mb-2 flex items-center justify-center">
+                    <span className="flex h-12 w-12 items-center justify-center rounded-2xl bg-white text-sky-700 shadow ring-1 ring-sky-100">
+                      <DesignedIcon name="message" className="h-10 w-10" />
+                    </span>
+                  </div>
+                  <h3 className="text-center text-lg font-black leading-none text-slate-950">זמינות</h3>
+                  <ul className="mt-3 space-y-1.5 text-[0.72rem] font-bold leading-tight text-slate-700">
+                    <li className="flex gap-1.5"><span className="mt-1.5 h-1.5 w-1.5 shrink-0 rounded-full bg-sky-500" aria-hidden="true" /><span>זמינות דיגיטלית לשאלות</span></li>
+                    <li className="flex gap-1.5"><span className="mt-1.5 h-1.5 w-1.5 shrink-0 rounded-full bg-sky-500" aria-hidden="true" /><span>תנאי תשלום נוחים</span></li>
+                    <li className="flex gap-1.5"><span className="mt-1.5 h-1.5 w-1.5 shrink-0 rounded-full bg-sky-500" aria-hidden="true" /><span>מענה אנושי לאורך הדרך</span></li>
+                  </ul>
+                </article>
               </section>
 
               <LeadRowForm className="mt-10 mb-6" />
