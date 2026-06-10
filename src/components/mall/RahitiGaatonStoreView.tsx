@@ -10,6 +10,7 @@ import type { Store } from "@/data/mallData";
 type Answers = {
   type?: "ארון" | "מטבח";
   layout?: string;       // for kitchen: ישר / L / U ; for closet: 2 דלתות / 3 / 4
+  height?: number;       // closet total height in cm (160/200/220/240)
   material?: "אלון" | "אגוז" | "אורן" | "לבן מט";
   handles?: "ידיות מוט" | "ידיות כפתור" | "ללא ידיות";
   extras?: string;       // kitchen: כיריים+תנור / מקרר / שיש עליון ; closet: מגירות / מדפים / תלייה
@@ -23,24 +24,35 @@ type StepDef = {
   options: string[] | ((a: Answers) => string[]);
 };
 
-const STEPS: StepDef[] = [
-  { key: "type", question: "מה תרצה לבנות?", options: ["ארון", "מטבח"] },
-  {
-    key: "layout",
-    question: "איך לסדר את היחידות?",
-    options: (a) => (a.type === "מטבח" ? ["ישר", "L", "U"] : ["2 דלתות", "3 דלתות", "4 דלתות"]),
-  },
-  { key: "material", question: "איזה חומר/גוון?", options: ["אלון", "אגוז", "אורן", "לבן מט"] },
-  { key: "handles", question: "סוג ידיות?", options: ["ידיות מוט", "ידיות כפתור", "ללא ידיות"] },
-  {
-    key: "extras",
-    question: "מה להוסיף?",
-    options: (a) =>
-      a.type === "מטבח"
+const getSteps = (a: Answers): StepDef[] => {
+  const isCloset = a.type === "ארון";
+  return [
+    { key: "type", question: "מה תרצה לבנות?", options: ["ארון", "מטבח"] },
+    {
+      key: "layout",
+      question: isCloset ? "סוג פתיחת דלתות?" : "איך לסדר את היחידות?",
+      options: a.type === "מטבח"
+        ? ["ישר", "L", "U"]
+        : ["דלתות נפתחות", "דלתות הזזה"],
+    },
+    ...(isCloset
+      ? [{
+          key: "height" as StepKey,
+          question: "מה הגובה?",
+          options: ["160 ס\"מ", "200 ס\"מ", "220 ס\"מ", "240 ס\"מ"],
+        }]
+      : []),
+    { key: "material", question: "איזה חומר/גוון?", options: ["אלון", "אגוז", "אורן", "לבן מט"] },
+    { key: "handles", question: "סוג ידיות?", options: ["ידיות מוט", "ידיות כפתור", "ללא ידיות"] },
+    {
+      key: "extras",
+      question: "מה להוסיף?",
+      options: a.type === "מטבח"
         ? ["כיריים + תנור", "מקרר משולב", "שיש עליון"]
         : ["מגירות", "מדפים", "מוט תלייה"],
-  },
-];
+    },
+  ];
+};
 
 const MATERIAL_COLORS: Record<string, { fill: string; grain: string; edge: string }> = {
   "אלון":    { fill: "#c9a06a", grain: "#a07a44", edge: "#7a5a32" },
@@ -66,11 +78,13 @@ const RahitiGaatonStoreView = ({ store }: { store: Store }) => {
     rightUpper: 2,
   });
 
-  const step = STEPS[stepIdx];
+  const steps = useMemo(() => getSteps(answers), [answers]);
+  const safeIdx = Math.min(stepIdx, steps.length - 1);
+  const step = steps[safeIdx];
   const stepOptions = typeof step.options === "function" ? step.options(answers) : step.options;
   const progress = useMemo(
-    () => Math.round(((done ? STEPS.length : stepIdx) / STEPS.length) * 100),
-    [stepIdx, done]
+    () => Math.round(((done ? steps.length : safeIdx) / steps.length) * 100),
+    [safeIdx, done, steps.length]
   );
 
   const pick = (value: string) => {
@@ -79,6 +93,12 @@ const RahitiGaatonStoreView = ({ store }: { store: Store }) => {
     if (step.key === "type" && answers.type && answers.type !== value) {
       next.layout = undefined;
       next.extras = undefined;
+      next.height = undefined;
+    }
+    // Parse closet height (e.g. "200 ס\"מ" -> 200)
+    if (step.key === "height") {
+      const h = parseInt(value, 10);
+      next.height = isNaN(h) ? 240 : h;
     }
     // Initialise unit counts when layout chosen
     if (step.key === "layout") {
@@ -89,7 +109,8 @@ const RahitiGaatonStoreView = ({ store }: { store: Store }) => {
           rightBase: 2, rightUpper: 2,
         });
       } else {
-        const n = value === "2 דלתות" ? 2 : value === "4 דלתות" ? 4 : 3;
+        // 2 default units (sliding => 2 sliding doors, hinged => 2 units of 2 doors)
+        const n = 2;
         setCounts({
           centerBase: n, centerUpper: n,
           leftBase: 0, leftUpper: 0,
@@ -98,8 +119,10 @@ const RahitiGaatonStoreView = ({ store }: { store: Store }) => {
       }
     }
     setAnswers(next);
-    if (stepIdx + 1 < STEPS.length) {
-      setTimeout(() => setStepIdx(stepIdx + 1), 220);
+    // Recompute steps with the new answers so dynamic insertion (height for closet) is respected
+    const nextSteps = getSteps(next);
+    if (safeIdx + 1 < nextSteps.length) {
+      setTimeout(() => setStepIdx(safeIdx + 1), 220);
     } else {
       setTimeout(() => setDone(true), 220);
     }
