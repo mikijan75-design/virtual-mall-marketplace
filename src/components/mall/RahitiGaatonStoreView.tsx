@@ -327,9 +327,10 @@ const LABEL: Record<StepKey, string> = {
 export default RahitiGaatonStoreView;
 
 /* =========================================================================
-   LIVE PREVIEW — progressive front-view rendering, inspired by
+   LIVE PREVIEW — progressive ISOMETRIC (45°) rendering, inspired by
    github.com/Bruinen90/kitchen-planner. Each answered question adds a layer
-   of detail: outline → modules → finish → handles → extras.
+   of detail: footprint → modules → finish → handles → extras. The 30°/30°
+   axonometric projection lets the user see L / U layouts and depth.
    ========================================================================= */
 
 type PreviewProps = { answers: Answers };
@@ -340,31 +341,238 @@ function LivePreview({ answers }: PreviewProps) {
   const hasType = !!type;
   const isKitchen = type === "מטבח";
 
-  // Width scales with size
-  const widthScale = size === "קטן" ? 0.75 : size === "גדול" ? 1.15 : 0.95;
   const VB_W = 900;
-  const VB_H = 460;
-  const unitW = 720 * widthScale;
-  const unitH = isKitchen ? 230 : 320;
-  const x0 = (VB_W - unitW) / 2;
-  const y0 = VB_H - unitH - 60; // leave floor below
+  const VB_H = 520;
 
-  // Module count from layout
-  const modules = (() => {
-    if (!layout) return 0;
-    if (layout === "ישר") return 4;
-    if (layout === "L") return 5;
-    if (layout === "U") return 6;
-    const m = parseInt(layout, 10);
-    return Number.isFinite(m) ? m : 3;
-  })();
+  // --- Isometric projection (30° / 30°) ---
+  const COS = Math.cos(Math.PI / 6); // ~0.866
+  const SIN = Math.sin(Math.PI / 6); // 0.5
+  // Origin chosen so the whole layout sits centered above the floor line
+  const OX = VB_W / 2;
+  const OY = VB_H - 80;
+  const iso = (x: number, y: number, z: number): [number, number] => [
+    OX + (x - z) * COS,
+    OY - y + (x + z) * SIN,
+  ];
+  const pt = (x: number, y: number, z: number) => iso(x, y, z).join(",");
 
-  const mat = MATERIAL_COLORS[material ?? ""] ?? { fill: "#d8c29b", grain: "#a07a44", edge: "#7a5a32" };
+  // Size affects per-module dimensions
+  const sizeScale = size === "קטן" ? 0.8 : size === "גדול" ? 1.15 : 1;
+  const W = 70 * sizeScale; // module width along arm
+  const D = 60 * sizeScale; // depth
+  const H = isKitchen ? 95 : 200; // base/closet body height
+  const UH = 80; // upper kitchen cabinet height
+  const UD = 38; // upper cabinet depth
+  const UY = 130; // y where upper cabinet starts
 
-  // Counter top for kitchen
-  const counterH = isKitchen ? 14 : 0;
+  const mat =
+    MATERIAL_COLORS[material ?? ""] ?? { fill: "#d8c29b", grain: "#a07a44", edge: "#7a5a32" };
+  // Shading variants for the 3 visible faces
+  const FACE = {
+    front: mat.fill,
+    side: shade(mat.fill, -0.18),
+    top: shade(mat.fill, 0.12),
+    edge: mat.edge,
+  };
+  // Neutral / no-material-yet
+  const NEUTRAL = { front: "#e7d6b1", side: "#c9b487", top: "#f0e2bf", edge: "#7a5a32" };
+  const F = material ? FACE : NEUTRAL;
 
-  const moduleW = modules > 0 ? unitW / modules : unitW;
+  // --- Build module list as 3D boxes ---
+  type Box = {
+    x: number; z: number; w: number; d: number; h: number; y0?: number;
+    kind: "base" | "upper" | "tall" | "stove" | "counter";
+    facingX?: boolean; // door faces +x direction (default +z)
+  };
+
+  const boxes: Box[] = [];
+
+  if (hasType && layout) {
+    if (isKitchen) {
+      // Number of modules per arm depends on size
+      const nMain = size === "קטן" ? 3 : size === "גדול" ? 5 : 4;
+      const nArm = Math.max(2, Math.round(nMain / 2));
+
+      // Arm 1: along +x at z = 0..D, x = 0..nMain*W
+      for (let i = 0; i < nMain; i++) {
+        boxes.push({ x: i * W, z: 0, w: W, d: D, h: H, kind: "base" });
+        boxes.push({ x: i * W, z: 0, w: W, d: UD, h: UH, y0: UY, kind: "upper" });
+      }
+
+      if (layout === "L" || layout === "U") {
+        // Arm 2: perpendicular, at x = 0..D, z = D..D + nArm*W (door faces -x → flip via facingX)
+        for (let i = 0; i < nArm; i++) {
+          boxes.push({ x: 0, z: D + i * W, w: D, d: W, h: H, kind: "base", facingX: true });
+          boxes.push({ x: 0, z: D + i * W, w: UD, d: W, h: UH, y0: UY, kind: "upper", facingX: true });
+        }
+      }
+      if (layout === "U") {
+        // Arm 3: also perpendicular on the far x side
+        const x3 = nMain * W - D;
+        for (let i = 0; i < nArm; i++) {
+          boxes.push({ x: x3, z: D + i * W, w: D, d: W, h: H, kind: "base", facingX: true });
+          boxes.push({ x: x3, z: D + i * W, w: UD, d: W, h: UH, y0: UY, kind: "upper", facingX: true });
+        }
+      }
+    } else {
+      // Closet — N doors in a row
+      const n =
+        layout === "2 דלתות" ? 2 : layout === "3 דלתות" ? 3 : layout === "4 דלתות" ? 4 : 3;
+      for (let i = 0; i < n; i++) {
+        boxes.push({ x: i * W, z: 0, w: W, d: D, h: H, kind: "base" });
+      }
+    }
+  }
+
+  // --- Compute global bounds, then re-center via translate ---
+  // For now we shift OX based on layout footprint width.
+  // (Recompute centering offset for the whole composition.)
+  const projected = boxes.flatMap((b) => {
+    const y = b.y0 ?? 0;
+    return [
+      iso(b.x, y, b.z),
+      iso(b.x + b.w, y, b.z),
+      iso(b.x, y, b.z + b.d),
+      iso(b.x + b.w, y, b.z + b.d),
+      iso(b.x, y + b.h, b.z),
+      iso(b.x + b.w, y + b.h, b.z + b.d),
+    ];
+  });
+  const minX = projected.length ? Math.min(...projected.map((p) => p[0])) : OX;
+  const maxX = projected.length ? Math.max(...projected.map((p) => p[0])) : OX;
+  const minY = projected.length ? Math.min(...projected.map((p) => p[1])) : OY;
+  const maxY = projected.length ? Math.max(...projected.map((p) => p[1])) : OY;
+  const dx = VB_W / 2 - (minX + maxX) / 2;
+  const dy = (VB_H - 70) - maxY; // keep base slightly above floor line
+
+  // --- Draw helpers ---
+  const renderBox = (b: Box, key: string) => {
+    const y0 = b.y0 ?? 0;
+    const y1 = y0 + b.h;
+    // 8 corners
+    const A = pt(b.x, y0, b.z);
+    const B = pt(b.x + b.w, y0, b.z);
+    const C = pt(b.x + b.w, y0, b.z + b.d);
+    const D2 = pt(b.x, y0, b.z + b.d);
+    const E = pt(b.x, y1, b.z);
+    const F2 = pt(b.x + b.w, y1, b.z);
+    const G = pt(b.x + b.w, y1, b.z + b.d);
+    const Hh = pt(b.x, y1, b.z + b.d);
+
+    // Decide which face is the "door face" (front) for handles / details.
+    const frontFaceIsZ = !b.facingX;
+
+    // Front face polygon (visible large face)
+    const frontPoly = frontFaceIsZ
+      ? `${D2} ${C} ${G} ${Hh}` // z = +d face
+      : `${B} ${C} ${G} ${F2}`; // x = +w face
+    // Side face polygon
+    const sidePoly = frontFaceIsZ
+      ? `${B} ${C} ${G} ${F2}` // x = +w face
+      : `${D2} ${C} ${G} ${Hh}`; // z = +d face
+    // Top face polygon
+    const topPoly = `${E} ${F2} ${G} ${Hh}`;
+
+    // Front face color overrides for special boxes
+    let frontFill = F.front;
+    let topFill = F.top;
+    if (b.kind === "upper") frontFill = shade(F.front, -0.05);
+    if (b.kind === "counter") {
+      frontFill = "#1a1410";
+      topFill = extras === "שיש עליון" ? "#ece8df" : "#1f1812";
+    }
+
+    // Compute handle / detail position on the front face
+    const details: JSX.Element[] = [];
+    if (b.kind !== "counter") {
+      // Door split line: a vertical line down the middle of the front face
+      const midTop = frontFaceIsZ
+        ? iso(b.x + b.w / 2, y1, b.z + b.d)
+        : iso(b.x + b.w, y1, b.z + b.d / 2);
+      const midBot = frontFaceIsZ
+        ? iso(b.x + b.w / 2, y0, b.z + b.d)
+        : iso(b.x + b.w, y0, b.z + b.d / 2);
+      details.push(
+        <line
+          key={`split-${key}`}
+          x1={midTop[0]} y1={midTop[1]} x2={midBot[0]} y2={midBot[1]}
+          stroke={F.edge} strokeWidth="0.8" opacity="0.55"
+        />
+      );
+
+      // Handles (only on base / closet, not on upper)
+      if (handles && handles !== "ללא ידיות") {
+        const handleY = b.kind === "upper" ? y0 + b.h * 0.15 : y0 + b.h * 0.78;
+        const a = frontFaceIsZ
+          ? iso(b.x + b.w * 0.55, handleY, b.z + b.d)
+          : iso(b.x + b.w, handleY, b.z + b.d * 0.55);
+        const bb = frontFaceIsZ
+          ? iso(b.x + b.w * 0.85, handleY, b.z + b.d)
+          : iso(b.x + b.w, handleY, b.z + b.d * 0.85);
+        if (handles === "ידיות מוט") {
+          details.push(
+            <line key={`h-${key}`} x1={a[0]} y1={a[1]} x2={bb[0]} y2={bb[1]} stroke="#2b2b2b" strokeWidth="2.2" strokeLinecap="round" />
+          );
+        } else {
+          const cx = (a[0] + bb[0]) / 2;
+          const cy = (a[1] + bb[1]) / 2;
+          details.push(<circle key={`h-${key}`} cx={cx} cy={cy} r="2.6" fill="#2b2b2b" />);
+        }
+      }
+    }
+
+    // Stove / sink decoration on top of base when extras chosen
+    if (b.kind === "base" && isKitchen && extras === "כיריים + תנור") {
+      // place hob on second module-ish (just decorate every other base box top)
+      if ((b.x / W) % 2 === 0 && b.z === 0) {
+        const T1 = iso(b.x + b.w * 0.18, y1 + 0.5, b.z + b.d * 0.25);
+        const T2 = iso(b.x + b.w * 0.82, y1 + 0.5, b.z + b.d * 0.25);
+        const T3 = iso(b.x + b.w * 0.82, y1 + 0.5, b.z + b.d * 0.78);
+        const T4 = iso(b.x + b.w * 0.18, y1 + 0.5, b.z + b.d * 0.78);
+        details.push(
+          <polygon key={`hob-${key}`} points={`${T1.join(",")} ${T2.join(",")} ${T3.join(",")} ${T4.join(",")}`} fill="#1a1a1a" />
+        );
+        // 2 burners
+        [[0.32, 0.4], [0.68, 0.65]].forEach(([u, v], idx) => {
+          const c = iso(b.x + b.w * u, y1 + 0.6, b.z + b.d * v);
+          details.push(<circle key={`burn-${key}-${idx}`} cx={c[0]} cy={c[1]} r="3.5" fill="#3a3a3a" stroke="#000" strokeWidth="0.4" />);
+        });
+      }
+    }
+
+    return (
+      <g key={key}>
+        {/* side first (back), then top, then front for correct overlap */}
+        <polygon points={sidePoly} fill={F.side} stroke={F.edge} strokeWidth="0.8" />
+        <polygon points={topPoly} fill={topFill} stroke={F.edge} strokeWidth="0.8" />
+        <polygon points={frontPoly} fill={frontFill} stroke={F.edge} strokeWidth="0.8" />
+        {details}
+      </g>
+    );
+  };
+
+  // Sort boxes back-to-front for painter's algorithm (depth = x + z + y0)
+  const sortedBoxes = [...boxes].sort(
+    (a, bb) => a.x + a.z + (a.y0 ?? 0) * 0.2 - (bb.x + bb.z + (bb.y0 ?? 0) * 0.2)
+  );
+
+  // Footprint (top-view shadow) for clarity of L/U shape
+  const footprintPolys = boxes
+    .filter((b) => b.kind === "base")
+    .map((b, i) => {
+      const a1 = iso(b.x, 0, b.z);
+      const a2 = iso(b.x + b.w, 0, b.z);
+      const a3 = iso(b.x + b.w, 0, b.z + b.d);
+      const a4 = iso(b.x, 0, b.z + b.d);
+      return (
+        <polygon
+          key={`fp-${i}`}
+          points={`${a1.join(",")} ${a2.join(",")} ${a3.join(",")} ${a4.join(",")}`}
+          fill="#000"
+          opacity="0.12"
+        />
+      );
+    });
 
   return (
     <div className="relative w-full rounded-2xl overflow-hidden border border-[#c9a06a]/40 shadow-inner bg-gradient-to-b from-[#f8f1de] to-[#ecdcbd]">
@@ -372,346 +580,65 @@ function LivePreview({ answers }: PreviewProps) {
         viewBox={`0 0 ${VB_W} ${VB_H}`}
         className="w-full h-auto block"
         role="img"
-        aria-label="הדמייה חיה של הרהיט"
+        aria-label="הדמייה איזומטרית חיה של הרהיט"
       >
         <defs>
           <linearGradient id="floor-grad" x1="0" y1="0" x2="0" y2="1">
-            <stop offset="0%" stopColor="#e6d5b3" />
-            <stop offset="100%" stopColor="#bf9f6c" />
+            <stop offset="0%" stopColor="#f0e1bf" />
+            <stop offset="100%" stopColor="#c39e63" />
           </linearGradient>
           <linearGradient id="wall-grad" x1="0" y1="0" x2="0" y2="1">
             <stop offset="0%" stopColor="#fbf3df" />
             <stop offset="100%" stopColor="#ead7b0" />
           </linearGradient>
-          <pattern id="wood-grain" patternUnits="userSpaceOnUse" width="6" height="40">
-            <rect width="6" height="40" fill={mat.fill} />
-            <path d="M0 6 Q3 14 0 22 T0 38" stroke={mat.grain} strokeWidth="0.6" fill="none" opacity="0.55" />
-          </pattern>
         </defs>
 
-        {/* Wall + floor */}
-        <rect x="0" y="0" width={VB_W} height={VB_H - 60} fill="url(#wall-grad)" />
-        <rect x="0" y={VB_H - 60} width={VB_W} height="60" fill="url(#floor-grad)" />
-        <line x1="0" y1={VB_H - 60} x2={VB_W} y2={VB_H - 60} stroke="#9a7944" strokeWidth="1.5" />
+        {/* Background wall + floor */}
+        <rect x="0" y="0" width={VB_W} height={VB_H} fill="url(#wall-grad)" />
+        {/* Isometric floor tile */}
+        {(() => {
+          const a = iso(-260, 0, -260);
+          const b = iso(560, 0, -260);
+          const c = iso(560, 0, 560);
+          const d = iso(-260, 0, 560);
+          return (
+            <polygon
+              points={`${a.join(",")} ${b.join(",")} ${c.join(",")} ${d.join(",")}`}
+              fill="url(#floor-grad)"
+            />
+          );
+        })()}
 
-        {/* Empty-state hint */}
         {!hasType && (
           <g>
             <rect
-              x={VB_W / 2 - 180}
-              y={VB_H / 2 - 36}
-              width="360"
-              height="72"
-              rx="14"
-              fill="#ffffff"
-              opacity="0.7"
-              stroke="#c9a06a"
-              strokeDasharray="6 6"
+              x={VB_W / 2 - 200} y={VB_H / 2 - 38}
+              width="400" height="76" rx="14"
+              fill="#ffffff" opacity="0.75"
+              stroke="#c9a06a" strokeDasharray="6 6"
             />
             <text
-              x={VB_W / 2}
-              y={VB_H / 2 + 8}
+              x={VB_W / 2} y={VB_H / 2 + 10}
               textAnchor="middle"
               fontFamily="'Frank Ruhl Libre', serif"
-              fontWeight="700"
-              fontSize="22"
-              fill="#5a4126"
+              fontWeight="700" fontSize="22" fill="#5a4126"
             >
               ההדמייה תופיע כאן בזמן שתענה
             </text>
           </g>
         )}
 
-        {/* Outline (after type chosen) */}
-        {hasType && (
-          <g>
-            {/* Base outline */}
-            <rect
-              x={x0}
-              y={y0}
-              width={unitW}
-              height={unitH}
-              fill={material ? "url(#wood-grain)" : "#efe1c8"}
-              stroke={mat.edge}
-              strokeWidth="2"
-              rx="4"
-            />
-
-            {/* Kitchen: upper cabinets row */}
-            {isKitchen && (
-              <rect
-                x={x0}
-                y={y0 - 130}
-                width={unitW}
-                height="100"
-                fill={material ? "url(#wood-grain)" : "#efe1c8"}
-                stroke={mat.edge}
-                strokeWidth="2"
-                rx="3"
-              />
-            )}
-
-            {/* Modules (doors / drawers) */}
-            {modules > 0 &&
-              Array.from({ length: modules }).map((_, i) => {
-                const mx = x0 + i * moduleW;
-                return (
-                  <g key={i}>
-                    {/* lower module door */}
-                    <rect
-                      x={mx + 4}
-                      y={y0 + 6}
-                      width={moduleW - 8}
-                      height={unitH - 12 - counterH}
-                      fill="none"
-                      stroke={mat.edge}
-                      strokeWidth="1.4"
-                      rx="3"
-                    />
-                    {/* horizontal drawer line for kitchen */}
-                    {isKitchen && (
-                      <line
-                        x1={mx + 4}
-                        y1={y0 + 50}
-                        x2={mx + moduleW - 4}
-                        y2={y0 + 50}
-                        stroke={mat.edge}
-                        strokeWidth="1"
-                      />
-                    )}
-                    {/* upper module */}
-                    {isKitchen && (
-                      <rect
-                        x={mx + 4}
-                        y={y0 - 124}
-                        width={moduleW - 8}
-                        height={88}
-                        fill="none"
-                        stroke={mat.edge}
-                        strokeWidth="1.4"
-                        rx="3"
-                      />
-                    )}
-                    {/* Handles */}
-                    {handles && handles !== "ללא ידיות" && (
-                      <>
-                        {handles === "ידיות מוט" ? (
-                          <rect
-                            x={mx + moduleW / 2 - 16}
-                            y={y0 + (isKitchen ? 70 : 30)}
-                            width="32"
-                            height="3"
-                            fill="#3b3b3b"
-                            rx="1.5"
-                          />
-                        ) : (
-                          <circle
-                            cx={mx + moduleW / 2}
-                            cy={y0 + (isKitchen ? 72 : 32)}
-                            r="3.5"
-                            fill="#3b3b3b"
-                          />
-                        )}
-                        {isKitchen && (
-                          handles === "ידיות מוט" ? (
-                            <rect
-                              x={mx + moduleW / 2 - 14}
-                              y={y0 - 50}
-                              width="28"
-                              height="3"
-                              fill="#3b3b3b"
-                              rx="1.5"
-                            />
-                          ) : (
-                            <circle cx={mx + moduleW / 2} cy={y0 - 48} r="3" fill="#3b3b3b" />
-                          )
-                        )}
-                      </>
-                    )}
-                  </g>
-                );
-              })}
-
-            {/* Kitchen counter (extras: שיש עליון) */}
-            {isKitchen && (
-              <rect
-                x={x0 - 6}
-                y={y0 - 6}
-                width={unitW + 12}
-                height={counterH}
-                fill={extras === "שיש עליון" ? "#e9e6df" : "#2a1d12"}
-                stroke="#2a1d12"
-                strokeWidth="1"
-                rx="2"
-              />
-            )}
-
-            {/* Kitchen extras: stove + oven on a module */}
-            {isKitchen && extras === "כיריים + תנור" && modules > 0 && (() => {
-              const stoveIdx = Math.floor(modules / 2);
-              const sx = x0 + stoveIdx * moduleW;
-              return (
-                <g>
-                  {/* stove top */}
-                  <rect x={sx + 8} y={y0 + 4} width={moduleW - 16} height="6" fill="#1b1b1b" />
-                  {[0, 1, 2, 3].map((k) => (
-                    <circle
-                      key={k}
-                      cx={sx + 16 + ((moduleW - 32) / 3) * k}
-                      cy={y0 + 7}
-                      r="3"
-                      fill="#3a3a3a"
-                      stroke="#0a0a0a"
-                      strokeWidth="0.6"
-                    />
-                  ))}
-                  {/* oven door */}
-                  <rect
-                    x={sx + 10}
-                    y={y0 + 56}
-                    width={moduleW - 20}
-                    height={unitH - 70 - counterH}
-                    fill="#2a2a2a"
-                    stroke="#0a0a0a"
-                    strokeWidth="1"
-                    rx="2"
-                  />
-                  <rect
-                    x={sx + 18}
-                    y={y0 + 64}
-                    width={moduleW - 36}
-                    height={unitH - 88 - counterH}
-                    fill="#0f0f0f"
-                    opacity="0.85"
-                    rx="2"
-                  />
-                </g>
-              );
-            })()}
-
-            {/* Kitchen extras: fridge takes the rightmost (rtl: leftmost) module */}
-            {isKitchen && extras === "מקרר משולב" && modules > 0 && (() => {
-              const fx = x0; // leftmost on canvas = rightmost in RTL view
-              return (
-                <g>
-                  <rect
-                    x={fx + 4}
-                    y={y0 - 124}
-                    width={moduleW - 8}
-                    height={unitH - 12 + 124}
-                    fill="#f5f5f5"
-                    stroke="#2a2a2a"
-                    strokeWidth="1.5"
-                    rx="3"
-                  />
-                  <line
-                    x1={fx + 4}
-                    y1={y0 + 40}
-                    x2={fx + moduleW - 4}
-                    y2={y0 + 40}
-                    stroke="#2a2a2a"
-                    strokeWidth="1"
-                  />
-                  <rect
-                    x={fx + moduleW - 18}
-                    y={y0 - 110}
-                    width="3"
-                    height="40"
-                    fill="#3b3b3b"
-                  />
-                  <rect
-                    x={fx + moduleW - 18}
-                    y={y0 + 50}
-                    width="3"
-                    height="40"
-                    fill="#3b3b3b"
-                  />
-                </g>
-              );
-            })()}
-
-            {/* Closet extras: shelves / drawers / hanging rod */}
-            {!isKitchen && extras && modules > 0 && (() => {
-              const elements: JSX.Element[] = [];
-              for (let i = 0; i < modules; i++) {
-                const mx = x0 + i * moduleW;
-                if (extras === "מדפים") {
-                  [0.25, 0.5, 0.75].forEach((p, k) => {
-                    elements.push(
-                      <line
-                        key={`sh-${i}-${k}`}
-                        x1={mx + 10}
-                        y1={y0 + unitH * p}
-                        x2={mx + moduleW - 10}
-                        y2={y0 + unitH * p}
-                        stroke={mat.edge}
-                        strokeWidth="1.2"
-                        opacity="0.55"
-                      />
-                    );
-                  });
-                } else if (extras === "מגירות") {
-                  [0.35, 0.55, 0.75].forEach((p, k) => {
-                    elements.push(
-                      <rect
-                        key={`dr-${i}-${k}`}
-                        x={mx + 10}
-                        y={y0 + unitH * p}
-                        width={moduleW - 20}
-                        height={unitH * 0.13}
-                        fill="none"
-                        stroke={mat.edge}
-                        strokeWidth="1.1"
-                        rx="2"
-                      />
-                    );
-                  });
-                } else if (extras === "מוט תלייה") {
-                  elements.push(
-                    <line
-                      key={`rod-${i}`}
-                      x1={mx + 10}
-                      y1={y0 + 38}
-                      x2={mx + moduleW - 10}
-                      y2={y0 + 38}
-                      stroke="#3b3b3b"
-                      strokeWidth="2"
-                    />
-                  );
-                  // little hangers
-                  [0.25, 0.5, 0.75].forEach((p, k) => {
-                    const hx = mx + 10 + (moduleW - 20) * p;
-                    elements.push(
-                      <path
-                        key={`hg-${i}-${k}`}
-                        d={`M ${hx} 38 q -10 14 0 22 q 10 -8 0 -22`}
-                        transform={`translate(0,${y0})`}
-                        stroke="#5a3d20"
-                        strokeWidth="1.2"
-                        fill="none"
-                      />
-                    );
-                  });
-                }
-              }
-              return <g>{elements}</g>;
-            })()}
-
-            {/* Side shadow */}
-            <rect
-              x={x0}
-              y={y0 + unitH}
-              width={unitW}
-              height="6"
-              fill="#000"
-              opacity="0.15"
-            />
+        {hasType && layout && (
+          <g transform={`translate(${dx} ${dy})`}>
+            {/* footprint shadow */}
+            {footprintPolys}
+            {sortedBoxes.map((b, i) => renderBox(b, `b${i}`))}
           </g>
         )}
 
         {/* Labels at bottom */}
         <g fontFamily="'Heebo', sans-serif" fontSize="14" fill="#5a4126">
-          <text x={VB_W / 2} y={VB_H - 18} textAnchor="middle" opacity="0.7">
+          <text x={VB_W / 2} y={VB_H - 18} textAnchor="middle" opacity="0.75">
             {hasType
               ? `${type ?? ""}${layout ? " · " + layout : ""}${size ? " · " + size : ""}${material ? " · " + material : ""}`
               : "ההדמייה מתעדכנת לפי הבחירות שלכם"}
@@ -719,11 +646,22 @@ function LivePreview({ answers }: PreviewProps) {
         </g>
       </svg>
 
-      {/* Caption */}
       <div className="px-4 py-3 bg-[#2a1d12] text-[#f7e9cf] font-heebo text-sm flex items-center justify-between">
-        <span className="opacity-80">תצוגה חיה · נבנית עם כל תשובה</span>
+        <span className="opacity-80">תצוגה איזומטרית חיה · 45°</span>
         <span className="opacity-70 text-xs tracking-wider">RAHITI · GAATON LIVE PREVIEW</span>
       </div>
     </div>
   );
+}
+
+/** Adjust a hex color brightness. amount in [-1..1], negative = darker. */
+function shade(hex: string, amount: number): string {
+  const h = hex.replace("#", "");
+  const r = parseInt(h.substring(0, 2), 16);
+  const g = parseInt(h.substring(2, 4), 16);
+  const b = parseInt(h.substring(4, 6), 16);
+  const adj = (c: number) =>
+    Math.max(0, Math.min(255, Math.round(c + (amount > 0 ? (255 - c) * amount : c * amount))));
+  const to2 = (n: number) => n.toString(16).padStart(2, "0");
+  return `#${to2(adj(r))}${to2(adj(g))}${to2(adj(b))}`;
 }
