@@ -846,11 +846,13 @@ function ArmStepper({
   value,
   onChange,
   min = 1,
+  max = 10,
 }: {
   label: string;
   value: number;
   onChange: (n: number) => void;
   min?: number;
+  max?: number;
 }) {
   return (
     <div className="inline-flex items-center gap-1.5 rounded-full bg-[#f8efd9] border border-[#c9a06a]/60 px-1.5 py-0.5 font-heebo text-xs text-[#3b2918]">
@@ -868,7 +870,7 @@ function ArmStepper({
       <button
         type="button"
         aria-label={`הוסף יחידה ל${label}`}
-        onClick={() => onChange(Math.min(10, value + 1))}
+        onClick={() => onChange(Math.min(max, value + 1))}
         className="w-6 h-6 rounded-full bg-[#3b2918] text-[#f7e9cf] hover:bg-[#5a3d20] border border-[#3b2918] flex items-center justify-center font-bold text-base leading-none"
       >
         +
