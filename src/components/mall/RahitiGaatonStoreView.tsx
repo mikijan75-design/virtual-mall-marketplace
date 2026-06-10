@@ -39,7 +39,9 @@ const getSteps = (a: Answers): StepDef[] => {
       ? [{
           key: "height" as StepKey,
           question: "מה הגובה?",
-          options: ["160 ס\"מ", "200 ס\"מ", "220 ס\"מ", "240 ס\"מ"],
+          options: a.layout === "דלתות הזזה"
+            ? ["200 ס\"מ", "220 ס\"מ", "240 ס\"מ"]
+            : ["160 ס\"מ", "200 ס\"מ", "220 ס\"מ", "240 ס\"מ"],
         }]
       : []),
     { key: "material", question: "איזה חומר/גוון?", options: ["אלון", "אגוז", "אורן", "לבן מט"] },
@@ -582,7 +584,7 @@ function LivePreview({ answers, counts, setCounts }: PreviewProps) {
       }
 
       // Horizontal split line for tall closet units at 160cm (upper door division)
-      if (b.kind === "tall" && !isKitchen && counts.centerUpper > 0) {
+      if (b.kind === "tall" && !isKitchen && !isSliding && closetTotal > 160) {
         const splitY = 160;
         const h1 = frontFaceIsZ
           ? iso(b.x, splitY, b.z + b.d)
@@ -801,31 +803,13 @@ function LivePreview({ answers, counts, setCounts }: PreviewProps) {
             </div>
           ) : (
             <div className="rounded-2xl bg-white/90 backdrop-blur border border-[#c9a06a]/60 shadow px-2.5 py-2.5 pointer-events-auto flex flex-col gap-2">
-              {(answers.height ?? 240) > 160 && (
-                <ArmStepper
-                  label="דלתות עליונות"
-                  value={counts.centerUpper > 0 ? 1 : 0}
-                  min={0}
-                  max={1}
-                  onChange={(n) =>
-                    setCounts((c) => ({
-                      ...c,
-                      centerUpper: n > 0 ? c.centerBase : 0,
-                    }))
-                  }
-                />
-              )}
               <ArmStepper
                 label={isSliding ? "דלתות הזזה" : "יחידות (2 דלתות)"}
                 value={counts.centerBase}
                 min={isSliding ? 2 : 1}
                 max={10}
                 onChange={(n) =>
-                  setCounts((c) => ({
-                    ...c,
-                    centerBase: n,
-                    centerUpper: c.centerUpper > 0 ? n : 0,
-                  }))
+                  setCounts((c) => ({ ...c, centerBase: n }))
                 }
               />
             </div>
