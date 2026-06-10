@@ -701,11 +701,11 @@ const PicoloStoreView = ({ store }: { store: Store }) => {
             style={{ background: "linear-gradient(135deg, #d9b88a, #c19a6b)" }}
           >
             <div className="container mx-auto text-center text-foreground">
-              <span className="text-6xl md:text-8xl block mb-4">{store.logoEmoji}</span>
-              <h1 className="text-3xl md:text-5xl font-frank font-bold mb-2">{store.name}</h1>
-              <p className="text-lg opacity-90 font-heebo">{store.description}</p>
+              <span className="text-6xl md:text-8xl block mb-4">🎵</span>
+              <h1 className="text-3xl md:text-5xl font-frank font-bold mb-2">פיקולו</h1>
+              <p className="text-lg opacity-90 font-heebo">כלי נגינה</p>
               <span className="inline-block mt-3 bg-white/40 px-4 py-1 rounded-full text-sm font-heebo">
-                {store.category} • קומה {store.floor}
+                כלי נגינה • קומה 3
               </span>
             </div>
           </div>
@@ -713,15 +713,11 @@ const PicoloStoreView = ({ store }: { store: Store }) => {
           {/* Category bar */}
           <div className="border-y border-[#c19a6b]/40" style={{ background: "#f4e6d2" }} dir="rtl">
             <div className="container mx-auto px-4 py-3 flex flex-wrap items-center justify-center gap-2 md:gap-3">
-              {["PIANO", "גיטרות", "קלידים", "תופים", "מוצרים נוספים"].map((cat) => (
-                <button
-                  key={cat}
-                  type="button"
-                  className="px-4 py-2 rounded-full font-heebo text-sm md:text-base font-bold text-[#5a3a1b] bg-white/70 hover:bg-white border border-[#c19a6b]/50 shadow-sm transition-colors"
-                >
-                  {cat}
-                </button>
-              ))}
+              <button type="button" className="px-4 py-2 rounded-full font-heebo text-sm md:text-base font-bold text-[#5a3a1b] bg-white/70 hover:bg-white border border-[#c19a6b]/50 shadow-sm transition-colors">PIANO</button>
+              <button type="button" className="px-4 py-2 rounded-full font-heebo text-sm md:text-base font-bold text-[#5a3a1b] bg-white/70 hover:bg-white border border-[#c19a6b]/50 shadow-sm transition-colors">גיטרות</button>
+              <button type="button" className="px-4 py-2 rounded-full font-heebo text-sm md:text-base font-bold text-[#5a3a1b] bg-white/70 hover:bg-white border border-[#c19a6b]/50 shadow-sm transition-colors">קלידים</button>
+              <button type="button" className="px-4 py-2 rounded-full font-heebo text-sm md:text-base font-bold text-[#5a3a1b] bg-white/70 hover:bg-white border border-[#c19a6b]/50 shadow-sm transition-colors">תופים</button>
+              <button type="button" className="px-4 py-2 rounded-full font-heebo text-sm md:text-base font-bold text-[#5a3a1b] bg-white/70 hover:bg-white border border-[#c19a6b]/50 shadow-sm transition-colors">מוצרים נוספים</button>
             </div>
           </div>
 
