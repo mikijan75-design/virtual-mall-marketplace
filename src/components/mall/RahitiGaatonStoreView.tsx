@@ -697,62 +697,56 @@ function LivePreview({ answers, counts, setCounts }: PreviewProps) {
 
       {/* Add/remove units controls */}
       {hasType && layout && (
-        <div className="absolute top-3 inset-x-3 pointer-events-none">
+        <div className="absolute top-3 bottom-12 right-3 pointer-events-none flex items-start">
           {isKitchen ? (
-            <div className="mx-auto w-fit max-w-full rounded-2xl bg-white/90 backdrop-blur border border-[#c9a06a]/60 shadow px-3 py-2 pointer-events-auto">
-              {/* Top row: upper cabinets */}
-              <div className="flex items-center gap-2 justify-center">
-                <span className="font-heebo text-[11px] text-[#7a5a36] w-14 text-left">עליונים</span>
-                {layout === "U" && (
-                  <ArmStepper
-                    label="שמאל"
-                    value={counts.leftUpper}
-                    min={0}
-                    onChange={(n) => setCounts((c) => ({ ...c, leftUpper: n }))}
-                  />
-                )}
+            <div className="rounded-2xl bg-white/90 backdrop-blur border border-[#c9a06a]/60 shadow px-2.5 py-2.5 pointer-events-auto flex flex-col gap-2 max-h-full overflow-auto">
+              <div className="font-heebo text-[11px] font-bold text-[#7a5a36] text-center uppercase tracking-wider">עליונים</div>
+              {layout === "U" && (
                 <ArmStepper
-                  label="אמצע"
-                  value={counts.centerUpper}
+                  label="שמאל"
+                  value={counts.leftUpper}
                   min={0}
-                  onChange={(n) => setCounts((c) => ({ ...c, centerUpper: n }))}
+                  onChange={(n) => setCounts((c) => ({ ...c, leftUpper: n }))}
                 />
-                {(layout === "L" || layout === "U") && (
-                  <ArmStepper
-                    label="ימין"
-                    value={counts.rightUpper}
-                    min={0}
-                    onChange={(n) => setCounts((c) => ({ ...c, rightUpper: n }))}
-                  />
-                )}
-              </div>
-              <div className="my-1.5 h-px bg-[#c9a06a]/40" />
-              {/* Bottom row: base cabinets */}
-              <div className="flex items-center gap-2 justify-center">
-                <span className="font-heebo text-[11px] text-[#7a5a36] w-14 text-left">תחתונים</span>
-                {layout === "U" && (
-                  <ArmStepper
-                    label="שמאל"
-                    value={counts.leftBase}
-                    onChange={(n) => setCounts((c) => ({ ...c, leftBase: n }))}
-                  />
-                )}
+              )}
+              <ArmStepper
+                label="אמצע"
+                value={counts.centerUpper}
+                min={0}
+                onChange={(n) => setCounts((c) => ({ ...c, centerUpper: n }))}
+              />
+              {(layout === "L" || layout === "U") && (
                 <ArmStepper
-                  label="אמצע"
-                  value={counts.centerBase}
-                  onChange={(n) => setCounts((c) => ({ ...c, centerBase: n }))}
+                  label="ימין"
+                  value={counts.rightUpper}
+                  min={0}
+                  onChange={(n) => setCounts((c) => ({ ...c, rightUpper: n }))}
                 />
-                {(layout === "L" || layout === "U") && (
-                  <ArmStepper
-                    label="ימין"
-                    value={counts.rightBase}
-                    onChange={(n) => setCounts((c) => ({ ...c, rightBase: n }))}
-                  />
-                )}
-              </div>
+              )}
+              <div className="h-px bg-[#c9a06a]/40 my-0.5" />
+              <div className="font-heebo text-[11px] font-bold text-[#7a5a36] text-center uppercase tracking-wider">תחתונים</div>
+              {layout === "U" && (
+                <ArmStepper
+                  label="שמאל"
+                  value={counts.leftBase}
+                  onChange={(n) => setCounts((c) => ({ ...c, leftBase: n }))}
+                />
+              )}
+              <ArmStepper
+                label="אמצע"
+                value={counts.centerBase}
+                onChange={(n) => setCounts((c) => ({ ...c, centerBase: n }))}
+              />
+              {(layout === "L" || layout === "U") && (
+                <ArmStepper
+                  label="ימין"
+                  value={counts.rightBase}
+                  onChange={(n) => setCounts((c) => ({ ...c, rightBase: n }))}
+                />
+              )}
             </div>
           ) : (
-            <div className="mx-auto w-fit rounded-2xl bg-white/90 backdrop-blur border border-[#c9a06a]/60 shadow px-3 py-2 pointer-events-auto flex flex-col gap-1.5">
+            <div className="rounded-2xl bg-white/90 backdrop-blur border border-[#c9a06a]/60 shadow px-2.5 py-2.5 pointer-events-auto flex flex-col gap-2">
               <ArmStepper
                 label="עליון"
                 value={counts.centerUpper}
