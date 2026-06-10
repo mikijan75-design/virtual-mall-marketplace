@@ -304,9 +304,11 @@ const RahitiGaatonStoreView = ({ store }: { store: Store }) => {
 
 const LABEL: Record<StepKey, string> = {
   type: "סוג רהיט",
-  style: "סגנון",
+  layout: "סידור",
   size: "גודל",
   material: "חומר",
+  handles: "ידיות",
+  extras: "תוספות",
 };
 
 export default RahitiGaatonStoreView;
