@@ -397,6 +397,7 @@ const LABEL: Record<StepKey, string> = {
   type: "סוג רהיט",
   layout: "סידור",
   height: "גובה",
+  designCategory: "עיצוב",
   material: "חומר",
   handles: "ידיות",
   extras: "תוספות",
