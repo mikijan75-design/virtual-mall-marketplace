@@ -4,7 +4,7 @@ import MallHeader from "@/components/mall/MallHeader";
 import MallFooter from "@/components/mall/MallFooter";
 import PageTracker from "@/components/PageTracker";
 import BackButton from "@/components/BackButton";
-import rahitiLogo from "@/assets/stores/rahiti-gaaton-logo.png";
+import rahitigaatonLogoAsset from "@/assets/rahitigaaton-logo.png.asset.json";
 import type { Store } from "@/data/mallData";
 
 type Answers = {
@@ -87,33 +87,12 @@ const RahitiGaatonStoreView = ({ store }: { store: Store }) => {
           }}
         />
 
-        <div className="relative w-full max-w-[1280px] mx-auto px-5 md:px-10 py-12 md:py-20 text-center">
+        <div className="relative w-full max-w-[1280px] mx-auto px-5 md:px-10 py-8 md:py-12 flex items-center justify-center">
           <img
-            src={rahitiLogo}
-            alt="רהיטי געתון"
-            className="mx-auto mb-6 h-20 md:h-24 w-auto object-contain drop-shadow-[0_6px_18px_rgba(0,0,0,0.45)]"
+            src={rahitigaatonLogoAsset.url}
+            alt="רהיטיגעתון - ברוכים הבאים למשפחה"
+            className="mx-auto h-32 md:h-44 w-auto object-contain drop-shadow-[0_8px_24px_rgba(0,0,0,0.5)]"
           />
-          <h1
-            className="font-frank font-black tracking-tight text-[#f7e9cf] leading-[1.05]"
-            style={{ fontSize: "clamp(2.25rem, 5vw, 4.25rem)" }}
-          >
-            תכנון נגרות בלחיצה כפתור
-          </h1>
-          <p
-            className="mt-4 font-heebo text-[#e9d5b1]/90"
-            style={{ fontSize: "clamp(1rem, 1.7vw, 1.5rem)" }}
-          >
-            תענו על השאלות ותקבלו הדמייה אישית של הרהיט שלכם
-          </p>
-
-          {/* deco rule */}
-          <div className="mx-auto mt-8 flex items-center justify-center gap-3 opacity-80">
-            <span className="h-px w-12 bg-[#c9a06a]" />
-            <span className="text-[#c9a06a] text-xs tracking-[0.4em] font-heebo">
-              RAHITI · GAATON
-            </span>
-            <span className="h-px w-12 bg-[#c9a06a]" />
-          </div>
         </div>
       </section>
 
@@ -125,6 +104,29 @@ const RahitiGaatonStoreView = ({ store }: { store: Store }) => {
           style={{ background: WOOD_BG }}
         />
         <div className="relative w-full max-w-[1100px] mx-auto px-5 md:px-10 py-12 md:py-20">
+          {/* Titles moved from hero */}
+          <div className="text-center mb-10 md:mb-14">
+            <h1
+              className="font-frank font-black tracking-tight text-[#2a1d12] leading-[1.05]"
+              style={{ fontSize: "clamp(2.25rem, 5vw, 4.25rem)" }}
+            >
+              תכנון נגרות בלחיצה כפתור
+            </h1>
+            <p
+              className="mt-4 font-heebo text-[#5a4126]"
+              style={{ fontSize: "clamp(1rem, 1.7vw, 1.5rem)" }}
+            >
+              תענו על השאלות ותקבלו הדמייה אישית של הרהיט שלכם
+            </p>
+            <div className="mx-auto mt-6 flex items-center justify-center gap-3 opacity-80">
+              <span className="h-px w-12 bg-[#8b5e2b]" />
+              <span className="text-[#8b5e2b] text-xs tracking-[0.4em] font-heebo">
+                RAHITI · GAATON
+              </span>
+              <span className="h-px w-12 bg-[#8b5e2b]" />
+            </div>
+          </div>
+
           {/* progress */}
           <div className="mb-8">
             <div className="flex items-center justify-between mb-2 font-heebo text-sm md:text-base text-[#5a4126]">
