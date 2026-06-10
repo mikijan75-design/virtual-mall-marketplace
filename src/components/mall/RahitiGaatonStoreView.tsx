@@ -312,3 +312,405 @@ const LABEL: Record<StepKey, string> = {
 };
 
 export default RahitiGaatonStoreView;
+
+/* =========================================================================
+   LIVE PREVIEW — progressive front-view rendering, inspired by
+   github.com/Bruinen90/kitchen-planner. Each answered question adds a layer
+   of detail: outline → modules → finish → handles → extras.
+   ========================================================================= */
+
+type PreviewProps = { answers: Answers };
+
+function LivePreview({ answers }: PreviewProps) {
+  const { type, layout, size, material, handles, extras } = answers;
+
+  const hasType = !!type;
+  const isKitchen = type === "מטבח";
+
+  // Width scales with size
+  const widthScale = size === "קטן" ? 0.75 : size === "גדול" ? 1.15 : 0.95;
+  const VB_W = 900;
+  const VB_H = 460;
+  const unitW = 720 * widthScale;
+  const unitH = isKitchen ? 230 : 320;
+  const x0 = (VB_W - unitW) / 2;
+  const y0 = VB_H - unitH - 60; // leave floor below
+
+  // Module count from layout
+  const modules = (() => {
+    if (!layout) return 0;
+    if (layout === "ישר") return 4;
+    if (layout === "L") return 5;
+    if (layout === "U") return 6;
+    const m = parseInt(layout, 10);
+    return Number.isFinite(m) ? m : 3;
+  })();
+
+  const mat = MATERIAL_COLORS[material ?? ""] ?? { fill: "#d8c29b", grain: "#a07a44", edge: "#7a5a32" };
+
+  // Counter top for kitchen
+  const counterH = isKitchen ? 14 : 0;
+
+  const moduleW = modules > 0 ? unitW / modules : unitW;
+
+  return (
+    <div className="relative w-full rounded-2xl overflow-hidden border border-[#c9a06a]/40 shadow-inner bg-gradient-to-b from-[#f8f1de] to-[#ecdcbd]">
+      <svg
+        viewBox={`0 0 ${VB_W} ${VB_H}`}
+        className="w-full h-auto block"
+        role="img"
+        aria-label="הדמייה חיה של הרהיט"
+      >
+        <defs>
+          <linearGradient id="floor-grad" x1="0" y1="0" x2="0" y2="1">
+            <stop offset="0%" stopColor="#e6d5b3" />
+            <stop offset="100%" stopColor="#bf9f6c" />
+          </linearGradient>
+          <linearGradient id="wall-grad" x1="0" y1="0" x2="0" y2="1">
+            <stop offset="0%" stopColor="#fbf3df" />
+            <stop offset="100%" stopColor="#ead7b0" />
+          </linearGradient>
+          <pattern id="wood-grain" patternUnits="userSpaceOnUse" width="6" height="40">
+            <rect width="6" height="40" fill={mat.fill} />
+            <path d="M0 6 Q3 14 0 22 T0 38" stroke={mat.grain} strokeWidth="0.6" fill="none" opacity="0.55" />
+          </pattern>
+        </defs>
+
+        {/* Wall + floor */}
+        <rect x="0" y="0" width={VB_W} height={VB_H - 60} fill="url(#wall-grad)" />
+        <rect x="0" y={VB_H - 60} width={VB_W} height="60" fill="url(#floor-grad)" />
+        <line x1="0" y1={VB_H - 60} x2={VB_W} y2={VB_H - 60} stroke="#9a7944" strokeWidth="1.5" />
+
+        {/* Empty-state hint */}
+        {!hasType && (
+          <g>
+            <rect
+              x={VB_W / 2 - 180}
+              y={VB_H / 2 - 36}
+              width="360"
+              height="72"
+              rx="14"
+              fill="#ffffff"
+              opacity="0.7"
+              stroke="#c9a06a"
+              strokeDasharray="6 6"
+            />
+            <text
+              x={VB_W / 2}
+              y={VB_H / 2 + 8}
+              textAnchor="middle"
+              fontFamily="'Frank Ruhl Libre', serif"
+              fontWeight="700"
+              fontSize="22"
+              fill="#5a4126"
+            >
+              ההדמייה תופיע כאן בזמן שתענה
+            </text>
+          </g>
+        )}
+
+        {/* Outline (after type chosen) */}
+        {hasType && (
+          <g>
+            {/* Base outline */}
+            <rect
+              x={x0}
+              y={y0}
+              width={unitW}
+              height={unitH}
+              fill={material ? "url(#wood-grain)" : "#efe1c8"}
+              stroke={mat.edge}
+              strokeWidth="2"
+              rx="4"
+            />
+
+            {/* Kitchen: upper cabinets row */}
+            {isKitchen && (
+              <rect
+                x={x0}
+                y={y0 - 130}
+                width={unitW}
+                height="100"
+                fill={material ? "url(#wood-grain)" : "#efe1c8"}
+                stroke={mat.edge}
+                strokeWidth="2"
+                rx="3"
+              />
+            )}
+
+            {/* Modules (doors / drawers) */}
+            {modules > 0 &&
+              Array.from({ length: modules }).map((_, i) => {
+                const mx = x0 + i * moduleW;
+                return (
+                  <g key={i}>
+                    {/* lower module door */}
+                    <rect
+                      x={mx + 4}
+                      y={y0 + 6}
+                      width={moduleW - 8}
+                      height={unitH - 12 - counterH}
+                      fill="none"
+                      stroke={mat.edge}
+                      strokeWidth="1.4"
+                      rx="3"
+                    />
+                    {/* horizontal drawer line for kitchen */}
+                    {isKitchen && (
+                      <line
+                        x1={mx + 4}
+                        y1={y0 + 50}
+                        x2={mx + moduleW - 4}
+                        y2={y0 + 50}
+                        stroke={mat.edge}
+                        strokeWidth="1"
+                      />
+                    )}
+                    {/* upper module */}
+                    {isKitchen && (
+                      <rect
+                        x={mx + 4}
+                        y={y0 - 124}
+                        width={moduleW - 8}
+                        height={88}
+                        fill="none"
+                        stroke={mat.edge}
+                        strokeWidth="1.4"
+                        rx="3"
+                      />
+                    )}
+                    {/* Handles */}
+                    {handles && handles !== "ללא ידיות" && (
+                      <>
+                        {handles === "ידיות מוט" ? (
+                          <rect
+                            x={mx + moduleW / 2 - 16}
+                            y={y0 + (isKitchen ? 70 : 30)}
+                            width="32"
+                            height="3"
+                            fill="#3b3b3b"
+                            rx="1.5"
+                          />
+                        ) : (
+                          <circle
+                            cx={mx + moduleW / 2}
+                            cy={y0 + (isKitchen ? 72 : 32)}
+                            r="3.5"
+                            fill="#3b3b3b"
+                          />
+                        )}
+                        {isKitchen && (
+                          handles === "ידיות מוט" ? (
+                            <rect
+                              x={mx + moduleW / 2 - 14}
+                              y={y0 - 50}
+                              width="28"
+                              height="3"
+                              fill="#3b3b3b"
+                              rx="1.5"
+                            />
+                          ) : (
+                            <circle cx={mx + moduleW / 2} cy={y0 - 48} r="3" fill="#3b3b3b" />
+                          )
+                        )}
+                      </>
+                    )}
+                  </g>
+                );
+              })}
+
+            {/* Kitchen counter (extras: שיש עליון) */}
+            {isKitchen && (
+              <rect
+                x={x0 - 6}
+                y={y0 - 6}
+                width={unitW + 12}
+                height={counterH}
+                fill={extras === "שיש עליון" ? "#e9e6df" : "#2a1d12"}
+                stroke="#2a1d12"
+                strokeWidth="1"
+                rx="2"
+              />
+            )}
+
+            {/* Kitchen extras: stove + oven on a module */}
+            {isKitchen && extras === "כיריים + תנור" && modules > 0 && (() => {
+              const stoveIdx = Math.floor(modules / 2);
+              const sx = x0 + stoveIdx * moduleW;
+              return (
+                <g>
+                  {/* stove top */}
+                  <rect x={sx + 8} y={y0 + 4} width={moduleW - 16} height="6" fill="#1b1b1b" />
+                  {[0, 1, 2, 3].map((k) => (
+                    <circle
+                      key={k}
+                      cx={sx + 16 + ((moduleW - 32) / 3) * k}
+                      cy={y0 + 7}
+                      r="3"
+                      fill="#3a3a3a"
+                      stroke="#0a0a0a"
+                      strokeWidth="0.6"
+                    />
+                  ))}
+                  {/* oven door */}
+                  <rect
+                    x={sx + 10}
+                    y={y0 + 56}
+                    width={moduleW - 20}
+                    height={unitH - 70 - counterH}
+                    fill="#2a2a2a"
+                    stroke="#0a0a0a"
+                    strokeWidth="1"
+                    rx="2"
+                  />
+                  <rect
+                    x={sx + 18}
+                    y={y0 + 64}
+                    width={moduleW - 36}
+                    height={unitH - 88 - counterH}
+                    fill="#0f0f0f"
+                    opacity="0.85"
+                    rx="2"
+                  />
+                </g>
+              );
+            })()}
+
+            {/* Kitchen extras: fridge takes the rightmost (rtl: leftmost) module */}
+            {isKitchen && extras === "מקרר משולב" && modules > 0 && (() => {
+              const fx = x0; // leftmost on canvas = rightmost in RTL view
+              return (
+                <g>
+                  <rect
+                    x={fx + 4}
+                    y={y0 - 124}
+                    width={moduleW - 8}
+                    height={unitH - 12 + 124}
+                    fill="#f5f5f5"
+                    stroke="#2a2a2a"
+                    strokeWidth="1.5"
+                    rx="3"
+                  />
+                  <line
+                    x1={fx + 4}
+                    y1={y0 + 40}
+                    x2={fx + moduleW - 4}
+                    y2={y0 + 40}
+                    stroke="#2a2a2a"
+                    strokeWidth="1"
+                  />
+                  <rect
+                    x={fx + moduleW - 18}
+                    y={y0 - 110}
+                    width="3"
+                    height="40"
+                    fill="#3b3b3b"
+                  />
+                  <rect
+                    x={fx + moduleW - 18}
+                    y={y0 + 50}
+                    width="3"
+                    height="40"
+                    fill="#3b3b3b"
+                  />
+                </g>
+              );
+            })()}
+
+            {/* Closet extras: shelves / drawers / hanging rod */}
+            {!isKitchen && extras && modules > 0 && (() => {
+              const elements: JSX.Element[] = [];
+              for (let i = 0; i < modules; i++) {
+                const mx = x0 + i * moduleW;
+                if (extras === "מדפים") {
+                  [0.25, 0.5, 0.75].forEach((p, k) => {
+                    elements.push(
+                      <line
+                        key={`sh-${i}-${k}`}
+                        x1={mx + 10}
+                        y1={y0 + unitH * p}
+                        x2={mx + moduleW - 10}
+                        y2={y0 + unitH * p}
+                        stroke={mat.edge}
+                        strokeWidth="1.2"
+                        opacity="0.55"
+                      />
+                    );
+                  });
+                } else if (extras === "מגירות") {
+                  [0.35, 0.55, 0.75].forEach((p, k) => {
+                    elements.push(
+                      <rect
+                        key={`dr-${i}-${k}`}
+                        x={mx + 10}
+                        y={y0 + unitH * p}
+                        width={moduleW - 20}
+                        height={unitH * 0.13}
+                        fill="none"
+                        stroke={mat.edge}
+                        strokeWidth="1.1"
+                        rx="2"
+                      />
+                    );
+                  });
+                } else if (extras === "מוט תלייה") {
+                  elements.push(
+                    <line
+                      key={`rod-${i}`}
+                      x1={mx + 10}
+                      y1={y0 + 38}
+                      x2={mx + moduleW - 10}
+                      y2={y0 + 38}
+                      stroke="#3b3b3b"
+                      strokeWidth="2"
+                    />
+                  );
+                  // little hangers
+                  [0.25, 0.5, 0.75].forEach((p, k) => {
+                    const hx = mx + 10 + (moduleW - 20) * p;
+                    elements.push(
+                      <path
+                        key={`hg-${i}-${k}`}
+                        d={`M ${hx} 38 q -10 14 0 22 q 10 -8 0 -22`}
+                        transform={`translate(0,${y0})`}
+                        stroke="#5a3d20"
+                        strokeWidth="1.2"
+                        fill="none"
+                      />
+                    );
+                  });
+                }
+              }
+              return <g>{elements}</g>;
+            })()}
+
+            {/* Side shadow */}
+            <rect
+              x={x0}
+              y={y0 + unitH}
+              width={unitW}
+              height="6"
+              fill="#000"
+              opacity="0.15"
+            />
+          </g>
+        )}
+
+        {/* Labels at bottom */}
+        <g fontFamily="'Heebo', sans-serif" fontSize="14" fill="#5a4126">
+          <text x={VB_W / 2} y={VB_H - 18} textAnchor="middle" opacity="0.7">
+            {hasType
+              ? `${type ?? ""}${layout ? " · " + layout : ""}${size ? " · " + size : ""}${material ? " · " + material : ""}`
+              : "ההדמייה מתעדכנת לפי הבחירות שלכם"}
+          </text>
+        </g>
+      </svg>
+
+      {/* Caption */}
+      <div className="px-4 py-3 bg-[#2a1d12] text-[#f7e9cf] font-heebo text-sm flex items-center justify-between">
+        <span className="opacity-80">תצוגה חיה · נבנית עם כל תשובה</span>
+        <span className="opacity-70 text-xs tracking-wider">RAHITI · GAATON LIVE PREVIEW</span>
+      </div>
+    </div>
+  );
+}
