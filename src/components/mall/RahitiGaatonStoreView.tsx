@@ -318,7 +318,7 @@ const RahitiGaatonStoreView = ({ store }: { store: Store }) => {
                 מתעדכנת בזמן אמת לפי כל בחירה
               </p>
             </div>
-            <LivePreview answers={answers} />
+            <LivePreview answers={answers} counts={counts} setCounts={setCounts} />
           </div>
         </div>
       </section>
@@ -331,7 +331,6 @@ const RahitiGaatonStoreView = ({ store }: { store: Store }) => {
 const LABEL: Record<StepKey, string> = {
   type: "סוג רהיט",
   layout: "סידור",
-  size: "גודל",
   material: "חומר",
   handles: "ידיות",
   extras: "תוספות",
@@ -346,10 +345,15 @@ export default RahitiGaatonStoreView;
    axonometric projection lets the user see L / U layouts and depth.
    ========================================================================= */
 
-type PreviewProps = { answers: Answers };
+type Counts = { main: number; arm2: number; arm3: number };
+type PreviewProps = {
+  answers: Answers;
+  counts: Counts;
+  setCounts: React.Dispatch<React.SetStateAction<Counts>>;
+};
 
-function LivePreview({ answers }: PreviewProps) {
-  const { type, layout, size, material, handles, extras } = answers;
+function LivePreview({ answers, counts, setCounts }: PreviewProps) {
+  const { type, layout, material, handles, extras } = answers;
 
   const hasType = !!type;
   const isKitchen = type === "מטבח";
@@ -369,10 +373,8 @@ function LivePreview({ answers }: PreviewProps) {
   ];
   const pt = (x: number, y: number, z: number) => iso(x, y, z).join(",");
 
-  // Size affects per-module dimensions
-  const sizeScale = size === "קטן" ? 0.8 : size === "גדול" ? 1.15 : 1;
-  const W = 70 * sizeScale; // module width along arm
-  const D = 60 * sizeScale; // depth
+  const W = 70; // module width along arm
+  const D = 60; // depth
   const H = isKitchen ? 95 : 200; // base/closet body height
   const UH = 80; // upper kitchen cabinet height
   const UD = 38; // upper cabinet depth
@@ -402,9 +404,9 @@ function LivePreview({ answers }: PreviewProps) {
 
   if (hasType && layout) {
     if (isKitchen) {
-      // Number of modules per arm depends on size
-      const nMain = size === "קטן" ? 3 : size === "גדול" ? 5 : 4;
-      const nArm = Math.max(2, Math.round(nMain / 2));
+      const nMain = Math.max(1, counts.main);
+      const nArm2 = Math.max(1, counts.arm2);
+      const nArm3 = Math.max(1, counts.arm3);
 
       // Arm 1: along +x at z = 0..D, x = 0..nMain*W
       for (let i = 0; i < nMain; i++) {
@@ -413,24 +415,20 @@ function LivePreview({ answers }: PreviewProps) {
       }
 
       if (layout === "L" || layout === "U") {
-        // Arm 2: perpendicular, at x = 0..D, z = D..D + nArm*W (door faces -x → flip via facingX)
-        for (let i = 0; i < nArm; i++) {
+        for (let i = 0; i < nArm2; i++) {
           boxes.push({ x: 0, z: D + i * W, w: D, d: W, h: H, kind: "base", facingX: true });
           boxes.push({ x: 0, z: D + i * W, w: UD, d: W, h: UH, y0: UY, kind: "upper", facingX: true });
         }
       }
       if (layout === "U") {
-        // Arm 3: also perpendicular on the far x side
         const x3 = nMain * W - D;
-        for (let i = 0; i < nArm; i++) {
+        for (let i = 0; i < nArm3; i++) {
           boxes.push({ x: x3, z: D + i * W, w: D, d: W, h: H, kind: "base", facingX: true });
           boxes.push({ x: x3, z: D + i * W, w: UD, d: W, h: UH, y0: UY, kind: "upper", facingX: true });
         }
       }
     } else {
-      // Closet — N doors in a row
-      const n =
-        layout === "2 דלתות" ? 2 : layout === "3 דלתות" ? 3 : layout === "4 דלתות" ? 4 : 3;
+      const n = Math.max(1, counts.main);
       for (let i = 0; i < n; i++) {
         boxes.push({ x: i * W, z: 0, w: W, d: D, h: H, kind: "base" });
       }
@@ -653,16 +651,85 @@ function LivePreview({ answers }: PreviewProps) {
         <g fontFamily="'Heebo', sans-serif" fontSize="14" fill="#5a4126">
           <text x={VB_W / 2} y={VB_H - 18} textAnchor="middle" opacity="0.75">
             {hasType
-              ? `${type ?? ""}${layout ? " · " + layout : ""}${size ? " · " + size : ""}${material ? " · " + material : ""}`
+              ? `${type ?? ""}${layout ? " · " + layout : ""}${material ? " · " + material : ""}`
               : "ההדמייה מתעדכנת לפי הבחירות שלכם"}
           </text>
         </g>
       </svg>
 
+      {/* Add/remove units controls */}
+      {hasType && layout && (
+        <div className="absolute top-3 inset-x-3 flex flex-wrap gap-2 justify-center pointer-events-none">
+          {isKitchen ? (
+            <>
+              <ArmStepper
+                label="זרוע ראשית"
+                value={counts.main}
+                onChange={(n) => setCounts((c) => ({ ...c, main: n }))}
+              />
+              {(layout === "L" || layout === "U") && (
+                <ArmStepper
+                  label="זרוע צד"
+                  value={counts.arm2}
+                  onChange={(n) => setCounts((c) => ({ ...c, arm2: n }))}
+                />
+              )}
+              {layout === "U" && (
+                <ArmStepper
+                  label="זרוע נוספת"
+                  value={counts.arm3}
+                  onChange={(n) => setCounts((c) => ({ ...c, arm3: n }))}
+                />
+              )}
+            </>
+          ) : (
+            <ArmStepper
+              label="דלתות"
+              value={counts.main}
+              onChange={(n) => setCounts((c) => ({ ...c, main: n }))}
+            />
+          )}
+        </div>
+      )}
+
       <div className="px-4 py-3 bg-[#2a1d12] text-[#f7e9cf] font-heebo text-sm flex items-center justify-between">
-        <span className="opacity-80">תצוגה איזומטרית חיה · 45°</span>
+        <span className="opacity-80">הוסיפו או הסירו יחידות בכפתורי + / − למעלה</span>
         <span className="opacity-70 text-xs tracking-wider">RAHITI · GAATON LIVE PREVIEW</span>
       </div>
+    </div>
+  );
+}
+
+function ArmStepper({
+  label,
+  value,
+  onChange,
+}: {
+  label: string;
+  value: number;
+  onChange: (n: number) => void;
+}) {
+  return (
+    <div className="pointer-events-auto inline-flex items-center gap-2 rounded-full bg-white/90 backdrop-blur border border-[#c9a06a]/60 shadow px-2 py-1 font-heebo text-sm text-[#3b2918]">
+      <button
+        type="button"
+        aria-label={`הסר יחידה מ${label}`}
+        onClick={() => onChange(Math.max(1, value - 1))}
+        className="w-7 h-7 rounded-full bg-[#f3e6c8] hover:bg-[#e7d29f] border border-[#c9a06a] flex items-center justify-center font-bold text-lg leading-none"
+      >
+        −
+      </button>
+      <span className="min-w-[88px] text-center">
+        {label}: <span className="font-bold">{value}</span>
+      </span>
+      <button
+        type="button"
+        aria-label={`הוסף יחידה ל${label}`}
+        onClick={() => onChange(Math.min(10, value + 1))}
+        className="w-7 h-7 rounded-full bg-[#3b2918] text-[#f7e9cf] hover:bg-[#5a3d20] border border-[#3b2918] flex items-center justify-center font-bold text-lg leading-none"
+      >
+        +
+      </button>
     </div>
   );
 }
