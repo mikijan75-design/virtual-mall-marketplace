@@ -888,8 +888,9 @@ function LivePreview({ answers, counts, setCounts }: PreviewProps) {
       : Math.max(isSliding ? 2 : 1, counts.centerBase);
     const UNIT_CM = isKitchen ? 70 : 80;
     const widthCm = centerCount * UNIT_CM;
-    const topY = isKitchen ? UY + UH : closetTotal;
-    const heightCm = isKitchen ? 235 : closetTotal;
+    const hasUpper = isKitchen && (counts.centerUpper + counts.rightUpper + counts.leftUpper) > 0;
+    const topY = isKitchen ? (hasUpper ? UY + UH : H) : closetTotal;
+    const heightCm = isKitchen ? (hasUpper ? 235 : 90) : closetTotal;
     const [lx, ly] = iso(0, topY, 0);
     const [rx, ry] = iso(centerCount * W, topY, 0);
     const [bx, by] = iso(centerCount * W, 0, 0);
