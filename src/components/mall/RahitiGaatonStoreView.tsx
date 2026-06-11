@@ -495,6 +495,36 @@ function LivePreview({ answers, setAnswers, counts, setCounts }: PreviewProps) {
     setAnswers((a) => ({ ...a, layout: shape }));
   };
 
+  // Effective center base count for kitchen
+  const centerCountEff = isKitchen ? Math.max(1, counts.centerBase) : 0;
+  const hasFridge = !!(isKitchen && extras?.includes("מקרר משולב"));
+  const hasStove = !!(isKitchen && extras?.includes("כיריים + תנור"));
+
+  // Initialise / clamp positions when extras or layout change
+  useEffect(() => {
+    if (!hasFridge) { if (fridgePos !== null) setFridgePos(null); return; }
+    setFridgePos((p) => {
+      const max = centerCountEff - 1;
+      if (p === null) return max;             // default: rightmost
+      return Math.max(0, Math.min(max, p));
+    });
+  }, [hasFridge, centerCountEff]);
+  useEffect(() => {
+    if (!hasStove) { if (stovePos !== null) setStovePos(null); return; }
+    setStovePos((p) => {
+      const max = centerCountEff - 1;
+      const def = Math.min(1, max);            // default like before (index 1)
+      if (p === null) return def;
+      // Avoid overlapping fridge if possible
+      let np = Math.max(0, Math.min(max, p));
+      if (hasFridge && fridgePos !== null && np === fridgePos && max > 0) {
+        np = np === 0 ? 1 : np - 1;
+      }
+      return np;
+    });
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [hasStove, centerCountEff]);
+
   const VB_W = 900;
   const VB_H = 520;
 
