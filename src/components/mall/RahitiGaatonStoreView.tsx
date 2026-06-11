@@ -854,23 +854,13 @@ function LivePreview({ answers, setAnswers, counts, setCounts }: PreviewProps) {
     (a, bb) => a.x + a.z + (a.y0 ?? 0) * 0.2 - (bb.x + bb.z + (bb.y0 ?? 0) * 0.2)
   );
 
-  // Fridge column: replace the cabinet at `fridgePos` with a tall stainless fridge.
-  const centerBaseBoxes = boxes.filter((bx) => bx.kind === "base" && bx.z === 0 && !bx.facingX);
-  const nCenterBase = centerBaseBoxes.length;
-  const fridgeBase = (isKitchen && extras?.includes("מקרר משולב") && fridgePos !== null && nCenterBase > 0)
-    ? centerBaseBoxes.find((bx) => bx.x === fridgePos * W) ?? null
+  // Fridge is an ADDITION at slot `fridgePos` (0..nC, where nC = center base count).
+  // It does not hide any cabinet. Cabinets at index >= fridgePos were already shifted by W above.
+  const nC = isKitchen ? Math.max(1, counts.centerBase) : 0;
+  const fridgeBase: Box | null = (isKitchen && extras?.includes("מקרר משולב") && fridgePos !== null)
+    ? { x: Math.max(0, Math.min(nC, fridgePos)) * W, z: 0, w: W, d: D, h: H, kind: "base" }
     : null;
-  // Hide that base + the upper directly above it from normal rendering
-  const hiddenBoxes = new Set<Box>();
-  if (fridgeBase) {
-    hiddenBoxes.add(fridgeBase);
-    boxes.forEach((bx) => {
-      if (bx.kind === "upper" && !bx.facingX && bx.x === fridgeBase.x && bx.z === 0) {
-        hiddenBoxes.add(bx);
-      }
-    });
-  }
-  const visibleSorted = sortedBoxes.filter((bx) => !hiddenBoxes.has(bx));
+  const visibleSorted = sortedBoxes;
 
   const renderFridge = (b: Box) => {
     const fH = 210; // full height (covers base + upper zone)
