@@ -730,8 +730,12 @@ function LivePreview({ answers, setAnswers, counts, setCounts }: PreviewProps) {
       }
     }
 
-    // Stove + oven decoration on the first center-arm base when chosen
-    if (b.kind === "base" && isKitchen && extras?.includes("כיריים + תנור") && b.x === W && b.z === 0 && !b.facingX) {
+    // Stove + oven decoration on the chosen center-arm base when "כיריים + תנור" selected
+    if (
+      b.kind === "base" && isKitchen && extras?.includes("כיריים + תנור") &&
+      b.z === 0 && !b.facingX &&
+      stovePos !== null && b.x === stovePos * W
+    ) {
       // Hob (top of counter) — 4 burners
       const T1 = iso(b.x + b.w * 0.12, y1 + 0.5, b.z + b.d * 0.18);
       const T2 = iso(b.x + b.w * 0.88, y1 + 0.5, b.z + b.d * 0.18);
