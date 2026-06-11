@@ -920,7 +920,8 @@ function LivePreview({ answers, counts, setCounts }: PreviewProps) {
           <g transform={`translate(${dx} ${dy})`}>
             {/* footprint shadow */}
             {footprintPolys}
-            {sortedBoxes.map((b, i) => renderBox(b, `b${i}`))}
+            {visibleSorted.map((b, i) => renderBox(b, `b${i}`))}
+            {fridgeBase && renderFridge(fridgeBase)}
           </g>
         )}
 
