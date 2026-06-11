@@ -677,23 +677,62 @@ function LivePreview({ answers, counts, setCounts }: PreviewProps) {
       }
     }
 
-    // Stove / sink decoration on top of base when extras chosen
-    if (b.kind === "base" && isKitchen && extras === "כיריים + תנור") {
-      // place hob on second module-ish (just decorate every other base box top)
-      if ((b.x / W) % 2 === 0 && b.z === 0) {
-        const T1 = iso(b.x + b.w * 0.18, y1 + 0.5, b.z + b.d * 0.25);
-        const T2 = iso(b.x + b.w * 0.82, y1 + 0.5, b.z + b.d * 0.25);
-        const T3 = iso(b.x + b.w * 0.82, y1 + 0.5, b.z + b.d * 0.78);
-        const T4 = iso(b.x + b.w * 0.18, y1 + 0.5, b.z + b.d * 0.78);
+    // Stove + oven decoration on the first center-arm base when chosen
+    if (b.kind === "base" && isKitchen && extras === "כיריים + תנור" && b.x === 0 && b.z === 0 && !b.facingX) {
+      // Hob (top of counter) — 4 burners
+      const T1 = iso(b.x + b.w * 0.12, y1 + 0.5, b.z + b.d * 0.18);
+      const T2 = iso(b.x + b.w * 0.88, y1 + 0.5, b.z + b.d * 0.18);
+      const T3 = iso(b.x + b.w * 0.88, y1 + 0.5, b.z + b.d * 0.82);
+      const T4 = iso(b.x + b.w * 0.12, y1 + 0.5, b.z + b.d * 0.82);
+      details.push(
+        <polygon key={`hob-${key}`} points={`${T1.join(",")} ${T2.join(",")} ${T3.join(",")} ${T4.join(",")}`} fill="#141414" stroke="#000" strokeWidth="0.3" />
+      );
+      [[0.3, 0.32], [0.7, 0.32], [0.3, 0.7], [0.7, 0.7]].forEach(([u, v], idx) => {
+        const c = iso(b.x + b.w * u, y1 + 0.6, b.z + b.d * v);
+        details.push(<circle key={`burn-${key}-${idx}`} cx={c[0]} cy={c[1]} r="3" fill="#2c2c2c" stroke="#0a0a0a" strokeWidth="0.4" />);
+        details.push(<circle key={`burn2-${key}-${idx}`} cx={c[0]} cy={c[1]} r="1.2" fill="#5a5a5a" />);
+      });
+      // Oven door on the FRONT face of the same base unit
+      const ovU0 = 0.12, ovU1 = 0.88;
+      const ovY0 = y0 + b.h * 0.18;
+      const ovY1 = y0 + b.h * 0.92;
+      const O1 = frontFaceIsZ ? iso(b.x + b.w * ovU0, ovY0, b.z + b.d) : iso(b.x + b.w, ovY0, b.z + b.d * ovU0);
+      const O2 = frontFaceIsZ ? iso(b.x + b.w * ovU1, ovY0, b.z + b.d) : iso(b.x + b.w, ovY0, b.z + b.d * ovU1);
+      const O3 = frontFaceIsZ ? iso(b.x + b.w * ovU1, ovY1, b.z + b.d) : iso(b.x + b.w, ovY1, b.z + b.d * ovU1);
+      const O4 = frontFaceIsZ ? iso(b.x + b.w * ovU0, ovY1, b.z + b.d) : iso(b.x + b.w, ovY1, b.z + b.d * ovU0);
+      details.push(
+        <polygon key={`oven-${key}`} points={`${O1.join(",")} ${O2.join(",")} ${O3.join(",")} ${O4.join(",")}`} fill="#1a1a1a" stroke="#000" strokeWidth="0.4" />
+      );
+      // Oven inner glass panel
+      const gU0 = 0.18, gU1 = 0.82, gY0 = y0 + b.h * 0.30, gY1 = y0 + b.h * 0.80;
+      const G1 = frontFaceIsZ ? iso(b.x + b.w * gU0, gY0, b.z + b.d) : iso(b.x + b.w, gY0, b.z + b.d * gU0);
+      const G2 = frontFaceIsZ ? iso(b.x + b.w * gU1, gY0, b.z + b.d) : iso(b.x + b.w, gY0, b.z + b.d * gU1);
+      const G3 = frontFaceIsZ ? iso(b.x + b.w * gU1, gY1, b.z + b.d) : iso(b.x + b.w, gY1, b.z + b.d * gU1);
+      const G4 = frontFaceIsZ ? iso(b.x + b.w * gU0, gY1, b.z + b.d) : iso(b.x + b.w, gY1, b.z + b.d * gU0);
+      details.push(
+        <polygon key={`ovglass-${key}`} points={`${G1.join(",")} ${G2.join(",")} ${G3.join(",")} ${G4.join(",")}`} fill="#3a3530" opacity="0.85" />
+      );
+      // Oven handle bar near top of door
+      const hY = y0 + b.h * 0.24;
+      const Ha = frontFaceIsZ ? iso(b.x + b.w * 0.2, hY, b.z + b.d) : iso(b.x + b.w, hY, b.z + b.d * 0.2);
+      const Hb = frontFaceIsZ ? iso(b.x + b.w * 0.8, hY, b.z + b.d) : iso(b.x + b.w, hY, b.z + b.d * 0.8);
+      details.push(
+        <line key={`ovhandle-${key}`} x1={Ha[0]} y1={Ha[1]} x2={Hb[0]} y2={Hb[1]} stroke="#c8c8c8" strokeWidth="2.4" strokeLinecap="round" />
+      );
+    }
+
+    // Marble veins on counter top when "שיש עליון"
+    if (b.kind === "base" && isKitchen && extras === "שיש עליון") {
+      const seed = (b.x * 13 + b.z * 7) % 100;
+      [0.25, 0.55, 0.78].forEach((vy, i) => {
+        const offset = ((seed + i * 17) % 20) / 100;
+        const v1 = iso(b.x + b.w * (0.05 + offset), y1 + 0.6, b.z + b.d * vy);
+        const v2 = iso(b.x + b.w * (0.4 + offset), y1 + 0.6, b.z + b.d * (vy + 0.08));
+        const v3 = iso(b.x + b.w * (0.95), y1 + 0.6, b.z + b.d * (vy - 0.04));
         details.push(
-          <polygon key={`hob-${key}`} points={`${T1.join(",")} ${T2.join(",")} ${T3.join(",")} ${T4.join(",")}`} fill="#1a1a1a" />
+          <polyline key={`vein-${key}-${i}`} points={`${v1.join(",")} ${v2.join(",")} ${v3.join(",")}`} fill="none" stroke="#a8a299" strokeWidth="0.6" opacity="0.7" />
         );
-        // 2 burners
-        [[0.32, 0.4], [0.68, 0.65]].forEach(([u, v], idx) => {
-          const c = iso(b.x + b.w * u, y1 + 0.6, b.z + b.d * v);
-          details.push(<circle key={`burn-${key}-${idx}`} cx={c[0]} cy={c[1]} r="3.5" fill="#3a3a3a" stroke="#000" strokeWidth="0.4" />);
-        });
-      }
+      });
     }
 
     return (
