@@ -677,23 +677,62 @@ function LivePreview({ answers, counts, setCounts }: PreviewProps) {
       }
     }
 
-    // Stove / sink decoration on top of base when extras chosen
-    if (b.kind === "base" && isKitchen && extras === "כיריים + תנור") {
-      // place hob on second module-ish (just decorate every other base box top)
-      if ((b.x / W) % 2 === 0 && b.z === 0) {
-        const T1 = iso(b.x + b.w * 0.18, y1 + 0.5, b.z + b.d * 0.25);
-        const T2 = iso(b.x + b.w * 0.82, y1 + 0.5, b.z + b.d * 0.25);
-        const T3 = iso(b.x + b.w * 0.82, y1 + 0.5, b.z + b.d * 0.78);
-        const T4 = iso(b.x + b.w * 0.18, y1 + 0.5, b.z + b.d * 0.78);
+    // Stove + oven decoration on the first center-arm base when chosen
+    if (b.kind === "base" && isKitchen && extras === "כיריים + תנור" && b.x === 0 && b.z === 0 && !b.facingX) {
+      // Hob (top of counter) — 4 burners
+      const T1 = iso(b.x + b.w * 0.12, y1 + 0.5, b.z + b.d * 0.18);
+      const T2 = iso(b.x + b.w * 0.88, y1 + 0.5, b.z + b.d * 0.18);
+      const T3 = iso(b.x + b.w * 0.88, y1 + 0.5, b.z + b.d * 0.82);
+      const T4 = iso(b.x + b.w * 0.12, y1 + 0.5, b.z + b.d * 0.82);
+      details.push(
+        <polygon key={`hob-${key}`} points={`${T1.join(",")} ${T2.join(",")} ${T3.join(",")} ${T4.join(",")}`} fill="#141414" stroke="#000" strokeWidth="0.3" />
+      );
+      [[0.3, 0.32], [0.7, 0.32], [0.3, 0.7], [0.7, 0.7]].forEach(([u, v], idx) => {
+        const c = iso(b.x + b.w * u, y1 + 0.6, b.z + b.d * v);
+        details.push(<circle key={`burn-${key}-${idx}`} cx={c[0]} cy={c[1]} r="3" fill="#2c2c2c" stroke="#0a0a0a" strokeWidth="0.4" />);
+        details.push(<circle key={`burn2-${key}-${idx}`} cx={c[0]} cy={c[1]} r="1.2" fill="#5a5a5a" />);
+      });
+      // Oven door on the FRONT face of the same base unit
+      const ovU0 = 0.12, ovU1 = 0.88;
+      const ovY0 = y0 + b.h * 0.18;
+      const ovY1 = y0 + b.h * 0.92;
+      const O1 = frontFaceIsZ ? iso(b.x + b.w * ovU0, ovY0, b.z + b.d) : iso(b.x + b.w, ovY0, b.z + b.d * ovU0);
+      const O2 = frontFaceIsZ ? iso(b.x + b.w * ovU1, ovY0, b.z + b.d) : iso(b.x + b.w, ovY0, b.z + b.d * ovU1);
+      const O3 = frontFaceIsZ ? iso(b.x + b.w * ovU1, ovY1, b.z + b.d) : iso(b.x + b.w, ovY1, b.z + b.d * ovU1);
+      const O4 = frontFaceIsZ ? iso(b.x + b.w * ovU0, ovY1, b.z + b.d) : iso(b.x + b.w, ovY1, b.z + b.d * ovU0);
+      details.push(
+        <polygon key={`oven-${key}`} points={`${O1.join(",")} ${O2.join(",")} ${O3.join(",")} ${O4.join(",")}`} fill="#1a1a1a" stroke="#000" strokeWidth="0.4" />
+      );
+      // Oven inner glass panel
+      const gU0 = 0.18, gU1 = 0.82, gY0 = y0 + b.h * 0.30, gY1 = y0 + b.h * 0.80;
+      const G1 = frontFaceIsZ ? iso(b.x + b.w * gU0, gY0, b.z + b.d) : iso(b.x + b.w, gY0, b.z + b.d * gU0);
+      const G2 = frontFaceIsZ ? iso(b.x + b.w * gU1, gY0, b.z + b.d) : iso(b.x + b.w, gY0, b.z + b.d * gU1);
+      const G3 = frontFaceIsZ ? iso(b.x + b.w * gU1, gY1, b.z + b.d) : iso(b.x + b.w, gY1, b.z + b.d * gU1);
+      const G4 = frontFaceIsZ ? iso(b.x + b.w * gU0, gY1, b.z + b.d) : iso(b.x + b.w, gY1, b.z + b.d * gU0);
+      details.push(
+        <polygon key={`ovglass-${key}`} points={`${G1.join(",")} ${G2.join(",")} ${G3.join(",")} ${G4.join(",")}`} fill="#3a3530" opacity="0.85" />
+      );
+      // Oven handle bar near top of door
+      const hY = y0 + b.h * 0.24;
+      const Ha = frontFaceIsZ ? iso(b.x + b.w * 0.2, hY, b.z + b.d) : iso(b.x + b.w, hY, b.z + b.d * 0.2);
+      const Hb = frontFaceIsZ ? iso(b.x + b.w * 0.8, hY, b.z + b.d) : iso(b.x + b.w, hY, b.z + b.d * 0.8);
+      details.push(
+        <line key={`ovhandle-${key}`} x1={Ha[0]} y1={Ha[1]} x2={Hb[0]} y2={Hb[1]} stroke="#c8c8c8" strokeWidth="2.4" strokeLinecap="round" />
+      );
+    }
+
+    // Marble veins on counter top when "שיש עליון"
+    if (b.kind === "base" && isKitchen && extras === "שיש עליון") {
+      const seed = (b.x * 13 + b.z * 7) % 100;
+      [0.25, 0.55, 0.78].forEach((vy, i) => {
+        const offset = ((seed + i * 17) % 20) / 100;
+        const v1 = iso(b.x + b.w * (0.05 + offset), y1 + 0.6, b.z + b.d * vy);
+        const v2 = iso(b.x + b.w * (0.4 + offset), y1 + 0.6, b.z + b.d * (vy + 0.08));
+        const v3 = iso(b.x + b.w * (0.95), y1 + 0.6, b.z + b.d * (vy - 0.04));
         details.push(
-          <polygon key={`hob-${key}`} points={`${T1.join(",")} ${T2.join(",")} ${T3.join(",")} ${T4.join(",")}`} fill="#1a1a1a" />
+          <polyline key={`vein-${key}-${i}`} points={`${v1.join(",")} ${v2.join(",")} ${v3.join(",")}`} fill="none" stroke="#a8a299" strokeWidth="0.6" opacity="0.7" />
         );
-        // 2 burners
-        [[0.32, 0.4], [0.68, 0.65]].forEach(([u, v], idx) => {
-          const c = iso(b.x + b.w * u, y1 + 0.6, b.z + b.d * v);
-          details.push(<circle key={`burn-${key}-${idx}`} cx={c[0]} cy={c[1]} r="3.5" fill="#3a3a3a" stroke="#000" strokeWidth="0.4" />);
-        });
-      }
+      });
     }
 
     return (
@@ -720,6 +759,66 @@ function LivePreview({ answers, counts, setCounts }: PreviewProps) {
   const sortedBoxes = [...boxes].sort(
     (a, bb) => a.x + a.z + (a.y0 ?? 0) * 0.2 - (bb.x + bb.z + (bb.y0 ?? 0) * 0.2)
   );
+
+  // Fridge column: replace last center-arm base with a tall stainless fridge
+  const fridgeBase = (isKitchen && extras === "מקרר משולב")
+    ? boxes
+        .filter((bx) => bx.kind === "base" && bx.z === 0 && !bx.facingX)
+        .reduce<Box | null>((acc, bx) => (!acc || bx.x > acc.x ? bx : acc), null)
+    : null;
+  // Hide that base + the upper directly above it from normal rendering
+  const hiddenBoxes = new Set<Box>();
+  if (fridgeBase) {
+    hiddenBoxes.add(fridgeBase);
+    boxes.forEach((bx) => {
+      if (bx.kind === "upper" && !bx.facingX && bx.x === fridgeBase.x && bx.z === 0) {
+        hiddenBoxes.add(bx);
+      }
+    });
+  }
+  const visibleSorted = sortedBoxes.filter((bx) => !hiddenBoxes.has(bx));
+
+  const renderFridge = (b: Box) => {
+    const fH = 210; // full height (covers base + upper zone)
+    const y0 = 0;
+    const y1 = fH;
+    const C = pt(b.x + b.w, y0, b.z + b.d);
+    const G = pt(b.x + b.w, y1, b.z + b.d);
+    const Hh = pt(b.x, y1, b.z + b.d);
+    const D2 = pt(b.x, y0, b.z + b.d);
+    const B = pt(b.x + b.w, y0, b.z);
+    const F2 = pt(b.x + b.w, y1, b.z);
+    const E = pt(b.x, y1, b.z);
+    const frontPoly = `${D2} ${C} ${G} ${Hh}`;
+    const sidePoly = `${B} ${C} ${G} ${F2}`;
+    const topPoly = `${E} ${F2} ${G} ${Hh}`;
+    // Door split (freezer top ~ 60cm)
+    const splitY = fH - 60;
+    const s1 = iso(b.x, splitY, b.z + b.d);
+    const s2 = iso(b.x + b.w, splitY, b.z + b.d);
+    // Vertical handles (right side of each door)
+    const hx = b.x + b.w * 0.88;
+    const h1a = iso(hx, fH - 45, b.z + b.d);
+    const h1b = iso(hx, fH - 12, b.z + b.d);
+    const h2a = iso(hx, splitY - 15, b.z + b.d);
+    const h2b = iso(hx, 25, b.z + b.d);
+    return (
+      <g key="fridge">
+        <polygon points={sidePoly} fill="#9097a0" stroke="#3a4048" strokeWidth="0.8" />
+        <polygon points={topPoly} fill="#c6cbd2" stroke="#3a4048" strokeWidth="0.8" />
+        <polygon points={frontPoly} fill="#b9bfc6" stroke="#3a4048" strokeWidth="0.8" />
+        {/* subtle brushed-metal vertical lines */}
+        {[0.15, 0.3, 0.45, 0.6, 0.75].map((u, i) => {
+          const a = iso(b.x + b.w * u, 5, b.z + b.d);
+          const c = iso(b.x + b.w * u, fH - 5, b.z + b.d);
+          return <line key={`fb-${i}`} x1={a[0]} y1={a[1]} x2={c[0]} y2={c[1]} stroke="#fff" strokeOpacity="0.18" strokeWidth="0.5" />;
+        })}
+        <line x1={s1[0]} y1={s1[1]} x2={s2[0]} y2={s2[1]} stroke="#3a4048" strokeWidth="1" opacity="0.8" />
+        <line x1={h1a[0]} y1={h1a[1]} x2={h1b[0]} y2={h1b[1]} stroke="#2b2b2b" strokeWidth="2.4" strokeLinecap="round" />
+        <line x1={h2a[0]} y1={h2a[1]} x2={h2b[0]} y2={h2b[1]} stroke="#2b2b2b" strokeWidth="2.4" strokeLinecap="round" />
+      </g>
+    );
+  };
 
   // Footprint (top-view shadow) for clarity of L/U shape
   const footprintPolys = boxes
@@ -821,7 +920,8 @@ function LivePreview({ answers, counts, setCounts }: PreviewProps) {
           <g transform={`translate(${dx} ${dy})`}>
             {/* footprint shadow */}
             {footprintPolys}
-            {sortedBoxes.map((b, i) => renderBox(b, `b${i}`))}
+            {visibleSorted.map((b, i) => renderBox(b, `b${i}`))}
+            {fridgeBase && renderFridge(fridgeBase)}
           </g>
         )}
 
