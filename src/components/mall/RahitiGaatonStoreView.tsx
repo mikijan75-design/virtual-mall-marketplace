@@ -725,6 +725,25 @@ function LivePreview({ answers, counts, setCounts }: PreviewProps) {
             <stop offset="0%" stopColor="#fbf3df" />
             <stop offset="100%" stopColor="#ead7b0" />
           </linearGradient>
+          {/* Subtle wood-grain texture (color-agnostic overlay) */}
+          <pattern id="tex-wood" patternUnits="userSpaceOnUse" width="14" height="80" patternTransform="rotate(2)">
+            <rect width="14" height="80" fill="transparent" />
+            <path d="M0 10 Q7 12 14 9" stroke="#000" strokeOpacity="0.18" strokeWidth="0.6" fill="none" />
+            <path d="M0 26 Q7 24 14 27" stroke="#000" strokeOpacity="0.12" strokeWidth="0.5" fill="none" />
+            <path d="M0 42 Q7 45 14 41" stroke="#000" strokeOpacity="0.20" strokeWidth="0.7" fill="none" />
+            <path d="M0 58 Q7 56 14 59" stroke="#000" strokeOpacity="0.10" strokeWidth="0.5" fill="none" />
+            <path d="M0 72 Q7 74 14 71" stroke="#000" strokeOpacity="0.16" strokeWidth="0.6" fill="none" />
+            <path d="M0 18 Q7 19 14 18" stroke="#fff" strokeOpacity="0.10" strokeWidth="0.4" fill="none" />
+            <path d="M0 50 Q7 49 14 50" stroke="#fff" strokeOpacity="0.10" strokeWidth="0.4" fill="none" />
+          </pattern>
+          {/* Linen weave (color-agnostic overlay) */}
+          <pattern id="tex-linen" patternUnits="userSpaceOnUse" width="6" height="6">
+            <rect width="6" height="6" fill="transparent" />
+            <path d="M0 0 L6 0" stroke="#000" strokeOpacity="0.10" strokeWidth="0.5" />
+            <path d="M0 3 L6 3" stroke="#fff" strokeOpacity="0.14" strokeWidth="0.4" />
+            <path d="M0 0 L0 6" stroke="#000" strokeOpacity="0.08" strokeWidth="0.5" />
+            <path d="M3 0 L3 6" stroke="#fff" strokeOpacity="0.10" strokeWidth="0.4" />
+          </pattern>
         </defs>
 
         {/* Background wall + floor */}
