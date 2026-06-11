@@ -481,6 +481,13 @@ function LivePreview({ answers, counts, setCounts }: PreviewProps) {
   // Neutral / no-material-yet
   const NEUTRAL = { front: "#e7d6b1", side: "#c9b487", top: "#f0e2bf", edge: "#7a5a32" };
   const F = material ? FACE : NEUTRAL;
+  const textureId = material
+    ? answers.designCategory === "עץ"
+      ? "tex-wood"
+      : answers.designCategory === "בד"
+      ? "tex-linen"
+      : null
+    : null;
 
   // --- Build module list as 3D boxes ---
   type Box = {
