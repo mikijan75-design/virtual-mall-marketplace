@@ -1,4 +1,4 @@
-import { useMemo, useState } from "react";
+import { useEffect, useMemo, useState } from "react";
 import { useNavigate } from "react-router-dom";
 import MallHeader from "@/components/mall/MallHeader";
 import MallFooter from "@/components/mall/MallFooter";
