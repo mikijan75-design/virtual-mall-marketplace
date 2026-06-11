@@ -1021,6 +1021,8 @@ function LivePreview({ answers, counts, setCounts }: PreviewProps) {
           </g>
         )}
 
+        {rulers}
+
         {/* Labels at bottom */}
         <g fontFamily="'Heebo', sans-serif" fontSize="14" fill="#5a4126">
           <text x={VB_W / 2} y={VB_H - 18} textAnchor="middle" opacity="0.75">
