@@ -755,10 +755,15 @@ function LivePreview({ answers, counts, setCounts }: PreviewProps) {
           {/* Linen weave (color-agnostic overlay) */}
           <pattern id="tex-linen" patternUnits="userSpaceOnUse" width="6" height="6">
             <rect width="6" height="6" fill="transparent" />
-            <path d="M0 0 L6 0" stroke="#000" strokeOpacity="0.10" strokeWidth="0.5" />
-            <path d="M0 3 L6 3" stroke="#fff" strokeOpacity="0.14" strokeWidth="0.4" />
-            <path d="M0 0 L0 6" stroke="#000" strokeOpacity="0.08" strokeWidth="0.5" />
-            <path d="M3 0 L3 6" stroke="#fff" strokeOpacity="0.10" strokeWidth="0.4" />
+            {/* Broken horizontal weave threads */}
+            <path d="M0.4 0.8 L2.3 0.8 M3.1 0.8 L5.4 0.8" stroke="#000" strokeOpacity="0.28" strokeWidth="0.55" strokeLinecap="round" />
+            <path d="M0.6 3.2 L2.6 3.2 M3.4 3.2 L5.7 3.2" stroke="#000" strokeOpacity="0.22" strokeWidth="0.5" strokeLinecap="round" />
+            {/* Broken vertical weave threads, offset */}
+            <path d="M1.5 0.3 L1.5 2.1 M1.5 2.9 L1.5 5.2" stroke="#000" strokeOpacity="0.24" strokeWidth="0.5" strokeLinecap="round" />
+            <path d="M4.2 0.6 L4.2 2.4 M4.2 3.3 L4.2 5.5" stroke="#000" strokeOpacity="0.20" strokeWidth="0.5" strokeLinecap="round" />
+            {/* Tiny highlight slubs to feel like linen fiber */}
+            <path d="M0.8 4.6 L1.6 4.6" stroke="#fff" strokeOpacity="0.22" strokeWidth="0.35" strokeLinecap="round" />
+            <path d="M3.6 1.9 L4.4 1.9" stroke="#fff" strokeOpacity="0.20" strokeWidth="0.35" strokeLinecap="round" />
           </pattern>
         </defs>
 
