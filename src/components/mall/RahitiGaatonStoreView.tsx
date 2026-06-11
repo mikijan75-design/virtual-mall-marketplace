@@ -14,7 +14,7 @@ type Answers = {
   designCategory?: "עץ" | "בד" | "מלא";
   material?: string;
   handles?: "ידיות מוט" | "ידיות כפתור" | "ללא ידיות";
-  extras?: string;       // kitchen: כיריים+תנור / מקרר / שיש עליון ; closet: מגירות / מדפים / תלייה
+  extras?: string[];     // kitchen: כיריים+תנור / מקרר / שיש עליון ; closet: מגירות / מדפים / תלייה (multi-select)
 };
 
 type StepKey = keyof Answers;
