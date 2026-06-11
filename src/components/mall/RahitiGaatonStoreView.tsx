@@ -880,6 +880,60 @@ function LivePreview({ answers, counts, setCounts }: PreviewProps) {
       );
     });
 
+  // --- Measurement rulers (width above center arm, height on right side) ---
+  const rulers = (() => {
+    if (!hasType || !layout) return null;
+    const centerCount = isKitchen
+      ? Math.max(1, counts.centerBase)
+      : Math.max(isSliding ? 2 : 1, counts.centerBase);
+    const UNIT_CM = 80;
+    const widthCm = centerCount * UNIT_CM;
+    const topY = isKitchen ? UY + UH : closetTotal;
+    const heightCm = isKitchen ? Math.round(topY) : closetTotal;
+    const [lx, ly] = iso(0, topY, 0);
+    const [rx, ry] = iso(centerCount * W, topY, 0);
+    const [bx, by] = iso(centerCount * W, 0, 0);
+    const L = { x: lx + dx, y: ly + dy };
+    const R = { x: rx + dx, y: ry + dy };
+    const B = { x: bx + dx, y: by + dy };
+    const topRulerY = Math.min(L.y, R.y) - 30;
+    const rightRulerX = Math.max(R.x, B.x) + 26;
+    return (
+      <g stroke="#3b2918" fill="#3b2918" fontFamily="'Heebo',sans-serif" fontSize="14">
+        {/* Top width ruler */}
+        <line x1={L.x} y1={topRulerY} x2={R.x} y2={topRulerY} strokeWidth="1.6" />
+        <line x1={L.x} y1={topRulerY - 7} x2={L.x} y2={topRulerY + 7} strokeWidth="1.6" />
+        <line x1={R.x} y1={topRulerY - 7} x2={R.x} y2={topRulerY + 7} strokeWidth="1.6" />
+        <line x1={L.x} y1={topRulerY} x2={L.x} y2={L.y} strokeDasharray="3 3" strokeWidth="1" opacity="0.55" />
+        <line x1={R.x} y1={topRulerY} x2={R.x} y2={R.y} strokeDasharray="3 3" strokeWidth="1" opacity="0.55" />
+        <text
+          x={(L.x + R.x) / 2}
+          y={topRulerY - 9}
+          textAnchor="middle"
+          fontWeight="700"
+          stroke="none"
+        >
+          {widthCm} ס״מ
+        </text>
+        {/* Right vertical height ruler */}
+        <line x1={rightRulerX} y1={R.y} x2={rightRulerX} y2={B.y} strokeWidth="1.6" />
+        <line x1={rightRulerX - 7} y1={R.y} x2={rightRulerX + 7} y2={R.y} strokeWidth="1.6" />
+        <line x1={rightRulerX - 7} y1={B.y} x2={rightRulerX + 7} y2={B.y} strokeWidth="1.6" />
+        <line x1={R.x} y1={R.y} x2={rightRulerX} y2={R.y} strokeDasharray="3 3" strokeWidth="1" opacity="0.55" />
+        <line x1={B.x} y1={B.y} x2={rightRulerX} y2={B.y} strokeDasharray="3 3" strokeWidth="1" opacity="0.55" />
+        <text
+          x={rightRulerX + 10}
+          y={(R.y + B.y) / 2}
+          dominantBaseline="middle"
+          fontWeight="700"
+          stroke="none"
+        >
+          {heightCm} ס״מ
+        </text>
+      </g>
+    );
+  })();
+
   return (
     <div className="relative w-full rounded-2xl overflow-hidden border border-[#c9a06a]/40 shadow-inner bg-gradient-to-b from-[#f8f1de] to-[#ecdcbd]">
       <svg
@@ -966,6 +1020,8 @@ function LivePreview({ answers, counts, setCounts }: PreviewProps) {
             {fridgeBase && renderFridge(fridgeBase)}
           </g>
         )}
+
+        {rulers}
 
         {/* Labels at bottom */}
         <g fontFamily="'Heebo', sans-serif" fontSize="14" fill="#5a4126">
