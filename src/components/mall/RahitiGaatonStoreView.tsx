@@ -1190,7 +1190,7 @@ function LivePreview({ answers, setAnswers, counts, setCounts }: PreviewProps) {
               label="מקרר"
               value={fridgePos}
               min={0}
-              max={centerCountEff - 1}
+              max={centerCountEff}
               onChange={setFridgePos}
             />
           )}
