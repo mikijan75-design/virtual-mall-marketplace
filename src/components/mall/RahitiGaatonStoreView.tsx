@@ -52,9 +52,9 @@ const getSteps = (a: Answers): StepDef[] => {
       options: (ans: Answers) => {
         if (ans.designCategory === "עץ") return ["אלון", "אגוז", "אורן"];
         if (ans.designCategory === "בד")
-          return ["תכלת בהיר מאוד", "לבן", "אפור בהיר", "אפור כהה"];
+          return ["תכלת בהיר", "לבן", "אפור בהיר", "אפור כהה"];
         if (ans.designCategory === "מלא")
-          return ["לבן", "קרם בהיר", "נס", "תכלת בהיר מאוד", "ורוד בהיר מאוד", "אפרסק בהיר מאוד"];
+          return ["לבן", "קרם בהיר", "נס", "תכלת בהיר", "ורוד בהיר", "אפרסק בהיר"];
         return [];
       },
     },
@@ -75,7 +75,7 @@ const MATERIAL_COLORS: Record<string, { fill: string; grain: string; edge: strin
   "עץ:אגוז":              { fill: "#6b4525", grain: "#4a2e16", edge: "#2e1c0d" },
   "עץ:אורן":              { fill: "#e7c79a", grain: "#c69b6a", edge: "#9c7344" },
   // בד (פשתן) — גוונים רכים
-  "בד:תכלת בהיר מאוד":    { fill: "#dff0fb", grain: "#b9d8ec", edge: "#8fb4cc" },
+  "בד:תכלת בהיר":         { fill: "#dff0fb", grain: "#b9d8ec", edge: "#8fb4cc" },
   "בד:לבן":               { fill: "#f6f1e7", grain: "#e2d9c7", edge: "#b6ad9a" },
   "בד:אפור בהיר":         { fill: "#d9d9d4", grain: "#bcbcb5", edge: "#8d8d86" },
   "בד:אפור כהה":          { fill: "#5e5e5a", grain: "#464643", edge: "#2c2c2a" },
@@ -83,9 +83,9 @@ const MATERIAL_COLORS: Record<string, { fill: string; grain: string; edge: strin
   "מלא:לבן":              { fill: "#fafafa", grain: "#ececec", edge: "#bdbdbd" },
   "מלא:קרם בהיר":         { fill: "#f4ead6", grain: "#e4d6b6", edge: "#b09c72" },
   "מלא:נס":               { fill: "#efe1cf", grain: "#dcc7ad", edge: "#a98a64" },
-  "מלא:תכלת בהיר מאוד":   { fill: "#e3f1fb", grain: "#c2dcef", edge: "#92b7ce" },
-  "מלא:ורוד בהיר מאוד":   { fill: "#fbe4ea", grain: "#f0c5d1", edge: "#c389a0" },
-  "מלא:אפרסק בהיר מאוד":  { fill: "#fde2cf", grain: "#f5c4a3", edge: "#c98c5e" },
+  "מלא:תכלת בהיר":        { fill: "#e3f1fb", grain: "#c2dcef", edge: "#92b7ce" },
+  "מלא:ורוד בהיר":        { fill: "#fbe4ea", grain: "#f0c5d1", edge: "#c389a0" },
+  "מלא:אפרסק בהיר":       { fill: "#fde2cf", grain: "#f5c4a3", edge: "#c98c5e" },
 };
 
 const WOOD_BG =
