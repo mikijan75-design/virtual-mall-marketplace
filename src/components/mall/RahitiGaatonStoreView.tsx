@@ -439,6 +439,9 @@ function LivePreview({ answers, counts, setCounts }: PreviewProps) {
   const hasType = !!type;
   const isKitchen = type === "מטבח";
 
+  // L-shape mirror toggle (right arm → left arm)
+  const [lMirror, setLMirror] = useState(false);
+
   const VB_W = 900;
   const VB_H = 520;
 
@@ -503,9 +506,9 @@ function LivePreview({ answers, counts, setCounts }: PreviewProps) {
     if (isKitchen) {
       const nC = Math.max(1, counts.centerBase);
       const nCU = Math.max(0, counts.centerUpper);
-      const nR = Math.max(1, counts.rightBase);
+      const nR = Math.max(0, counts.rightBase);
       const nRU = Math.max(0, counts.rightUpper);
-      const nL = Math.max(1, counts.leftBase);
+      const nL = Math.max(0, counts.leftBase);
       const nLU = Math.max(0, counts.leftUpper);
 
       // Center arm: along +x at z = 0
@@ -516,9 +519,10 @@ function LivePreview({ answers, counts, setCounts }: PreviewProps) {
         boxes.push({ x: i * W, z: 0, w: W, d: UD, h: UH, y0: UY, kind: "upper" });
       }
 
-      // Right arm (L or U) — at right end of center, extending +z
+      // Right arm (L or U) — at right end of center, extending +z.
+      // When L is mirrored, render this arm at the LEFT end instead.
       if (layout === "L" || layout === "U") {
-        const xR = nC * W - D;
+        const xR = (layout === "L" && lMirror) ? 0 : nC * W - D;
         for (let i = 0; i < nR; i++) {
           boxes.push({ x: xR, z: D + i * W, w: D, d: W, h: H, kind: "base", facingX: true });
         }
