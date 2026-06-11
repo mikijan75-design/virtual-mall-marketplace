@@ -1,4 +1,4 @@
-import { useMemo, useState } from "react";
+import { useEffect, useMemo, useState } from "react";
 import { useNavigate } from "react-router-dom";
 import MallHeader from "@/components/mall/MallHeader";
 import MallFooter from "@/components/mall/MallFooter";
@@ -432,7 +432,7 @@ const RahitiGaatonStoreView = ({ store }: { store: Store }) => {
                 מתעדכנת בזמן אמת לפי כל בחירה
               </p>
             </div>
-            <LivePreview answers={answers} counts={counts} setCounts={setCounts} />
+            <LivePreview answers={answers} setAnswers={setAnswers} counts={counts} setCounts={setCounts} />
           </div>
         </div>
       </section>
@@ -471,11 +471,12 @@ type Counts = {
 };
 type PreviewProps = {
   answers: Answers;
+  setAnswers: React.Dispatch<React.SetStateAction<Answers>>;
   counts: Counts;
   setCounts: React.Dispatch<React.SetStateAction<Counts>>;
 };
 
-function LivePreview({ answers, counts, setCounts }: PreviewProps) {
+function LivePreview({ answers, setAnswers, counts, setCounts }: PreviewProps) {
   const { type, layout, material, handles, extras } = answers;
 
   const hasType = !!type;
@@ -483,6 +484,46 @@ function LivePreview({ answers, counts, setCounts }: PreviewProps) {
 
   // L-shape mirror toggle (right arm → left arm)
   const [lMirror, setLMirror] = useState(false);
+
+  // Fridge / Stove positions along the center arm (0 = leftmost slot)
+  // Fridge replaces the cabinet at that slot; stove overlays the cabinet at that slot.
+  const [fridgePos, setFridgePos] = useState<number | null>(null);
+  const [stovePos, setStovePos] = useState<number | null>(null);
+
+  // In-preview shape switcher for kitchen (ישר / L / U)
+  const setLayoutShape = (shape: "ישר" | "L" | "U") => {
+    setAnswers((a) => ({ ...a, layout: shape }));
+  };
+
+  // Effective center base count for kitchen
+  const centerCountEff = isKitchen ? Math.max(1, counts.centerBase) : 0;
+  const hasFridge = !!(isKitchen && extras?.includes("מקרר משולב"));
+  const hasStove = !!(isKitchen && extras?.includes("כיריים + תנור"));
+
+  // Initialise / clamp positions when extras or layout change
+  useEffect(() => {
+    if (!hasFridge) { if (fridgePos !== null) setFridgePos(null); return; }
+    setFridgePos((p) => {
+      const max = centerCountEff - 1;
+      if (p === null) return max;             // default: rightmost
+      return Math.max(0, Math.min(max, p));
+    });
+  }, [hasFridge, centerCountEff]);
+  useEffect(() => {
+    if (!hasStove) { if (stovePos !== null) setStovePos(null); return; }
+    setStovePos((p) => {
+      const max = centerCountEff - 1;
+      const def = Math.min(1, max);            // default like before (index 1)
+      if (p === null) return def;
+      // Avoid overlapping fridge if possible
+      let np = Math.max(0, Math.min(max, p));
+      if (hasFridge && fridgePos !== null && np === fridgePos && max > 0) {
+        np = np === 0 ? 1 : np - 1;
+      }
+      return np;
+    });
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [hasStove, centerCountEff]);
 
   const VB_W = 900;
   const VB_H = 520;
@@ -719,8 +760,12 @@ function LivePreview({ answers, counts, setCounts }: PreviewProps) {
       }
     }
 
-    // Stove + oven decoration on the first center-arm base when chosen
-    if (b.kind === "base" && isKitchen && extras?.includes("כיריים + תנור") && b.x === W && b.z === 0 && !b.facingX) {
+    // Stove + oven decoration on the chosen center-arm base when "כיריים + תנור" selected
+    if (
+      b.kind === "base" && isKitchen && extras?.includes("כיריים + תנור") &&
+      b.z === 0 && !b.facingX &&
+      stovePos !== null && b.x === stovePos * W
+    ) {
       // Hob (top of counter) — 4 burners
       const T1 = iso(b.x + b.w * 0.12, y1 + 0.5, b.z + b.d * 0.18);
       const T2 = iso(b.x + b.w * 0.88, y1 + 0.5, b.z + b.d * 0.18);
@@ -802,11 +847,11 @@ function LivePreview({ answers, counts, setCounts }: PreviewProps) {
     (a, bb) => a.x + a.z + (a.y0 ?? 0) * 0.2 - (bb.x + bb.z + (bb.y0 ?? 0) * 0.2)
   );
 
-  // Fridge column: replace last center-arm base with a tall stainless fridge
-  const fridgeBase = (isKitchen && extras?.includes("מקרר משולב"))
-    ? boxes
-        .filter((bx) => bx.kind === "base" && bx.z === 0 && !bx.facingX)
-        .reduce<Box | null>((acc, bx) => (!acc || bx.x > acc.x ? bx : acc), null)
+  // Fridge column: replace the cabinet at `fridgePos` with a tall stainless fridge.
+  const centerBaseBoxes = boxes.filter((bx) => bx.kind === "base" && bx.z === 0 && !bx.facingX);
+  const nCenterBase = centerBaseBoxes.length;
+  const fridgeBase = (isKitchen && extras?.includes("מקרר משולב") && fridgePos !== null && nCenterBase > 0)
+    ? centerBaseBoxes.find((bx) => bx.x === fridgePos * W) ?? null
     : null;
   // Hide that base + the upper directly above it from normal rendering
   const hiddenBoxes = new Set<Box>();
@@ -1106,16 +1151,56 @@ function LivePreview({ answers, counts, setCounts }: PreviewProps) {
         </div>
       )}
 
-      {/* L-shape orientation toggle (left side of preview) */}
-      {hasType && isKitchen && layout === "L" && (
-        <div className="absolute top-3 left-3 pointer-events-none">
-          <button
-            type="button"
-            onClick={() => setLMirror((v) => !v)}
-            className="pointer-events-auto rounded-xl bg-[#f8efd9] border-2 border-[#8b5e2b]/60 px-3 py-2 font-heebo text-sm font-bold text-[#5a4126] shadow hover:-translate-y-0.5 hover:bg-[#ece3cd] hover:shadow-md transition"
-          >
-            {lMirror ? "שינוי לצד ימין" : "שינוי לצד שמאל"}
-          </button>
+      {/* Left-side preview controls: shape switcher + L mirror + fridge/stove movers */}
+      {hasType && isKitchen && (
+        <div className="absolute top-3 left-3 pointer-events-none flex flex-col gap-2 items-start">
+          {/* Shape switcher */}
+          <div className="pointer-events-auto rounded-xl bg-white/90 backdrop-blur border border-[#c9a06a]/60 shadow px-2 py-1.5 flex items-center gap-1">
+            <span className="font-heebo text-[11px] font-bold text-[#7a5a36] px-1">צורה:</span>
+            {(["ישר", "L", "U"] as const).map((s) => (
+              <button
+                key={s}
+                type="button"
+                onClick={() => setLayoutShape(s)}
+                className={`rounded-lg px-2.5 py-1 font-heebo text-xs font-bold transition ${
+                  layout === s
+                    ? "bg-[#3b2918] text-[#f7e9cf]"
+                    : "bg-[#f8efd9] text-[#3b2918] hover:bg-[#ece3cd] border border-[#c9a06a]/60"
+                }`}
+              >
+                {s}
+              </button>
+            ))}
+          </div>
+
+          {layout === "L" && (
+            <button
+              type="button"
+              onClick={() => setLMirror((v) => !v)}
+              className="pointer-events-auto rounded-xl bg-[#f8efd9] border-2 border-[#8b5e2b]/60 px-3 py-2 font-heebo text-sm font-bold text-[#5a4126] shadow hover:-translate-y-0.5 hover:bg-[#ece3cd] hover:shadow-md transition"
+            >
+              {lMirror ? "שינוי לצד ימין" : "שינוי לצד שמאל"}
+            </button>
+          )}
+
+          {hasFridge && fridgePos !== null && (
+            <PositionMover
+              label="מקרר"
+              value={fridgePos}
+              min={0}
+              max={centerCountEff - 1}
+              onChange={setFridgePos}
+            />
+          )}
+          {hasStove && stovePos !== null && (
+            <PositionMover
+              label="כיריים + תנור"
+              value={stovePos}
+              min={0}
+              max={centerCountEff - 1}
+              onChange={setStovePos}
+            />
+          )}
         </div>
       )}
 
@@ -1160,6 +1245,46 @@ function ArmStepper({
         className="w-6 h-6 rounded-full bg-[#3b2918] text-[#f7e9cf] hover:bg-[#5a3d20] border border-[#3b2918] flex items-center justify-center font-bold text-base leading-none"
       >
         +
+      </button>
+    </div>
+  );
+}
+
+function PositionMover({
+  label,
+  value,
+  min,
+  max,
+  onChange,
+}: {
+  label: string;
+  value: number;
+  min: number;
+  max: number;
+  onChange: (n: number) => void;
+}) {
+  const canLeft = value > min;   // index 0 = leftmost in scene
+  const canRight = value < max;
+  return (
+    <div className="pointer-events-auto inline-flex items-center gap-1.5 rounded-full bg-white/95 border border-[#c9a06a]/70 shadow px-2 py-1 font-heebo text-xs text-[#3b2918]">
+      <button
+        type="button"
+        aria-label={`הזז ${label} שמאלה`}
+        disabled={!canLeft}
+        onClick={() => onChange(Math.max(min, value - 1))}
+        className="w-6 h-6 rounded-full bg-[#f8efd9] hover:bg-[#e7d29f] border border-[#c9a06a] flex items-center justify-center font-bold leading-none disabled:opacity-40 disabled:hover:bg-[#f8efd9]"
+      >
+        ◄
+      </button>
+      <span className="px-1 font-bold">{label}</span>
+      <button
+        type="button"
+        aria-label={`הזז ${label} ימינה`}
+        disabled={!canRight}
+        onClick={() => onChange(Math.min(max, value + 1))}
+        className="w-6 h-6 rounded-full bg-[#f8efd9] hover:bg-[#e7d29f] border border-[#c9a06a] flex items-center justify-center font-bold leading-none disabled:opacity-40 disabled:hover:bg-[#f8efd9]"
+      >
+        ►
       </button>
     </div>
   );
