@@ -639,7 +639,7 @@ function LivePreview({ answers, counts, setCounts }: PreviewProps) {
     if (b.kind === "upper") frontFill = shade(F.front, -0.05);
     if (b.kind === "counter") {
       frontFill = "#1a1410";
-      topFill = extras === "שיש עליון" ? "#ece8df" : "#1f1812";
+      topFill = extras?.includes("שיש עליון") ? "#ece8df" : "#1f1812";
     }
 
     // Compute handle / detail position on the front face
@@ -713,7 +713,7 @@ function LivePreview({ answers, counts, setCounts }: PreviewProps) {
     }
 
     // Stove + oven decoration on the first center-arm base when chosen
-    if (b.kind === "base" && isKitchen && extras === "כיריים + תנור" && b.x === W && b.z === 0 && !b.facingX) {
+    if (b.kind === "base" && isKitchen && extras?.includes("כיריים + תנור") && b.x === W && b.z === 0 && !b.facingX) {
       // Hob (top of counter) — 4 burners
       const T1 = iso(b.x + b.w * 0.12, y1 + 0.5, b.z + b.d * 0.18);
       const T2 = iso(b.x + b.w * 0.88, y1 + 0.5, b.z + b.d * 0.18);
@@ -757,7 +757,7 @@ function LivePreview({ answers, counts, setCounts }: PreviewProps) {
     }
 
     // Marble veins on counter top when "שיש עליון"
-    if (b.kind === "base" && isKitchen && extras === "שיש עליון") {
+    if (b.kind === "base" && isKitchen && extras?.includes("שיש עליון")) {
       const seed = (b.x * 13 + b.z * 7) % 100;
       [0.25, 0.55, 0.78].forEach((vy, i) => {
         const offset = ((seed + i * 17) % 20) / 100;
@@ -796,7 +796,7 @@ function LivePreview({ answers, counts, setCounts }: PreviewProps) {
   );
 
   // Fridge column: replace last center-arm base with a tall stainless fridge
-  const fridgeBase = (isKitchen && extras === "מקרר משולב")
+  const fridgeBase = (isKitchen && extras?.includes("מקרר משולב"))
     ? boxes
         .filter((bx) => bx.kind === "base" && bx.z === 0 && !bx.facingX)
         .reduce<Box | null>((acc, bx) => (!acc || bx.x > acc.x ? bx : acc), null)
