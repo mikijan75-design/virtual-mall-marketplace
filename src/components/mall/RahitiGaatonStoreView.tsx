@@ -1250,6 +1250,46 @@ function ArmStepper({
   );
 }
 
+function PositionMover({
+  label,
+  value,
+  min,
+  max,
+  onChange,
+}: {
+  label: string;
+  value: number;
+  min: number;
+  max: number;
+  onChange: (n: number) => void;
+}) {
+  const canLeft = value < max;   // visually "left" in RTL = increase index toward right? Use index directly
+  const canRight = value > min;
+  return (
+    <div className="pointer-events-auto inline-flex items-center gap-1.5 rounded-full bg-white/95 border border-[#c9a06a]/70 shadow px-2 py-1 font-heebo text-xs text-[#3b2918]">
+      <button
+        type="button"
+        aria-label={`הזז ${label} שמאלה`}
+        disabled={!canLeft}
+        onClick={() => onChange(Math.min(max, value + 1))}
+        className="w-6 h-6 rounded-full bg-[#f8efd9] hover:bg-[#e7d29f] border border-[#c9a06a] flex items-center justify-center font-bold leading-none disabled:opacity-40 disabled:hover:bg-[#f8efd9]"
+      >
+        ◄
+      </button>
+      <span className="px-1 font-bold">{label}</span>
+      <button
+        type="button"
+        aria-label={`הזז ${label} ימינה`}
+        disabled={!canRight}
+        onClick={() => onChange(Math.max(min, value - 1))}
+        className="w-6 h-6 rounded-full bg-[#f8efd9] hover:bg-[#e7d29f] border border-[#c9a06a] flex items-center justify-center font-bold leading-none disabled:opacity-40 disabled:hover:bg-[#f8efd9]"
+      >
+        ►
+      </button>
+    </div>
+  );
+}
+
 /** Adjust a hex color brightness. amount in [-1..1], negative = darker. */
 function shade(hex: string, amount: number): string {
   const h = hex.replace("#", "");
