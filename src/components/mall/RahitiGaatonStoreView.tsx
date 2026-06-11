@@ -432,7 +432,7 @@ const RahitiGaatonStoreView = ({ store }: { store: Store }) => {
                 מתעדכנת בזמן אמת לפי כל בחירה
               </p>
             </div>
-            <LivePreview answers={answers} counts={counts} setCounts={setCounts} />
+            <LivePreview answers={answers} setAnswers={setAnswers} counts={counts} setCounts={setCounts} />
           </div>
         </div>
       </section>
@@ -471,11 +471,12 @@ type Counts = {
 };
 type PreviewProps = {
   answers: Answers;
+  setAnswers: React.Dispatch<React.SetStateAction<Answers>>;
   counts: Counts;
   setCounts: React.Dispatch<React.SetStateAction<Counts>>;
 };
 
-function LivePreview({ answers, counts, setCounts }: PreviewProps) {
+function LivePreview({ answers, setAnswers, counts, setCounts }: PreviewProps) {
   const { type, layout, material, handles, extras } = answers;
 
   const hasType = !!type;
@@ -491,9 +492,8 @@ function LivePreview({ answers, counts, setCounts }: PreviewProps) {
 
   // In-preview shape switcher for kitchen (ישר / L / U)
   const setLayoutShape = (shape: "ישר" | "L" | "U") => {
-    setAnswersShape(shape);
+    setAnswers((a) => ({ ...a, layout: shape }));
   };
-  // small helper kept inline below via callback
 
   const VB_W = 900;
   const VB_H = 520;
