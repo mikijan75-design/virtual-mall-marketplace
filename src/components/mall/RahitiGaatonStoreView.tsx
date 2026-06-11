@@ -484,6 +484,17 @@ function LivePreview({ answers, counts, setCounts }: PreviewProps) {
   // L-shape mirror toggle (right arm → left arm)
   const [lMirror, setLMirror] = useState(false);
 
+  // Fridge / Stove positions along the center arm (0 = leftmost slot)
+  // Fridge replaces the cabinet at that slot; stove overlays the cabinet at that slot.
+  const [fridgePos, setFridgePos] = useState<number | null>(null);
+  const [stovePos, setStovePos] = useState<number | null>(null);
+
+  // In-preview shape switcher for kitchen (ישר / L / U)
+  const setLayoutShape = (shape: "ישר" | "L" | "U") => {
+    setAnswersShape(shape);
+  };
+  // small helper kept inline below via callback
+
   const VB_W = 900;
   const VB_H = 520;
 
