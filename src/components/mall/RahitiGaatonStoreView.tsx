@@ -371,6 +371,17 @@ const RahitiGaatonStoreView = ({ store }: { store: Store }) => {
                 </button>
                 <button
                   type="button"
+                  onClick={() => {
+                    setDone(false);
+                    setStepIdx(steps.length - 1);
+                  }}
+                  className="rounded-xl px-7 py-3 font-frank font-bold text-[#3b2918] border-2 border-[#8b5e2b]/70 bg-[#f8efd9] hover:bg-[#ece3cd] hover:border-[#8b5e2b] shadow-sm hover:shadow-md transition inline-flex items-center justify-center gap-2"
+                >
+                  <span aria-hidden="true">←</span>
+                  <span>חזרה ושינוי בחירות</span>
+                </button>
+                <button
+                  type="button"
                   onClick={reset}
                   className="rounded-xl px-7 py-3 font-frank font-bold text-[#3b2918] border-2 border-[#3b2918]/60 hover:bg-[#3b2918] hover:text-white transition"
                 >
