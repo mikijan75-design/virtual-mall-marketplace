@@ -115,7 +115,15 @@ const RahitiGaatonStoreView = ({ store }: { store: Store }) => {
   );
 
   const pick = (value: string) => {
-    const next: Answers = { ...answers, [step.key]: value as Answers[StepKey] };
+    let next: Answers = { ...answers, [step.key]: value as Answers[StepKey] };
+    // Multi-select for extras (toggle)
+    if (step.key === "extras") {
+      const cur = answers.extras ?? [];
+      const updated = cur.includes(value)
+        ? cur.filter((v) => v !== value)
+        : [...cur, value];
+      next = { ...answers, extras: updated };
+    }
     // Reset dependent fields if `type` changes
     if (step.key === "type" && answers.type && answers.type !== value) {
       next.layout = undefined;
@@ -152,6 +160,8 @@ const RahitiGaatonStoreView = ({ store }: { store: Store }) => {
       }
     }
     setAnswers(next);
+    // Extras is multi-select: don't auto-advance, user clicks "סיום" button
+    if (step.key === "extras") return;
     // Recompute steps with the new answers so dynamic insertion (height for closet) is respected
     const nextSteps = getSteps(next);
     if (safeIdx + 1 < nextSteps.length) {
