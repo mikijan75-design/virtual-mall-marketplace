@@ -889,7 +889,7 @@ function LivePreview({ answers, counts, setCounts }: PreviewProps) {
     const UNIT_CM = isKitchen ? 70 : 80;
     const widthCm = centerCount * UNIT_CM;
     const topY = isKitchen ? UY + UH : closetTotal;
-    const heightCm = isKitchen ? Math.round(topY) : closetTotal;
+    const heightCm = isKitchen ? 235 : closetTotal;
     const [lx, ly] = iso(0, topY, 0);
     const [rx, ry] = iso(centerCount * W, topY, 0);
     const [bx, by] = iso(centerCount * W, 0, 0);
