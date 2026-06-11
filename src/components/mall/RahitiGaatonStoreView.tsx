@@ -594,18 +594,25 @@ function LivePreview({ answers, setAnswers, counts, setCounts }: PreviewProps) {
       const nL = Math.max(0, counts.leftBase);
       const nLU = Math.max(0, counts.leftUpper);
 
+      // Fridge is an ADDITION (not a replacement). It inserts a new slot at
+      // `fridgePos` in 0..nC, shifting cabinets at index >= fridgePos by W.
+      const fridgeOn = !!(extras?.includes("מקרר משולב") && fridgePos !== null);
+      const fp = fridgeOn ? Math.max(0, Math.min(nC, fridgePos!)) : -1;
+      const shift = (i: number) => (fridgeOn && i >= fp ? W : 0);
+
       // Center arm: along +x at z = 0
       for (let i = 0; i < nC; i++) {
-        boxes.push({ x: i * W, z: 0, w: W, d: D, h: H, kind: "base" });
+        boxes.push({ x: i * W + shift(i), z: 0, w: W, d: D, h: H, kind: "base" });
       }
       for (let i = 0; i < nCU; i++) {
-        boxes.push({ x: i * W, z: 0, w: W, d: UD, h: UH, y0: UY, kind: "upper" });
+        boxes.push({ x: i * W + shift(i), z: 0, w: W, d: UD, h: UH, y0: UY, kind: "upper" });
       }
 
       // Right arm (L or U) — at right end of center, extending +z.
       // When L is mirrored, render this arm at the LEFT end instead.
       if (layout === "L" || layout === "U") {
-        const xR = (layout === "L" && lMirror) ? 0 : nC * W - D;
+        const centerSpan = nC * W + (fridgeOn ? W : 0);
+        const xR = (layout === "L" && lMirror) ? 0 : centerSpan - D;
         for (let i = 0; i < nR; i++) {
           boxes.push({ x: xR, z: D + i * W, w: D, d: W, h: H, kind: "base", facingX: true });
         }
