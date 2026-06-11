@@ -760,6 +760,66 @@ function LivePreview({ answers, counts, setCounts }: PreviewProps) {
     (a, bb) => a.x + a.z + (a.y0 ?? 0) * 0.2 - (bb.x + bb.z + (bb.y0 ?? 0) * 0.2)
   );
 
+  // Fridge column: replace last center-arm base with a tall stainless fridge
+  const fridgeBase = (isKitchen && extras === "מקרר משולב")
+    ? boxes
+        .filter((bx) => bx.kind === "base" && bx.z === 0 && !bx.facingX)
+        .reduce<Box | null>((acc, bx) => (!acc || bx.x > acc.x ? bx : acc), null)
+    : null;
+  // Hide that base + the upper directly above it from normal rendering
+  const hiddenBoxes = new Set<Box>();
+  if (fridgeBase) {
+    hiddenBoxes.add(fridgeBase);
+    boxes.forEach((bx) => {
+      if (bx.kind === "upper" && !bx.facingX && bx.x === fridgeBase.x && bx.z === 0) {
+        hiddenBoxes.add(bx);
+      }
+    });
+  }
+  const visibleSorted = sortedBoxes.filter((bx) => !hiddenBoxes.has(bx));
+
+  const renderFridge = (b: Box) => {
+    const fH = 210; // full height (covers base + upper zone)
+    const y0 = 0;
+    const y1 = fH;
+    const C = pt(b.x + b.w, y0, b.z + b.d);
+    const G = pt(b.x + b.w, y1, b.z + b.d);
+    const Hh = pt(b.x, y1, b.z + b.d);
+    const D2 = pt(b.x, y0, b.z + b.d);
+    const B = pt(b.x + b.w, y0, b.z);
+    const F2 = pt(b.x + b.w, y1, b.z);
+    const E = pt(b.x, y1, b.z);
+    const frontPoly = `${D2} ${C} ${G} ${Hh}`;
+    const sidePoly = `${B} ${C} ${G} ${F2}`;
+    const topPoly = `${E} ${F2} ${G} ${Hh}`;
+    // Door split (freezer top ~ 60cm)
+    const splitY = fH - 60;
+    const s1 = iso(b.x, splitY, b.z + b.d);
+    const s2 = iso(b.x + b.w, splitY, b.z + b.d);
+    // Vertical handles (right side of each door)
+    const hx = b.x + b.w * 0.88;
+    const h1a = iso(hx, fH - 45, b.z + b.d);
+    const h1b = iso(hx, fH - 12, b.z + b.d);
+    const h2a = iso(hx, splitY - 15, b.z + b.d);
+    const h2b = iso(hx, 25, b.z + b.d);
+    return (
+      <g key="fridge">
+        <polygon points={sidePoly} fill="#9097a0" stroke="#3a4048" strokeWidth="0.8" />
+        <polygon points={topPoly} fill="#c6cbd2" stroke="#3a4048" strokeWidth="0.8" />
+        <polygon points={frontPoly} fill="#b9bfc6" stroke="#3a4048" strokeWidth="0.8" />
+        {/* subtle brushed-metal vertical lines */}
+        {[0.15, 0.3, 0.45, 0.6, 0.75].map((u, i) => {
+          const a = iso(b.x + b.w * u, 5, b.z + b.d);
+          const c = iso(b.x + b.w * u, fH - 5, b.z + b.d);
+          return <line key={`fb-${i}`} x1={a[0]} y1={a[1]} x2={c[0]} y2={c[1]} stroke="#fff" strokeOpacity="0.18" strokeWidth="0.5" />;
+        })}
+        <line x1={s1[0]} y1={s1[1]} x2={s2[0]} y2={s2[1]} stroke="#3a4048" strokeWidth="1" opacity="0.8" />
+        <line x1={h1a[0]} y1={h1a[1]} x2={h1b[0]} y2={h1b[1]} stroke="#2b2b2b" strokeWidth="2.4" strokeLinecap="round" />
+        <line x1={h2a[0]} y1={h2a[1]} x2={h2b[0]} y2={h2b[1]} stroke="#2b2b2b" strokeWidth="2.4" strokeLinecap="round" />
+      </g>
+    );
+  };
+
   // Footprint (top-view shadow) for clarity of L/U shape
   const footprintPolys = boxes
     .filter((b) => b.kind === "base")
