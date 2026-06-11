@@ -14,7 +14,7 @@ type Answers = {
   designCategory?: "עץ" | "בד" | "מלא";
   material?: string;
   handles?: "ידיות מוט" | "ידיות כפתור" | "ללא ידיות";
-  extras?: string;       // kitchen: כיריים+תנור / מקרר / שיש עליון ; closet: מגירות / מדפים / תלייה
+  extras?: string[];     // kitchen: כיריים+תנור / מקרר / שיש עליון ; closet: מגירות / מדפים / תלייה (multi-select)
 };
 
 type StepKey = keyof Answers;
@@ -115,7 +115,15 @@ const RahitiGaatonStoreView = ({ store }: { store: Store }) => {
   );
 
   const pick = (value: string) => {
-    const next: Answers = { ...answers, [step.key]: value as Answers[StepKey] };
+    let next: Answers = { ...answers, [step.key]: value as Answers[StepKey] };
+    // Multi-select for extras (toggle)
+    if (step.key === "extras") {
+      const cur = answers.extras ?? [];
+      const updated = cur.includes(value)
+        ? cur.filter((v) => v !== value)
+        : [...cur, value];
+      next = { ...answers, extras: updated };
+    }
     // Reset dependent fields if `type` changes
     if (step.key === "type" && answers.type && answers.type !== value) {
       next.layout = undefined;
@@ -152,6 +160,8 @@ const RahitiGaatonStoreView = ({ store }: { store: Store }) => {
       }
     }
     setAnswers(next);
+    // Extras is multi-select: don't auto-advance, user clicks "סיום" button
+    if (step.key === "extras") return;
     // Recompute steps with the new answers so dynamic insertion (height for closet) is respected
     const nextSteps = getSteps(next);
     if (safeIdx + 1 < nextSteps.length) {
@@ -273,7 +283,9 @@ const RahitiGaatonStoreView = ({ store }: { store: Store }) => {
                 {step.question}
               </h2>
               <p className="mt-2 font-heebo text-[#7a5a36]">
-                בחרו אופציה ונמשיך הלאה
+                {step.key === "extras"
+                  ? "ניתן לבחור כמה אופציות. בסיום לחצו ׳סיום ושליחת פרטים׳"
+                  : "בחרו אופציה ונמשיך הלאה"}
               </p>
 
               <div
@@ -286,7 +298,8 @@ const RahitiGaatonStoreView = ({ store }: { store: Store }) => {
                 }`}
               >
                 {stepOptions.map((opt) => {
-                  const selected = answers[step.key] === opt;
+                  const cur = answers[step.key];
+                  const selected = Array.isArray(cur) ? cur.includes(opt) : cur === opt;
                   return (
                     <button
                       key={opt}
@@ -316,6 +329,17 @@ const RahitiGaatonStoreView = ({ store }: { store: Store }) => {
                 })}
               </div>
 
+              {step.key === "extras" && (
+                <button
+                  type="button"
+                  onClick={() => setDone(true)}
+                  className="mt-8 inline-flex items-center gap-2 rounded-xl px-7 py-3 font-frank font-bold text-white shadow-lg hover:opacity-95 transition"
+                  style={{ background: "linear-gradient(180deg, #5a3d20, #2a1d12)" }}
+                >
+                  סיום ושליחת פרטים ←
+                </button>
+              )}
+
               {stepIdx > 0 && (
                 <button
                   type="button"
@@ -341,7 +365,14 @@ const RahitiGaatonStoreView = ({ store }: { store: Store }) => {
               </p>
 
               <ul className="mt-8 grid grid-cols-2 md:grid-cols-4 gap-3 text-right">
-                {(Object.keys(answers) as StepKey[]).map((k) => (
+                {(Object.keys(answers) as StepKey[])
+                  .filter((k) => {
+                    const v = answers[k];
+                    if (v === undefined || v === null || v === "") return false;
+                    if (Array.isArray(v) && v.length === 0) return false;
+                    return true;
+                  })
+                  .map((k) => (
                   <li
                     key={k}
                     className="rounded-xl border border-[#c9a06a]/40 bg-[#f8efd9] px-4 py-3"
@@ -350,7 +381,7 @@ const RahitiGaatonStoreView = ({ store }: { store: Store }) => {
                       {LABEL[k]}
                     </div>
                     <div className="font-frank font-bold text-[#3b2918] mt-1">
-                      {answers[k]}
+                      {Array.isArray(answers[k]) ? (answers[k] as string[]).join(", ") : (answers[k] as string | number)}
                     </div>
                   </li>
                 ))}
@@ -615,7 +646,7 @@ function LivePreview({ answers, counts, setCounts }: PreviewProps) {
     if (b.kind === "upper") frontFill = shade(F.front, -0.05);
     if (b.kind === "counter") {
       frontFill = "#1a1410";
-      topFill = extras === "שיש עליון" ? "#ece8df" : "#1f1812";
+      topFill = extras?.includes("שיש עליון") ? "#ece8df" : "#1f1812";
     }
 
     // Compute handle / detail position on the front face
@@ -689,7 +720,7 @@ function LivePreview({ answers, counts, setCounts }: PreviewProps) {
     }
 
     // Stove + oven decoration on the first center-arm base when chosen
-    if (b.kind === "base" && isKitchen && extras === "כיריים + תנור" && b.x === W && b.z === 0 && !b.facingX) {
+    if (b.kind === "base" && isKitchen && extras?.includes("כיריים + תנור") && b.x === W && b.z === 0 && !b.facingX) {
       // Hob (top of counter) — 4 burners
       const T1 = iso(b.x + b.w * 0.12, y1 + 0.5, b.z + b.d * 0.18);
       const T2 = iso(b.x + b.w * 0.88, y1 + 0.5, b.z + b.d * 0.18);
@@ -733,7 +764,7 @@ function LivePreview({ answers, counts, setCounts }: PreviewProps) {
     }
 
     // Marble veins on counter top when "שיש עליון"
-    if (b.kind === "base" && isKitchen && extras === "שיש עליון") {
+    if (b.kind === "base" && isKitchen && extras?.includes("שיש עליון")) {
       const seed = (b.x * 13 + b.z * 7) % 100;
       [0.25, 0.55, 0.78].forEach((vy, i) => {
         const offset = ((seed + i * 17) % 20) / 100;
@@ -772,7 +803,7 @@ function LivePreview({ answers, counts, setCounts }: PreviewProps) {
   );
 
   // Fridge column: replace last center-arm base with a tall stainless fridge
-  const fridgeBase = (isKitchen && extras === "מקרר משולב")
+  const fridgeBase = (isKitchen && extras?.includes("מקרר משולב"))
     ? boxes
         .filter((bx) => bx.kind === "base" && bx.z === 0 && !bx.facingX)
         .reduce<Box | null>((acc, bx) => (!acc || bx.x > acc.x ? bx : acc), null)
