@@ -678,8 +678,17 @@ function LivePreview({ answers, counts, setCounts }: PreviewProps) {
       <g key={key}>
         {/* side first (back), then top, then front for correct overlap */}
         <polygon points={sidePoly} fill={F.side} stroke={F.edge} strokeWidth="0.8" />
+        {textureId && (
+          <polygon points={sidePoly} fill={`url(#${textureId})`} stroke="none" pointerEvents="none" />
+        )}
         <polygon points={topPoly} fill={topFill} stroke={F.edge} strokeWidth="0.8" />
+        {textureId && (
+          <polygon points={topPoly} fill={`url(#${textureId})`} stroke="none" pointerEvents="none" />
+        )}
         <polygon points={frontPoly} fill={frontFill} stroke={F.edge} strokeWidth="0.8" />
+        {textureId && (
+          <polygon points={frontPoly} fill={`url(#${textureId})`} stroke="none" pointerEvents="none" />
+        )}
         {details}
       </g>
     );
