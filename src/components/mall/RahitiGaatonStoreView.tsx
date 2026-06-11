@@ -374,7 +374,7 @@ const RahitiGaatonStoreView = ({ store }: { store: Store }) => {
                       {LABEL[k]}
                     </div>
                     <div className="font-frank font-bold text-[#3b2918] mt-1">
-                      {answers[k]}
+                      {Array.isArray(answers[k]) ? (answers[k] as string[]).join(", ") : (answers[k] as string | number)}
                     </div>
                   </li>
                 ))}
