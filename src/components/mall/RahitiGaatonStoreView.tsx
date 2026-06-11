@@ -439,6 +439,9 @@ function LivePreview({ answers, counts, setCounts }: PreviewProps) {
   const hasType = !!type;
   const isKitchen = type === "מטבח";
 
+  // L-shape mirror toggle (right arm → left arm)
+  const [lMirror, setLMirror] = useState(false);
+
   const VB_W = 900;
   const VB_H = 520;
 
@@ -503,9 +506,9 @@ function LivePreview({ answers, counts, setCounts }: PreviewProps) {
     if (isKitchen) {
       const nC = Math.max(1, counts.centerBase);
       const nCU = Math.max(0, counts.centerUpper);
-      const nR = Math.max(1, counts.rightBase);
+      const nR = Math.max(0, counts.rightBase);
       const nRU = Math.max(0, counts.rightUpper);
-      const nL = Math.max(1, counts.leftBase);
+      const nL = Math.max(0, counts.leftBase);
       const nLU = Math.max(0, counts.leftUpper);
 
       // Center arm: along +x at z = 0
@@ -516,9 +519,10 @@ function LivePreview({ answers, counts, setCounts }: PreviewProps) {
         boxes.push({ x: i * W, z: 0, w: W, d: UD, h: UH, y0: UY, kind: "upper" });
       }
 
-      // Right arm (L or U) — at right end of center, extending +z
+      // Right arm (L or U) — at right end of center, extending +z.
+      // When L is mirrored, render this arm at the LEFT end instead.
       if (layout === "L" || layout === "U") {
-        const xR = nC * W - D;
+        const xR = (layout === "L" && lMirror) ? 0 : nC * W - D;
         for (let i = 0; i < nR; i++) {
           boxes.push({ x: xR, z: D + i * W, w: D, d: W, h: H, kind: "base", facingX: true });
         }
@@ -869,6 +873,7 @@ function LivePreview({ answers, counts, setCounts }: PreviewProps) {
                 <ArmStepper
                   label="שמאל"
                   value={counts.leftBase}
+                  min={0}
                   onChange={(n) => setCounts((c) => ({ ...c, leftBase: n }))}
                 />
               )}
@@ -881,6 +886,7 @@ function LivePreview({ answers, counts, setCounts }: PreviewProps) {
                 <ArmStepper
                   label="ימין"
                   value={counts.rightBase}
+                  min={0}
                   onChange={(n) => setCounts((c) => ({ ...c, rightBase: n }))}
                 />
               )}
@@ -898,6 +904,19 @@ function LivePreview({ answers, counts, setCounts }: PreviewProps) {
               />
             </div>
           )}
+        </div>
+      )}
+
+      {/* L-shape orientation toggle (left side of preview) */}
+      {hasType && isKitchen && layout === "L" && (
+        <div className="absolute top-3 left-3 pointer-events-none">
+          <button
+            type="button"
+            onClick={() => setLMirror((v) => !v)}
+            className="pointer-events-auto rounded-xl bg-[#f8efd9] border-2 border-[#8b5e2b]/60 px-3 py-2 font-heebo text-sm font-bold text-[#5a4126] shadow hover:-translate-y-0.5 hover:bg-[#ece3cd] hover:shadow-md transition"
+          >
+            {lMirror ? "שינוי לצד ימין" : "שינוי לצד שמאל"}
+          </button>
         </div>
       )}
 
