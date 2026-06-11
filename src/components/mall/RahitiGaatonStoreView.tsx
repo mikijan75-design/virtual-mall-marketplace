@@ -928,10 +928,12 @@ function LivePreview({ answers, setAnswers, counts, setCounts }: PreviewProps) {
   // --- Measurement rulers (width above center arm, height on right side) ---
   const rulers = (() => {
     if (!hasType || !layout) return null;
-    const centerCount = isKitchen
+    const baseCenterCount = isKitchen
       ? Math.max(1, counts.centerBase)
       : Math.max(isSliding ? 2 : 1, counts.centerBase);
     const UNIT_CM = isKitchen ? 70 : 80;
+    const fridgeOnRuler = !!(isKitchen && extras?.includes("מקרר משולב") && fridgePos !== null);
+    const centerCount = baseCenterCount + (fridgeOnRuler ? 1 : 0);
     const widthCm = centerCount * UNIT_CM;
     const hasUpper = isKitchen && (counts.centerUpper + counts.rightUpper + counts.leftUpper) > 0;
     const topY = isKitchen ? (hasUpper ? UY + UH : H) : closetTotal;
