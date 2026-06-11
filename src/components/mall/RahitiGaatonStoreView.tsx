@@ -873,6 +873,7 @@ function LivePreview({ answers, counts, setCounts }: PreviewProps) {
                 <ArmStepper
                   label="שמאל"
                   value={counts.leftBase}
+                  min={0}
                   onChange={(n) => setCounts((c) => ({ ...c, leftBase: n }))}
                 />
               )}
@@ -885,6 +886,7 @@ function LivePreview({ answers, counts, setCounts }: PreviewProps) {
                 <ArmStepper
                   label="ימין"
                   value={counts.rightBase}
+                  min={0}
                   onChange={(n) => setCounts((c) => ({ ...c, rightBase: n }))}
                 />
               )}
