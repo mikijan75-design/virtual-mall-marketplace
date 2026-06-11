@@ -1151,16 +1151,56 @@ function LivePreview({ answers, setAnswers, counts, setCounts }: PreviewProps) {
         </div>
       )}
 
-      {/* L-shape orientation toggle (left side of preview) */}
-      {hasType && isKitchen && layout === "L" && (
-        <div className="absolute top-3 left-3 pointer-events-none">
-          <button
-            type="button"
-            onClick={() => setLMirror((v) => !v)}
-            className="pointer-events-auto rounded-xl bg-[#f8efd9] border-2 border-[#8b5e2b]/60 px-3 py-2 font-heebo text-sm font-bold text-[#5a4126] shadow hover:-translate-y-0.5 hover:bg-[#ece3cd] hover:shadow-md transition"
-          >
-            {lMirror ? "שינוי לצד ימין" : "שינוי לצד שמאל"}
-          </button>
+      {/* Left-side preview controls: shape switcher + L mirror + fridge/stove movers */}
+      {hasType && isKitchen && (
+        <div className="absolute top-3 left-3 pointer-events-none flex flex-col gap-2 items-start">
+          {/* Shape switcher */}
+          <div className="pointer-events-auto rounded-xl bg-white/90 backdrop-blur border border-[#c9a06a]/60 shadow px-2 py-1.5 flex items-center gap-1">
+            <span className="font-heebo text-[11px] font-bold text-[#7a5a36] px-1">צורה:</span>
+            {(["ישר", "L", "U"] as const).map((s) => (
+              <button
+                key={s}
+                type="button"
+                onClick={() => setLayoutShape(s)}
+                className={`rounded-lg px-2.5 py-1 font-heebo text-xs font-bold transition ${
+                  layout === s
+                    ? "bg-[#3b2918] text-[#f7e9cf]"
+                    : "bg-[#f8efd9] text-[#3b2918] hover:bg-[#ece3cd] border border-[#c9a06a]/60"
+                }`}
+              >
+                {s}
+              </button>
+            ))}
+          </div>
+
+          {layout === "L" && (
+            <button
+              type="button"
+              onClick={() => setLMirror((v) => !v)}
+              className="pointer-events-auto rounded-xl bg-[#f8efd9] border-2 border-[#8b5e2b]/60 px-3 py-2 font-heebo text-sm font-bold text-[#5a4126] shadow hover:-translate-y-0.5 hover:bg-[#ece3cd] hover:shadow-md transition"
+            >
+              {lMirror ? "שינוי לצד ימין" : "שינוי לצד שמאל"}
+            </button>
+          )}
+
+          {hasFridge && fridgePos !== null && (
+            <PositionMover
+              label="מקרר"
+              value={fridgePos}
+              min={0}
+              max={centerCountEff - 1}
+              onChange={setFridgePos}
+            />
+          )}
+          {hasStove && stovePos !== null && (
+            <PositionMover
+              label="כיריים + תנור"
+              value={stovePos}
+              min={0}
+              max={centerCountEff - 1}
+              onChange={setStovePos}
+            />
+          )}
         </div>
       )}
 
