@@ -504,8 +504,8 @@ function LivePreview({ answers, setAnswers, counts, setCounts }: PreviewProps) {
   useEffect(() => {
     if (!hasFridge) { if (fridgePos !== null) setFridgePos(null); return; }
     setFridgePos((p) => {
-      const max = centerCountEff - 1;
-      if (p === null) return max;             // default: rightmost
+      const max = centerCountEff;             // 0..nC (insert positions)
+      if (p === null) return max;             // default: after all cabinets
       return Math.max(0, Math.min(max, p));
     });
   }, [hasFridge, centerCountEff]);
