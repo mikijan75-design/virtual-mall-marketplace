@@ -283,7 +283,9 @@ const RahitiGaatonStoreView = ({ store }: { store: Store }) => {
                 {step.question}
               </h2>
               <p className="mt-2 font-heebo text-[#7a5a36]">
-                בחרו אופציה ונמשיך הלאה
+                {step.key === "extras"
+                  ? "ניתן לבחור כמה אופציות. בסיום לחצו ׳סיום ושליחת פרטים׳"
+                  : "בחרו אופציה ונמשיך הלאה"}
               </p>
 
               <div
@@ -296,7 +298,8 @@ const RahitiGaatonStoreView = ({ store }: { store: Store }) => {
                 }`}
               >
                 {stepOptions.map((opt) => {
-                  const selected = answers[step.key] === opt;
+                  const cur = answers[step.key];
+                  const selected = Array.isArray(cur) ? cur.includes(opt) : cur === opt;
                   return (
                     <button
                       key={opt}
@@ -325,6 +328,17 @@ const RahitiGaatonStoreView = ({ store }: { store: Store }) => {
                   );
                 })}
               </div>
+
+              {step.key === "extras" && (
+                <button
+                  type="button"
+                  onClick={() => setDone(true)}
+                  className="mt-8 inline-flex items-center gap-2 rounded-xl px-7 py-3 font-frank font-bold text-white shadow-lg hover:opacity-95 transition"
+                  style={{ background: "linear-gradient(180deg, #5a3d20, #2a1d12)" }}
+                >
+                  סיום ושליחת פרטים ←
+                </button>
+              )}
 
               {stepIdx > 0 && (
                 <button
