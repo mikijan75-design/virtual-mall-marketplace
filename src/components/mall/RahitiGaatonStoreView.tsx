@@ -817,11 +817,11 @@ function LivePreview({ answers, setAnswers, counts, setCounts }: PreviewProps) {
     (a, bb) => a.x + a.z + (a.y0 ?? 0) * 0.2 - (bb.x + bb.z + (bb.y0 ?? 0) * 0.2)
   );
 
-  // Fridge column: replace last center-arm base with a tall stainless fridge
-  const fridgeBase = (isKitchen && extras?.includes("מקרר משולב"))
-    ? boxes
-        .filter((bx) => bx.kind === "base" && bx.z === 0 && !bx.facingX)
-        .reduce<Box | null>((acc, bx) => (!acc || bx.x > acc.x ? bx : acc), null)
+  // Fridge column: replace the cabinet at `fridgePos` with a tall stainless fridge.
+  const centerBaseBoxes = boxes.filter((bx) => bx.kind === "base" && bx.z === 0 && !bx.facingX);
+  const nCenterBase = centerBaseBoxes.length;
+  const fridgeBase = (isKitchen && extras?.includes("מקרר משולב") && fridgePos !== null && nCenterBase > 0)
+    ? centerBaseBoxes.find((bx) => bx.x === fridgePos * W) ?? null
     : null;
   // Hide that base + the upper directly above it from normal rendering
   const hiddenBoxes = new Set<Box>();
