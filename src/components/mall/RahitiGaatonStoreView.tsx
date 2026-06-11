@@ -645,21 +645,31 @@ function LivePreview({ answers, counts, setCounts }: PreviewProps) {
       // Handles (only on base / closet, not on upper)
       if (handles && handles !== "ללא ידיות") {
         const handleY = b.kind === "upper" ? y0 + b.h * 0.15 : y0 + b.h * 0.78;
-        const a = frontFaceIsZ
-          ? iso(b.x + b.w * 0.55, handleY, b.z + b.d)
-          : iso(b.x + b.w, handleY, b.z + b.d * 0.55);
-        const bb = frontFaceIsZ
-          ? iso(b.x + b.w * 0.85, handleY, b.z + b.d)
-          : iso(b.x + b.w, handleY, b.z + b.d * 0.85);
-        if (handles === "ידיות מוט") {
-          details.push(
-            <line key={`h-${key}`} x1={a[0]} y1={a[1]} x2={bb[0]} y2={bb[1]} stroke="#2b2b2b" strokeWidth="2.2" strokeLinecap="round" />
-          );
-        } else {
-          const cx = (a[0] + bb[0]) / 2;
-          const cy = (a[1] + bb[1]) / 2;
-          details.push(<circle key={`h-${key}`} cx={cx} cy={cy} r="2.6" fill="#2b2b2b" />);
-        }
+        // For split units (two doors), place a handle on each door near the center split.
+        // For sliding-door units (no split), place a single handle only.
+        const handleRanges: Array<[number, number]> = isSliding
+          ? [[0.55, 0.85]]
+          : [
+              [0.15, 0.42], // left door — handle near inner (right) edge
+              [0.58, 0.85], // right door — handle near inner (left) edge
+            ];
+        handleRanges.forEach(([u1, u2], hi) => {
+          const a = frontFaceIsZ
+            ? iso(b.x + b.w * u1, handleY, b.z + b.d)
+            : iso(b.x + b.w, handleY, b.z + b.d * u1);
+          const bb = frontFaceIsZ
+            ? iso(b.x + b.w * u2, handleY, b.z + b.d)
+            : iso(b.x + b.w, handleY, b.z + b.d * u2);
+          if (handles === "ידיות מוט") {
+            details.push(
+              <line key={`h-${key}-${hi}`} x1={a[0]} y1={a[1]} x2={bb[0]} y2={bb[1]} stroke="#2b2b2b" strokeWidth="2.2" strokeLinecap="round" />
+            );
+          } else {
+            const cx = (a[0] + bb[0]) / 2;
+            const cy = (a[1] + bb[1]) / 2;
+            details.push(<circle key={`h-${key}-${hi}`} cx={cx} cy={cy} r="2.6" fill="#2b2b2b" />);
+          }
+        });
       }
     }
 
