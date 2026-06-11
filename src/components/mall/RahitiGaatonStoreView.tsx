@@ -907,6 +907,19 @@ function LivePreview({ answers, counts, setCounts }: PreviewProps) {
         </div>
       )}
 
+      {/* L-shape orientation toggle (left side of preview) */}
+      {hasType && isKitchen && layout === "L" && (
+        <div className="absolute top-3 left-3 pointer-events-none">
+          <button
+            type="button"
+            onClick={() => setLMirror((v) => !v)}
+            className="pointer-events-auto rounded-xl bg-[#f8efd9] border-2 border-[#8b5e2b]/60 px-3 py-2 font-heebo text-sm font-bold text-[#5a4126] shadow hover:-translate-y-0.5 hover:bg-[#ece3cd] hover:shadow-md transition"
+          >
+            {lMirror ? "שינוי לצד ימין" : "שינוי לצד שמאל"}
+          </button>
+        </div>
+      )}
+
       <div className="px-4 py-3 bg-[#2a1d12] text-[#f7e9cf] font-heebo text-sm flex items-center justify-between">
         <span className="opacity-80">הוסיפו או הסירו יחידות בכפתורי + / − למעלה</span>
         <span className="opacity-70 text-xs tracking-wider">RAHITI · GAATON LIVE PREVIEW</span>
