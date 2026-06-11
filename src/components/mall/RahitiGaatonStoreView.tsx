@@ -365,7 +365,14 @@ const RahitiGaatonStoreView = ({ store }: { store: Store }) => {
               </p>
 
               <ul className="mt-8 grid grid-cols-2 md:grid-cols-4 gap-3 text-right">
-                {(Object.keys(answers) as StepKey[]).map((k) => (
+                {(Object.keys(answers) as StepKey[])
+                  .filter((k) => {
+                    const v = answers[k];
+                    if (v === undefined || v === null || v === "") return false;
+                    if (Array.isArray(v) && v.length === 0) return false;
+                    return true;
+                  })
+                  .map((k) => (
                   <li
                     key={k}
                     className="rounded-xl border border-[#c9a06a]/40 bg-[#f8efd9] px-4 py-3"
