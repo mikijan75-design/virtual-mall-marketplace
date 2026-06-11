@@ -886,7 +886,7 @@ function LivePreview({ answers, counts, setCounts }: PreviewProps) {
     const centerCount = isKitchen
       ? Math.max(1, counts.centerBase)
       : Math.max(isSliding ? 2 : 1, counts.centerBase);
-    const UNIT_CM = 80;
+    const UNIT_CM = isKitchen ? 70 : 80;
     const widthCm = centerCount * UNIT_CM;
     const topY = isKitchen ? UY + UH : closetTotal;
     const heightCm = isKitchen ? Math.round(topY) : closetTotal;
