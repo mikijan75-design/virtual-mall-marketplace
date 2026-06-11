@@ -320,9 +320,10 @@ const RahitiGaatonStoreView = ({ store }: { store: Store }) => {
                 <button
                   type="button"
                   onClick={() => setStepIdx(stepIdx - 1)}
-                  className="mt-8 font-heebo text-sm text-[#7a5a36] hover:text-[#3b2918] underline underline-offset-4"
+                  className="mt-8 inline-flex items-center gap-2 rounded-xl border-2 border-[#8b5e2b]/60 bg-[#f8efd9] px-5 py-2.5 font-heebo text-sm font-semibold text-[#3b2918] shadow-sm hover:-translate-y-0.5 hover:bg-[#ece3cd] hover:border-[#8b5e2b] hover:shadow-md transition-all duration-200"
                 >
-                  ← חזרה לשאלה הקודמת
+                  <span aria-hidden="true">←</span>
+                  <span>חזרה לשאלה הקודמת</span>
                 </button>
               )}
             </div>
