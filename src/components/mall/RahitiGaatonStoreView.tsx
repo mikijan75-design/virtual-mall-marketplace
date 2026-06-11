@@ -504,8 +504,8 @@ function LivePreview({ answers, setAnswers, counts, setCounts }: PreviewProps) {
   useEffect(() => {
     if (!hasFridge) { if (fridgePos !== null) setFridgePos(null); return; }
     setFridgePos((p) => {
-      const max = centerCountEff - 1;
-      if (p === null) return max;             // default: rightmost
+      const max = centerCountEff;             // 0..nC (insert positions)
+      if (p === null) return max;             // default: after all cabinets
       return Math.max(0, Math.min(max, p));
     });
   }, [hasFridge, centerCountEff]);
@@ -594,18 +594,25 @@ function LivePreview({ answers, setAnswers, counts, setCounts }: PreviewProps) {
       const nL = Math.max(0, counts.leftBase);
       const nLU = Math.max(0, counts.leftUpper);
 
+      // Fridge is an ADDITION (not a replacement). It inserts a new slot at
+      // `fridgePos` in 0..nC, shifting cabinets at index >= fridgePos by W.
+      const fridgeOn = !!(extras?.includes("מקרר משולב") && fridgePos !== null);
+      const fp = fridgeOn ? Math.max(0, Math.min(nC, fridgePos!)) : -1;
+      const shift = (i: number) => (fridgeOn && i >= fp ? W : 0);
+
       // Center arm: along +x at z = 0
       for (let i = 0; i < nC; i++) {
-        boxes.push({ x: i * W, z: 0, w: W, d: D, h: H, kind: "base" });
+        boxes.push({ x: i * W + shift(i), z: 0, w: W, d: D, h: H, kind: "base" });
       }
       for (let i = 0; i < nCU; i++) {
-        boxes.push({ x: i * W, z: 0, w: W, d: UD, h: UH, y0: UY, kind: "upper" });
+        boxes.push({ x: i * W + shift(i), z: 0, w: W, d: UD, h: UH, y0: UY, kind: "upper" });
       }
 
       // Right arm (L or U) — at right end of center, extending +z.
       // When L is mirrored, render this arm at the LEFT end instead.
       if (layout === "L" || layout === "U") {
-        const xR = (layout === "L" && lMirror) ? 0 : nC * W - D;
+        const centerSpan = nC * W + (fridgeOn ? W : 0);
+        const xR = (layout === "L" && lMirror) ? 0 : centerSpan - D;
         for (let i = 0; i < nR; i++) {
           boxes.push({ x: xR, z: D + i * W, w: D, d: W, h: H, kind: "base", facingX: true });
         }
@@ -760,11 +767,14 @@ function LivePreview({ answers, setAnswers, counts, setCounts }: PreviewProps) {
       }
     }
 
-    // Stove + oven decoration on the chosen center-arm base when "כיריים + תנור" selected
+    // Stove + oven decoration on the chosen center-arm base when "כיריים + תנור" selected.
+    // Account for fridge insertion shift: cabinets at original index >= fridgePos are shifted by W.
+    const fridgeOnHere = !!(isKitchen && extras?.includes("מקרר משולב") && fridgePos !== null);
+    const stoveShift = fridgeOnHere && stovePos !== null && stovePos >= (fridgePos ?? 0) ? W : 0;
     if (
       b.kind === "base" && isKitchen && extras?.includes("כיריים + תנור") &&
       b.z === 0 && !b.facingX &&
-      stovePos !== null && b.x === stovePos * W
+      stovePos !== null && b.x === stovePos * W + stoveShift
     ) {
       // Hob (top of counter) — 4 burners
       const T1 = iso(b.x + b.w * 0.12, y1 + 0.5, b.z + b.d * 0.18);
@@ -847,23 +857,13 @@ function LivePreview({ answers, setAnswers, counts, setCounts }: PreviewProps) {
     (a, bb) => a.x + a.z + (a.y0 ?? 0) * 0.2 - (bb.x + bb.z + (bb.y0 ?? 0) * 0.2)
   );
 
-  // Fridge column: replace the cabinet at `fridgePos` with a tall stainless fridge.
-  const centerBaseBoxes = boxes.filter((bx) => bx.kind === "base" && bx.z === 0 && !bx.facingX);
-  const nCenterBase = centerBaseBoxes.length;
-  const fridgeBase = (isKitchen && extras?.includes("מקרר משולב") && fridgePos !== null && nCenterBase > 0)
-    ? centerBaseBoxes.find((bx) => bx.x === fridgePos * W) ?? null
+  // Fridge is an ADDITION at slot `fridgePos` (0..nC, where nC = center base count).
+  // It does not hide any cabinet. Cabinets at index >= fridgePos were already shifted by W above.
+  const nC = isKitchen ? Math.max(1, counts.centerBase) : 0;
+  const fridgeBase: Box | null = (isKitchen && extras?.includes("מקרר משולב") && fridgePos !== null)
+    ? { x: Math.max(0, Math.min(nC, fridgePos)) * W, z: 0, w: W, d: D, h: H, kind: "base" }
     : null;
-  // Hide that base + the upper directly above it from normal rendering
-  const hiddenBoxes = new Set<Box>();
-  if (fridgeBase) {
-    hiddenBoxes.add(fridgeBase);
-    boxes.forEach((bx) => {
-      if (bx.kind === "upper" && !bx.facingX && bx.x === fridgeBase.x && bx.z === 0) {
-        hiddenBoxes.add(bx);
-      }
-    });
-  }
-  const visibleSorted = sortedBoxes.filter((bx) => !hiddenBoxes.has(bx));
+  const visibleSorted = sortedBoxes;
 
   const renderFridge = (b: Box) => {
     const fH = 210; // full height (covers base + upper zone)
@@ -928,10 +928,12 @@ function LivePreview({ answers, setAnswers, counts, setCounts }: PreviewProps) {
   // --- Measurement rulers (width above center arm, height on right side) ---
   const rulers = (() => {
     if (!hasType || !layout) return null;
-    const centerCount = isKitchen
+    const baseCenterCount = isKitchen
       ? Math.max(1, counts.centerBase)
       : Math.max(isSliding ? 2 : 1, counts.centerBase);
     const UNIT_CM = isKitchen ? 70 : 80;
+    const fridgeOnRuler = !!(isKitchen && extras?.includes("מקרר משולב") && fridgePos !== null);
+    const centerCount = baseCenterCount + (fridgeOnRuler ? 1 : 0);
     const widthCm = centerCount * UNIT_CM;
     const hasUpper = isKitchen && (counts.centerUpper + counts.rightUpper + counts.leftUpper) > 0;
     const topY = isKitchen ? (hasUpper ? UY + UH : H) : closetTotal;
@@ -1188,7 +1190,7 @@ function LivePreview({ answers, setAnswers, counts, setCounts }: PreviewProps) {
               label="מקרר"
               value={fridgePos}
               min={0}
-              max={centerCountEff - 1}
+              max={centerCountEff}
               onChange={setFridgePos}
             />
           )}
