@@ -767,11 +767,14 @@ function LivePreview({ answers, setAnswers, counts, setCounts }: PreviewProps) {
       }
     }
 
-    // Stove + oven decoration on the chosen center-arm base when "כיריים + תנור" selected
+    // Stove + oven decoration on the chosen center-arm base when "כיריים + תנור" selected.
+    // Account for fridge insertion shift: cabinets at original index >= fridgePos are shifted by W.
+    const fridgeOnHere = !!(isKitchen && extras?.includes("מקרר משולב") && fridgePos !== null);
+    const stoveShift = fridgeOnHere && stovePos !== null && stovePos >= (fridgePos ?? 0) ? W : 0;
     if (
       b.kind === "base" && isKitchen && extras?.includes("כיריים + תנור") &&
       b.z === 0 && !b.facingX &&
-      stovePos !== null && b.x === stovePos * W
+      stovePos !== null && b.x === stovePos * W + stoveShift
     ) {
       // Hob (top of counter) — 4 burners
       const T1 = iso(b.x + b.w * 0.12, y1 + 0.5, b.z + b.d * 0.18);
